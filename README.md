@@ -1,1 +1,11 @@
-# SAE_S5_CalculsDistribues
+<img src="doc/DocumentsTechniques/FormatMD/Images/logoUvsq.jpg" width="500px" alt="Logo uvsq">
+
+_Durand Antonin_ <br>
+_Jougla Maxime_ <br>
+_Parciany Benjamin_ <br>
+_Zehren William_
+
+<h1 style="color:#5d79e7; text-align: center"> SAE S5 Calculs parallèles </h1>
+
+L'objectif de ce projet est de permettre à des utilisateurs de réaliser du calcul distribué ou parallèle, grâce à un kit cluster. <br> 
+Ces calculs seront accessibles depuis un site web dans lequel seront exécutés différents programmes. <br>
