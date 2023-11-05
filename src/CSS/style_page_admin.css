@@ -1,0 +1,89 @@
+html, body{
+    padding: 0;
+}
+
+#contenu_page_admin{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.div_recherche{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255,255,255,0.5);
+    width: 20%;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.div_form_recherche,#div_resultat_recherche_user, #div_result{
+    display: flex;
+    flex-direction: column;
+}
+
+.div_form_recherche{
+    width: fit-content;
+}
+
+#div_resultat_recherche_user{
+    width: 100%;
+}
+
+#div_result{
+    margin-top: 10px;
+    width: 100%;
+}
+
+#ul_users_recherches{
+    list-style: none;
+
+}
+
+#ul_users_recherches > li{
+    margin: 10px;
+    max-width: 50%;
+    overflow: scroll;
+    border:  2px solid black;
+    padding: 2px;
+    border-radius: 3px;
+}
+
+
+#div_navigation_pagination_recherche_user{
+    display: none;
+    flex-direction: row;
+    margin-top: 20px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.button_nav{
+    margin: 3px;
+    border: 2px solid #1e3050;
+    color: black;
+    font-weight: bold;
+    font-size: 1em;
+    background-color: transparent;
+    width: 35px;
+    height: 35px;
+}
+
+.button_nav:hover{
+    cursor : pointer;
+    transition: all 0.2s ease;
+    transform: scale(110%, 110%);
+}
+
+.button_nav:disabled{
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    transition: none;
+    transform : none;
+    cursor: default;
+}
