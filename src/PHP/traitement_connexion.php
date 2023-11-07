@@ -101,7 +101,7 @@ if (isset($_POST)) {
                                     //echo $resultVerifPassword;
                                     //on affiche une erreur à l'utilisateur
                                     $_SESSION["erreur_traitement_connexion"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
-                                    //header("Location:page_connexion.php");
+                                    header("Location:page_connexion.php");
                                 }
                             } else {
                                 //le user n'existe pas, on le renvoie à la page de connexion
@@ -122,7 +122,7 @@ if (isset($_POST)) {
                     } else {
                         //on affiche une erreur à l'utilisateur
                         $_SESSION["erreur_traitement_connexion"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
-                        //header("Location:page_connexion.php");
+                        header("Location:page_connexion.php");
                     }
                 }
                 else{
