@@ -25,7 +25,6 @@ session_start();
         <div>
             <label for="password">Mot de passe</label>
             <input type="password" id="password" name="password"  min="6" max="25">
-            <p> Mot de passe oublié ? <a href="page_mdp_perdu.php"> Cliquez ici </a> </p>
         </div>
 
         <input type="submit" name="submit_connexion_user" value="Submit">
