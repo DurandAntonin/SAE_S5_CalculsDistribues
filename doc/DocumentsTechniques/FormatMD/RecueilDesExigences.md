@@ -24,14 +24,17 @@ Ce qui rentre dans la portée est la réalisation des différents modules de sim
 
 # Chapitre 2 – Terminologie employée / Glossaire
 
-- Abstraction : Action intellectuelle consistant à mettre en évidence un élément en portant l’attention sur lui et en négligeant tout autre aspect. Elle fait partie des principes fondamentaux de l’approche orientée objet.
-- Calcul distribué : Un calcul distribué, ou réparti ou encore partagé, est un calcul ou un traitement réparti sur plusieurs microprocesseurs et plus généralement sur plusieurs unités centrales informatiques. Le calcul distribué est souvent réalisé sur des clusters de calcul spécialisés, mais peut aussi être réalisé sur des stations informatiques individuelles à plusieurs cœurs. La distribution d'un calcul est un domaine de recherche des sciences mathématiques et informatiques. Elle implique notamment la notion de calcul parallèle.
-- Cas d’utilisation : Exigences fonctionnelles.
-- Conception : Activité du génie logiciel ayant pour objectif de fournir une structure pour un élément complexe. Lors de la conception on décompose l’élément en parties, on attribue des responsabilités à chaque partie et on s’assure que les parties sont bien assemblées afin d’accomplir une tâche bien définie.
-- Développement :  Activité du génie logiciel consistant à programmer le logiciel dans un langage de programmation.
-- Génie logiciel : Discipline liée à tous les aspects de la production du logiciel complexe et avec d’importantes contraintes de qualité. Elle est liée à l’application de théories, de méthodes et l'utilisation d’outils pour le développement logiciel d’une façon professionnelle. Elle favorise et permet le travail en équipe.
-- Parallélisme : En informatique, le parallélisme consiste à mettre en œuvre des architectures d'électronique numérique permettant de traiter des informations de manière simultanée, ainsi que les algorithmes spécialisés pour celles-ci. Ces techniques ont pour but de réaliser le plus grand nombre d'opérations en un temps le plus petit possible
-- Spécification : Activité du génie logiciel consistant à décrire ce que le logiciel doit faire.
+- **Abstraction** : Action intellectuelle consistant à mettre en évidence un élément en portant l’attention sur lui et en négligeant tout autre aspect. Elle fait partie des principes fondamentaux de l’approche orientée objet.
+- **Calcul distribué** : Un calcul distribué, ou réparti ou encore partagé, est un calcul ou un traitement réparti sur plusieurs microprocesseurs et plus généralement sur plusieurs unités centrales informatiques. Le calcul distribué est souvent réalisé sur des clusters de calcul spécialisés, mais peut aussi être réalisé sur des stations informatiques individuelles à plusieurs cœurs. La distribution d'un calcul est un domaine de recherche des sciences mathématiques et informatiques. Elle implique notamment la notion de calcul parallèle.
+- **Cas d’utilisation** : Exigences fonctionnelles.
+- **Conception** : Activité du génie logiciel ayant pour objectif de fournir une structure pour un élément complexe. Lors de la conception on décompose l’élément en parties, on attribue des responsabilités à chaque partie et on s’assure que les parties sont bien assemblées afin d’accomplir une tâche bien définie.
+- **Développement** :  Activité du génie logiciel consistant à programmer le logiciel dans un langage de programmation.
+- **Génie logiciel** : Discipline liée à tous les aspects de la production du logiciel complexe et avec d’importantes contraintes de qualité. Elle est liée à l’application de théories, de méthodes et l'utilisation d’outils pour le développement logiciel d’une façon professionnelle. Elle favorise et permet le travail en équipe.
+- **Parallélisme** : En informatique, le parallélisme consiste à mettre en œuvre des architectures d'électronique numérique permettant de traiter des informations de manière simultanée, ainsi que les algorithmes spécialisés pour celles-ci. Ces techniques ont pour but de réaliser le plus grand nombre d'opérations en un temps le plus petit possible
+- **Spécification** : Activité du génie logiciel consistant à décrire ce que le logiciel doit faire.
+- **Haute disponibilité** : Objectif pour une application, service, site web d'être tout le temps disponible et fiable. Cette haute disponibilité peut être définir par deux fonctionnalités.
+La première est le **hors-panne** où une machine est remplacée par une autre dans le cas d'un dysfonctionnement.
+La deuxième fonctionnalité est **l'équilibrage de charge** où un service est exécuté par une machine en fonction de la charge des machines.
 
 # Chapitre 3 – Les cas d’utilisation
 
