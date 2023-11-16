@@ -54,9 +54,12 @@ Les maquettes des différentes pages du site seront également réalisées dans 
 
 - Administrateur 
 
-La page d'inscription permettra aux utilisateurs non connectés de se créer un compte en renseignant une adresse mail, un login, un nom, un prénom et un mot de passe. La page de connexion permettra aux utilisateurs connectés et aux administrateurs de se connecter. 
+Une page d'accueil du site permet de présenter ce dernier. L'utilisateur a le choix de s'inscrire, de se connecter ou d'accéder directement aux modules de calculs sans se connecter.
 
-Les utilisateurs inscrits pourront accéder aux différents modules de calculs sur le site, et bénéficieront de la vitesse de calcul du cluster rpi4.
+La page d'inscription permettra à de nouveaux utilisateurs de se créer un compte en renseignant une adresse mail, un login, un nom, un prénom et un mot de passe. 
+La page de connexion permettra aux utilisateurs inscrits et aux administrateurs de se connecter, en entrant un login et un mot de passe. 
+
+Les utilisateurs inscrits pourront accéder aux différents modules de calculs sur le site, et bénéficieront de la vitesse de calcul du kit cluster hat.
 Ils auront de plus accès à une page de profil dans laquelle ils pourront modifier leurs informations personnelles, comme leur adresse mail, login, nom, prénom ou mot de passe.
 Ils peuvent aussi supprimer leur compte.
 
