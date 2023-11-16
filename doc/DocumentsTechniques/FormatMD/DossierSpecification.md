@@ -45,6 +45,7 @@ Pour rédiger ce dossier on utilisera la méthode d’Alistair Cockburn comme vu
 
 Ci-dessous le lien vers la maquette de l'application.
 
+https://www.figma.com/file/S1pEHXusOJ29ZLPUjzZCoc/BlitzCalc?type=design&t=ohczqNCd79y9zTP1-6
 
 Avec l’outil Figma les boutons sont cliquables et permettent une première idée de la navigation sur le site. Les boutons utilisables sont les suivants : Inscription, Connexion, Retour, Valider, Mot de passe oublié, l’icône de profil, et le bouton déconnexion.  
 

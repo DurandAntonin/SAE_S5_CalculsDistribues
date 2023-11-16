@@ -56,18 +56,21 @@ Les maquettes des différentes pages du site seront également réalisées dans 
 
 Une page d'accueil du site permet de présenter ce dernier. L'utilisateur a le choix de s'inscrire, de se connecter ou d'accéder directement aux modules de calculs sans se connecter.
 
+Si l'utilisateur fait le choix d'accèder directement aux modules du site sans se connecter, il pourra toujours s'inscrire et se connecter. 
+
 La page d'inscription permettra à de nouveaux utilisateurs de se créer un compte en renseignant une adresse mail, un login, un nom, un prénom et un mot de passe. 
 La page de connexion permettra aux utilisateurs inscrits et aux administrateurs de se connecter, en entrant un login et un mot de passe. 
 
-Les utilisateurs inscrits pourront accéder aux différents modules de calculs sur le site, et bénéficieront de la vitesse de calcul du kit cluster hat.
-Ils auront de plus accès à une page de profil dans laquelle ils pourront modifier leurs informations personnelles, comme leur adresse mail, login, nom, prénom ou mot de passe.
+Les utilisateurs inscrits pourront accéder aux différents modules de calculs sur le site, et bénéficieront de la vitesse de calcul du kit cluster hat. 
+Ils pourront cliquer sur une icone profil leur permettant de se deconnecter et de voir et modifier leurs informations personnelles. 
+Cliquer sur ce bouton ouvrira une pop up dans laquelle ils pourront donc voir et modifier leurs informations personnelles, comme leur adresse mail, login, nom, prénom ou mot de passe.
 Ils peuvent aussi supprimer leur compte.
 
 Les utilisateurs non inscrits auront aussi accès au site, mais y seront limités. 
-Ils pourront utiliser les modules de calculs comme les utilisateurs inscrits, mais n'auront pas accès aux performances améliorées du calcul distribué, les calculs seront ainsi plus longs à être exécutés.
+Ils pourront utiliser les modules de calculs comme les utilisateurs inscrits, mais n'auront pas accès aux performances améliorées du calcul distribué, les calculs seront ainsi plus longs à exécuter.
 Comme ils n'ont pas de compte utilisateur, il ne pourront pas accéder à la page profil.
 
-L'administrateur quant à lui, n'aura accès qu'à une page qui lui sera dédiée, sur laquelle il pourra gérer les différents utilisateurs inscrits. Cette fonctionnalité sera développée dans le livrable 2.
+L'administrateur quant à lui, n'aura accès qu'à une page qui lui sera dédiée, sur laquelle il pourra gérer les différents utilisateurs inscrits. Cette fonctionnalité sera développée dans le livrable 2. 
 
 
 <h2 style="color:#5dbee7; page-break-before: always" id="pres_requis"> Prés-requis </h2>
