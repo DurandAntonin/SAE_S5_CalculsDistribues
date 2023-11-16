@@ -18,6 +18,7 @@ _Zehren William_
     <li><a href="#III_introduction">D) Création du service de la base de données </a></li>
     <li><a href="#III_creationImageWeb">C) Création de l'image pour le serveur web </a></li>
     <li><a href="#III_creationImageBaseDonnees">D) Création de l'image pour la base de données </a></li>
+    <li><a href="#III_creationStackAppli">E) Création du stack de l'application </a></li>
 </ul>
 </ul>
 
