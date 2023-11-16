@@ -12,11 +12,21 @@ _Zehren William_
 
 <ol>
     <li> <a href="#introduction"> Introduction  </a> </li>
-    <li> <a href="#maquettes"> Maquettes  </a> </li>
-    <li> <a href="#pres_requis"> Cas d'utilisations  </a>  </li>
+    <li> <a href="#maquette"> Maquette  </a> </li>
+    <li> <a href="#cas_utilisations"> Cas d'utilisations  </a>  </li>
     <ol>
-        <li> <a href="#connaissances_competences"> Récit d'utilisation  </a> </li>
-        <li> <a href="#ressources_materielles"> Cas d'utilisation détaillé  </a> </li>
+        <li> <a href="#recit_utilisation"> Récit d'utilisation  </a> </li>
+        <li> <a href="#cas_utilisations_detailles"> Cas d'utilisations détaillés  </a> </li>
+        <ul>
+        <li><a href="#cu1"> CU#1 </a></li>
+        <li><a href="#cu2"> CU#2 </a></li>
+        <li><a href="#cu3"> CU#3 </a></li>
+        <li><a href="#cu4"> CU#4 </a></li>
+        <li><a href="#cu5"> CU#5 </a></li>
+        <li><a href="#cu6"> CU#6 </a></li>
+        <li><a href="#cu7"> CU#7 </a></li>
+        <li><a href="#cu8"> CU#8 </a></li>
+        </ul>
     </ol>
 </ol>
 
@@ -31,19 +41,16 @@ Dans la partie “Cas d’utilisations”, les différents cas d’utilisations 
 
 Pour rédiger ce dossier on utilisera la méthode d’Alistair Cockburn comme vu dans le cours. En effet cette méthode facilite la visualisation et la compréhension des différents cas d’utilisation et de leurs descriptions, non seulement pour les personnes qui écrivent les cas d’utilisation, mais aussi pour les personnes extérieures et n’ayant pas de notions à ce propos.
 
-<h2 style="color:#5dbee7; page-break-before: always" id="maquettes"> Maquettes </h2>
+<h2 style="color:#5dbee7; page-break-before: always" id="maquette"> Maquette </h2>
 
-Voici ci-dessous le lien vers la première maquette réalisée :
-https://www.figma.com/proto/qMbHJtZuRbIjwsbW98pGr0/Untitled?node-id=3%3A20&scaling=scale-down&page-id=0%3A1&starting-point-node-id=3%3A20
+Ci-dessous le lien vers la maquette de l'application.
 
-Voici ci-dessous le lien vers la deuxième maquette réalisée :
-https://www.figma.com/proto/JJHEWjiEuGdnE0jZbyxsgo/page_accueil?node-id=21%3A53&scaling=min-zoom&page-id=0%3A1&starting-point-node-id=18%3A29
 
 Avec l’outil Figma les boutons sont cliquables et permettent une première idée de la navigation sur le site. Les boutons utilisables sont les suivants : Inscription, Connexion, Retour, Valider, Mot de passe oublié, l’icône de profil, et le bouton déconnexion.  
 
-<h2 style="color:#5dbee7; page-break-before: always" id="cas_utilisation"> Cas d'utilisations </h2>
+<h2 style="color:#5dbee7; page-break-before: always" id="cas_utilisations"> Cas d'utilisations </h2>
 
-<h2 style="color:#5dbee7; page-break-before: always" id="recit_utilisation"> Récit d'utilisation </h2>
+<h3 id="recit_utilisation"> Récit d'utilisation </h3>
 
 Le premier livrable est un système de connexion et d'inscription relié à une base de données.
 
@@ -55,9 +62,23 @@ Si le visiteur n’est pas inscrit, alors il devra remplir un formulaire et rens
 
 Si l'utilisateur se connecte avec les identifiants de l’administrateur, il n’aura pas accès aux mêmes fonctionnalités que les inscrits « classique » mais à une page exclusive.
 
-<h2 style="color:#5dbee7; page-break-before: always" id="cas_detaille"> Cas d'utilisation détaillé </h2>
+Ci-dessous les différents niveaux des cas d'utilisation:
+**Niveau stratégique**:
 
-### Cas d’utilisation 1 ==> S’inscrire :
+**Niveau utilisateur**:
+- S'inscrire
+- Supprimer son compte
+
+**Niveau sous-fonctions**:
+- Se connecter
+- Changer son login
+- Changer son adresse mail
+- Changer son nom
+- Changer son prénom
+
+<h3 style="page-break-before: always" id="cas_utilisations_detailles"> Cas d'utilisations détaillés </h3>
+
+<h4 id="cu1"> CU#1 : S’inscrire</h4> 
 
 **Nom** : S’inscrire\
 **Contexte d’utilisation** : inscrire le visiteur lors de sa première visite sur le site\
@@ -82,41 +103,75 @@ Si l'utilisateur se connecte avec les identifiants de l’administrateur, il n�
 
 6. Les données sont transmises à la base de données puis enregistrées.
 
+7. Le visiteur devient un utilisateur inscrit et est renvoyé vers la page principale
+
 
  
 **Extension** : / \
 **Liste des variantes** : \
-Scénario alternatif 1 :
+
+Scénario alternatif 4.1 :
+1. Le formulaire est vide
+2. Un message d'erreur est affiché
+
+Scénario alternatif 6.1 :
 1. Le visiteur choisit une adresse mail déjà enregistrée
 2. Le serveur refuse l’insertion des données
-3. Le visiteur est redirigé sur la page d’inscription
+3. Le visiteur est redirigé sur la page d’inscription avec un message d'erreur
+
+Scénario alternatif 6.2 :
+1. Le visiteur choisit un login déjà enregistré
+2. Le serveur refuse l’insertion des données
+3. Le visiteur est redirigé sur la page d’inscription avec un message d'erreur
+
+Scénario alternatif 6.3 :
+1. Le visiteur saisit une adresse mail, login, nom ou prénom avec des caractères spéciaux
+2. Le serveur refuse l’insertion des données
+3. Le visiteur est redirigé sur la page d’inscription avec un message d'erreur
+
+Scénario alternatif 6.4 :
+1. Le visiteur saisit une adresse mail dont la taille n'est pas valide
+2. Le serveur refuse l’insertion des données
+3. Le visiteur est redirigé sur la page d’inscription avec un message d'erreur
+
+Scénario alternatif 6.5 :
+1. Le visiteur saisit un login, nom ou prénom dont la taille n'est pas valide
+2. Le serveur refuse l’insertion des données
+3. Le visiteur est redirigé sur la page d’inscription avec un message d'erreur
 	
-Scénario alternatif 2 :
+Scénario alternatif 6.6 :
 1. Le visiteur se trompe en remplissant une deuxième fois son mot de passe
 2. Le serveur refuse l’insertion des données
-3. Le visiteur est redirigé sur la page d’inscription
+3. Le visiteur est redirigé sur la page d’inscription avec un message d'erreur
 
-Scénario alternatif 3 :
-1. Le visiteur est une personne mal intentionnée et essaye d’injecter du code à travers le formulaire
+Scénario alternatif 6.7 :
+1. Le visiteur saisit deux mot passes différents
+2. Le serveur refuse l’insertion des données
+3. Le visiteur est redirigé sur la page d’inscription avec un message d'erreur
+
+Scénario alternatif 6.8 :
+1. Le visiteur saisit un mot de passe trop facile à deviner
+2. Le serveur refuse l’insertion des données
+3. Le visiteur est redirigé sur la page d’inscription avec un message d'erreur
+
+Scénario alternatif 6.9 :
+1. Le visiteur est une personne mal intentionnée et essaie d’injecter du code à travers le formulaire
 2. Le serveur détecte l’injection et repousse la tentative
-3. Le visiteur est redirigé sur la page d’inscription
+3. Le visiteur est redirigé sur la page d’inscription avec un message d'erreur
 
 
 **Informations connexes** : /
 
 
-
-
-
-### Cas d’utilisation 2 ==> Se connecter :
+<h4 id="cu2"> CU#2 : Se connecter</h4> 
 
 **Nom** : L’inscrit se connecte \
 **Contexte d’utilisation** : Un utilisateur inscrit souhaite se servir du site\
-**Portée** : page web, serveur apache, base de données\
+**Portée** : site web, base de données\
 **Niveau** : sous-fonction\
 **Acteur principal** : utilisateur inscrit\
 **Intervenants et intérêts** : /\
-**Précondition** : Être inscrit sur le site et enregistré dans la base de données\
+**Précondition** : <u>Être inscrit sur le site et enregistré dans la base de données</u> **(CU#1)**\
 **Garantie minimale** : pas de garantie\
 **Garantie de succès** : L’utilisateur est connecté\
 **Déclencheur** : L’inscrit clique sur le bouton connexion\
@@ -140,54 +195,59 @@ Scénario alternatif 3 :
 
 **Extension** : /\
 **Liste des variantes** : \
-Scénario alternatif 1 :
+
+Scénario alternatif 4.1 :
+1. Le formulaire est vide
+2. Un message d'erreur est affiché
+
+Scénario alternatif 6.1 :
+1. Le visiteur saisit son login avec des caractères spéciaux
+2. Le serveur refuse l’insertion des données
+3. Le visiteur est redirigé sur la page connexion avec un message d'erreur
+
+Scénario alternatif 6.2 :
+1. Le visiteur saisit son login ou mot de passe dont la taille n'est pas valide
+2. Le serveur refuse l’insertion des données
+3. Le visiteur est redirigé sur la page de connexion avec un message d'erreur
+
+Scénario alternatif 6.3 :
 1. L’utilisateur se trompe en remplissant son mot de passe
 2. La base de données ne reconnaît pas les identifiant de connexion
 3. Le visiteur est redirigé sur la page de connexion
     
-Scénario alternatif 2 :
+Scénario alternatif 6.4 :
 1. L’utilisateur se trompe en remplissant son identifiant
 2. La base de données ne reconnaît pas les identifiant de connexion
 3. Le visiteur est redirigé sur la page de connexion
 
-Scénario alternatif 3 :
-1. L’utilisateur est une personne mal intentionnée et essaye d’injecter du code à travers le formulaire
+Scénario alternatif 6.5 :
+1. L’utilisateur est une personne mal intentionnée et essaie d’injecter du code à travers le formulaire
 2. Le serveur détecte l’injection et repousse la tentative
 3. Le visiteur est redirigé sur la page de connexion
 
-Scénario alternatif 4 :
+Scénario alternatif 6.6 :
 1. L’utilisateur se trompe en remplissant son nom
-2. La base de données ne reconnaît pas les identifiant de connexion
-3. Le visiteur est redirigé sur la page de connexion
-    
-Scénario alternatif 5 :
-1. L’utilisateur se trompe en remplissant son prénom
-2. La base de données ne reconnaît pas les identifiant de connexion
-3. Le visiteur est redirigé sur la page de connexion
-
-Scénario alternatif 6 :
-1. L’utilisateur se trompe en remplissant son adresse mail
 2. La base de données ne reconnaît pas les identifiant de connexion
 3. Le visiteur est redirigé sur la page de connexion
 
 **Informations connexes** : /
 
 
-### Cas d’utilisation 3 ==> Changer son mot de passe :
+<h4 id="cu3"> CU#3 : Changer son mot de passe</h4> 
 
 **Nom** : Changement de son mot de passe par un utilisateur inscrit\
 **Contexte d’utilisation** : Utilisation normale du site\
-**Portée** : page web, serveur apache, base de données\
-**Niveau** : utilisateur\
+**Portée** : site web, base de données\
+**Niveau** : sous-fonction\
 **Acteur principal** : utilisateur inscrit\
 **Intervenants et intérêts** : /\
-**Précondition** : Être inscrit sur le site et s’être connecter\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté</u> **(CU#2)**\
 **Garantie minimale** : pas de garantie\
 **Garantie de succès** : Le mot de passe est modifié\
-**Déclencheur** : l’inscrit clique sur le bouton de profil\
+**Déclencheur** : l’inscrit clique sur le bouton valider les changements\
 **Scénario nominal** :
 
-1. L’inscrit remplit les deux formulaires avec le même nouveau mot de passe
+1. L’inscrit remplit les deux formulaires avec le nouveau mot de passe
         
 2. L’inscrit clique sur le bouton valider
 
@@ -198,13 +258,23 @@ Scénario alternatif 6 :
 
 **Extension** : /\
 **Liste des variantes** : \
-Scénario alternatif 1 :
+
+Scénario alternatif 1.1 :
+1. Le formulaire est vide
+2. Un message d'erreur est affiché
+
+Scénario alternatif 3.1 :
+1. La taille du mot de passe saisi par l'inscrit n'est pas valide
+2. Le serveur refuse l’insertion des données
+3. Un message d'erreur est affiché
+
+Scénario alternatif 3.2 :
 1. Le mot de passe est similaire à l’ancien mot de passe
 2. Le serveur refuse le changement de mot de passe
 3. L’inscrit est redirigé sur la page de changement de mot de passe
 4. Un message lui disant de ne pas choir le même mot de passe est affiché
 
-Scénario alternatif 2 :
+Scénario alternatif 3.3 :
 1. Les deux mots de passe renseignés sont différents
 2. Le serveur refuse le changement de mot de passe
 3. L’inscrit est redirigé sur la page de changement de mot de passe
@@ -212,19 +282,17 @@ Scénario alternatif 2 :
 
 **Informations connexes** : /
 
-
-### Cas d’utilisation 4 ==> Changer son adresse mail :
+<h4 id="cu4"> CU#4 : Changer son adresse mail</h4> 
 
 **Nom** : Changement de son adresse mail par un utilisateur inscrit\
 **Contexte d’utilisation** : Utilisation normale du site\
-**Portée** : page web, serveur apache, base de données\
-**Niveau** : utilisateur\
+**Portée** : site web, base de données\
+**Niveau** : sous-fonction\
 **Acteur principal** : utilisateur inscrit\
-**Intervenants et intérêts** : /\
-**Précondition** : Être inscrit sur le site et s’être connecter\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté</u> **(CU#2)**\
 **Garantie minimale** : pas de garantie\
 **Garantie de succès** : L'adresse mail est modifiée\
-**Déclencheur** : l’inscrit clique sur le bouton de profil\
+**Déclencheur** : l’inscrit clique sur le bouton valider les changements\
 **Scénario nominal** :
 
 
@@ -239,7 +307,22 @@ Scénario alternatif 2 :
 
 **Extension** : /\
 **Liste des variantes** : \
-Scénario alternatif 1 :
+
+Scénario alternatif 1.1 :
+1. Le formulaire est vide
+2. Un message d'erreur est affiché
+
+Scénario alternatif 3.1 :
+1. L'inscrit saisit une adresse mail avec des caractères spéciaux
+2. Le serveur refuse l’insertion des données
+3. Le visiteur est redirigé sur la page connexion avec un message d'erreur
+
+Scénario alternatif 3.2 :
+1. La taille de l'adresse mail saisie par l'inscrit n'est pas valide
+2. Le serveur refuse l’insertion des données
+3. Un message d'erreur est affiché
+
+Scénario alternatif 3.3 :
 1. L'adresse mail est similaire à l’ancienne adresse mail
 2. Le serveur refuse le changement d'adresse mail
 3. L’inscrit est redirigé sur la page de profil
@@ -247,21 +330,21 @@ Scénario alternatif 1 :
 **Informations connexes** : /
 
 
-### Cas d’utilisation 5 ==> Changer son identifiant:
+<h4 id="cu5"> CU#5 : Changer son login</h4> 
 
 **Nom** : Changement de son identifiant par un utilisateur inscrit\
 **Contexte d’utilisation** : Utilisation normale du site\
 **Portée** : page web, serveur apache, base de données\
-**Niveau** : utilisateur\
+**Niveau** : sous-fonction\
 **Acteur principal** : utilisateur inscrit\
 **Intervenants et intérêts** : /\
-**Précondition** : Être inscrit sur le site et s’être connecter\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté</u> **(CU#2)**\
 **Garantie minimale** : pas de garantie\
 **Garantie de succès** : L'identifiant est modifié\
-**Déclencheur** : l’inscrit clique sur le bouton de profil\
+**Déclencheur** : l’inscrit clique sur le bouton valider les changements\
 **Scénario nominal** :
 
-1. L’inscrit remplit le formulaire avec le nouvel identifiant
+1. L’inscrit remplit le formulaire avec le nouveau login
         
 2. L’inscrit clique sur le bouton valider
 
@@ -272,26 +355,41 @@ Scénario alternatif 1 :
 
 **Extension** : /\
 **Liste des variantes** : \
-Scénario alternatif 1 :
-1. L'identifiant est similaire à l'ancien identifiant
-2. Le serveur refuse le changement de l'identifiant
+
+Scénario alternatif 1.1 :
+1. Le formulaire est vide
+2. Un message d'erreur est affiché
+
+Scénario alternatif 3.1 :
+1. L'inscrit saisit un login avec des caractères spéciaux
+2. Le serveur refuse l’insertion des données
+3. Le visiteur est redirigé sur la page connexion avec un message d'erreur
+
+Scénario alternatif 3.2 :
+1. La taille du login saisi par l'inscrit n'est pas valide
+2. Le serveur refuse l’insertion des données
+3. Un message d'erreur est affiché
+
+Scénario alternatif 3.3 :
+1. Le login est similaire à l'ancien login
+2. Le serveur refuse le changement du login
 3. L’inscrit est redirigé sur la page de profil
 
 **Informations connexes** : /
 
 
-### Cas d’utilisation 6 ==> Changer son nom:
+<h4 id="cu6"> CU#6 : Changer son nom</h4> 
 
 **Nom** : Changement de son nom par un utilisateur inscrit\
 **Contexte d’utilisation** : Utilisation normale du site\
 **Portée** : page web, serveur apache, base de données\
-**Niveau** : utilisateur\
+**Niveau** : sous-fonction\
 **Acteur principal** : utilisateur inscrit\
 **Intervenants et intérêts** : /\
-**Précondition** : Être inscrit sur le site et s’être connecter\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté</u> **(CU#2)**\
 **Garantie minimale** : pas de garantie\
 **Garantie de succès** : Le nom est modifié\
-**Déclencheur** : l’inscrit clique sur le bouton de profil\
+**Déclencheur** : l’inscrit clique sur le bouton valider les changements\
 **Scénario nominal** :
 
 1. L’inscrit remplit le formulaire avec le nouveau nom
@@ -305,28 +403,43 @@ Scénario alternatif 1 :
 
 **Extension** : /\
 **Liste des variantes** : \
-Scénario alternatif 1 :
+
+Scénario alternatif 1.1 :
+1. Le formulaire est vide
+2. Un message d'erreur est affiché
+
+Scénario alternatif 3.1 :
+1. L'inscrit saisit une nom avec des caractères spéciaux
+2. Le serveur refuse l’insertion des données
+3. Un message d'erreur est affiché 
+
+Scénario alternatif 3.2 :
+1. La taille du nom saisi par l'inscrit n'est pas valide
+2. Le serveur refuse l’insertion des données
+3. Un message d'erreur est affiché
+
+Scénario alternatif 3.3 :
 1. Le nom est similaire à l'ancien nom
 2. Le serveur refuse le changement du nom
-3. L’inscrit est redirigé sur la page de profil
+3. Un message d'erreur est affiché
 
 **Informations connexes** : /
 
-### Cas d’utilisation 7 ==> Changer son prénom:
+<h4 id="cu7"> CU#7 : Changer son prénom</h4> 
 
 **Nom** : Changement de son prénom par un utilisateur inscrit\
 **Contexte d’utilisation** : Utilisation normale du site\
-**Portée** : page web, serveur apache, base de données\
-**Niveau** : utilisateur\
+**Portée** : site web, base de données\
+**Niveau** : sous-fonction\
 **Acteur principal** : utilisateur inscrit\
 **Intervenants et intérêts** : /\
-**Précondition** : Être inscrit sur le site et s’être connecter\
+**Précondition** : <u>Être inscrit sur le site et s’être connecter</u> **(CU#2)**\
 **Garantie minimale** : pas de garantie\
 **Garantie de succès** : Le prénom est modifié\
-**Déclencheur** : l’inscrit clique sur le bouton de profil\
+**Déclencheur** : l’inscrit clique sur le bouton valider les changements\
 **Scénario nominal** :
 
-1. L’inscrit remplit le formulaire avec le nouveau nom
+1. L’inscrit remplit le formulaire avec le nouveau prénom
         
 2. L’inscrit clique sur le bouton valider
 
@@ -337,10 +450,54 @@ Scénario alternatif 1 :
 
 **Extension** : /\
 **Liste des variantes** : \
-Scénario alternatif 1 :
+
+Scénario alternatif 1.1 :
+1. Le formulaire est vide
+2. Un message d'erreur est affiché
+
+Scénario alternatif 3.1 :
+1. L'inscrit saisit prénom avec des caractères spéciaux
+2. Le serveur refuse l’insertion des données
+3. Un message d'erreur est affiché
+
+Scénario alternatif 3.2 :
+1. La taille du prénom saisi par l'inscrit n'est pas valide
+2. Le serveur refuse l’insertion des données
+3. Un message d'erreur est affiché
+
+Scénario alternatif 3.3 :
 1. Le prénom est similaire à l'ancien prénom
 2. Le serveur refuse le changement du prénom
-3. L’inscrit est redirigé sur la page de profil
+3. Un message d'erreur est affiché
 
+**Informations connexes** : /
+
+<h4 id="cu8"> CU#8 : Supprimer son compte</h4> 
+
+**Nom** : Changement de son prénom par un utilisateur inscrit\
+**Contexte d’utilisation** : Utilisation normale du site\
+**Portée** : site web, base de données\
+**Niveau** : utilisateur\
+**Acteur principal** : utilisateur inscrit\
+**Intervenants et intérêts** : /\
+**Précondition** : <u>Être inscrit sur le site et s’être connecter</u> **(CU#2)**\
+**Garantie minimale** : pas de garantie\
+**Garantie de succès** : Le compte est supprimé\
+**Déclencheur** : l’inscrit clique sur le bouton supprimer son compte\
+**Scénario nominal** :
+
+1. L'inscrit clique sur l'image de profil
+        
+2. L’inscrit clique sur le bouton supprimer son compte
+
+3. Les données sont transmises à la base de données
+
+4. La base de données modifie les données
+
+5. Il devient visiteur et est redirigé vers la page d'accueil
+
+
+**Extension** : /\
+**Liste des variantes** : /
 **Informations connexes** : /
 
