@@ -62,13 +62,17 @@ Le site doit respecter les normes imposées par le RGPD.
 
 Le site doit respecter les normes concernant l'accessibilité. 
 
-Le site doit être installé sur un cluster de quatre RPI4.  
+Le site doit être installé sur un cluster de quatre RPI0.  
 
 Le SGBD du site doit également etre installé sur ce même cluster.
 
+Le site doit etre configuré à l'aide de Docker Swarm.
+
+Chaque RPI0 devra etre considéré comme un worker node Docker. 
+
 Les fichiers de log doivent être hébergés sur le SGBD et en local. 
 
-Le serveur web du site doit aussi être hebergé sur le cluster de RPI4.
+Le serveur web du site doit aussi être hebergé sur le cluster de RPI0.
 
 Les composants du site web devront être programmés en HTML, CSS, JS et PHP. 
 
@@ -79,21 +83,3 @@ Le code du site devra être entièrement documenté pour faciliter sa maintenanc
 (Les différents modules du site seront testés et devront fournir des résultats cohérents.)
 
 Le site doit être opérationnel et prêt à la mise en service pour Janvier 2024. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

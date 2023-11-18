@@ -26,7 +26,7 @@ _Zehren William_
 
 
 
-<h2 style="color:#5dbee7; page-break-before: always" id="introduction"> Introduction </h2>
+<h2 style="color:#5d79e7; page-break-before: always" id="introduction"> Introduction </h2>
 
 Ce document est un cahier des charges technique rédigé en collaboration avec le client.
 
@@ -37,7 +37,7 @@ Le cahier des charges comporte une description précise des objectifs à résoud
 Enfin, dans la partie « Priorités » nous verrons les différentes fonctionnalités à développer en priorité, fixées au préalable avec le client.
 Ce document est sujet-à modifications à la suite des entrevues avec les clients du projet.
 
-<h2 style="color:#5dbee7; page-break-before: always" id="enonce"> Enoncé </h2>  
+<h2 style="color:#5d79e7; page-break-before: always" id="enonce"> Enoncé </h2>  
 
 <h3 id="livrable_1"> Livrable 1 - Fondations du site </h3>
 
@@ -73,7 +73,7 @@ Comme ils n'ont pas de compte utilisateur, il ne pourront pas accéder à la pag
 L'administrateur quant à lui, n'aura accès qu'à une page qui lui sera dédiée, sur laquelle il pourra gérer les différents utilisateurs inscrits. Cette fonctionnalité sera développée dans le livrable 2. 
 
 
-<h2 style="color:#5dbee7; page-break-before: always" id="pres_requis"> Prés-requis </h2>
+<h2 style="color:#5d79e7; page-break-before: always" id="pres_requis"> Prés-requis </h2>
 
 <h3 id="connaissances_competences"> Connaissances et compétences requises </h3>
 
@@ -105,6 +105,6 @@ Les ressources logicielles que nous à disposition pour ce projet sont :
 
 - La suite JetBrains avec l'IDE PhpStorm 
 
-<h2 style="color:#5dbee7; page-break-before: always" id="priorites"> Priorités </h2>
+<h2 style="color:#5d79e7; page-break-before: always" id="priorites"> Priorités </h2>
 
 Aucune tâche de développement n'a été définie comme prioritaire pour l'instant.
