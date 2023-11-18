@@ -21,18 +21,18 @@ _Zehren William_
 
 
 
-<h2 style="color:#5dbee7; page-break-before: always" id="introduction"> Introduction </h2>
+<h2 style="color:#5d79e7; id="introduction"> Introduction </h2>
 
 Ce document sert à définir la charte graphique qui sera utilisée durant notre projet. Il nous permet donc de nous y référer lors de la création de pages ou lors de l'ajout de nouveaux modules sur le site. 
 
-<h2 style="color:#5dbee7; page-break-before: always" id="elemCG"> Eléments de charte graphique </h2>
+<h2 style="color:#5d79e7;" id="elemCG"> Eléments de charte graphique </h2>
 
-<h3 style="color:#5dbee7; page-break-before: always" id="logo"> Logo </h3>
+<h3 style="color:#5d79e7;" id="logo"> Logo </h3>
 
 Ce logo est une combinaison lettres-images. Le nom, BlitzCalc, associe les mots Blitz et Calc. Le premier, Blitz, signifie en allemand "éclair" et le deuxieme, Calc, est un apocope du mot calcul. L'éclair jaune (sur la version normale) représente la vitesse de calcul et la précision acquise grâce au kit cluster hat.
 Le logo à plusieurs déclinaisons ainsi que des favicons. 
 
-<h4>Version normale</h4>
+<h4 style="page-break-before: always">Version normale</h4>
 
 <img src="Images/LogoSite/png/blitzcalc-high-resolution-logo.png" width="500px">
 
@@ -40,7 +40,7 @@ Le logo à plusieurs déclinaisons ainsi que des favicons.
 
 <img src="Images/LogoSite/png/blitzcalc-high-resolution-logo-black.png" width="500px">
 
-<h4>Version blanche</h4>
+<h4 style="page-break-before: always" >Version blanche</h4>
 
 <img src="Images/LogoSite/png/blitzcalc-high-resolution-logo-white.png" width="500px">
 
@@ -48,13 +48,17 @@ Le logo à plusieurs déclinaisons ainsi que des favicons.
 
 <img src="Images/LogoSite/png/blitzcalc-high-resolution-logo-transparent.png" width="500px">
 
-<h4>Version noire transparente</h4>
+<h4 style="page-break-before: always">Version noire transparente</h4>
 
 <img src="Images/LogoSite/png/blitzcalc-high-resolution-logo-black-transparent.png" width="500px">
 
-<h4>Version noire transparente</h4>
+<h4>Version blanche transparente</h4>
+
+<div style="background-color:red ; width:fit-content">
 
 <img src="Images/LogoSite/png/blitzcalc-high-resolution-logo-white-transparent.png" width="500px">
+
+</div>
 
 <h4>Favicon normal</h4>
 
@@ -68,7 +72,7 @@ Le logo à plusieurs déclinaisons ainsi que des favicons.
 
 <img src="Images/LogoSite/favicon/blitzcalc-favicon-white.png" width="100px">
 
-<h3 style="color:#5dbee7; page-break-before: always" id="couleurs"> Couleurs </h3>
+<h3 style="color:#5d79e7; page-break-before: always" id="couleurs"> Couleurs </h3>
 
 <h4>Couleur de fond :</h4>
 
@@ -91,7 +95,7 @@ Cette couleur symbolise la sagesse, la vérité et sérénité. Elle permet auss
 #FFDC00  
 <span style="background-color:#FFDC00; color:#FFDC00">elprimo
 
-<h3 style="color:#5dbee7; page-break-before: always" id="police"> Police </h3>
+<h3 style="color:#5d79e7;" id="police"> Police </h3>
 
 <h4>Police du site :</h4>
 
