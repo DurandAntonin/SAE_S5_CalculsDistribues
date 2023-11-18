@@ -6,23 +6,73 @@ _Parciany Benjamin_ <br>
 _Zehren William_
 
 
-<h1 style="color:#5dbee7; text-align: center"> Recueil des exigences </h1>
+<h1 style="color:#5d79e7; text-align: center"> Recueil des exigences </h1>
 
-# Chapitre 1 - Objectif et portée
+<h1 style="color:#5d79e7; text-align: center; margin-top: 100px"> Table des matières</h1>
 
-## (a) Quels sont la portée et les objectifs généraux ?
+<ol>
+    <li> <a href="#chapitre_1"> Chapitre 1 - Objectif et portée  </a> </li>
+    <ol>
+        <li> <a href="#portee_obj"> Quels sont la portée et les objectifs généraux ? </a> </li>
+        <li> <a href="#intervenants"> Les intervenants. (Qui est concerné ?) </a> </li>
+        <li> <a href="#limites_sys"> Qu’est-ce qui entre dans cette portée ? Qu’est-ce qui est en dehors ? (Les limites du système.) </a> </li>
+    </ol>
+    <li> <a href="#chapitre_2"> Chapitre 2 – Terminologie employée / Glossaire  </a> </li>
+    <ol></ol>
+    <li> <a href="#chapitre_3"> Chapitre 3 – Les cas d’utilisation  </a> </li>
+    <ol>
+        <li> <a href="#acteurs"> Les acteurs principaux et leurs objectifs généraux. </a> </li>
+        <li> <a href="#cas_util_metier"> Les cas d’utilisation métier (concepts opérationnels). </a> </li>
+        <li> <a href="#cas_util_sys"> Les cas d’utilisation système. </a> </li>
+    </ol>
+    <li> <a href="#chapitre_4"> Chapitre 4 – La technologie employée  </a> </li>
+    <ol>
+        <li> <a href="#exigences_techno"> Quelles sont les exigences technologiques pour ce système ? </a> </li>
+    </ol>
+    <li> <a href="#chapitre_5"> Chapitre 5 – Autres exigences  </a> </li>
+    <ol>
+        <li> <a href="#processus_dev"> Processus de développement </a> </li>
+        <ol>
+        <li> <a href="#participants"> Qui sont les participants au projet ? </a> </li>
+        <li> <a href="#valeurs"> Quelles valeurs devront être privilégiées ? (exemple : simplicité, disponibilité, rapidité, souplesse etc... ) </a> </li>
+        <li> <a href="#retours_visibilite"> Quels retours ou quelle visibilité sur le projet les utilisateurs et commanditaires souhaitent-ils ? </a> </li>
+        <li> <a href="#jsp"> Que peut-on acheter ? Que doit-on construire ? Qui sont nos concurrents ? </a> </li>
+        <li> <a href="#autres_exigences"> Quels sont les autres exigences du processus ? (exemple : tests, installation, etc...) </a> </li>
+        <li> <a href="#dependance"> À quelle dépendance le projet est-il soumis ? </a> </li>
+        </ol>
+        <li> <a href="#regles_metier"> Règles métier </a> </li>
+        <li> <a href="#perfs"> Performances </a> </li>
+        <li> <a href="#ope_secu_doc"> Opérations, sécurité, documentation </a> </li>
+        <li> <a href="#utilisation"> Utilisation et utilisabilité </a> </li>
+        <li> <a href="#maintenance_porta"> Maintenance et portabilité </a> </li>
+        <li> <a href="#questions"> Questions non résolues ou reportées à plus tard </a> </li>
+    </ol>
+    <li> <a href="#chapitre_6"> Chapitre 6 – Recours humain, questions juridiques, politiques, organisationnelles.  </a> </li>
+    <ol>
+        <li> <a href="#recours_humain"> Quel est le recours humain au fonctionnement du système ? </a> </li>
+        <li> <a href="#exi_juri_poli"> Quelles sont les exigences juridiques et politiques ? </a> </li>
+        <li> <a href="#conseq_hum"> Quelles sont les conséquences humaines de la réalisation du système ? </a> </li>
+        <li> <a href="#besoins_forma"> Quels sont les besoins en formation ? </a> </li>
+        <li> <a href="#hypo_dep"> Quelles sont les hypothèses et les dépendances affectant l’environnement humain ? </a> </li>
+    </ol>
+</ol>
+
+<h2 style="color:#5d79e7; page-break-before: always" id="chapitre_1"> Chapitre 1 - Objectif et portée </h2>
+
+<h3 style="color:#5d79e7;" id="portee_obj"> Quels sont la portée et les objectifs généraux ? </h3>
 
 La portée ou le domaine du problème est une application web. Les objectifs généraux sont la simulation de calculs distribués dans différents domaines par trois profils d’utilisateur différents.
 
-## (b) Les intervenants. (Qui est concerné ?)
+<h3 style="color:#5d79e7;" id="intervenants"> Les intervenants. (Qui est concerné ?) </h3>
 
 Les intervenants sont les trois utilisateurs de l'application, à savoir, le visiteur ou l'utilisateur ne possédant pas de compte, l'utilisateur possédant un compte et enfin, l'administrateur.
 
-## (c) Qu’est-ce qui entre dans cette portée ? Qu’est-ce qui est en dehors ? (Les limites du système.)
+<h3 style="color:#5d79e7;" id="limites_sys"> Qu’est-ce qui entre dans cette portée ? Qu’est-ce qui est en dehors ? (Les limites du système.) </h3>
 
 Ce qui rentre dans la portée est la réalisation des différents modules de simulations de calculs distribués, la mise en place de trois profils d’utilisation, le développement de différentes pages web, la conception d’une ou plusieurs bases de données. Il est également nécessaire de mettre en place l’installation et la sécurisation du serveur web, de la base de données et du cluster de raspberrypi.
 
-# Chapitre 2 – Terminologie employée / Glossaire
+
+<h2 style="color:#5d79e7; page-break-before: always" id="chapitre_2"> Chapitre 2 – Terminologie employée / Glossaire </h2>
 
 - **Abstraction** : Action intellectuelle consistant à mettre en évidence un élément en portant l’attention sur lui et en négligeant tout autre aspect. Elle fait partie des principes fondamentaux de l’approche orientée objet.
 - **Calcul distribué** : Un calcul distribué, ou réparti ou encore partagé, est un calcul ou un traitement réparti sur plusieurs microprocesseurs et plus généralement sur plusieurs unités centrales informatiques. Le calcul distribué est souvent réalisé sur des clusters de calcul spécialisés, mais peut aussi être réalisé sur des stations informatiques individuelles à plusieurs cœurs. La distribution d'un calcul est un domaine de recherche des sciences mathématiques et informatiques. Elle implique notamment la notion de calcul parallèle.
@@ -36,13 +86,13 @@ Ce qui rentre dans la portée est la réalisation des différents modules de sim
 La première est le **hors-panne** où une machine est remplacée par une autre dans le cas d'un dysfonctionnement.
 La deuxième fonctionnalité est **l'équilibrage de charge** où un service est exécuté par une machine en fonction de la charge des machines.
 
-# Chapitre 3 – Les cas d’utilisation
+<h2 style="color:#5d79e7; page-break-before: always" id="chapitre_3"> Chapitre 3 – Les cas d’utilisation </h2>
 
-## (a) Les acteurs principaux et leurs objectifs généraux.
+<h3 style="color:#5d79e7;" id="acteurs"> Les acteurs principaux et leurs objectifs généraux. </h3>
 
 Les acteurs principaux sont les utilisateurs possédant un compte. Leurs objectifs généraux sont d'utiliser les différents modules de l'application afin de réaliser des calculs distribués.
 
-## (b) Les cas d’utilisation métier (concepts opérationnels).
+<h3 style="color:#5d79e7;" id="cas_util_metier"> Les cas d’utilisation métier (concepts opérationnels). </h3>
 
 - L'utilisateur s'inscrit
 - L'utilisateur se connecte
@@ -52,23 +102,23 @@ Les acteurs principaux sont les utilisateurs possédant un compte. Leurs objecti
 - L’utilisateur se déconnecter
 - Le gestionnaire peut supprimer des utilisateurs
 
-## (c) Les cas d’utilisation système.
+<h3 style="color:#5d79e7;" id="cas_util_sys"> Les cas d’utilisation système. </h3>
 
 - Le système enregistre les login et les mots de passe des utilisateurs
 - Le système enregistre le login, le mot de passe, la date et l'adresse ip lors d'une connexion échouée
 - La page principale donne accès à tous les modules du site
 
-# Chapitre 4 – La technologie employée
+<h2 style="color:#5d79e7; page-break-before: always" id="chapitre_4"> Chapitre 4 – La technologie employée </h2>
 
-## (a) Quelles sont les exigences technologiques pour ce système ?
+<h3 style="color:#5d79e7;" id="exigences_techno"> Quelles sont les exigences technologiques pour ce système ? </h3>
 
 Le système doit être installé sur le Raspberry Cluster HAT v2 mis à disposition par l'IUT. 
 
-# Chapitre 5 – Autres exigences
+<h2 style="color:#5d79e7; page-break-before: always" id="chapitre_5"> Chapitre 5 – Autres exigences </h2>
 
-## (a) Processus de développement
+<h3 style="color:#5d79e7;" id="processus_dev"> Processus de développement </h3>
 
-### i) Qui sont les participants au projet ?
+<h4 style="color:#5d79e7;" id="participants"> Qui sont les participants au projet ? </h4>
 
 **Les participants du projet sont:**
 
@@ -77,51 +127,51 @@ Le système doit être installé sur le Raspberry Cluster HAT v2 mis à disposit
 - Maxime Jougla
 - William Zehren
 
-### ii) Quelles valeurs devront être privilégiées ? (exemple : simplicité, disponibilité, rapidité, souplesse etc... )
+<h4 style="color:#5d79e7;" id="valeurs"> Quelles valeurs devront être privilégiées ? (exemple : simplicité, disponibilité, rapidité, souplesse etc... ) </h4>
 
 Le site web doit être accessible depuis n'importe quelle machine connecté à internet, de plus la navigation dans le site doit être rapide, efficace et clair pour une expérience utilisateur positive.
 
-### iii) Quels retours ou quelle visibilité sur le projet les utilisateurs et commanditaires souhaitent-ils ?
+<h4 style="color:#5d79e7;" id="retours_visibilite"> Quels retours ou quelle visibilité sur le projet les utilisateurs et commanditaires souhaitent-ils ? </h4>
 
 Aucun retour particulier n'est demandé.
 
-### iv) Que peut-on acheter ? Que doit-on construire ? Qui sont nos concurrents ?
+<h4 style="color:#5d79e7;" id="jsp"> Que peut-on acheter ? Que doit-on construire ? Qui sont nos concurrents ? </h4>
 
 Aucun produit ne doit être acheté pour pouvoir utiliser pleinement le site web, aucun élément doit être construit. Pour se connecter au site web, il suffit de se connecter à internet. Les concurrents sont les autres groupes de SAE.
 
-### v) Quels sont les autres exigences **d**u processus ? (exemple : tests, installation, etc...)
+<h4 style="color:#5d79e7;" id="autres_exigences"> Quels sont les autres exigences du processus ? (exemple : tests, installation, etc...) </h4>
 
-### vi) À quelle dépendance le projet est-il soumis ?
+<h4 style="color:#5d79e7;" id="dependance"> À quelle dépendance le projet est-il soumis ? </h4>
 
 Il y a une contrainte de temps, la SAE se termine en janvier. Le projet doit également mettre en place du parallélisme afin de profiter du cluster pi.
 
-## (b) Règles métier
+<h3 style="color:#5d79e7;" id="regles_metier"> Règles métier</h3>
 
-## (c) Performances
+<h3 style="color:#5d79e7;" id="perfs"> Performances</h3>
 
 Le stockage des données dans la base de données doit être performante, ainsi que les calculs distribués et opérations effectuées dans les modules.
 
-## (d) Opérations, sécurité, documentation
+<h3 style="color:#5d79e7;" id="ope_secu_doc"> Opérations, sécurité, documentation</h3>
 
 Le Raspberry Cluster HAT contenant le système doit être sécurisé. Les fonctions et le code doit être documenté.
 
-## (e) Utilisation et utilisabilité
+<h3 style="color:#5d79e7;" id="utilisation"> Utilisation et utilisabilité</h3>
 
 Pour pouvoir utiliser pleinement le site, il suffit de se connecter à internet et de s'enregistrer sur l'application.
 
-## (f) Maintenance et portabilité
+<h3 style="color:#5d79e7;" id="maintenance_porta"> Maintenance et portabilité</h3>
 
 Régler les éventuels bugs et améliorer le style des pages du site web.
 
-## (g) Questions non résolues ou reportées à plus tard
+<h3 style="color:#5d79e7;" id="questions"> Questions non résolues ou reportées à plus tard</h3>
 
-# Chapitre 6 – Recours humain, questions juridiques, politiques, organisationnelles.
+<h2 style="color:#5d79e7; page-break-before: always" id="chapitre_6"> Chapitre 6 – Recours humain, questions juridiques, politiques, organisationnelles. </h2>
 
-## (a) Quel est le recours humain au fonctionnement du système ?
+<h3 style="color:#5d79e7;" id="recours_humain"> Quel est le recours humain au fonctionnement du système ?</h3>
 
 L'administrateur système doit vérifier dans les fichiers de logs si des connexions intempestives ont eu lieu.
 
-## (b) Quelles sont les exigences juridiques et politiques ?
+<h3 style="color:#5d79e7;" id="exi_juri_poli"> Quelles sont les exigences juridiques et politiques ?</h3>
 
  Dans la fiche n°1 “Identifier les données à caractère personnel”, la pseudonymisation des données à caractère personnel est une mesure qui s'applique pour notre projet. En effet, l'utilisateur doit se connecter au site avec un login et un mot de passe, pour ensuite utiliser des modules.  Le login ou le pseudonyme étant considéré selon la CNIL comme une donnée à caractère personnelle et est la seule dans le site que nous devons développer, ainsi cette dernière doit rester intègre et réduisant les risques pour les personnes concernées. Pour ce faire, le login va être crypté selon une certaine méthode. 
 
@@ -163,10 +213,10 @@ Le seul cookie que nous utilisons stocke les deux facteurs de la multiplication 
 
 Comme tous les sites informatiques, il est important de mettre en place des mesures de sécurités informatiques. C'est ce dont parle la fiche n°18 : « Se prémunir contre les attaques informatiques ». Notre site possède déjà des mesures contre les attaques informatiques comme la manipulation URL, le bourrage d'identifiants, l'injection de code indirecte et l'injection SQL. Nos mesures sont respectivement de « vérifier que l'émetteur de la requête est autorisé à accéder à la ressource associée », d'utiliser un captcha, « neutraliser les caractères utilisés pour l'insertion de script » et « utiliser des requête préparées ». Pour contrer les attaques par force brute et les programmes malveillants, nous prévoyons de sauvegarder régulièrement la base de données et d'imposer des mots de passe conformes aux recommandations en vigueur.
 
-## (c) Quelles sont les conséquences humaines de la réalisation du système ?
+<h3 style="color:#5d79e7;" id="conseq_hum"> Quelles sont les conséquences humaines de la réalisation du système ?</h3>
 
-## (d) Quels sont les besoins en formation ?
+<h3 style="color:#5d79e7;" id="besoins_forma"> Quels sont les besoins en formation ?</h3>
 
 Aucune formation n'est requise pour pouvoir utiliser le site web.
 
-## (e) Quelles sont les hypothèses et les dépendances affectant l’environnement humain ?
+<h3 style="color:#5d79e7;" id="hypo_dep"> Quelles sont les hypothèses et les dépendances affectant l’environnement humain ?</h3>

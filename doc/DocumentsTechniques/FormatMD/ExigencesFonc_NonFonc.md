@@ -18,7 +18,7 @@ _Zehren William_
 
 
 
-<h2 style="color:#5dbee7; page-break-before: always" id="introduction"> Introduction </h2>
+<h2 style="color:#5d79e7; page-break-before: always" id="introduction"> Introduction </h2>
 
 Ce document rassemble l'ensemble des exigences fonctionnelles et non fonctionnelles de notre site. 
 
@@ -26,7 +26,7 @@ Les exigences fonctionnelles correspondent à l'ensemble des fonctionnalités qu
 
 Les exigences non fonctionnelles permettent de spécifier la manière dont le site doit exécuter des fonctions. Elles servent à définir des exigences en termes de qualité, de performance ou de sécurité. En résumé, ce sont les qualités, caractéristiques et contraintes du site. 
 
-<h2 style="color:#5dbee7; page-break-before: always" id="exigences_fonc"> Exigences fonctionnelles </h2>
+<h2 style="color:#5d79e7; page-break-before: always" id="exigences_fonc"> Exigences fonctionnelles </h2>
 
 L'utilisateur accède à la page web en tapant l'url du site sur internet. 
 
@@ -54,7 +54,7 @@ La page profil comporte un lien vers la page d'accueil utilisateur et permet à 
 
 L'utilisateur connecté qui se déconnecte perd l'accès à son compte et doit se reconnecter. 
 
-<h2 style="color:#5dbee7; page-break-before: always" id="exigences_nonfonc"> Exigences non fonctionnelles </h2>
+<h2 style="color:#5d79e7; page-break-before: always" id="exigences_nonfonc"> Exigences non fonctionnelles </h2>
 
 Le site doit être conforme aux normes de sécurité liées aux sites web en vigueur, comme le protocole HTTPS.
 

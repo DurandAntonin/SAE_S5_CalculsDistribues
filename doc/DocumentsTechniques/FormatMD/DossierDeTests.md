@@ -5,4 +5,4 @@ _Jougla Maxime_ <br>
 _Parciany Benjamin_ <br>
 _Zehren William_
 
-<h1 style="color:#5dbee7; text-align: center"> Dossier de tests </h1>
+<h1 style="color:#5d79e7; text-align: center"> Dossier de tests </h1>
