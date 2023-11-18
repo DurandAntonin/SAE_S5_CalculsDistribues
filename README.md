@@ -21,11 +21,7 @@ npm install
 
 Pour lancer le process de build de TailwindCLI (bloque le terminal) utile pour modifier le style en temps réel.
 ```bash
-npx tailwindcss -i ./src/input.css -o ./src/dist/output.css --watch
+npx tailwindcss -i ./src/CSS/style.css -o ./src/dist/output.css --watch
 ```
 
-Pour lancer le serveur avec Express (port 3000 de localhost).
-```bash
-npm start
-```
 
