@@ -33,10 +33,10 @@ class MySQLDataManagement{
         //on parcourt les champs de l'objet
         foreach ($this as $nameField => $valueField){
             //on n'affiche pas le champ de type mysqli car il n'y a pas de méthode mysql
-            if (gettype($valueField) == "mysqli")
+            if (gettype($valueField) == "object" && get_class($valueField) == "mysqli")
                 continue;
 
-            $string .= "\n\t$nameField : $valueField";
+            $string .= "<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp$nameField : $valueField";
         }
         return $string;
     }
@@ -88,23 +88,23 @@ class MySQLDataManagement{
         }
     }
 
-    public function insert_log(string $table, Logging $log){
+    public function insert_log(string $table, Logging $log)
+    {
         try{
             $request = "insert into $table(logId, logLevel, userId, date, ip, description) values(?, ?,?,?,?,?)";
 
             //on exécute la requete pour insérer un log dans la table des enregistrements des actions
             if ($stmt = $this->connector->prepare($request)){
                 $logId = $log->getLogId();
-                $enum_niveau_logger = $log->getLogLevel();
+                $enum_niveau_logger = $log->getLogLevel()->name;
                 $userId = $log->getUserId();
-                $dateTime = $log->getDate();
+                $dateTime = $log->getDate()->format("Y-m-d H:i:s");
                 $ip = $log->getIp();
                 $description = $log->getDescription();
                 $stmt-> bind_param("ssssss", $logId, $enum_niveau_logger, $userId, $dateTime, $ip, $description);
 
                 $stmt -> execute();
             }
-            return -1;
         }
         catch (\mysqli_sql_exception $e) {
             //on enregistre à l'aide d'un logger l'erreur, ainsi que les paramètres d'exécution
@@ -559,6 +559,13 @@ class MySQLDataManagement{
 
         //on renvoie la liste des Users
         return $listUsers;
+    }
+
+    public function __sleep(){
+        return array('connector', 'hostname', 'username', 'password', 'database', 'connection_erreur');
+    }
+
+    public function __wakeup(){
     }
 }
 

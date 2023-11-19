@@ -7,6 +7,8 @@ include_once "Utility.php";
 include_once "Enum_fic_logs.php";
 include_once "MySQLDataManagement.php";
 include_once "Enum_niveau_logger.php";
+include_once "LoggerInstance.php";
+include_once "Logger.php";
 
 session_start();
 
@@ -37,12 +39,15 @@ if (isset($_POST)) {
                 if (strlen($login) >= $VARIABLES_GLOBALES["taille_champ_texte"][0] && strlen($login) <= $VARIABLES_GLOBALES["taille_champ_texte"][1]
                     && strlen($password_form) >= $VARIABLES_GLOBALES["taille_champ_mdp"][0] && strlen($password_form) <= $VARIABLES_GLOBALES["taille_champ_mdp"][1]
                 ) {
-                    //on créé un objet logger pour permettre d'avoir une trace des erreurs et autre
-                    //$logger = new Logger("../LOGS/logs_programme/", Enum_niveau_logger::ERROR);
+                    //on crée un objet logger en fonction de la configuration enregistrée
+                    $logger = new Logger($VARIABLES_GLOBALES["loggerConf"]);
+                    $loggerBd = $logger->getLoggerInstance("loggerDb");
+                    $loggerFile = $logger->getLoggerInstance("loggerFile");
+                    //echo $logger;
 
                     //on se connecte à la bd
                     $sqlData = new MySQLDataManagement($VARIABLES_GLOBALES["bd_hostname"], $VARIABLES_GLOBALES["bd_username"], $VARIABLES_GLOBALES["bd_password"], $VARIABLES_GLOBALES["bd_database"]);
-                    var_dump($sqlData);
+
                     //on vérifie qu'il n'y a aucune erreur
                     if ($sqlData->getConnectionErreur() == 0) {
                         $user = $sqlData->get_user_by_login("Users", $login);
@@ -60,14 +65,13 @@ if (isset($_POST)) {
                                         //le user existe, on demarre une session et on le redirige en fonction de son role
                                         //et on écrit dans un fichier de log la connexion
                                         $user = $user[0];
-                                        //print_r($user[0]);
-                                        //echo $user->getId();
 
-                                        //enregistrement_actions_dans_logs([$_SERVER['REMOTE_ADDR'], "Connexion d'un user inscrit", $user->getId(), getTodayDate()->format("Y-m-d H:i:s")], Enum_fic_logs::REPO_LOGS_USERS_ACTIONS, $VARIABLES_GLOBALES);
+                                        //$loggerFile->critical($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Connexion utilisateur");
+                                        //$loggerBd->info($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Connexion utilisateur");
                                         $sqlData->close_connexion_to_db();
 
                                         //on stocke le logger dans la session
-                                        //$_SESSION["logger"] = serialize($logger);
+                                        $_SESSION["logger"] = serialize($logger);
 
                                         //on serialize l'objet pour pouvoir le passer dans la session
                                         $_SESSION["user"] = serialize($user);
@@ -75,7 +79,7 @@ if (isset($_POST)) {
                                         switch ($user->getRole()) {
                                             case Enum_role_user::USER:
                                                 //echo "Redirection page USER";
-                                                header("Location:page_accueil_user.php");
+                                                //header("Location:page_accueil_user.php");
                                                 break;
                                             case Enum_role_user::ADMIN:
                                                 //echo "Redirection page ADMIN";

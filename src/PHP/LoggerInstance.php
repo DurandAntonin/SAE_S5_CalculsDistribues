@@ -2,6 +2,13 @@
 
 namespace PHP;
 
+use PHP\Enum_niveau_logger;
+use PHP\MySQLDataManagement;
+
+include_once "Enum_niveau_logger.php";
+include_once "MySQLDataManagement.php";
+include_once "Logging.php";
+
 class LoggerInstance
 {
     private Enum_niveau_logger $logLevel;
@@ -35,91 +42,105 @@ class LoggerInstance
             else
                 $value .= $valueField;
 
-            $string .= "\n\t$nameField : $value";
+            $string .= "<br>&nbsp&nbsp&nbsp$nameField : $value";
         }
         return $string;
     }
 
-    public function debug(string $message, array $parameters, string $dateFileName, string $dateComplete): void
+    public function debug(string $userId, \DateTime $date, string $ip, string $message): void
     {
         //on vérifie que le niveau permet d'écrire un log de niveau debug
         if ($this->logLevel->value <= Enum_niveau_logger::DEBUG->value){
             //on regarde à quel endroit on écrit le log, soit dans un fichier, soit dans une table sql, soit dans les deux
             if ($this->logRepo != "")
-                $this->writeLogInFile($message, $parameters, $dateFileName, $dateComplete, Enum_niveau_logger::DEBUG);
+                $this->writeLogInFile(Enum_niveau_logger::DEBUG, $userId, $date, $ip, $message);
             elseif(!is_null($this->mySqlConnector))
-                $this->writeLogInDbTable($message, $parameters, $dateFileName, $dateComplete, Enum_niveau_logger::DEBUG);
+                $this->writeLogInDbTable(Enum_niveau_logger::DEBUG, $userId, $date, $ip, $message);
         }
     }
 
-    public function info(string $message,array $parameters, string $dateFileName, string $dateComplete): void
+    public function info(string $userId, \DateTime $date, string $ip, string $message): void
     {
         //on vérifie que le niveau permet d'écrire un log de niveau debug
         if ($this->logLevel->value <= Enum_niveau_logger::INFO->value){
             //on regarde à quel endroit on écrit le log, soit dans un fichier, soit dans une table sql, soit dans les deux
             if ($this->logRepo != "")
-                $this->writeLogInFile($message, $parameters, $dateFileName, $dateComplete, Enum_niveau_logger::INFO);
+                $this->writeLogInFile(Enum_niveau_logger::INFO, $userId, $date, $ip, $message);
             elseif(!is_null($this->mySqlConnector))
-                $this->writeLogInDbTable($message, $parameters, $dateFileName, $dateComplete, Enum_niveau_logger::INFO);
+                $this->writeLogInDbTable(Enum_niveau_logger::INFO, $userId, $date, $ip, $message);
         }
     }
 
-    public function warning(string $message,array $parameters, string $dateFileName, string $dateComplete): void
+    public function warning(string $userId, \DateTime $date, string $ip, string $message): void
     {
         //on vérifie que le niveau permet d'écrire un log de niveau debug
-        if ($this->logLevel->value >= Enum_niveau_logger::WARNING->value){
+        if ($this->logLevel->value <= Enum_niveau_logger::WARNING->value){
             //on regarde à quel endroit on écrit le log, soit dans un fichier, soit dans une table sql, soit dans les deux
             if ($this->logRepo != "")
-                $this->writeLogInFile($message, $parameters, $dateFileName, $dateComplete, Enum_niveau_logger::WARNING);
+                $this->writeLogInFile(Enum_niveau_logger::WARNING, $userId, $date, $ip, $message);
             elseif(!is_null($this->mySqlConnector))
-                $this->writeLogInDbTable($message, $parameters, $dateFileName, $dateComplete, Enum_niveau_logger::WARNING);
+                $this->writeLogInDbTable(Enum_niveau_logger::WARNING, $userId, $date, $ip, $message);
         }
     }
 
-    public function error(string $message,array $parameters, string $dateFileName, string $dateComplete): void
+    public function error(string $userId, \DateTime $date, string $ip, string $message): void
     {
         //on vérifie que le niveau permet d'écrire un log de niveau debug
         if ($this->logLevel->value <= Enum_niveau_logger::ERROR->value){
             //on regarde à quel endroit on écrit le log, soit dans un fichier, soit dans une table sql, soit dans les deux
             if ($this->logRepo != "")
-                $this->writeLogInFile($message, $parameters, $dateFileName, $dateComplete, Enum_niveau_logger::ERROR);
+                $this->writeLogInFile(Enum_niveau_logger::ERROR, $userId, $date, $ip, $message);
             elseif(!is_null($this->mySqlConnector))
-                $this->writeLogInDbTable($message, $parameters, $dateFileName, $dateComplete, Enum_niveau_logger::ERROR);
+                $this->writeLogInDbTable(Enum_niveau_logger::ERROR, $userId, $date, $ip, $message);
         }
     }
 
-    public function critical(string $message,array $parameters, string $dateFileName, string $dateComplete): void
+    public function critical(string $userId, \DateTime $date, string $ip, string $message): void
     {
         //on vérifie que le niveau permet d'écrire un log de niveau debug
-        if ($this->logLevel->value <= \PHP\Enum_niveau_logger::CRITICAL->value){
+        if ($this->logLevel->value <= Enum_niveau_logger::CRITICAL->value){
             //on regarde à quel endroit on écrit le log, soit dans un fichier, soit dans une table sql, soit dans les deux
             if ($this->logRepo != "")
-                $this->writeLogInFile($message, $parameters, $dateFileName, $dateComplete, Enum_niveau_logger::CRITICAL);
+                $this->writeLogInFile(Enum_niveau_logger::CRITICAL, $userId, $date, $ip, $message);
             elseif(!is_null($this->mySqlConnector))
-                $this->writeLogInDbTable($message, $parameters, $dateFileName, $dateComplete, Enum_niveau_logger::CRITICAL);
+                $this->writeLogInDbTable(Enum_niveau_logger::CRITICAL, $userId, $date, $ip, $message);
         }
     }
 
-    private function writeLogInFile(string $message,array $parameters, string $dateFileName, string $dateComplete, Enum_niveau_logger $niveau): void
+    private function writeLogInFile(Enum_niveau_logger $logLevel, string $userId, \DateTime $date, string $ip, string $message): void
     {
-        //on a un fichier de log par mois
-        $fileName = $this->logRepo . "logsprogramme_" . $dateFileName;
+        echo $this->logRepo;
+        //on vérifie que le répertoire contenant les différents répertoire de log par niveau existe
+        if (is_dir($this->logRepo) && file_exists($this->logRepo)){
+            //on va stocker le fichier de log dans un répertoire associé au niveau du log
+            $logLeveRepo = $this->logRepo . $logLevel->name;
 
-        //on tente d'ouvrir le fichier de log, dans lequel on insère le niveau, la date et le message du log
-        $curseur = fopen($fileName, "a+");
-        fputs($curseur,$niveau->name . "-" . $dateComplete . " : " . $message . PHP_EOL);
-        fputs($curseur, "Parameters : " . implode(";", $parameters) . PHP_EOL);
-        fputs($curseur, "");
-        fclose($curseur);
+            //si ce répertoire n'existe pas, on le crée
+            if (!file_exists($logLeveRepo)){
+                mkdir($logLeveRepo);
+            }
+
+            //on a un fichier de log par mois
+            $fileName = $logLeveRepo . "\logsprogramme_" . $date->format("Ym");
+
+            //on tente d'ouvrir le fichier de log, dans lequel on insère le niveau, la date et le message du log
+            $curseur = fopen($fileName, "a+");
+            fputs($curseur, "{$logLevel->name}|userId:{$userId}|userIP:{$ip}|{$date->format("Y-m-d H:i:s")}|{$message}".PHP_EOL);
+            fclose($curseur);
+        }
     }
 
-    private function writeLogInDbTable(string $message,array $parameters, string $dateFileName, string $dateComplete, Enum_niveau_logger $niveau){
-        //on insère dans une table dans la base de données le log
-        //$this->mySqlConnector->insertLog($this->tableName, $niveau->name, );
+    private function writeLogInDbTable(Enum_niveau_logger $logLevel, $userId, $date, $ip, $message): void
+    {
+        //on crée un objet logging, contenant les différentes info du log
+        $log = new Logging(guidv4(), $logLevel, $userId, $date, $ip, $message);
+
+        //on insère dans une table sql les champs de cet objet
+        $this->mySqlConnector->insert_log($this->tableName, $log);
     }
 
     public function __sleep(){
-        return array('loggerInstanceName', 'repoLog', 'niveauLog');
+        return array('logLevel', 'logInstanceName', 'logRepo', 'mySqlConnector', 'tableName');
     }
 
     public function __wakeup(){
