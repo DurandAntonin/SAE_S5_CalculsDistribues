@@ -56,15 +56,13 @@ Le composant serveur est dans le kit cluster hat et le navigateur est un composa
 | Logging.php                              |                                                             |                                        |
 | MYSQLDataManagement.php                  |                                                             |                                        |
 | page_deconnexion.php                     |                                                             |                                        |
-| page_profil.php                          |                                                             |                                        |
-| Pagination.php                           |                                                             |                                        |
 | traitement_connexion.php                 |                                                             |                                        |
 | traitement_inscription.php               |                                                             |                                        |
 | traitement_profil.php                    |                                                             |                                        |
 | User.php                                 |                                                             |                                        |
 | Utility.php                              |                                                             |                                        |
 | verif_identite_page_admin.php            |                                                             |                                        |
-| verif_identite_page_user_inscription.php |                                                             |                                        |
+| verif_identite_page_user_inscrit_only.php|                                                             |                                        |
 | verif_identite_page_user.php             |                                                             |                                        |
 | index.html                               |                                                             |                                        |
 | Serveur Web                              | A tous les objets .php, .html, .css, .json, a une interface | Ecoute les requêtes du navigateur      |
@@ -73,9 +71,9 @@ Le composant serveur est dans le kit cluster hat et le navigateur est un composa
 
 
 
-A partir de ce tableau, on peut définir les composants suivants : "page_accueil.php", "page_connexion.php", "page_inscription.php", "page_accueil_user.php", "page_accueil_admin.html", "style.css", "Enum_fic_logs.php", "Enum_niveau_logger.php","Enum_role_user.php","Enum_role_user.php","Logger.php","LoggerInstance.php","Logging.php","MYSQLDataManagement.php","page_deconnexion.php","page_profil.php","Pagination.php","traitement_connexion.php","traitement_inscription.php","traitement_profil.php","User.php","Utility.php","verif_identite_page_admin.php","verif_identite_page_user_inscription.php","verif_identite_page_user.php","index.html". 
+A partir de ce tableau, on peut définir les composants suivants : "page_accueil.php", "page_connexion.php", "page_inscription.php", "page_accueil_user.php", "page_accueil_admin.html", "style.css", "Enum_fic_logs.php", "Enum_niveau_logger.php","Enum_role_user.php","Enum_role_user.php","Logger.php","LoggerInstance.php","Logging.php","MYSQLDataManagement.php","page_deconnexion.php","Pagination.php","traitement_connexion.php","traitement_inscription.php","traitement_profil.php","User.php","Utility.php","verif_identite_page_admin.php","verif_identite_page_user_inscrit_only.php","verif_identite_page_user.php","index.html". 
 
-Ces derniers sont des abstractions respectives des objets : "page_accueil.php", "page_connexion.php", "page_inscription.php", "page_accueil_user.php", "page_accueil_admin.html", "style.css", "Enum_fic_logs.php", "Enum_niveau_logger.php","Enum_role_user.php","Enum_role_user.php","Logger.php","LoggerInstance.php","Logging.php","MYSQLDataManagement.php","page_deconnexion.php","page_profil.php","Pagination.php","traitement_connexion.php","traitement_inscription.php","traitement_profil.php","User.php","Utility.php","verif_identite_page_admin.php","verif_identite_page_user_inscription.php","verif_identite_page_user.php","index.html".
+Ces derniers sont des abstractions respectives des objets : "page_accueil.php", "page_connexion.php", "page_inscription.php", "page_accueil_user.php", "page_accueil_admin.html", "style.css", "Enum_fic_logs.php", "Enum_niveau_logger.php","Enum_role_user.php","Enum_role_user.php","Logger.php","LoggerInstance.php","Logging.php","MYSQLDataManagement.php","page_deconnexion.php","Pagination.php","traitement_connexion.php","traitement_inscription.php","traitement_profil.php","User.php","Utility.php","verif_identite_page_admin.php","verif_identite_page_user_inscrit_only.php","verif_identite_page_user.php","index.html".
 
 On définit ensuite le composant "Navigateur", abstraction de l'objet "Navigateur web", qui correspond au client voulant accèder au site web. On définit également le composant "Serveur", abstraction de l'objet "Serveur web". Enfin, on définit le composant "Base de données", abstraction de l'objet "Base de données". 
 

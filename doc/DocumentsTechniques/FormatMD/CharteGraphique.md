@@ -21,7 +21,7 @@ _Zehren William_
 
 
 
-<h2 style="color:#5d79e7; id="introduction"> Introduction </h2>
+<h2 style="color:#5d79e7; id=introduction"> Introduction </h2>
 
 Ce document sert à définir la charte graphique qui sera utilisée durant notre projet. Il nous permet donc de nous y référer lors de la création de pages ou lors de l'ajout de nouveaux modules sur le site. 
 
