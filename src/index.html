@@ -5,25 +5,25 @@
     <title>BlitzCalc</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="dist\output.css" rel="stylesheet">
-    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
 </head>
-<body class= "bg-gradient-to-br from-yellow-400 via-blue-200 to-blue-300 h-screen">
-    <header>
+<body class= "bg-lightblue h-screen">
+    <header class="top-0 w-full shadow-md bg-lightblue">
         <nav class="flex justify-between items-center w-auto  mx-auto">
             <div class="container mx-auto flex items-center justify-between">
-              <!-- Logo in the center -->
-              <div class="flex items-center">
+              <div >
                 <img src="PICTURES/blitzcalc-high-resolution-logo-transparent.png" alt="Logo" class="h-20 mr-2">
               </div>
           
-              <!-- Buttons on the right -->
-              <div class="nav-links duration-500 md:static absolute md:min-h-fit min-h-[100vh] left-0 top-[-100%] md:w-auto flex items-center">
-                <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-6 h-20 mr-2">
+              <div class="nav-links duration-500 bg-lightblue md:static absolute md:min-h-fit min-h-[15vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
+                <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
                     <li>
-                        <a href="PHP/page_inscription.php" class="text-deep-blue mr-4 hover:underline text-3xl">S'inscrire</a>
+                        <a href="PHP/page_inscription.php" class="text-deepblue mr-4 text-3xl relative w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center">S'inscrire</a>
+                        
                     </li>
                     <li>
-                        <a href="PHP/page_connexion.php" class="text-deep-blue hover:underline text-3xl">Se connecter</a>
+                        <a href="PHP/page_connexion.php" class="text-deepblue text-3xl relative w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center">Se connecter</a>
                     </li>
                 </ul>
               </div>
@@ -33,12 +33,47 @@
             </div>
         </nav>
     </header>
+    <main>
+        <section class="w-full h-screen flex justify-center items-center">
+            <h1 class="text-4xl text-deepblue">Bienvenue sur BlitzCalc.fr</h1>
+        </section>
+        <section class="w-full h-screen bg-lyellow flex justify-center items-center">
+            <h1 class="text-4xl text-deepblue">Rien du tout</h1>
+        </section>
+        <section class="w-full h-screen bg-deepblue flex justify-center items-center">
+            <h1 class="text-4xl text-white">Encore rien</h1>
+        </section>
+        <section class="w-full h-screen bg-lightblue flex justify-center items-center">
+            <h1 class="text-4xl text-deepblue">Toujours rien</h1>
+        </section>
+        <section class="w-full h-screen bg-lyellow flex justify-center items-center">
+            <h1 class="text-4xl text-deepblue">C'est dingue c'est toujours rien</h1>
+        </section>
+    </main>
+
+    <button id="to-top-button" onclick="goToTop()" title="Go To Top"
+        class="hidden fixed z-90 bottom-8 right-8 border-0 w-16 h-16 rounded-full drop-shadow-md bg-indigo-500 text-white text-3xl font-bold">&uarr;</button>
+
 
     <script>
         const navLinks = document.querySelector('.nav-links')
         function onToggleMenu(e){
             e.name = e.name === 'menu' ? 'close' : 'menu'
             navLinks.classList.toggle('top-[9%]')
+        }
+
+        var toTopButton = document.getElementById("to-top-button");
+
+        window.onscroll = function () {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                toTopButton.classList.remove("hidden");
+            } else {
+                toTopButton.classList.add("hidden");
+            }
+        }
+
+        function goToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 
