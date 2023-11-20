@@ -109,7 +109,7 @@ class LoggerInstance
 
     private function writeLogInFile(Enum_niveau_logger $logLevel, string $userId, \DateTime $date, string $ip, string $message): void
     {
-        echo $this->logRepo;
+        //echo $this->logRepo;
         //on vérifie que le répertoire contenant les différents répertoire de log par niveau existe
         if (is_dir($this->logRepo) && file_exists($this->logRepo)){
             //on va stocker le fichier de log dans un répertoire associé au niveau du log
