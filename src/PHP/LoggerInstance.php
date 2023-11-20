@@ -139,11 +139,24 @@ class LoggerInstance
         $this->mySqlConnector->insert_log($this->tableName, $log);
     }
 
+    public function disconnectLoggerInstanceBd(): void
+    {
+        $this->mySqlConnector->close_connexion_to_db();
+    }
+
     public function __sleep(){
         return array('logLevel', 'logInstanceName', 'logRepo', 'mySqlConnector', 'tableName');
     }
 
     public function __wakeup(){
 
+    }
+
+    /**
+     * @return \PHP\MySQLDataManagement|null
+     */
+    public function getMySqlConnector(): ?\PHP\MySQLDataManagement
+    {
+        return $this->mySqlConnector;
     }
 }

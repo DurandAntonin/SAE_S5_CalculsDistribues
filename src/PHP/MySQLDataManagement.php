@@ -16,6 +16,7 @@ class MySQLDataManagement{
     private string $password;
     private string $database;
     private int $connection_erreur;
+    private array $lastConnexionParams;
 
     function __construct(string $par_hostname, string $par_username, string $par_pasword, string $par_database){
         $this->hostname = $par_hostname;
@@ -47,6 +48,9 @@ class MySQLDataManagement{
             //on se connecteur à la base de données
             $this->connector = new mysqli($this->hostname, $this->username, $this->password, $this->database);
 
+            //on stocke les informations de cette connexion dans le champ approprié
+            $this->lastConnexionParams = [$this->hostname, $this->username, $this->password, $this->database];
+
             $this->connection_erreur = 0;
         }
         catch (\mysqli_sql_exception $e){
@@ -58,9 +62,26 @@ class MySQLDataManagement{
 
     }
 
+    public function reconnect_to_bd(): void
+    {
+        if (count($this->lastConnexionParams) == 4){
+            $this->hostname = $this->lastConnexionParams[0];
+            $this->username = $this->lastConnexionParams[1];
+            $this->password = $this->lastConnexionParams[2];
+            $this->database = $this->lastConnexionParams[3];
+        }
+
+        $this->connect_to_db();
+    }
+
     public function getConnectionErreur(): int
     {
         return $this->connection_erreur;
+    }
+
+    public function getConnectionErreurMessage(): ?string
+    {
+        return $this->connector->connect_error;
     }
 
     public function get_users(string $table): int|array
@@ -562,7 +583,7 @@ class MySQLDataManagement{
     }
 
     public function __sleep(){
-        return array('connector', 'hostname', 'username', 'password', 'database', 'connection_erreur');
+        return array('connector', 'hostname', 'username', 'password', 'database', 'connection_erreur', 'lastConnexionParams');
     }
 
     public function __wakeup(){
