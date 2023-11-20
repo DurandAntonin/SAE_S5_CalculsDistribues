@@ -20,22 +20,3 @@ function goToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-
-const observer = new IntersectionObserver((entries)=>{
-    entries.forEach((entry,index)=>{
-        console.log(entry)
-        if (entry.isIntersecting){
-            console.log(titleElements[index]);
-            titleElements[index].classList.add('animate__fadeInUp');
-            console.log(entry.target);
-            console.log("observe");
-        } else{
-            entry.target.classList.remove('animate__fadeInUp');
-        }
-    });
-},{ threshold: 0.5 });
-
-const sectionElements = document.querySelectorAll('section');
-const titleElements = document.querySelectorAll('h1');
-console.log(titleElements);
-sectionElements.forEach((el)=> observer.observe(el));

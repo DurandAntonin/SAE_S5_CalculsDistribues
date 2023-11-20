@@ -8,7 +8,8 @@
     <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
 <script defer src = "JS/index_script.js"> </script>
-<script src="https://cdn.jsdelivr.net/npm/animate.css"></script>
+<script>document.documentElement.classList.add('js')</script>
+<script src="https://unpkg.com/taos@1.0.5/dist/taos.js"></script>  
 
 </head>
 <body class= "bg-lightblue h-screen">
@@ -37,25 +38,31 @@
         </nav>
     </header>
         <section class="w-full h-screen flex justify-center items-center">
-            <h1 class="hidden text-4xl text-deepblue animate__animated">Bienvenue sur BlitzCalc.fr</h1>
+                <h1 class="text-4xl text-deepblue">Bienvenue sur BlitzCalc.fr</h1>
         </section>
         <section class="w-full h-screen bg-lyellow flex justify-center items-center">
-            <h1 class="hidden  text-4xl text-deepblue animate__animated">Rien du tout</h1>
+            <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0" data-taos-offset="300">
+                <h1 class="text-4xl text-deepblue">Rien du tout</h1>
+            </div>
         </section>
         <section class="w-full h-screen bg-deepblue flex justify-center items-center">
-            <h1 class="hidden  text-4xl text-white animate__animated">Encore rien</h1>
+            <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0" data-taos-offset="300">
+                <h1 class="text-4xl text-white ">Encore rien</h1>
+            </div>
         </section>
         <section class="w-full h-screen bg-lightblue flex justify-center items-center">
-            <h1 class="hidden  text-4xl text-deepblue animate__animated">Toujours rien</h1>
+            <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0" data-taos-offset="300">
+                <h1 class="text-4xl text-deepblue">Toujours rien</h1>
+            </div>
         </section>
         <section class="w-full h-screen bg-lyellow flex justify-center items-center">
-            <h1 class="hidden  text-4xl text-deepblue animate__animated">C'est dingue c'est toujours rien</h1>
+            <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0" data-taos-offset="300">
+                <h1 class="text-4xl text-deepblue">C'est dingue c'est toujours rien</h1>
+            </div>
         </section>
 
     <button id="to-top-button" onclick="goToTop()" title="Go To Top"
-        class="hidden fixed z-90 bottom-8 right-8 border-0 w-16 h-16 rounded-full drop-shadow-md bg-indigo-500 text-white text-3xl font-bold">&uarr;</button>
+        class="hidden fixed z-90 bottom-8 right-8 border-0 w-16 h-16 rounded-full drop-shadow-md bg-indigo-500 text-white text-3xl font-bold animate-bounce">&uarr;</button>
 
-
-   
 </body>
 </html>
