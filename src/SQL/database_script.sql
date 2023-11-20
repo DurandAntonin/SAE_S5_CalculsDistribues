@@ -3,8 +3,7 @@ create database BlitzCalc_DB;
 
 use BlitzCalc_DB;
 
-drop table if exists Friends;
-drop table if exists User_activity;
+drop table if exists Logging;
 drop table if exists Users;
 drop table if exists Weak_passwords;
 
