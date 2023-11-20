@@ -37,7 +37,16 @@ class MySQLDataManagement{
             if (gettype($valueField) == "object" && get_class($valueField) == "mysqli")
                 continue;
 
-            $string .= "<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp$nameField : $valueField";
+            //si le champ est une liste, on affiche le contenu de cette liste
+            else if (gettype($valueField) == "array"){
+                $subString = "";
+                for ($i=0;$i<count($valueField);$i++)
+                    $subString.= "<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{$i}:{$valueField[$i]}";
+                $string .= $subString;
+            }
+
+            else
+                $string .= "<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp$nameField : $valueField";
         }
         return $string;
     }
@@ -112,7 +121,7 @@ class MySQLDataManagement{
     public function insert_log(string $table, Logging $log)
     {
         try{
-            $request = "insert into $table(logId, logLevel, userId, date, ip, description) values(?, ?,?,?,?,?)";
+            $request = "insert into $table(logId, logLevel, userId, date, ip, description) values(?,?,?,?,?,?)";
 
             //on exécute la requete pour insérer un log dans la table des enregistrements des actions
             if ($stmt = $this->connector->prepare($request)){
@@ -188,32 +197,32 @@ class MySQLDataManagement{
         }
     }
 
-    public function get_user_by_login(string $table, string $login): int|array
+    public function get_user_by_login(string $table, string $login): array
     {
+        //on va stocker les différents paramètres de renvoi dans une liste
+        $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
+
         try{
             $request = "select userId, userMail, login, lastName, firstName, password, role from $table where login = ?";
 
             //on exécute la requete pour obtenir un user d'après un mail
-            if ($stmt = $this->connector->prepare($request)){
-                $stmt-> bind_param("s", $login);
+            $stmt = $this->connector->prepare($request);
+            $stmt-> bind_param("s", $login);
 
-                $stmt -> execute();
+            $stmt -> execute();
 
-                //on récupere les résultats sous forme d'une liste
-                $results = $stmt -> get_result();
-                //print_r($stmt -> errno);
-                //echo $stmt->error;
+            //on récupere les résultats sous forme d'une liste
+            $results = $stmt -> get_result();
 
-                //on retourne une liste de users mappée
-                return $this->mappMySqliResultToUser($results);
-            }
-            return -1;
+            //on retourne une liste de users mappée
+            $listeResultParamsFunction["result"] = $this->mappMySqliResultToUser($results);
         }
         catch (\mysqli_sql_exception $e) {
-            //on enregistre à l'aide d'un logger l'erreur, ainsi que les paramètres d'exécution
-            //$this->logger->error($e, array($this->hostname, $this->username, $this->password, $this->database), getTodayDate()->format("Ym"), getTodayDate()->format("Y-m-d H:i:s"));
-            return -1;
+            //on enregistre dans la liste des param de result, le message d'erreur
+            $listeResultParamsFunction["error"] = 1;
+            $listeResultParamsFunction["errorMessage"] = $e;
         }
+        return $listeResultParamsFunction;
     }
 
     public function get_users_by_mail_appro(string $table, string $mailAppro, Pagination $pagination): string|int
@@ -289,39 +298,37 @@ class MySQLDataManagement{
         }
     }
 
-    public function verif_password(string $table, string $login, string $password_to_verify): bool|int
+    public function verif_password(string $table, string $login, string $password_to_verify): mysqli_result|array
     {
+        //on va stocker les différents paramètres de renvoi dans une liste
+        $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
         try{
             $request = "select password from $table where login = ?";
 
             //on exécute la requete pour obtenir un user d'après un mail
-            if ($stmt = $this->connector->prepare($request)) {
-                $stmt->bind_param("s", $login);
+            $stmt = $this->connector->prepare($request);
+            $stmt->bind_param("s", $login);
 
-                $stmt->execute();
+            $stmt->execute();
 
-                //on récupere les résultats sous forme d'une liste
-                $results = $stmt->get_result();
+            //on récupere les résultats sous forme d'une liste
+            $results = $stmt->get_result();
 
-                //on vérifie si la requete s'est exécutée sans erreur
-                if ($stmt->affected_rows == 1) {
-                    //on compare les 2 mots de passes
-                    $listResults = $results->fetch_array(MYSQLI_ASSOC);
-                    return compare_passwords($password_to_verify, $listResults["password"]);
-
-                } else {
-                    return false;
-                }
-            }
-            else{
-                return -1;
+            //on vérifie si la requete s'est exécutée sans erreur
+            if ($stmt->affected_rows == 1) {
+                //on compare les 2 mots de passes
+                $listResults = $results->fetch_array(MYSQLI_ASSOC);
+                $listeResultParamsFunction["result"] = compare_passwords($password_to_verify, $listResults["password"]);
+            } else {
+                $listeResultParamsFunction["result"] = false;
             }
         }
         catch (\mysqli_sql_exception $e) {
-            //on enregistre à l'aide d'un logger l'erreur, ainsi que les paramètres d'exécution
-            //$this->logger->error($e, array($this->hostname, $this->username, $this->password, $this->database), getTodayDate()->format("Ym")->format("Ym"), getTodayDate()->format("Y-m-d H:i:s")->format());
-            return -1;
+            //on renvoie l'erreur dans la liste des résultats
+            $listeResultParamsFunction["error"] = 1;
+            $listeResultParamsFunction["errorMessage"] = $e;
         }
+        return $listeResultParamsFunction;
     }
 
     public function verif_solidite_password(string $table, string $password): bool|int
