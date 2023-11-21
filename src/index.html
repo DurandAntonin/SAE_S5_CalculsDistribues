@@ -5,15 +5,15 @@
     <title>BlitzCalc</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="dist\output.css" rel="stylesheet">
-    <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
-<script defer src = "JS/index_script.js"> </script>
-<script>document.documentElement.classList.add('js')</script>
-<script src="https://unpkg.com/taos@1.0.5/dist/taos.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script defer src = "JS/index_script.js"> </script>
+    <script>document.documentElement.classList.add('js')</script>
+    <script src="https://unpkg.com/taos@1.0.5/dist/taos.js"></script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">  
 
 </head>
 <body class= "bg-lightblue h-screen" style="font-family: 'Poppins', sans-serif;">
@@ -41,16 +41,15 @@
             </div>
         </nav>
     </header>
-        <section class="w-full h-screen flex justify-center items-center">
+        <section class="w-full h-screen inline-flex flex-col justify-center items-center">
                 <h1 class="text-4xl text-deepblue">Bienvenue sur BlitzCalc.fr</h1>
-                <ion-icon name="chevron-down" class="text-3xl text-deepblue"></ion-icon>
         </section>
         <section class="w-full h-screen bg-lyellow flex justify-center items-center">
             <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0" data-taos-offset="300">
                 <h1 class="text-4xl text-deepblue">Rien du tout</h1>
             </div>
         </section>
-        <section class="w-full h-screen bg-deepblue flex justify-center items-center">
+        <section class="w-full h-screen bg-deepblue flex justify-center items-center" id="sectionBlue">
             <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0" data-taos-offset="300">
                 <h1 class="text-4xl text-white ">Encore rien</h1>
             </div>
@@ -60,7 +59,7 @@
                 <h1 class="text-4xl text-deepblue">Toujours rien</h1>
             </div>
         </section>
-        <section class="w-full h-screen bg-lyellow flex justify-center items-center">
+        <section class="w-full h-screen bg-lyellow flex justify-center items-center" id="sectionLast">
             <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0" data-taos-offset="300">
                 <h1 class="text-4xl text-deepblue">C'est dingue c'est toujours rien</h1>
             </div>
@@ -68,6 +67,9 @@
 
     <button id="to-top-button" onclick="goToTop()" title="Go To Top"
         class="hidden fixed z-90 bottom-8 right-8 border-0 w-16 h-16 rounded-full drop-shadow-md bg-indigo-500 text-white text-3xl font-bold animate-bounce">&uarr;</button>
+    <div class="flex justify-center items-center">
+        <ion-icon name="chevron-down" class="text-3xl text-deepblue fixed z-90 bottom-8 mx-auto border-0 w-16 h-16 animate-bounce" id="arrowDown"></ion-icon>
+    </div>
 
 </body>
 </html>

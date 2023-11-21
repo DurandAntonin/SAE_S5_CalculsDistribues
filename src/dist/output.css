@@ -572,6 +572,10 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
   }
 }
 
+.visible {
+  visibility: visible;
+}
+
 .static {
   position: static;
 }
@@ -610,6 +614,10 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
 
 .top-\[9\%\] {
   top: 9%;
+}
+
+.right-4 {
+  right: 1rem;
 }
 
 .float-right {
@@ -673,6 +681,10 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
 
 .flex {
   display: flex;
+}
+
+.inline-flex {
+  display: inline-flex;
 }
 
 .table {
@@ -786,6 +798,10 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
 
 .gap-8 {
   gap: 2rem;
+}
+
+.self-end {
+  align-self: flex-end;
 }
 
 .rounded {

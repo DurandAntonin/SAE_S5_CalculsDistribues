@@ -20,3 +20,35 @@ function goToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+const observer1 = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            arrow.classList.remove('text-deepblue');
+            arrow.classList.add('text-white');
+        } else {
+            arrow.classList.remove('text-white');
+            arrow.classList.add('text-deepblue');
+        }
+    });
+}, { threshold: 0.5 });
+
+const observer2 = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            arrow.classList.add('hidden');
+        } else {
+            arrow.classList.remove('hidden');
+        }
+    });
+}, { threshold: 0.5 });
+
+
+
+// Sélectionnez l'élément à animer
+const sectionBlue = document.getElementById('sectionBlue');
+const sectionLast = document.getElementById('sectionLast');
+const arrow = document.getElementById('arrowDown');
+
+// Observez l'élément
+observer1.observe(sectionBlue);
+observer2.observe(sectionLast);
