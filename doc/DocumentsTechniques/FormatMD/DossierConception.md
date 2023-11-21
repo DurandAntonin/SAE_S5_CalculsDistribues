@@ -132,14 +132,58 @@ Enfin, les 2 machines sont reliées par une connexion internet, représentée pa
 
 <h3 style="color:#5d79e7; id=concepDeta"> Conception détaillée </h3> 
 
+En ayant défini les dépendances et les associations entre tous les objets, on obtient alors une structure telle que : 
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L1_diagClasses.PNG" width="700px">
+<p> Diagramme de classes du livrable 1 (1)</p>
+</div>
+
+On commence par analyser les différentes classes .php, à savoir "Logger.php", "LoggerInstance.php", "Logging.php", "MySQLDataManagement.php", "User.php" et "Utility.php".
+
+On analyse aussi les énumérations "Enum_fic_logs.php", "Enum_niveau_logger.php","Enum_role_user.php".
+
+Pour faciliter l'analyse de ces dernieres, on réalise un diagramme de classe ne contenant que ces classes, leurs paramètres et leurs méthodes et ces énumérations. Il servira a modéliser les dépendances et les associations entre ces dernières. 
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML" width="700px">
+<p> Diagramme de classes du livrable 1 (2)</p>
+</div>
+
 On analyse maintenant comment sont constitués les objets en .php, à savoir "page_accueil_admin.php", "page_accueil_user.php", "page_connexion.php", "page_deconnexion.php", "page_inscription.php".
 
 La page "page_deconnexion.php" ne contient pas d'html et n'apparaitra jamais sur l'écran de l'utilisateur, elle permet uniquemement de déconnecter la session de l'utilisateur. 
 
-La page "page_accueil_admin.php" ne contient qu'un lien de déconnexion contenu dans un ```<nav>```. Elle contient aussi un ```<h2>``` dans le ```<main>``` qui affiche le nom de l'admin. 
+La page "page_accueil_admin.php" ne contient qu'un lien de déconnexion contenu dans un ```<ul><li>``` lui même contenu dans un ```<nav>```. Elle contient un ```<h1>``` qui permet d'afficher le nom de la page. Elle contient aussi un ```<h2>``` dans le ```<main>``` qui affiche le nom de l'admin.
 
-La page "page_accueil_user.php" ne contient qu'un lien de déconnexion contenu dans un ```<nav>```. Elle contient aussi un ```<h2>``` dans le ```<main>``` qui affiche le nom de l'utilisateur. 
+La page "page_accueil_user.php" ne contient qu'un lien de déconnexion contenu dans un ```<ul><li>``` lui meme contenu ```<nav>```.  Elle contient un ```<h1>``` qui permet d'afficher le nom de la page. Elle contient aussi un ```<h2>``` dans le ```<main>``` qui affiche le nom de l'utilisateur. 
 
-La page "page_connexion.php" contient deux formulaires ```<form>```. Le premier contient deux ```<div>``` et 
+La page "page_connexion.php" contient un ```<h2>``` qui permet d'afficher le nom de la page. Elle contient ensuite un ```<form>``` qui contient lui même deux ```<div>``` qui contiennent chacun un ```<label>``` et un ```<input>``` de  type text. Ce sont les champs de notre formulaire. Ce ```<form>``` contient également un ```<input>``` de type submit qui correspond au bouton de validation. Cette page contient un deuxième ```<form>``` qui contient un ```<input>``` de type submit. Elle contient aussi un ```<p>``` servant à l'affichage des erreurs. Enfin, elle contient un ```<ul>``` dans un ```<nav>```avec deux ```<li>``` qui contiennent chacun un ```<a>``` avec un href.  
 
-La page "page_inscription.php"
+La page "page_inscription.php" contient un ```<h2>``` qui permet d'afficher le nom de la page. Elle contient ensuite un ```<form>``` qui contient lui même six ```<div>``` qui contiennent chacun un ```<label>``` et un ```<input>``` de  type text. Ce sont les champs de notre formulaire. Ce ```<form>``` contient également un ```<input>``` de type submit qui correspond au bouton de validation. Cette page contient un deuxième ```<form>``` qui contient un ```<input>``` de type submit. Elle contient aussi un ```<p>``` servant à l'affichage des erreurs. Enfin, elle contient un ```<ul>``` dans un ```<nav>```avec deux ```<li>``` qui contiennent chacun un ```<a>``` avec un href.  
+
+Nous allons ensuite effectuer la conception détaillée de la base de données. 
+La base de données se décompose de 3 tables : 
+
+La table Users comporte 7 colonnes, à savoir userId de type varchar, userMail de type varchar, login de type varchar, lastName de type varchar, firstName de type varchar, password de type varchar et role de type varchar. De plus, on a des contraintes d'intégrités sur les colonnes, le nombre de caractères maximum est de 36 pour la colonne userId, de 35 pour la colonne userMail, de 256 pour la colonne password et de 10 pour la colonne role. le nombre de caractères maximal est de 25 pour les colonnes login, lastName et firstName. On a également une clé primaire sur la colonne userId pour rendre les identifiants uniques et pour empecher le fait d'avoir deux tuples ayant le même login. Les colonnes ne peuvent par ailleurs pas être nulles. De plus, pour la colonne role, la valeur "USER" est insérée par défaut. 
+
+La table Users comporte 6 colonnes, à savoir logId de type varchar, logLevel de type varchar, userId de type varchar, date de type datetime, ip de type varchar et description de type text. De plus, on a des contraintes d'intégrités sur les colonnes, le nombre de caractères maximum est de 36 pour les colonnes logId et userId, de 10 pour la colonne logLevel, de 15 pour la colonne ip. On a également une clé primaire sur la colonne logId pour rendre les identifiants uniques et pour empecher le fait d'avoir deux tuples ayant le même login. On a aussi une clé étrangère sur la colonne userId, cette dernière fait référence à la clé primaire du même nom dans la table Users. Toutes les colonnes sauf logLevel ne peuvent par ailleurs pas être nulles. La colonne logLevel, doit être nulle ou doit contenir des valeurs de criticités d'alerte des logs ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'). De plus, pour la colone role, la valeur "USER" est insérée par défaut. 
+
+La table Weak_passwords comporte une seule colonne password de type varchar avec des contraintes d'intégrité telles que : le nombre de caractères contenus dans cette colonne doit être de 256 au maximum et elle ne peut pas être nulle. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

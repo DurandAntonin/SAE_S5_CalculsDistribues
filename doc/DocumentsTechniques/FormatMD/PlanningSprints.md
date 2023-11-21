@@ -13,7 +13,7 @@ _Zehren William_
 <li><a href="#sprint3">III- Sprint 3 </a></li>
 </ul>
 
-<h2 style="color:#5d79e7; page-break-before: always" id="sprint1"> I- Fondations du site </h2>
+<h2 style="color:#5d79e7; page-break-before: always" id="sprint1"> I- Squelette du site </h2>
 
 Le premier sprint correspond à l'initialisation de l'application et de ses services, ainsi que du Kit Cluster hat hébergeant l'application.
 Sera en premier lieu installé les différents services Apache, PHP, MySQL dans le kit Cluster.
