@@ -82,7 +82,7 @@ if (isset($_POST)) {
                                             default :
                                                 //role inconnu, on le redirige vers la page de connexion
                                                 //echo "Role inconnu";
-                                                $loggerFile->warning($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Role inconnu lors d'une tentative de connexion|Login:{$login};Mot de passe:{$password_form}");
+                                                $loggerFile->warning($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Role inconnu lors d'une tentative de connexion|User:{$user}");
                                                 header("Location:page_connexion.php");
                                         }
                                     } else {
@@ -96,7 +96,7 @@ if (isset($_POST)) {
                                     }
 
                                 } else {
-                                    $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Login:{$login};Mot de passe:{$password_form}|Erreur:{$resultVerifPassword["errorMessage"]}");
+                                    $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Login:{$login}|Erreur:{$resultVerifPassword["errorMessage"]}");
                                     $sqlData->close_connexion_to_db();
                                     //echo $resultVerifPassword;
                                     //on affiche une erreur à l'utilisateur
@@ -113,7 +113,7 @@ if (isset($_POST)) {
                                 header("Location:page_connexion.php");
                             }
                         } else {
-                            $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Login:{$login};Mot de passe:{$password_form}|Erreur:{$resultGetLogin["errorMessage"]}");
+                            $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Login:{$login}|Erreur:{$resultGetLogin["errorMessage"]}");
                             $sqlData->close_connexion_to_db();
                             //on affiche une erreur à l'utilisateur
                             $_SESSION["erreur_traitement_connexion"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
@@ -121,7 +121,7 @@ if (isset($_POST)) {
                         }
                     } else {
                         //on affiche une erreur à l'utilisateur
-                        $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Login:{$login};Mot de passe:{$password_form}|Erreur:{$sqlData->getConnectionErreurMessage()}");
+                        $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Login:{$login}|Erreur:{$sqlData->getConnectionErreurMessage()}");
                         $_SESSION["erreur_traitement_connexion"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
                         header("Location:page_connexion.php");
                     }

@@ -15,7 +15,9 @@ class MySQLDataManagement{
     private string $username;
     private string $password;
     private string $database;
-    private int $connection_erreur;
+    private int $connectionErreur;
+
+    private string $connectionErreurMessage;
     private array $lastConnexionParams;
 
     function __construct(string $par_hostname, string $par_username, string $par_pasword, string $par_database){
@@ -55,20 +57,17 @@ class MySQLDataManagement{
     {
         try{
             //on se connecteur à la base de données
-            $this->connector = new mysqli($this->hostname, $this->username, $this->password, $this->database);
+            $this->connector = @new mysqli($this->hostname, $this->username, $this->password, $this->database);
 
             //on stocke les informations de cette connexion dans le champ approprié
             $this->lastConnexionParams = [$this->hostname, $this->username, $this->password, $this->database];
 
-            $this->connection_erreur = 0;
+            $this->connectionErreur = 0;
         }
-        catch (\mysqli_sql_exception $e){
-            $this->connection_erreur = 1;
-
-            //on enregistre à l'aide d'un logger l'erreur, ainsi que les paramètres d'exécution
-            //$this->logger->error($e, array($this->hostname, $this->username, $this->password, $this->database), getTodayDate()->format("Ym"), getTodayDate()->format("Y-m-d H:i:s"));
+        catch (\Exception|\mysqli_sql_exception $e){
+            $this->connectionErreur = 1;
+            $this->connectionErreurMessage = $e;
         }
-
     }
 
     public function reconnect_to_bd(): void
@@ -85,12 +84,12 @@ class MySQLDataManagement{
 
     public function getConnectionErreur(): int
     {
-        return $this->connection_erreur;
+        return $this->connectionErreur;
     }
 
     public function getConnectionErreurMessage(): ?string
     {
-        return $this->connector->connect_error;
+        return $this->connectionErreurMessage;
     }
 
     public function get_users(string $table): int|array
@@ -143,58 +142,59 @@ class MySQLDataManagement{
         }
     }
 
-    public function check_mail_login_taken(string $table, string $mail, string $login): bool|int
+    public function check_mail_login_taken(string $table, string $mail, string $login): array
     {
+        $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
         try{
             $request = "select userId from $table where userMail = ? or login = ?";
 
             //on exécute la requete pour obtenir un user d'après un mail
-            if ($stmt = $this->connector->prepare($request)){
-                $stmt-> bind_param("ss", $mail, $login);
+            $stmt = $this->connector->prepare($request);
+            $stmt-> bind_param("ss", $mail, $login);
 
-                $stmt -> execute();
-                $results = $stmt -> get_result();
+            $stmt -> execute();
+            $results = $stmt -> get_result();
 
-                //on regarde si un ou plusieurs users ont été renvoyés
-                if ($results->num_rows != 0)
-                    return true;
-                return false;
-            }
-            return -1;
+            //on regarde si un ou plusieurs users ont été renvoyés
+            $listeResultParamsFunction["result"] = $results->num_rows != 0;
+
         }
         catch (\mysqli_sql_exception $e) {
-            //on enregistre à l'aide d'un logger l'erreur, ainsi que les paramètres d'exécution
-            //$this->logger->error($e, array($this->hostname, $this->username, $this->password, $this->database), getTodayDate()->format("Ym"), getTodayDate()->format("Y-m-d H:i:s"));
-            return -1;
+            //on enregistre dans la liste des param de result, le message d'erreur
+            $listeResultParamsFunction["error"] = 1;
+            $listeResultParamsFunction["errorMessage"] = $e;
         }
+
+        return $listeResultParamsFunction;
     }
 
-    public function get_user_by_mail(string $table, string $mail): int|array
+    public function get_user_by_mail(string $table, string $mail): array
     {
+        //on va stocker les différents paramètres de renvoi dans une liste
+        $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
+
         try{
             $request = "select userId, userMail, login, lastName, firstName, password, role from $table where userMail = ?";
 
             //on exécute la requete pour obtenir un user d'après un mail
-            if ($stmt = $this->connector->prepare($request)){
-                $stmt-> bind_param("s", $mail);
+            $stmt = $this->connector->prepare($request);
+            $stmt-> bind_param("s", $mail);
 
-                $stmt -> execute();
+            $stmt -> execute();
 
-                //on récupere les résultats sous forme d'une liste
-                $results = $stmt -> get_result();
-                //print_r($stmt -> errno);
-                //echo $stmt->error;
+            //on récupere les résultats sous forme d'une liste
+            $results = $stmt -> get_result();
 
-                //on retourne une liste de users mappée
-                return $this->mappMySqliResultToUser($results);
-            }
-            return -1;
+            //on retourne une liste de users mappée
+            $listeResultParamsFunction["result"] = $this->mappMySqliResultToUser($results);
         }
         catch (\mysqli_sql_exception $e) {
-            //on enregistre à l'aide d'un logger l'erreur, ainsi que les paramètres d'exécution
-            //$this->logger->error($e, array($this->hostname, $this->username, $this->password, $this->database), getTodayDate()->format("Ym"), getTodayDate()->format("Y-m-d H:i:s"));
-            return -1;
+            //on enregistre dans la liste des param de result, le message d'erreur
+            $listeResultParamsFunction["error"] = 1;
+            $listeResultParamsFunction["errorMessage"] = $e;
         }
+
+        return $listeResultParamsFunction;
     }
 
     public function get_user_by_login(string $table, string $login): array
@@ -331,86 +331,82 @@ class MySQLDataManagement{
         return $listeResultParamsFunction;
     }
 
-    public function verif_solidite_password(string $table, string $password): bool|int
+    public function verif_solidite_password(string $table, string $password): array
     {
+        //on va stocker les différents paramètres de renvoi dans une liste
+        $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
+
         try{
             $request = "select password from $table where password = ?";
 
             //on exécute la requete savoir si le mot de passe en parametre est présent dans la base de données des mdp faibles
-            if ($stmt = $this->connector->prepare($request)) {
-                $stmt->bind_param("s", $password);
-                $stmt->execute();
+            $stmt = $this->connector->prepare($request);
+            $stmt->bind_param("s", $password);
+            $stmt->execute();
 
+            $result = $stmt->get_result();
 
-                //echo $stmt->get_result()->num_rows;
-                $result = $stmt->get_result();
-                //print_r($result);
-                //print_r($result->fetch_array());
-                if ($result->num_rows == 0)
-                    return true;
-                else
-                    return false;
-            }
-            else{
-                return -1;
-            }
+            $listeResultParamsFunction["result"] = $result->num_rows == 0;
         }
         catch (\mysqli_sql_exception $e) {
-            //on enregistre à l'aide d'un logger l'erreur, ainsi que les paramètres d'exécution
-            //$this->logger->error($e, array($this->hostname, $this->username, $this->password, $this->database), getTodayDate()->format("Ym"), getTodayDate()->format("Y-m-d H:i:s"));
-            return -1;
+            //on enregistre dans la liste des param de result, le message d'erreur
+            $listeResultParamsFunction["error"] = 1;
+            $listeResultParamsFunction["errorMessage"] = $e;
         }
+
+        return $listeResultParamsFunction;
     }
 
-    public function insert_user(string $table, \PHP\User $userToInsert, string $userPassword): int
+    public function insert_user(string $table, \PHP\User $userToInsert, string $userPassword): array
     {
+        //on va stocker les différents paramètres de renvoi dans une liste
+        $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
+
         try{
             $request = "insert into $table(userId, userMail, login, lastName, firstName, password) values(?, ?, ?, ?, ?, ?)";
 
             //on exécute la requete pour insérer un nouvel user
-            if ($stmt = $this->connector->prepare($request)) {
-                $userId = $userToInsert->getId();
-                $login = $userToInsert->getLogin();
-                $userMail = $userToInsert->getUserMail();
-                $lastName = $userToInsert->getLastName();
-                $firstName = $userToInsert->getFirstName();
-                $stmt->bind_param("ssssss",$userId, $userMail, $login, $lastName, $firstName, $userPassword);
+            $stmt = $this->connector->prepare($request);
 
-                $stmt->execute();
+            $userId = $userToInsert->getId();
+            $login = $userToInsert->getLogin();
+            $userMail = $userToInsert->getUserMail();
+            $lastName = $userToInsert->getLastName();
+            $firstName = $userToInsert->getFirstName();
+            $stmt->bind_param("ssssss",$userId, $userMail, $login, $lastName, $firstName, $userPassword);
 
-                return 1;
-            }
-            else {
-                return -1;
-            }
+            $stmt->execute();
         }
         catch (\mysqli_sql_exception $e) {
-            //on enregistre à l'aide d'un logger l'erreur, ainsi que les paramètres d'exécution
-            //$this->logger->error($e, array($this->hostname, $this->username, $this->password, $this->database), getTodayDate()->format("Ym"), getTodayDate()->format("Y-m-d H:i:s"));
-
-            return -1;
+            //on enregistre dans la liste des param de result, le message d'erreur
+            $listeResultParamsFunction["error"] = 1;
+            $listeResultParamsFunction["errorMessage"] = $e;
         }
+
+        return $listeResultParamsFunction;
     }
 
-    public function delete_user(string $tableUser, string $userId): int
+    public function delete_user(string $tableUser, string $userId): array
     {
+        //on va stocker les différents paramètres de renvoi dans une liste
+        $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
+
         try{
             $request = "delete from $tableUser where userId = ?";
 
             //on supprime le user de la table des users
-            if ($stmt = $this->connector->prepare($request)){
-                $stmt-> bind_param("s", $userId);
+            $stmt = $this->connector->prepare($request);
+            $stmt-> bind_param("s", $userId);
 
-                $stmt -> execute();
-                return 1;
-            }
-            return -1;
+            $stmt -> execute();
         }
         catch (\mysqli_sql_exception $e) {
-            //on enregistre à l'aide d'un logger l'erreur, ainsi que les paramètres d'exécution
-            //$this->logger->error($e, array($this->hostname, $this->username, $this->password, $this->database), getTodayDate()->format("Ym"), getTodayDate()->format("Y-m-d H:i:s"));
-            return -1;
+            //on enregistre dans la liste des param de result, le message d'erreur
+            $listeResultParamsFunction["error"] = 1;
+            $listeResultParamsFunction["errorMessage"] = $e;
         }
+
+        return $listeResultParamsFunction;
     }
 
     public function change_user_password(string $table, string $userId, string $newPassword): int
@@ -590,7 +586,7 @@ class MySQLDataManagement{
     }
 
     public function __sleep(){
-        return array('connector', 'hostname', 'username', 'password', 'database', 'connection_erreur', 'lastConnexionParams');
+        return array('connector', 'hostname', 'username', 'password', 'database', 'connectionErreur', 'connectionErreurMessage', 'lastConnexionParams');
     }
 
     public function __wakeup(){
