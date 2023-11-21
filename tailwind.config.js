@@ -6,7 +6,8 @@ module.exports = {
       colors: {
         'deepblue': '#002346',
         'lightblue' : '#BDD4E7',
-        'lyellow' : '#FFDC00'
+        'lyellow' : '#FFDC00',
+        'lgrey' : '#8693AB'
       }
     },
   },
