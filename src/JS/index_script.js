@@ -30,7 +30,7 @@ const observer1 = new IntersectionObserver((entries) => {
             arrow.classList.add('text-deepblue');
         }
     });
-}, { threshold: 0.5 });
+}, { threshold: 0.3 });
 
 const observer2 = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -40,7 +40,7 @@ const observer2 = new IntersectionObserver((entries) => {
             arrow.classList.remove('hidden');
         }
     });
-}, { threshold: 0.5 });
+}, { threshold: 0.3 });
 
 
 
