@@ -711,6 +711,11 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
   width: 100%;
 }
 
+.translate-y-\[200px\] {
+  --tw-translate-y: 200px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 @keyframes bounce {
   0%, 100% {
     transform: translateY(-25%);
@@ -870,6 +875,10 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.opacity-0 {
+  opacity: 0;
 }
 
 .shadow-md {

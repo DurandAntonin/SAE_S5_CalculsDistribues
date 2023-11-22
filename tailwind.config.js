@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js,php}"],
+  content: {
+  relative: true,
+  transform: (content) => content.replace(/taos:/g, ''),
+  files:["./src/**/*.{html,js,php}"]
+  },
   theme: {
     extend: {
       colors: {
