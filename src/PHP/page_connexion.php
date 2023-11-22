@@ -44,29 +44,33 @@ session_start();
                 class="px-8 w-full border rounded-xl py-2 text-black focus:outline-none">
                 </div>
             </div>
-            <div class="flex justify-center">
-                <input type="submit" name="submit_connexion_user" value="Valider" class="w-3/4 mt-6 py-2 rounded-xl animate-pulse bg-lgrey text-white focus:outline-none hover:bg-gray-800 focus:ring-4 focus:ring-gray-300">
+            <div class="flex justify-center mb-6 ">
+                <input type="submit" name="submit_connexion_user" value="Valider" class="w-3/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300">
             </div>
-        <p id="erreur_message">
-            <?php
-            //on affiche ou non le message renvoye par la page traitement
-            $message = null;
-            $style = "'color: #EB3939'";
-            if (!empty($_SESSION["erreur_traitement_connexion"])){
-                $message = $_SESSION["erreur_traitement_connexion"];
+            <div class="flex justify-center mb-6 ">
+                <p id="erreur_message">
+                <?php
+                //on affiche ou non le message renvoye par la page traitement
+                $message = null;
+                $style = "'color: #EB3939'";
+                if (!empty($_SESSION["erreur_traitement_connexion"])){
+                    $message = $_SESSION["erreur_traitement_connexion"];
 
-                //on supprime la variable dans la session
-                unset($_SESSION["erreur_traitement_connexion"]);
-            }
-            if ($message != null)
-                echo "<b style=$style>$message </b>";
-            ?>
-        </p>
+                    //on supprime la variable dans la session
+                    unset($_SESSION["erreur_traitement_connexion"]);
+                }
+                if ($message != null)
+                    echo "<b style=$style>$message </b>";
+                ?>
+                </p>
+            </div>
+            <hr class="mb-6 border-t" />
 
                 <a href="page_inscription.php" class="text-sm text-opacity-200 float-right mt-6 mb-4 text-white hover:underline"> Pas encore inscrit ? </a> 
                 <a href="../index.html" class="text-sm text-opacity-200 float-left mt-6 mb-8 text-white hover:underline"> Mot de passe oublié ??</a> 
     </form>  
     </div>
+
 
 </body>
 </html>
