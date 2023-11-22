@@ -38,7 +38,7 @@
   "loggerConf" : {
     "loggerFile" : {
         "logLevel" : "ERROR",
-        "logRepo" : "C:\\Users\\AntoninDurand\\Documents\\SAE_S5_CalculsDistribues\\src\\LOGS\\logs_error\\",
+        "logRepo" : "C:\\Users\\AntoninDurand\\Documents\\SAE_S5_CalculsDistribues\\src\\LOGS\\",
         "logToDb" : 0
     },
     "loggerDb" : {

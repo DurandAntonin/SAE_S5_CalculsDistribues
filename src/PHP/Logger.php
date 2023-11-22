@@ -13,8 +13,12 @@ class Logger
 
         //on instancie un objet LoggerInstance pour chaque clé de la liste config passé en paramètre
         $ListeNomsLoggerInstances = array_keys($parLoggerConf);
+        //print_r($ListeNomsLoggerInstances);
         foreach ($ListeNomsLoggerInstances as $nomLoggerInstance){
             $confLoggerInstance = $parLoggerConf[$nomLoggerInstance];
+            //echo "<pre>";
+            //print_r($confLoggerInstance);
+            //echo "</pre>";
             $logRepo = $confLoggerInstance["logRepo"];
             $logToDb = $confLoggerInstance["logToDb"];
             $mySqliConnector = null;
@@ -23,16 +27,18 @@ class Logger
             $logLevel = $confLoggerInstance["logLevel"];
             //on instancie un type enumere en fonction du level du logger obtenu
             $logLevelEnum = Enum_niveau_logger::fromName($logLevel);
-
+            //echo var_dump($logToDb);
 
             //on regarde si le logger doit aussi écrire dans la base de données
             if ($logToDb == 1){
+                $configBd = $confLoggerInstance["configDbConnexion"];
+
                 //on instancie un objet pour se connecter à la bd
-                $bdHostName = $confLoggerInstance["bdHostname"];
-                $bdUserName = $confLoggerInstance["bdUsername"];
-                $bdPassword = $confLoggerInstance["bdPassword"];
-                $bdDataBase = $confLoggerInstance["bdDatabase"];
-                $tableName = $confLoggerInstance["Logging"];
+                $bdHostName = $configBd["bdHostname"];
+                $bdUserName = $configBd["bdUsername"];
+                $bdPassword = $configBd["bdPassword"];
+                $bdDataBase = $configBd["bdDatabase"];
+                $tableName = $configBd["bdTableLogging"];
 
                 $mySqliConnector = new MySQLDataManagement($bdHostName, $bdUserName, $bdPassword, $bdDataBase);
             }
@@ -51,7 +57,7 @@ class Logger
         //on parcourt la liste des loggerInstance dans le champ de type liste
         $ListeNomsLoggerInstances = array_keys($this->listLoggerInstances);
         foreach ($ListeNomsLoggerInstances as $nomLoggerInstance){
-            $string .= "$nomLoggerInstance\n";
+            $string .= "$nomLoggerInstance : {$this->listLoggerInstances["$nomLoggerInstance"]}<br>";
         }
 
         return $string;

@@ -7,16 +7,21 @@ include_once "Utility.php";
 include_once "Enum_fic_logs.php";
 include_once "MySQLDataManagement.php";
 include_once "Enum_niveau_logger.php";
+include_once "Logger.php";
+include_once "LoggerInstance.php";
 
 session_start();
 
 //on charge les variables d'environnement
 $VARIABLES_GLOBALES = import_config();
 
-//print_r($_POST);
-
 //on regarde si une requete post a été envoyé
 if (isset($_POST)) {
+    //on crée un objet logger en fonction de la configuration enregistrée
+    $logger = new Logger($VARIABLES_GLOBALES["loggerConf"]);
+    $loggerBd = $logger->getLoggerInstance("loggerDb");
+    $loggerFile = $logger->getLoggerInstance("loggerFile");
+
     //on regarde si le user a rempli le formulaire de connexion
     if (!empty($_POST["submit_connexion_user"])) {
 
@@ -37,41 +42,34 @@ if (isset($_POST)) {
                 if (strlen($login) >= $VARIABLES_GLOBALES["taille_champ_texte"][0] && strlen($login) <= $VARIABLES_GLOBALES["taille_champ_texte"][1]
                     && strlen($password_form) >= $VARIABLES_GLOBALES["taille_champ_mdp"][0] && strlen($password_form) <= $VARIABLES_GLOBALES["taille_champ_mdp"][1]
                 ) {
-                    //on créé un objet logger pour permettre d'avoir une trace des erreurs et autre
-                    //$logger = new Logger("../LOGS/logs_programme/", Enum_niveau_logger::ERROR);
-
                     //on se connecte à la bd
                     $sqlData = new MySQLDataManagement($VARIABLES_GLOBALES["bd_hostname"], $VARIABLES_GLOBALES["bd_username"], $VARIABLES_GLOBALES["bd_password"], $VARIABLES_GLOBALES["bd_database"]);
-                    var_dump($sqlData);
+
                     //on vérifie qu'il n'y a aucune erreur
                     if ($sqlData->getConnectionErreur() == 0) {
-                        $user = $sqlData->get_user_by_login("Users", $login);
-                        //print_r($user);
+                        $resultGetLogin = $sqlData->get_user_by_login("Users", $login);
+
                         //on regarde si la requete s'est exécutée sans erreur
-                        if ($user != -1) {
+                        if ($resultGetLogin["error"] != 1) {
                             //on vérifie si un utilisateur avec ce login existe
-                            if (count($user) == 1) {
-                                //echo $user[0]-> str() . "<br>";
+                            if (count($resultGetLogin["result"]) == 1) {
 
                                 //on regarde maintenant si le mot de passe est celui associé à ce login
                                 $resultVerifPassword = $sqlData->verif_password("Users", $login, $password_form);
-                                if (gettype($resultVerifPassword) == "boolean") {
-                                    if ($resultVerifPassword == true) {
+                                if ($resultVerifPassword["error"] == 0) {
+                                    if ($resultVerifPassword["result"] == true) {
                                         //le user existe, on demarre une session et on le redirige en fonction de son role
                                         //et on écrit dans un fichier de log la connexion
-                                        $user = $user[0];
-                                        //print_r($user[0]);
-                                        //echo $user->getId();
+                                        $user = $resultGetLogin["result"][0];
 
-                                        //enregistrement_actions_dans_logs([$_SERVER['REMOTE_ADDR'], "Connexion d'un user inscrit", $user->getId(), getTodayDate()->format("Y-m-d H:i:s")], Enum_fic_logs::REPO_LOGS_USERS_ACTIONS, $VARIABLES_GLOBALES);
+                                        $loggerBd->info($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Connexion user {$user->getRole()->name}");
                                         $sqlData->close_connexion_to_db();
 
                                         //on stocke le logger dans la session
-                                        //$_SESSION["logger"] = serialize($logger);
+                                        $_SESSION["logger"] = serialize($logger);
 
                                         //on serialize l'objet pour pouvoir le passer dans la session
                                         $_SESSION["user"] = serialize($user);
-                                        //print_r($_SESSION);
                                         switch ($user->getRole()) {
                                             case Enum_role_user::USER:
                                                 //echo "Redirection page USER";
@@ -84,12 +82,13 @@ if (isset($_POST)) {
                                             default :
                                                 //role inconnu, on le redirige vers la page de connexion
                                                 //echo "Role inconnu";
+                                                $loggerFile->warning($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Role inconnu lors d'une tentative de connexion|User:{$user}");
                                                 header("Location:page_connexion.php");
                                         }
                                     } else {
                                         //le couple login/mpd entré par le user n'existe pas
                                         //echo "Mot de passe incorrect";
-                                        //enregistrement_actions_dans_logs([$_SERVER['REMOTE_ADDR'], getTodayDate()->format("Y-m-d H:i:s"), "login : $login || Password : $password_form"], Enum_fic_logs::REPO_LOGS_TENTATIVES_CONNEXIONS_USERS, $VARIABLES_GLOBALES);
+                                        $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Couple (login,mdp) inconnu dans la base de données|Login:{$login};Mot de passe:{$password_form}");
 
                                         $sqlData->close_connexion_to_db();
                                         $_SESSION["erreur_traitement_connexion"] = $VARIABLES_GLOBALES["notif_erreur_compte_introuvable"];
@@ -97,6 +96,7 @@ if (isset($_POST)) {
                                     }
 
                                 } else {
+                                    $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Login:{$login}|Erreur:{$resultVerifPassword["errorMessage"]}");
                                     $sqlData->close_connexion_to_db();
                                     //echo $resultVerifPassword;
                                     //on affiche une erreur à l'utilisateur
@@ -105,15 +105,15 @@ if (isset($_POST)) {
                                 }
                             } else {
                                 //le user n'existe pas, on le renvoie à la page de connexion
-                                //et on écrit dans un fichier de log la tentative de connexion échouée
                                 //echo "Login introuvable";
+                                $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Login inconnu|Login:{$login};Mot de passe:{$password_form}");
                                 $sqlData->close_connexion_to_db();
-                                //enregistrement_actions_dans_logs([$_SERVER['REMOTE_ADDR'], getTodayDate()->format("Y-m-d H:i:s"), "Login : $login && Password : $password_form"], Enum_fic_logs::REPO_LOGS_TENTATIVES_CONNEXIONS_USERS, $VARIABLES_GLOBALES);
 
                                 $_SESSION["erreur_traitement_connexion"] = $VARIABLES_GLOBALES["notif_erreur_compte_introuvable"];
                                 header("Location:page_connexion.php");
                             }
                         } else {
+                            $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Login:{$login}|Erreur:{$resultGetLogin["errorMessage"]}");
                             $sqlData->close_connexion_to_db();
                             //on affiche une erreur à l'utilisateur
                             $_SESSION["erreur_traitement_connexion"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
@@ -121,6 +121,7 @@ if (isset($_POST)) {
                         }
                     } else {
                         //on affiche une erreur à l'utilisateur
+                        $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Login:{$login}|Erreur:{$sqlData->getConnectionErreurMessage()}");
                         $_SESSION["erreur_traitement_connexion"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
                         header("Location:page_connexion.php");
                     }
@@ -145,11 +146,10 @@ if (isset($_POST)) {
         $user = User::defaultUser();
 
         //on enregistre dans un fichier de log la connexion d'un visiteur
-        //enregistrement_actions_dans_logs([$_SERVER['REMOTE_ADDR'], "Connexion d'un visiteur", getTodayDate()->format("Y-m-d H:i:s")], Enum_fic_logs::REPO_LOGS_USERS_ACTIONS, $VARIABLES_GLOBALES);
+        $loggerBd->info($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Connexion user {$user->getRole()->name}");
 
-        //on créé un logger et on le stocke le logger dans la session
-        //$logger = new Logger("../LOGS/logs_programme/", Enum_niveau_logger::ERROR);
-        //$_SESSION["logger"] = serialize($logger);
+        //on stocke le logger dans la session
+        $_SESSION["logger"] = serialize($logger);
 
         //on serialize l'objet pour pouvoir le passer dans la session
         $_SESSION["user"] = serialize($user);

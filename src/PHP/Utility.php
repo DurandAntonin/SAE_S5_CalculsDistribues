@@ -90,12 +90,14 @@ function getTodayDateWithMilliSeconds(): \DateTime
     return $now;
 }
 
-/**
- * @throws \Exception
- */
+
 function getTodayDate(): \DateTime
 {
-    $currentDate = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+    $currentDate = "";
+    try {
+        $currentDate = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+    } catch (\Exception $e) {
+    }
 
     return $currentDate;
 }

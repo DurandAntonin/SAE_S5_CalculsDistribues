@@ -15,7 +15,7 @@ class User
 
     public static function defaultUser(): static
     {
-        return new static("null", "null","Visiteur","null", "null",Enum_role_user::VISITEUR);
+        return new static(guidv4(), "null","Visiteur","null", "null",Enum_role_user::VISITEUR);
     }
 
     function __construct(string $parUserId, string $parUserMail, string $parLogin, string $parLastName, string $parFirstName, Enum_role_user $parRole){
