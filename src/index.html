@@ -19,7 +19,7 @@
     <header class="top-0 w-full shadow-md bg-lightblue">
         <nav class="flex justify-between items-center w-auto  mx-auto">
             <div class="container mx-auto flex items-center justify-between">
-              <div >
+              <div>
                 <img src="PICTURES/blitzcalc-high-resolution-logo-transparent.png" alt="Logo" class="h-20 mr-2">
               </div>
           
@@ -27,7 +27,6 @@
                 <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
                     <li>
                         <a href="PHP/page_inscription.php" class="text-deepblue mr-4 text-3xl relative w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center">S'inscrire</a>
-                        
                     </li>
                     <li>
                         <a href="PHP/page_connexion.php" class="text-deepblue text-3xl relative w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center">Se connecter</a>
@@ -41,7 +40,20 @@
         </nav>
     </header>
         <section class="w-full h-screen inline-flex flex-col justify-center items-center">
-                <h1 class="text-4xl text-deepblue">Bienvenue sur BlitzCalc.fr</h1>
+                <h1 class="text-6xl text-deepblue mb-3">Bienvenue sur BlitzCalc.fr</h1>
+                <p class="text-3xl text-deepblue text-center mx-24">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget egestas odio, sed commodo diam. Praesent a leo in ante consequat finibus. Ut et consectetur lacus. Proin efficitur nisi eget tristique varius. In at enim erat. Sed nec rutrum elit, eget pharetra sapien. </p>
+            <div class="inline-flex flex-row justify-center items-center w-screen">
+                <form action="PHP/page_inscription.php">
+                    <div class="text-center">
+                        <input type="submit" name="go_inscription" value="S'inscrire" class="w-64 mr-6 mt-6 py-2 rounded-xl bg-white text-deepblue focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300">
+                    </div>
+                </form>
+                <form action="PHP/page_inscription.php">
+                    <div class="text-center">
+                        <input type="submit" name="go_inscription" value="Essayer sans inscription" class="w-64 mt-6 ml-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300">
+                    </div>
+                </form>        
+            </div>
         </section>
         <section class="w-full h-screen bg-lyellow flex justify-center items-center">
             <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0" data-taos-offset="300">
