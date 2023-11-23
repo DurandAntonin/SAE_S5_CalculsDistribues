@@ -42,7 +42,7 @@ session_start();
               <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="password" name="password" type="password" placeholder="******************" required/>
             </div>
             <div class="mb-6 text-center">
-              <input type="submit" name="submit_connexion_user" value="Valider" class="w-3/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300">
+              <input type="submit" name="submit_connexion_user" value="Valider" class="w-3/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
             </div>
             <div class="flex justify-center mb-6 ">
                 <p id="erreur_message">

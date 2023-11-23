@@ -63,7 +63,7 @@ session_start();
               </div>
             </div>
             <div class="mb-6 text-center">
-              <input type="submit" name="submit_inscription" value="Valider" class="w-3/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300">
+              <input type="submit" name="submit_inscription" value="Valider" class="w-3/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
             </div>
             <div class="flex justify-center mb-6 ">
                 <p id="erreur_message">
