@@ -24,28 +24,25 @@ session_start();
     </header>
 
 
-<div class="h-screen flex items-center justify-center">
-
-    <form method="post" action="traitement_connexion.php" class="w-full md:w-1/3 bg-deepblue rounded-3xl items-center">
-        <h2 class="text-3xl text-center text-white my-8">
-            Se connecter
-        </h2>
-        <div class="px-12 pb-10">
-            <div class="w-full mb-10">
-                <div class="flex justify-center">
-                    <input type="text" id="login" name="login" min="2" max="25" placeholder="Username"
-        class="px-8 w-full border rounded-xl py-2 text-black focus:outline-none items-center"
-            /> 
-                </div>
-            </div>            
-        <div class="w-full mb-10">
-            <div class="flex justify-center">
-                    <input type="password" id="password" name="password"  min="6" max="25" placeholder="Password"
-                class="px-8 w-full border rounded-xl py-2 text-black focus:outline-none">
-                </div>
+    <div class="h-screen flex items-center justify-center">
+    <div class="container mx-auto">
+    <div class="my-12 flex items-center justify-center px-6">
+      <!-- Row -->
+     
+        <div class="w-full md:w-1/3 bg-deepblue rounded-3xl items-center">
+          <h2 class="text-3xl text-center text-white my-8">Se connecter</h2>
+          <form class="mb-4 rounded  px-8 pb-8 pt-6" method="post" action="traitement_connexion.php">
+            <div class="mb-4">
+                <label class="mb-2 block text-sm font-bold text-white" for="login"> Identifiant </label>
+                <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="login" name="login" placeholder="Identifiant" required/>
             </div>
-            <div class="flex justify-center mb-6 ">
-                <input type="submit" name="submit_connexion_user" value="Valider" class="w-3/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300">
+            
+            <div class="mb-4">
+              <label class="mb-2 block text-sm font-bold text-white" for="password"> Mot de passe </label>
+              <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="password" name="password" type="password" placeholder="******************" required/>
+            </div>
+            <div class="mb-6 text-center">
+              <input type="submit" name="submit_connexion_user" value="Valider" class="w-3/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300">
             </div>
             <div class="flex justify-center mb-6 ">
                 <p id="erreur_message">
@@ -70,7 +67,10 @@ session_start();
                 <a href="../index.html" class="text-sm text-opacity-200 float-left mt-6 mb-8 text-white hover:underline"> Mot de passe oublié ??</a> 
     </form>  
     </div>
-
+    </div>
+     </div>
+    </div>
+</div>
 
 </body>
 </html>
