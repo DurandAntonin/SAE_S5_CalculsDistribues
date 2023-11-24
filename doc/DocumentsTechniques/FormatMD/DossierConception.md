@@ -146,7 +146,7 @@ On analyse aussi les énumérations "Enum_fic_logs.php", "Enum_niveau_logger.php
 Pour faciliter l'analyse de ces dernieres, on réalise un diagramme de classe ne contenant que ces classes, leurs paramètres et leurs méthodes et ces énumérations. Il servira a modéliser les dépendances et les associations entre ces dernières. 
 
 <div style="text-align:center">
-<img src="../DiagrammesUML/PNG_DiagrammesUML" width="700px">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L1_diagClasses_2.PNG" width="700px">
 <p> Diagramme de classes du livrable 1 (2)</p>
 </div>
 

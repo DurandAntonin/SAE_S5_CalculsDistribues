@@ -17,11 +17,11 @@ class MySQLDataManagement{
     private string $database;
     private int $connection_erreur;
 
-    function __construct(string $par_hostname, string $par_username, string $par_pasword, string $par_database){
-        $this->hostname = $par_hostname;
-        $this->username = $par_username;
-        $this->password = $par_pasword;
-        $this->database = $par_database;
+    function __construct(string $parHostname, string $parUsername, string $parPassword, string $parDatabase){
+        $this->hostname = $parHostname;
+        $this->username = $parUsername;
+        $this->password = $parPassword;
+        $this->database = $parDatabase;
 
         //on se connecte à la base de données
         $this->connect_to_db();
