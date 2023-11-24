@@ -20,13 +20,13 @@ _Zehren William_
 
 
 
-<h2 style="color:#5d79e7; id=introduction"> Introduction </h2>
+<h2 style="color:#5d79e7; id=introduction ; page-break-before: always"> Introduction </h2>
 
 Ce document est un dossier de conception divisé en plusieurs parties. Il sera constitué de la conception architecturale et détaillée de chaque livrable. Il aura pour but de donner de renseigner toutes les informations sur la conception du site ainsi que des diagrammes permettant de la représenter graphiquement. 
 
 Le premier livrable consiste en la réalisation des bases du site web, à savoir les pages principales. Il consiste également en la configuration du kit cluster hat, et en l'installation du site web sur ce dernier. 
 
-<h2 style="color:#5d79e7; id=livr1"> Conception Livrable 1 </h2>
+<h2 style="color:#5d79e7; id=livr1 ; page-break-before: always"> Conception Livrable 1 </h2>
 
 <h3 style="color:#5d79e7; id=concepArchi"> Conception architecturale </h3>
 
@@ -95,7 +95,7 @@ Ensuite, représente les relations entre les packages dans le diagramme de packa
 
 <div style="text-align:center">
 <img src="../DiagrammesUML/PNG_DiagrammesUML/L1_diagPackages.PNG" width="700px">
-<p> Diagramme BD du livrable 1 </p>
+<p> Diagramme de packages du livrable 1 </p>
 </div>
 
 On va utiliser la vue composants-connecteurs pour modéliser le système.   
@@ -130,7 +130,7 @@ Enfin, les 2 machines sont reliées par une connexion internet, représentée pa
 <p> Diagramme de deploiement du livrable 1 </p>
 </div>
 
-<h3 style="color:#5d79e7; id=concepDeta"> Conception détaillée </h3> 
+<h3 style="color:#5d79e7; id=concepDeta ; page-break-before: always"> Conception détaillée </h3> 
 
 En ayant défini les dépendances et les associations entre tous les objets, on obtient alors une structure telle que : 
 
