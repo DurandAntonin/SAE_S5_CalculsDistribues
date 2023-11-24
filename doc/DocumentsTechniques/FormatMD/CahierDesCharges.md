@@ -13,9 +13,9 @@ _Zehren William_
     <li> <a href="#introduction"> Introduction  </a> </li>
     <li> <a href="#enonce"> Enoncé  </a> </li>
     <ol>
-        <li> <a href="#livrable_1"> Livrable 1 - Fondations du site </a> </li>
+        <li> <a href="#livrable_1"> Livrable 1 - Squelette du site </a> </li>
     </ol>
-    <li> <a href="#pres_requis"> Prés-requis  </a>  </li>
+    <li> <a href="#prerequis"> Prérequis  </a>  </li>
     <ol>
         <li> <a href="#connaissances_competences"> Connaissances et compétences requises  </a> </li>
         <li> <a href="#ressources_materielles"> Ressources matérielles  </a> </li>
@@ -26,20 +26,20 @@ _Zehren William_
 
 
 
-<h2 style="color:#5dbee7; page-break-before: always" id="introduction"> Introduction </h2>
+<h2 style="color:#5d79e7; page-break-before: always" id="introduction"> Introduction </h2>
 
 Ce document est un cahier des charges technique rédigé en collaboration avec le client.
 
 Il constitue la première étape de l’activité de l’analyse des besoins dans un projet informatique et permet de définir clairement les besoins de l’utilisateur exprimés dans sa version du cahier des charges.
 
-Le cahier des charges comporte une description précise des objectifs à résoudre, des fonctionnalités du logiciel à développer, i-e des exigences fonctionnelles de l’application dans la partie « Énoncé ». Puis dans la partie « Pré-requis », une définition des connaissances, compétences et ressources matérielles et logicielles pour mener à bien ce projet.
+Le cahier des charges comporte une description des objectifs à résoudre, des fonctionnalités du logiciel à développer et des modules qui s'y rattachent, i-e des exigences fonctionnelles de l’application dans la partie <a href="#enonce"> Enoncé</a>. Puis dans la partie <a href="#prerequis"> Prérequis</a>, une définition des connaissances, compétences et ressources matérielles et logicielles pour mener à bien ce projet.
 
-Enfin, dans la partie « Priorités » nous verrons les différentes fonctionnalités à développer en priorité, fixées au préalable avec le client.
+Enfin, dans la partie <a href="#priorites"> Priorités</a> nous verrons les différentes fonctionnalités à développer en priorité, fixées au préalable avec le client.
 Ce document est sujet-à modifications à la suite des entrevues avec les clients du projet.
 
-<h2 style="color:#5dbee7; page-break-before: always" id="enonce"> Enoncé </h2>  
+<h2 style="color:#5d79e7; page-break-before: always" id="enonce"> Enoncé </h2>  
 
-<h3 id="livrable_1"> Livrable 1 - Fondations du site </h3>
+<h3 id="livrable_1"> Livrable 1 - Squelette du site </h3>
 
 Le premier livrable consiste en premier lieu à l'initialisation du cluster rpi4 qui va héberger notre application.
 Puis, en second lieu, seront définis le logo et la charte graphique. Ces derniers resteront inchangés durant le reste du projet.
@@ -66,14 +66,14 @@ Ils pourront cliquer sur une icone profil leur permettant de se deconnecter et d
 Cliquer sur ce bouton ouvrira une pop up dans laquelle ils pourront donc voir et modifier leurs informations personnelles, comme leur adresse mail, login, nom, prénom ou mot de passe.
 Ils peuvent aussi supprimer leur compte.
 
-Les utilisateurs non inscrits auront aussi accès au site, mais y seront limités. 
-Ils pourront utiliser les modules de calculs comme les utilisateurs inscrits, mais n'auront pas accès aux performances améliorées du calcul distribué, les calculs seront ainsi plus longs à exécuter.
-Comme ils n'ont pas de compte utilisateur, il ne pourront pas accéder à la page profil.
+Les utilisateurs non inscrits auront aussi accès au site de manière limitée. 
+Ils pourront utiliser les modules de calculs comme les utilisateurs inscrits, mais n'auront pas accès aux performances améliorées du calcul distribué.
+Comme ils n'ont pas de compte utilisateur, ils ne pourront pas accéder à leur profil.
 
 L'administrateur quant à lui, n'aura accès qu'à une page qui lui sera dédiée, sur laquelle il pourra gérer les différents utilisateurs inscrits. Cette fonctionnalité sera développée dans le livrable 2. 
 
 
-<h2 style="color:#5dbee7; page-break-before: always" id="pres_requis"> Prés-requis </h2>
+<h2 style="color:#5d79e7; page-break-before: always" id="prerequis"> Prérequis </h2>
 
 <h3 id="connaissances_competences"> Connaissances et compétences requises </h3>
 
@@ -95,7 +95,7 @@ Enfin, il est requis d'avoir des bases en programmation distribuée, pour pouvoi
 
 Les ressouces matérielles que nous avons à disposition pour ce projet sont :
 
-- Un kit Cluster Hat + 4 Pi Zero
+- Un <a href=https://www.minimachines.net/actu/clusterhat-raspberry-pi-80208> Kit Cluster Hat + 4 Pi Zero</a> 
 - Une salle informatique à l'IUT avec des ordinateurs, des tableaux et projecteurs
 - Des ordinateurs personnels
 
@@ -105,6 +105,6 @@ Les ressources logicielles que nous à disposition pour ce projet sont :
 
 - La suite JetBrains avec l'IDE PhpStorm 
 
-<h2 style="color:#5dbee7; page-break-before: always" id="priorites"> Priorités </h2>
+<h2 style="color:#5d79e7; page-break-before: always" id="priorites"> Priorités </h2>
 
 Aucune tâche de développement n'a été définie comme prioritaire pour l'instant.

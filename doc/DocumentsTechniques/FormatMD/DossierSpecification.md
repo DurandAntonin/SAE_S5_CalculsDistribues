@@ -32,7 +32,7 @@ _Zehren William_
 
 
 
-<h2 style="color:#5dbee7; page-break-before: always" id="introduction"> Introduction </h2>
+<h2 style="color:#5d79e7; page-break-before: always" id="introduction"> Introduction </h2>
 
 Ce document est réalisé à partir du cahier des charges réécrit et permet d’afficher sous forme de pages les différentes fonctionnalités du site. Le site est également disponible en accédant au serveur apache installé sur le RaspBerryPi en écrivant l’adresse suivante dans un navigateur web : 85.170.243.176:80. Il faut au préalable être connecté au réseau de l’iut.
 
@@ -41,7 +41,7 @@ Dans la partie “Cas d’utilisations”, les différents cas d’utilisations 
 
 Pour rédiger ce dossier on utilisera la méthode d’Alistair Cockburn comme vu dans le cours. En effet cette méthode facilite la visualisation et la compréhension des différents cas d’utilisation et de leurs descriptions, non seulement pour les personnes qui écrivent les cas d’utilisation, mais aussi pour les personnes extérieures et n’ayant pas de notions à ce propos.
 
-<h2 style="color:#5dbee7; page-break-before: always" id="maquette"> Maquette </h2>
+<h2 style="color:#5d79e7; page-break-before: always" id="maquette"> Maquette </h2>
 
 Ci-dessous le lien vers la maquette de l'application.
 
@@ -49,7 +49,7 @@ https://www.figma.com/file/S1pEHXusOJ29ZLPUjzZCoc/BlitzCalc?type=design&t=ohczqN
 
 Avec l’outil Figma les boutons sont cliquables et permettent une première idée de la navigation sur le site. Les boutons utilisables sont les suivants : Inscription, Connexion, Retour, Valider, Mot de passe oublié, l’icône de profil, et le bouton déconnexion.  
 
-<h2 style="color:#5dbee7; page-break-before: always" id="cas_utilisations"> Cas d'utilisations </h2>
+<h2 style="color:#5d79e7; page-break-before: always" id="cas_utilisations"> Cas d'utilisations </h2>
 
 <h3 id="recit_utilisation"> Récit d'utilisation </h3>
 
