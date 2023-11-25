@@ -645,6 +645,11 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
   margin-bottom: 2rem;
 }
 
+.mx-4 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
 .mb-2 {
   margin-bottom: 0.5rem;
 }
@@ -683,6 +688,18 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
 
 .mt-6 {
   margin-top: 1.5rem;
+}
+
+.mr-10 {
+  margin-right: 2.5rem;
+}
+
+.mr-3 {
+  margin-right: 0.75rem;
+}
+
+.mt-5 {
+  margin-top: 1.25rem;
 }
 
 .block {
@@ -725,6 +742,38 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
   height: 100vh;
 }
 
+.h-10 {
+  height: 2.5rem;
+}
+
+.h-1\/2 {
+  height: 50%;
+}
+
+.h-5 {
+  height: 1.25rem;
+}
+
+.h-1\/6 {
+  height: 16.666667%;
+}
+
+.h-40 {
+  height: 10rem;
+}
+
+.h-6 {
+  height: 1.5rem;
+}
+
+.h-14 {
+  height: 3.5rem;
+}
+
+.h-11 {
+  height: 2.75rem;
+}
+
 .min-h-\[15vh\] {
   min-height: 15vh;
 }
@@ -758,12 +807,32 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
   width: 100vw;
 }
 
+.w-1\/6 {
+  width: 16.666667%;
+}
+
+.w-40 {
+  width: 10rem;
+}
+
+.w-6 {
+  width: 1.5rem;
+}
+
+.w-60 {
+  width: 15rem;
+}
+
 .max-w-prose {
   max-width: 65ch;
 }
 
 .translate-y-\[200px\] {
   --tw-translate-y: 200px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -795,6 +864,22 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
 
 .animate-rotate-y {
   animation: rotate-y 1s both;
+}
+
+@keyframes fade-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-2rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-down {
+  animation: fade-down 1s both;
 }
 
 .cursor-pointer {
@@ -835,6 +920,12 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
   gap: 2rem;
 }
 
+.space-y-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
+}
+
 .rounded {
   border-radius: 0.25rem;
 }
@@ -849,6 +940,10 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
 
 .rounded-xl {
   border-radius: 0.75rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
 }
 
 .rounded-t-lg {
@@ -868,9 +963,17 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
   border-top-width: 1px;
 }
 
+.border-r-4 {
+  border-right-width: 4px;
+}
+
 .border-red-500 {
   --tw-border-opacity: 1;
   border-color: rgb(239 68 68 / var(--tw-border-opacity));
+}
+
+.border-transparent {
+  border-color: transparent;
 }
 
 .bg-deepblue {
@@ -936,6 +1039,11 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
   padding-bottom: 0.5rem;
 }
 
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
 .pb-8 {
   padding-bottom: 2rem;
 }
@@ -985,6 +1093,10 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
   font-weight: 700;
 }
 
+.font-medium {
+  font-weight: 500;
+}
+
 .italic {
   font-style: italic;
 }
@@ -1013,6 +1125,11 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.text-red-600 {
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity));
+}
+
 .opacity-0 {
   opacity: 0;
 }
@@ -1032,6 +1149,12 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
 .drop-shadow-md {
   --tw-drop-shadow: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
 .\!delay-\[0ms\] {
@@ -1054,16 +1177,24 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
   transition-duration: 600ms;
 }
 
+.duration-200 {
+  transition-duration: 200ms;
+}
+
+.animate-normal {
+  animation-direction: normal;
+}
+
 .animate-duration-\[2000ms\] {
   animation-duration: 2000ms;
 }
 
-.animate-infinite {
-  animation-iteration-count: infinite;
+.animate-duration-\[400ms\] {
+  animation-duration: 400ms;
 }
 
-.animate-once {
-  animation-iteration-count: 1;
+.animate-infinite {
+  animation-iteration-count: infinite;
 }
 
 .animate-ease-in-out {
@@ -1126,6 +1257,16 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
   content: var(--tw-content);
 }
 
+.hover\:border-indigo-700:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(67 56 202 / var(--tw-border-opacity));
+}
+
+.hover\:border-red-600:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(220 38 38 / var(--tw-border-opacity));
+}
+
 .hover\:bg-deepblue:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(0 35 70 / var(--tw-bg-opacity));
@@ -1170,6 +1311,27 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
 .focus\:ring-gray-300:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(209 213 219 / var(--tw-ring-opacity));
+}
+
+@media (prefers-color-scheme: dark) {
+  .dark\:border-gray-700 {
+    --tw-border-opacity: 1;
+    border-color: rgb(55 65 81 / var(--tw-border-opacity));
+  }
+
+  .dark\:border-transparent {
+    border-color: transparent;
+  }
+
+  .dark\:bg-gray-800 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+  }
+
+  .dark\:text-white {
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity));
+  }
 }
 
 @media (min-width: 768px) {
