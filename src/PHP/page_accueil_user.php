@@ -30,7 +30,7 @@ $user = unserialize($_SESSION["user"]);
                     <?php
                 //seul le user inscrit peut voir son profil
                 if ($user->getRole() == PHP\Enum_role_user::USER){
-                    echo "<img src='../PICTURES/IconeProfil.png' alt='profile picture' class='h-10 mr-10' onclick='showProfil()'>   
+                    echo "<img src='../PICTURES/IconeProfil.png' alt='profile picture' class='h-10 mr-10' onclick='showProfil()' id='showProfil'>   
                     ";
                 }
                 ?>
