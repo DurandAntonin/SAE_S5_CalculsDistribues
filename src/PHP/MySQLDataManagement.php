@@ -9,16 +9,63 @@ include_once "User.php";
 include_once "Logger.php";
 include_once "Enum_role_user.php";
 
+/**
+ * Utilise l'API mysqli pour se connecter et exécuter des requêtes dans une base de données MySQL.
+ * Permet d'exécuter des requêtes d'insertion, de sélection et de suppression qui sont prédéfinies.
+ *
+ * @version 1.0
+ */
 class MySQLDataManagement{
+    /**
+     * @var mysqli $connector Interface se connectant à une base de données MySQL
+     */
     private mysqli $connector;
+
+    /**
+     * @var string $hostname Adresse IP du serveur MySQL
+     */
     private string $hostname;
+
+    /**
+     * @var string $username Utilisateur serveur MySQL
+     */
     private string $username;
+
+    /**
+     * @var string $password Mot de passe de l'utilisateur
+     */
     private string $password;
+
+    /**
+     * @var string $database Base de données utilisée comme contexte d'exécution des requêtes SQL
+     */
     private string $database;
+
+    /**
+     * @var int $connectionErreur Indique si une erreur est survenue lors de la connexion au serveur (Ex: 1 si une erreur est survenue)
+     */
     private int $connectionErreur;
 
-    private string $connectionErreurMessage;
+    /**
+     * @var string|null $connectionErreurMessage Message d'erreur de la connexion au serveur MySQL
+     */
+    private ?string $connectionErreurMessage;
+
+    /**
+     * @var array Liste des paramètres utilisés pour la dernière connexion au serveur. Les paramètres sont : hostname, username, password, database
+     */
     private array $lastConnexionParams;
+
+    /**
+     * Constructeur de la classe, Instancie une connexion à une base de données d'un serveur MySQL
+     *
+     * @param string $parHostname Adresse IP du serveur MySQL
+     * @param string $parUsername Utilisateur pour se connecteur au serveur
+     * @param string $parPassword Mot de passe de l'utilisateur
+     * @param string $parDatabase Base de données utilisée comme contexte d'exécution des requêtes SQL
+     *
+     * @version 1.0
+     */
 
     function __construct(string $parHostname, string $parUsername, string $parPassword, string $parDatabase){
         $this->hostname = $parHostname;
@@ -30,6 +77,14 @@ class MySQLDataManagement{
         $this->connect_to_db();
     }
 
+    /**
+     * Méthode magique, retourne l'objet sous forme d'une chaîne de caractères lorsque ce dernier est affiché. <br>
+     * Le champ $connector de l'objet est ignoré et ne sera pas stocké dans la chaîne de caractères.
+     *
+     * @return string L'objet retourné sous forme d'une chaîne de caractères
+     *
+     * @version 1.0
+     */
     function __toString(): string
     {
         $string = "";
@@ -53,6 +108,14 @@ class MySQLDataManagement{
         return $string;
     }
 
+    /**
+     * Ouvre une connexion au serveur MySQL.
+     * Si une erreur survient au cours de cette connexion comme une base de données non existante, ou un mouvais mot de passe pour l'utilisateur MySQL, le champ $connectionErreur est mis à 1 et le message d'erreur est stocké dans $connectionErreurMessage.
+     *
+     * @return void
+     *
+     * @version 1.0
+     */
     private function connect_to_db(): void
     {
         try{
@@ -70,6 +133,13 @@ class MySQLDataManagement{
         }
     }
 
+    /**
+     * Réouvre une connexion au serveur MySQL, avec les derniers paramètres de connexion utilisés
+     *
+     * @return void
+     *
+     * @version 1.0
+     */
     public function reconnect_to_bd(): void
     {
         if (count($this->lastConnexionParams) == 4){
@@ -82,16 +152,50 @@ class MySQLDataManagement{
         $this->connect_to_db();
     }
 
+    /**
+     * Getter du champ _connectionErreur_
+     *
+     * @return int
+     *
+     * @see MySQLDataManagement::$connectionErreur
+     *
+     * @version 1.0
+     */
     public function getConnectionErreur(): int
     {
         return $this->connectionErreur;
     }
 
+    /**
+     * Getter du champ _connectionErreurMessage_
+     * @return string|null
+     *
+     *  @see MySQLDataManagement::$connectionErreurMessage
+     *
+     * @version 1.0
+     */
     public function getConnectionErreurMessage(): ?string
     {
         return $this->connectionErreurMessage;
     }
 
+    /**
+     * Exécute une requête SQL pour récupérer l'ensemble des utilisateurs de la base de données
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *      '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *      '**errorMessage**' string : message d'erreur <br>
+     *      '**result**' null<br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les informations des utilisateurs
+     * @return array
+     *
+     * @see Logging
+     *
+     * @version 1.0
+     */
     public function get_users(string $table): int|array
     {
         try{
@@ -117,6 +221,24 @@ class MySQLDataManagement{
         }
     }
 
+    /**
+     * Exécute une requête SQL pour insérer un enregistrement log.
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *      '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *      '**errorMessage**' string : message d'erreur <br>
+     *      '**result**' null<br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les différents logs
+     * @param Logging $log Objet contenant les différentes informations d'un log
+     * @return array
+     *
+     * @see Logging
+     *
+     * @version 1.0
+     */
     public function insert_log(string $table, Logging $log)
     {
         try{
@@ -142,6 +264,25 @@ class MySQLDataManagement{
         }
     }
 
+    /**
+     * Exécute une requête SQL pour vérifier si un login ou une adresse mail est déjà utilisé par un compte utilisateur.
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *   [ <br>
+     *     '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *     '**errorMessage**' string : message d'erreur <br>
+     *     '**result**' null|boolean : boolean qui indique si des utilisateurs ont été renvoyés ou non <br>
+     *   ] <br>
+     *
+     * @param string $table Table SQL contenant les informations des utilisateurs
+     * @param string $mail Adresse mail à rechercher
+     * @param string $login Login à rechercher
+     *
+     * @return array Liste contenant les paramètres de retour, sous forme clé-valeur.
+     *
+     * @version 1.0
+     *
+     */
     public function check_mail_login_taken(string $table, string $mail, string $login): array
     {
         $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
@@ -168,6 +309,27 @@ class MySQLDataManagement{
         return $listeResultParamsFunction;
     }
 
+    /**
+     * Exécute une requête SQL pour retourner l'utilisateur identifié par une adresse mail.
+     *
+     * Les informations de l'utilisateur retourné sont mappées.
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *   [ <br>
+     *     '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *     '**errorMessage**' string : message d'erreur <br>
+     *     '**result**' null|boolean : boolean qui indique si des utilisateurs ont été renvoyés ou non <br>
+     *   ] <br>
+     *
+     * @param string $table Table SQL contenant les informations des utilisateurs
+     * @param string $mail Adresse mail à utiliser pour la recherche d'utilisateur
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @see MySQLDataManagement::mappMySqliResultToUser()
+     *
+     * @version 1.0
+     */
     public function get_user_by_mail(string $table, string $mail): array
     {
         //on va stocker les différents paramètres de renvoi dans une liste
@@ -197,6 +359,27 @@ class MySQLDataManagement{
         return $listeResultParamsFunction;
     }
 
+    /**
+     * Exécute une requête SQL pour retourner l'utilisateur identifié par un login.
+     *
+     * Les informations de l'utilisateur retourné sont mappées.
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null|boolean : boolean qui indique si des utilisateurs ont été renvoyés ou non<br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les informations des utilisateurs
+     * @param string $login Login à utiliser pour la recherche d'utilisateur
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @see MySQLDataManagement::mappMySqliResultToUser()
+     *
+     * @version 1.0
+     */
     public function get_user_by_login(string $table, string $login): array
     {
         //on va stocker les différents paramètres de renvoi dans une liste
@@ -225,6 +408,29 @@ class MySQLDataManagement{
         return $listeResultParamsFunction;
     }
 
+    /**
+     * Exécute une requête SQL pour retourner les utilisateurs dont leur adresse mail contient une chaîne de caractères donnée. <br>
+     * Une pagination est utilisée pour ne retourner qu'une partie des utilisateurs trouvés selon une limite et un offset.
+     *
+     * Les informations de l'utilisateur retourné sont mappées, puis converties en format Json.
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null|string : Liste des utilisateurs convertis en format Json<br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les informations des utilisateurs
+     * @param string $mailAppro Chaîne de caractères
+     * @param Pagination $pagination Pagination pour la requête SQL
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @see MySQLDataManagement::mappMySqliResultToUser()
+     *
+     * @version 1.0
+     */
     public function get_users_by_mail_appro(string $table, string $mailAppro, Pagination $pagination): string|int
     {
         try{
@@ -270,6 +476,25 @@ class MySQLDataManagement{
         }
     }
 
+    /**
+     * Exécute une requête SQL pour retourner le nombre d'utilisateurs dont leur adresse mail contient une chaîne de caractères donnée.
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null|int : nombre d'utilisateurs retournés<br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les informations des utilisateurs
+     * @param string $mailAppro Chaîne de caractères
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @see MySQLDataManagement::mappMySqliResultToUser()
+     *
+     * @version 1.0
+     */
     public function get_number_users_by_mail(string $table, string $mailAppro): string|int
     {
         try{
@@ -298,7 +523,24 @@ class MySQLDataManagement{
         }
     }
 
-    public function verif_password(string $table, string $login, string $password_to_verify): mysqli_result|array
+    /**
+     * Exécute une requête SQL pour vérifier si le mot de passe d'un utilisateur est identique à un mot de passe donné.
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null|boolean : indique si le mot de passe est identique ou non<br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les informations des utilisateurs
+     * @param string $login Login de l'utilisateur
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @version 1.0
+     */
+    public function verif_password(string $table, string $login, string $password_to_verify): array
     {
         //on va stocker les différents paramètres de renvoi dans une liste
         $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
@@ -331,6 +573,24 @@ class MySQLDataManagement{
         return $listeResultParamsFunction;
     }
 
+    /**
+     * Exécute une requête SQL pour tester si un mot de passe est fragile. <br>
+     * Il est considéré comme fragile s'il figure dans la table SQL.
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null|boolean : indique si le mot de passe est fragile ou non<br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant des mots de passe considérés comme fragiles
+     * @param string $password Mot de passe à tester
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @version 1.0
+     */
     public function verif_solidite_password(string $table, string $password): array
     {
         //on va stocker les différents paramètres de renvoi dans une liste
@@ -357,7 +617,27 @@ class MySQLDataManagement{
         return $listeResultParamsFunction;
     }
 
-    public function insert_user(string $table, \PHP\User $userToInsert, string $userPassword): array
+    /**
+     * Exécute une requête SQL pour insérer un nouvel utilisateur dans la base de données. <br>
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null <br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant des mots de passe considérés comme fragiles
+     * @param User $userToInsert Objet contenant les informations de l'utilisateur
+     * @param string $userPassword Mot de passe de l'utilisateur
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @see User
+     *
+     * @version 1.0
+     */
+    public function insert_user(string $table, User $userToInsert, string $userPassword): array
     {
         //on va stocker les différents paramètres de renvoi dans une liste
         $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
@@ -386,6 +666,23 @@ class MySQLDataManagement{
         return $listeResultParamsFunction;
     }
 
+    /**
+     * Exécute une requête SQL pour supprimer un utilisateur de la base de données. <br>
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null <br>
+     *  ] <br>
+     *
+     * @param string $tableUser Table SQL contenant les informations des utilisateurs
+     * @param string $userId Identifiant de l'utilisateur
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @version 1.0
+     */
     public function delete_user(string $tableUser, string $userId): array
     {
         //on va stocker les différents paramètres de renvoi dans une liste
@@ -409,6 +706,24 @@ class MySQLDataManagement{
         return $listeResultParamsFunction;
     }
 
+    /**
+     * Exécute une requête SQL pour modifier le mot de passe d'un utilisateur. <br>
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null <br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les informations des utilisateurs
+     * @param string $userId Identifiant de l'utilisateur
+     * @param string $newPassword Nouveau mot de passe de l'utilisateur
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @version 1.0
+     */
     public function change_user_password(string $table, string $userId, string $newPassword): int
     {
         try{
@@ -430,6 +745,24 @@ class MySQLDataManagement{
         }
     }
 
+    /**
+     * Exécute une requête SQL pour modifier le login d'un utilisateur. <br>
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null <br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les informations des utilisateurs
+     * @param string $userId Identifiant de l'utilisateur
+     * @param string $newPassword Nouveau login de l'utilisateur
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @version 1.0
+     */
     public function change_user_login(string $table, string $userId, string $newLogin): int
     {
         try{
@@ -464,6 +797,24 @@ class MySQLDataManagement{
         }
     }
 
+    /**
+     * Exécute une requête SQL pour modifier l'adresse mail d'un utilisateur. <br>
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null <br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les informations des utilisateurs
+     * @param string $userId Identifiant de l'utilisateur
+     * @param string $newPassword Nouvelle addresse mail de l'utilisateur
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @version 1.0
+     */
     public function change_user_mail(string $table, string $userId, string $newMail): int
     {
         try{
@@ -498,6 +849,24 @@ class MySQLDataManagement{
         }
     }
 
+    /**
+     * Exécute une requête SQL pour modifier le nom d'un utilisateur. <br>
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null <br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les informations des utilisateurs
+     * @param string $userId Identifiant de l'utilisateur
+     * @param string $newPassword Nouveau nom de l'utilisateur
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @version 1.0
+     */
     public function change_user_lastname(string $table, string $userId, string $newLastName): int
     {
         try{
@@ -528,6 +897,24 @@ class MySQLDataManagement{
         }
     }
 
+    /**
+     * Exécute une requête SQL pour modifier le prénom d'un utilisateur. <br>
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null <br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les informations des utilisateurs
+     * @param string $userId Identifiant de l'utilisateur
+     * @param string $newPassword Nouveau prénom de l'utilisateur
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @version 1.0
+     */
     public function change_user_firstname(string $table, string $userId, string $newFirstName): int
     {
         try{
@@ -558,11 +945,28 @@ class MySQLDataManagement{
         }
     }
 
+    /**
+     * Ferme la connexion au serveur MySQL
+     *
+     * @return void
+     *
+     * @version 1.0
+     */
     public function close_connexion_to_db(): void
     {
         $this->connector -> close();
     }
 
+    /**
+     *
+     *
+     * @param mysqli_result $result
+     * @return array
+     *
+     * @see User
+     *
+     * @version 1.0
+     */
     private function mappMySqliResultToUser(mysqli_result $result): array
     {
         $listUsers = array();
@@ -585,10 +989,24 @@ class MySQLDataManagement{
         return $listUsers;
     }
 
+    /**
+     * Méthode magique qui retourne l'objet sérializé pour permettre son stockage dans la variable **$_SESSION**.
+     *
+     * @return string[] Liste des champs de l'objet
+     *
+     * @version 1.0
+     */
     public function __sleep(){
         return array('connector', 'hostname', 'username', 'password', 'database', 'connectionErreur', 'connectionErreurMessage', 'lastConnexionParams');
     }
 
+    /**
+     * Méthode magique utilisée lors de la recréation de l'objet.
+     *
+     * @return void
+     *
+     * @version 1.0
+     */
     public function __wakeup(){
     }
 }
