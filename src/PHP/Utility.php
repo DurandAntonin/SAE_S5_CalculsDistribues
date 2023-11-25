@@ -4,25 +4,65 @@ namespace PHP;
 
 require_once "Enum_fic_logs.php";
 
-//vérifie si le champ est de taille valide
+/**
+ * Vérifie si un champ d'un formulaire en HTML est valide, i.e si le nombre de caractères du champ est compris dans une borne.
+ *
+ * @param string $champ Chaîne de caractères d'un champ
+ * @param array $taille_champ Liste contenant les bornes minimum et maximum utilisées pour valider un champ
+ *
+ * @return bool true si le champ est valide, false sinon
+ *
+ * @version 1.0
+ */
 function verif_validite_champ(string $champ, array $taille_champ): bool
 {
     return count($taille_champ) == 2 && $taille_champ[0] <= strlen($champ) && $taille_champ[1] >= strlen($champ);
 }
 
-//hash un string passé en paramètre selon l'algo PASSWORD_BCRYPT
+
+/**
+ * Hash une chaîne de caractères selon l'algorithme CRYPT_BLOWFISH.
+ * Cette fonction est utilisée pour hasher le mot de passe d'un utilisateur.
+ *
+ * @param string $string_to_hash Chaîne de caractères à hasher
+ * @return string La chaîne de caractères hashée
+ *
+ * @version 1.0
+ */
 function hash_password(string $string_to_hash): string
 {
     return password_hash($string_to_hash, PASSWORD_BCRYPT);
 }
 
-//vérifie si le string est identique au string haché
+/**
+ * Vérifie si une chaîne de caractère non hashée est identique ou non à une chaîne de caractères hashée.
+ *
+ *
+ * @param string $string_to_verify La chaîne de caractères à comparer.
+ * @param string $password_hash La chaîne de caractères hashée
+ * @return bool
+ *
+ * @version 1.0
+ */
 function compare_passwords(string $string_to_verify, string $password_hash): bool
 {
     return password_verify($string_to_verify, $password_hash);
 }
 
-//fonction qui enregistre des LOGS dans un répertoire
+/**
+ * Enregistre un log dans un répertoire en fonction de son type, spécifiée par l'énumération _$repo_logs_
+ *
+ * @deprecated 1.0 N'est plus utilisée dans le code, sera enlevée dans la version suivante
+ *
+ * @param array $info_a_stocker
+ * @param Enum_fic_logs $repo_logs
+ * @param array $VARS
+ * @return void
+ *
+ * @see Enum_fic_logs
+ *
+ * @version 1.0
+ */
 function enregistrement_actions_dans_logs(array $info_a_stocker, Enum_fic_logs $repo_logs, array $VARS): void
 {
     $repo_a_utiliser = "";
@@ -73,7 +113,14 @@ function enregistrement_actions_dans_logs(array $info_a_stocker, Enum_fic_logs $
     }
 }
 
-//fonction qui importe la config
+
+/**
+ * Importe la configuration de l'application stockée dans un fichier Json, puis la convertie en une liste associative.
+ *
+ * @return mixed
+ *
+ * @version 1.0
+ */
 function import_config(){
     //on recupere le contenu du fichier de config
     $file_content = file_get_contents("../Config/config.json");
@@ -83,6 +130,15 @@ function import_config(){
     return json_decode($file_content, true);
 }
 
+/**
+ * Retourne la date d'aujourd'hui selon l'horaire UTC+1 (Europe/Paris), avec des microsecondes
+ *
+ * @deprecated 1.0 N'est plus utilisée dans le code, sera enlevée dans la version suivante
+ *
+ * @return \DateTime
+ *
+ * @version 1.0
+ */
 function getTodayDateWithMilliSeconds(): \DateTime
 {
     date_default_timezone_set("Europe/Paris");
@@ -91,6 +147,13 @@ function getTodayDateWithMilliSeconds(): \DateTime
 }
 
 
+/**
+ * Retourne la date d'aujourd'hui selon l'horaire UTC+1 (Europe/Paris)
+ *
+ * @return \DateTime Date
+ *
+ * @version 1.0
+ */
 function getTodayDate(): \DateTime
 {
     $currentDate = "";
@@ -102,22 +165,41 @@ function getTodayDate(): \DateTime
     return $currentDate;
 }
 
-function guidv4($data = null) {
-    // Generate 16 bytes (128 bits) of random data or use the data passed into the function.
+/**
+ * Génère un UUID compatible avec la RFC 4122.
+ *
+ * @param $data
+ *
+ * @return string L'UUID généré sous forme d'une chaîne de caractères
+ *
+ * @throws \Exception
+ *
+ * @version 1.0
+ */
+function guidv4($data = null): string
+{
     $data = $data ?? random_bytes(16);
     assert(strlen($data) == 16);
 
-    // Set version to 0100
     $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
-    // Set bits 6-7 to 10
     $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
 
-    // Output the 36 character UUID.
     return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
 }
 
-function deleteSpecialCharacters(string $str_to_analyse, array $listSpecialCharacters): array|string
+/**
+ * Enlève une liste de caractères spéciaux dans une chaîne de caractères. <br>
+ * Ex : te't ==> tet, si le ' est indiqué comme caractère spécial à enlever
+ *
+ * @param string $strToAnalyse Chaîne de caractères à analyser
+ * @param array $listSpecialCharacters Liste des caractères spéciaux à enlever dans la chaîne de caractères
+ *
+ * @return string La chaîne de caractères sans les caractères spéciaux
+ *
+ * @version 1
+ */
+function deleteSpecialCharacters(string $strToAnalyse, array $listSpecialCharacters): string
 {
     //on enleve les caracteres spéciaux du string entrée en paramètre
-    return str_replace($listSpecialCharacters, "", $str_to_analyse);
+    return str_replace($listSpecialCharacters, "", $strToAnalyse);
 }

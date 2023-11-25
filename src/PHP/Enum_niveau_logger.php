@@ -2,6 +2,11 @@
 
 namespace PHP;
 
+/**
+ * Priorités possibles pour un log
+ *
+ * @version 1.0
+ */
 enum Enum_niveau_logger : int
 {
     case DEBUG = 1;
@@ -28,7 +33,15 @@ enum Enum_niveau_logger : int
         return array_combine(self::values(), self::names());
     }
 
-    public static function fromName($name): Enum_niveau_logger
+    /**
+     * Renvoi une valeur de l'énumération correspondant au string donné en paramètre
+     *
+     * @param string $name Priorité (Ex : $name = 'DEBUG')
+     * @return Enum_niveau_logger
+     *
+     * @version 1.0
+     */
+    public static function fromName(string $name): Enum_niveau_logger
     {
         foreach (self::cases() as $status) {
             if( $name === $status->name ){
