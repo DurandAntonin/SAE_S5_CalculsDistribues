@@ -561,8 +561,6 @@ class MySQLDataManagement{
                 //on compare les 2 mots de passes
                 $listResults = $results->fetch_array(MYSQLI_ASSOC);
                 $listeResultParamsFunction["result"] = compare_passwords($password_to_verify, $listResults["password"]);
-            } else {
-                $listeResultParamsFunction["result"] = false;
             }
         }
         catch (\mysqli_sql_exception $e) {
@@ -724,25 +722,65 @@ class MySQLDataManagement{
      *
      * @version 1.0
      */
-    public function change_user_password(string $table, string $userId, string $newPassword): int
+    public function change_user_password(string $tableUsers, string $tableWeakPasswords, string $userId, string $newPassword): array
     {
-        try{
-            $request = "update $table set password = ? where userId = ?";
+        //on va stocker les différents paramètres de renvoi dans une liste
+        $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
 
-            //on exécute la requete pour changer le mot de passe d'un user
-            if ($stmt = $this->connector->prepare($request)){
-                $stmt-> bind_param("ss", $newPassword, $userId);
+        //on vérifie déjà si le nouveau mdp est différent de l'ancien
+        $resultVerifPassword = $this->verif_password($tableUsers, $userId, $newPassword);
 
-                $stmt -> execute();
-                return 1;
+        if ($resultVerifPassword["error"] == 0){
+
+            if ($resultVerifPassword["result"]){
+                //on regarde si le nouveau mdp est fragile
+                $resultSoliditePassword = $this->verif_solidite_password($tableWeakPasswords, $newPassword);
+
+                if ($resultSoliditePassword["error"] == 0){
+
+                    if ($resultSoliditePassword["result"]){
+                        try{
+                            //on met à jour le mdp
+                            $request = "update $tableUsers set password = ? where userId = ?";
+
+                            //on exécute la requete pour changer le mot de passe d'un user
+                            if ($stmt = $this->connector->prepare($request)){
+                                $stmt-> bind_param("ss", $newPassword, $userId);
+
+                                $stmt -> execute();
+                            }
+                        }
+                        catch (\mysqli_sql_exception $e) {
+                            //on enregistre dans la liste des param de result, le message d'erreur
+                            $listeResultParamsFunction["error"] = 1;
+                            $listeResultParamsFunction["errorMessage"] = $resultSoliditePassword["errorMessage"];
+
+                            return $listeResultParamsFunction;
+                        }
+                    }
+                    else{
+                        $listeResultParamsFunction["result"] = -2;
+
+                        return $listeResultParamsFunction;
+                    }
+
+                }
             }
-            return -1;
+            else{
+                $listeResultParamsFunction["result"] = -1;
+
+                return $listeResultParamsFunction;
+            }
         }
-        catch (\mysqli_sql_exception $e) {
-            //on enregistre à l'aide d'un logger l'erreur, ainsi que les paramètres d'exécution
-            //$this->logger->error($e, array($this->hostname, $this->username, $this->password, $this->database), getTodayDate()->format("Ym"), getTodayDate()->format("Y-m-d H:i:s"));
-            return -1;
+        else{
+            //on enregistre dans la liste des param de result, le message d'erreur
+            $listeResultParamsFunction["error"] = 1;
+            $listeResultParamsFunction["errorMessage"] = $resultVerifPassword["errorMessage"];
+
+            return $listeResultParamsFunction;
         }
+
+        return $listeResultParamsFunction;
     }
 
     /**
