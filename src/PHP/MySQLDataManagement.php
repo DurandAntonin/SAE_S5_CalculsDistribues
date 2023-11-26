@@ -650,7 +650,7 @@ class MySQLDataManagement{
 
             $userId = $userToInsert->getId();
             $login = $userToInsert->getLogin();
-            $userMail = $userToInsert->getUserMail();
+            $userMail = $userToInsert->getMail();
             $lastName = $userToInsert->getLastName();
             $firstName = $userToInsert->getFirstName();
             $stmt->bind_param("ssssss",$userId, $userMail, $login, $lastName, $firstName, $userPassword);

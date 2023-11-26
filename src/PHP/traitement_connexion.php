@@ -57,7 +57,7 @@ if (isset($_POST)) {
                                 //on regarde maintenant si le mot de passe est celui associé à ce login
                                 $resultVerifPassword = $sqlData->verif_password("Users", $login, $password_form);
                                 if ($resultVerifPassword["error"] == 0) {
-                                    if ($resultVerifPassword["result"] == true) {
+                                    if ($resultVerifPassword["result"]) {
                                         //le user existe, on demarre une session et on le redirige en fonction de son role
                                         //et on écrit dans un fichier de log la connexion
                                         $user = $resultGetLogin["result"][0];
