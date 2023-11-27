@@ -68,6 +68,8 @@ if (!empty($_POST["submit_profil"])){
                     ];
 
                     $errorDuringChange = false;
+                    $messageForUser = "";
+
                     foreach ($listeInfoUsersAChanger as $fieldName => $changed){
                         //s'il y a eu une erreur durant le changement d'une information personnelle de l'utilisateur, on arrête
                         if ($errorDuringChange)
@@ -91,9 +93,10 @@ if (!empty($_POST["submit_profil"])){
                                             $loggerBd->info($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Changement user login|{$userLoginBeforeChange}->{$login}");
                                         }
                                         else{
+                                            $errorDuringChange = true;
+
                                             //le login est deja pris, on affiche une erreur à l'utilisateur
-                                            $_SESSION["notif_page_user"] = $VARIABLES_GLOBALES["notif_erreur_login_existant"];
-                                            header("Location:page_profil.php");
+                                            $messageForUser = $VARIABLES_GLOBALES["notif_erreur_login_existant"];
                                         }
                                     }
                                     else{
@@ -118,9 +121,10 @@ if (!empty($_POST["submit_profil"])){
                                             $loggerBd->info($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Changement user mail|{$userMailBeforeChange}->{$mail}");
                                         }
                                         else{
-                                            //le login est deja pris, on affiche une erreur à l'utilisateur
-                                            $_SESSION["notif_page_user"] = $VARIABLES_GLOBALES["notif_erreur_login_existant"];
-                                            header("Location:page_profil.php");
+                                            $errorDuringChange = true;
+
+                                            //le mail est deja pris, on affiche une erreur à l'utilisateur
+                                            $messageForUser = $VARIABLES_GLOBALES["notif_erreur_mail_existant"];
                                         }
                                     }
                                     else{
@@ -141,7 +145,6 @@ if (!empty($_POST["submit_profil"])){
 
                                         //on enregistre cet événement à l'aide du logger
                                         $loggerBd->info($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Changement user last name|{$userLastNameBeforeChange}->{$lastName}");
-
                                     }
                                     else{
                                         $errorDuringChange = true;
@@ -161,7 +164,6 @@ if (!empty($_POST["submit_profil"])){
 
                                         //on enregistre cet événement à l'aide du logger
                                         $loggerBd->info($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Changement user first name|{$userFirstNameBeforeChange}->{$firstName}");
-
                                     }
                                     else{
                                         $errorDuringChange = true;
@@ -178,12 +180,14 @@ if (!empty($_POST["submit_profil"])){
 
                                         //on regarde si le changement n'a pas eu lieu car le mdp est identique à l'ancien
                                         if ($resultChangeUserPassword["result"] == -1){
-                                            break;
+                                            $errorDuringChange = true;
+                                            $messageForUser = $VARIABLES_GLOBALES["notif_erreur_champs_mdp_identiques"];
                                         }
 
                                         //on regarde si le changement n'a pas eu lieu car le mdp est trop fragile
                                         elseif ($resultChangeUserPassword["result"] == -2){
-                                            break;
+                                            $errorDuringChange = true;
+                                            $messageForUser = $VARIABLES_GLOBALES["notif_erreur_champs_mdp_fragile"];;
                                         }
 
                                         else{
@@ -208,15 +212,15 @@ if (!empty($_POST["submit_profil"])){
                     //on remet l'objet user avec ou non les nouvelles info
                     $_SESSION["user"] = serialize($user);
 
-                    //on affiche une erreur à l'utilisateur si on n'a pas réussi à prendre en compte tous les changements
-                    if ($errorDuringChange){
-                        $_SESSION["notif_page_user"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
-                    }
+                    //on renvoit un message pour l'utilisateur en fonction de s'il y a eu une erreur ou non
+                    if ($errorDuringChange && $messageForUser == "")
+                        $messageForUser = $_SESSION["notif_erreur_interne"];
                     else{
-                        //pas d'erreur, on indique au user que les changements ont été effectués
-                        $_SESSION["notif_page_user"] = $VARIABLES_GLOBALES["notif_changements_reussis"];
+                        $messageForUser = $VARIABLES_GLOBALES["notif_changements_reussis"];
                         $_SESSION["message_positif"] = true;
                     }
+
+                    $_SESSION["notif_page_user"] = $messageForUser;
 
                     header("Location:page_profil.php");
                 }
