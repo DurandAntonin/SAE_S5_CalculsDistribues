@@ -724,7 +724,7 @@ class MySQLDataManagement{
      *
      * @version 1.0
      */
-    public function delete_user(string $tableUser, string $userId): array
+    public function supprimer_user(string $tableUser, string $userId): array
     {
         //on va stocker les différents paramètres de renvoi dans une liste
         $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
