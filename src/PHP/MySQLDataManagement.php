@@ -295,17 +295,40 @@ class MySQLDataManagement{
     {
         $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
         try{
-            $request = "select userId from $table where userMail = ? or login = ?";
+            //on regarde si le login est déjà pris
+            $resultRequeteGetUserByLogin = $this->get_user_by_login($table, $login);
 
-            //on exécute la requete pour obtenir un user d'après un mail
-            $stmt = $this->connector->prepare($request);
-            $stmt-> bind_param("ss", $mail, $login);
+            //on regarde si la requete a renvoyée une erreur
+             if ($resultRequeteGetUserByLogin["error"] == 1){
+                 $listeResultParamsFunction["error"] = 1;
+                 $listeResultParamsFunction["errorMessage"] = $resultRequeteGetUserByLogin["errorMessage"];
+             }
 
-            $stmt -> execute();
-            $results = $stmt -> get_result();
+             //on regarde si la requete retourne au moins 1 user
+             else if (count($resultRequeteGetUserByLogin["result"]) > 0){
+                 $listeResultParamsFunction["result"] = -1;
+             }
 
-            //on regarde si un ou plusieurs users ont été renvoyés
-            $listeResultParamsFunction["result"] = $results->num_rows != 0;
+             else{
+                 //le login n'est pas pris, on regarde maintenant si l'adresse mail est prise
+                 $resultRequeteGetUserByMail = $this->get_user_by_mail($table, $mail);
+
+                 //on regarde si la requete a renvoyée une erreur
+                 if ($resultRequeteGetUserByMail["error"] == 1){
+                     $listeResultParamsFunction["error"] = 1;
+                     $listeResultParamsFunction["errorMessage"] = $resultRequeteGetUserByMail["errorMessage"];
+                 }
+
+                 //on regarde si la requete retourne au moins 1 user
+                 else if (count($resultRequeteGetUserByMail["result"]) > 0){
+                     $listeResultParamsFunction["result"] = -2;
+                 }
+
+                 else{
+                     //le login et le mail ne sont pas pris, on indique ca dans le parametre result
+                     $listeResultParamsFunction["result"] = 1;
+                 }
+             }
 
         }
         catch (\mysqli_sql_exception $e) {
