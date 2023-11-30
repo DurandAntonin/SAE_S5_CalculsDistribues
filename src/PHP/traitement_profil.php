@@ -440,6 +440,6 @@ elseif (!empty($_POST["submit_change_firstname"])){
     }
 }
 else{
-    header("Location:page_profil.php");
+    header("Location:page_accueil_user.php");
 }
 ?>
