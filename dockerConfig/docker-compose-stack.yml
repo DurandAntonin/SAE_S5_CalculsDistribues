@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  serviceweb:
+    image: phpimage
+    ports:
+      - "80:80"
+    deploy:
+      replicas: 4
+
+  servicebd:
+    image: mysqlimage
+    ports:
+      - "3306:3306"
+    deploy:
+      placement:
+        constraints: 
+          - node.hostname==p4
+      replicas: 1
+

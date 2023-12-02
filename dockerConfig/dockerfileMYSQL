@@ -1,0 +1,5 @@
+FROM --platform=linux/arm/v7 clover/mysql
+
+COPY ./database_script.sql /docker-entrypoint-initdb.d/
+
+

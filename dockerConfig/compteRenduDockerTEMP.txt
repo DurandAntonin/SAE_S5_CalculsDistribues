@@ -1,0 +1,88 @@
+Création d'un nouveau dossier dockerConfig au niveau de src dans le RPI Host pour mettre les dockerfile et tous les fichiers de conf
+
+Ecriture des différents dockerfile (et donc des images personnalisées) : 
+Ces dockerfiles doivent etre des fichiers sans extension pour pouvoir fonctionner
+
+- dockerfilePHP (va intégrer le site) :
+
+FROM php:8.2-apache
+
+COPY ./src/ /var/www/html/
+
+RUN chown -R www-data:www-data /var/www/html/
+
+
+
+- dockerfileMYSQL (va intégrer la BD) :
+
+FROM --platform=linux/arm/v7 clover/mysql
+
+COPY database_script.sql /docker-entrypoint-initdb.d/
+
+
+
+Dans le dockerfileMYSQL, il faut choisir une image mysql compatible avec l'architecture 32 bits armv7 de notre raspberry. Cependant cette derniere n'existant pas dans la version officielle de l'image mysql, il a fallu choisir une image non officielle.
+Nous avons donc décidé de choisir l'image clover/mysql. Cette image ayant plus de 10000 pulls, nous en avons déduit qu'elle était fiable et fonctionnelle.
+
+le service SQL sera répliqué sur pi4 : 172.19.181.4 
+Pour pouvoir utiliser la BD, il faut donc modifier le fichier config.json et mettre l'adresse de pi4 dans le champ bd_hostname
+
+En premier lieu, on va donc tester le bon fonctionnement des images précédemment créées sur le RPI Host. 
+
+On commence donc par build les images a partir des dockerfiles préalablement créés : 
+
+
+
+docker build -t phpimage -f dockerConfig/dockerfilePHP . (pour le dockerfilePHP)(Il faut se mettre dans la directory ou se situe src)
+
+Lorsqu'on a build l'image php on peut la run pour démarrer un container avec la commande suivante : 
+
+docker run -p 80:80 --name phpcont -dit phpimage
+
+puis on peut se connecter en bash sur ce dernier : 
+
+docker exec -it phpcont bash
+
+à partir de la, on doit modifier les fichiers php-ini-development et php-ini-production, et décommenter les lignes concernant l'utilisation de mysql pour permettre l'utilisation de mysql par php. 
+
+On doit également installer mysqli sur le container pour faire fonctionner mysql avec php
+
+On peut désormais sauvegarder notre image grace a la commande : docker save phpimage > phpimage.tar
+
+
+docker build -t sqlimage -f ../../dockerConfig/dockerfileMYSQL . (pour le dockerfileMYSQL)(il faut se mettre dans la directory ou se situe le fichier .sql)
+
+Lorsqu'on a build l'image sql on peut la run pour démarrer un container avec la commande suivante : 
+
+docker run --name sqlcont -dit sqlimage
+
+puis on peut se connecter en sh sur ce dernier : 
+
+docker exec -it sqlcont sh
+
+ensuite, on execute la commande pour accèder a mysql : 
+
+mysql -h 127.0.0.1 -u root -proot 
+
+on doit alors executer la commande \. database_script.sql pour executer le script et créer nos bases de données selon notre script.
+
+Après avoir fait cela, on peut commit l'image pour la conserver en utilisant la commande : docker commit 9b78fdc16f0b mysqlimage 
+
+On peut également sauvegarder l'image grace à la commande : docker save mysqlimage > mysqlimage.tar
+
+
+
+Après avoir vérifié le bon fonctionnement de nos conteneurs et des deux services php et mysql, on peut créer la swarm : 
+
+On commence donc par initialiser la swarm dans le RPI Host avec la commande : 
+
+on execute donc la commande docker swarm init puis on fait rejoindre les workers (et donc les 4 RPI0) avec la commande docker swarm join --token "token". 
+
+Pour faciliter l'installation des services on utilise donc un fichier compose.yml pour effectuer un docker stack deploy 
+
+le stack deploy ressemble donc à : 
+
+
+
+Cependant, il faut installer les images sur tous les nodes concernés par le docker stack deploy 
+
