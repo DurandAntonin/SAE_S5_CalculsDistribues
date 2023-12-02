@@ -40,7 +40,7 @@ session_start();
             
               <div class="mb-4 md:mb-0 md:mr-2">
                 <label class="mb-2 block text-sm font-bold text-white" for="first_name"> Prénom </label>
-                <input class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="first_name" id="first_name" type="text" placeholder="Prénom" required/>
+                <input class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="first_name" name="first_name" type="text" placeholder="Prénom" required/>
               </div>
               <div class="md:ml-2">
                 <label class="mb-2 block text-sm font-bold text-white" for="last_name"> Nom </label>
