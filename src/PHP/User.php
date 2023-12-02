@@ -124,7 +124,7 @@ class User
      *
      * @version 1.0
      */
-    public function getMail(): string
+    public function getUserMail(): string
     {
         return $this->userMail;
     }
@@ -186,7 +186,7 @@ class User
      *
      * @version 1.0
      */
-    public function setMail(string $newUserMail): void
+    public function setUserMail(string $newUserMail): void
     {
         $this->userMail = $newUserMail;
     }
