@@ -177,6 +177,7 @@ class MySQLDataManagement{
      */
     public function getConnectionErreurMessage(): ?string
     {
+        echo $this->connectionErreur;
         return $this->connectionErreurMessage;
     }
 

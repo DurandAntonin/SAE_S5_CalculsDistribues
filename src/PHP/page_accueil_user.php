@@ -118,6 +118,7 @@ if ($user->getRole() == Enum_role_user::USER){
                 <h2 class="text-3xl text-center text-white my-8">Mon profil </h2>
                 <ion-icon name="close" class="text-white right-0 my-9 mr-6 top-0 absolute text-3xl cursor-pointer" onclick="showFormProfile()"></ion-icon>
                 <form class="rounded  px-8 pb-8 pt-6" method="post" action="traitement_profil.php" id="formProfil">
+                <input type="hidden" id="submit_supprimer_compte" name="submit_supprimer_compte" value="">
                     <div class="mb-4">
                         <label class="mb-2 block text-sm font-bold text-white" for="login"> Identifiant </label>
                         <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="login" name="login" placeholder="Identifiant" value="<?php echo $user->getLogin(); ?>" required/>

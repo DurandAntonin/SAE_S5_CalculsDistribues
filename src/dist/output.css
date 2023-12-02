@@ -758,6 +758,10 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
   width: 4rem;
 }
 
+.w-2\/4 {
+  width: 50%;
+}
+
 .w-3\/4 {
   width: 75%;
 }
@@ -789,10 +793,6 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
 
 .w-screen {
   width: 100vw;
-}
-
-.w-2\/4 {
-  width: 50%;
 }
 
 .max-w-prose {
@@ -1260,19 +1260,14 @@ html.js :where([class*="taos:"]:not(.taos-init)) {
   color: rgb(0 35 70 / var(--tw-text-opacity));
 }
 
-.hover\:text-white:hover {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.hover\:text-lyellow:hover {
-  --tw-text-opacity: 1;
-  color: rgb(255 220 0 / var(--tw-text-opacity));
-}
-
 .hover\:text-red-500:hover {
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
+}
+
+.hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .hover\:underline:hover {
