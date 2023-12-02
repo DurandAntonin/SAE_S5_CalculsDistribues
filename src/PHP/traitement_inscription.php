@@ -64,27 +64,8 @@ if (isset($_POST) && !empty($_POST["submit_inscription"])){
                         //var_dump($resultCheckMailLoginTaken);
 
                         if ($resultCheckMailLoginTaken["error"] == 0){
-
-                            //on regarde si le login est déjà associé à un compte
-                            if ($resultCheckMailLoginTaken["result"] == -1) {
-                                $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription annulée:login déjà pris|Login:{$login}");
-                                $sqlData->close_connexion_to_db();
-                                //echo "Compte existant";
-                                $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_login_existant"];
-                                header("Location:page_inscription.php");
-                            }
-
-                            //on regarde si le mail est déjà associé à un compte
-                            elseif ($resultCheckMailLoginTaken["result"] == -2){
-                                $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription annulée:mail déjà pris|Mail:{$mail}");
-                                $sqlData->close_connexion_to_db();
-                                //echo "Compte existant";
-                                $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_mail_existant"];
-                                header("Location:page_inscription.php");
-                            }
-
-                            else{
-                                //le login et le mail ne sont pas pris
+                            //on renvoie le user à la page d'inscription si l'adresse mail et/ou le login est dejà associé à un compte
+                            if (!$resultCheckMailLoginTaken["result"]) {
                                 //on vérifie si le mdp n'est pas présent dans la table des mot de passe fragiles
                                 $resultVerifSoliditePasword = $sqlData->verif_solidite_password("Weak_passwords", $password_form);
 
@@ -145,6 +126,13 @@ if (isset($_POST) && !empty($_POST["submit_inscription"])){
                                     $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
                                     header("Location:page_inscription.php");
                                 }
+                            }
+                            else{
+                                $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription annulée:mail et/ou login déjà pris|Login:{$login};Mail:{$mail}");
+                                $sqlData->close_connexion_to_db();
+                                //echo "Compte existant";
+                                $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_compte_existant"];
+                                header("Location:page_inscription.php");
                             }
                         }
                         else{
