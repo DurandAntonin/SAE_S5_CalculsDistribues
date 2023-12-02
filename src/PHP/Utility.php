@@ -121,7 +121,8 @@ function enregistrement_actions_dans_logs(array $info_a_stocker, Enum_fic_logs $
  *
  * @version 1.0
  */
-function import_config(){
+function import_config(): mixed
+{
     //on recupere le contenu du fichier de config
     $file_content = file_get_contents("../Config/config.json");
     //echo $file_content;
