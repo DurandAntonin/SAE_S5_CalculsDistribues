@@ -182,29 +182,168 @@ Nous aurons un service web qui sera le front-end et le back-end du site. Il aura
 Ensuite, un autre service sera la base de données MySql de l'application, avec 1 réplica.
 Enfin, il faut créer deux autres services identiques aux précédents, mais qui seront utilisées pour tester les changements effectués dans l'application avant son déploiement.
 
-<h3 id="III_creationDockerSwarm"> B) Création du docker swarm</h3>
-
-On installe docker s'il ne l'est pas encore.
-Ensuite, on initialise un docker swarm, et on rajoute 4 workers, où le manager est le RasperryPi principal, et chaque worker est un RaspberryPi zero.
-L'objectif ensuite est d'avoir 1 stack contenant l'application déployée et 1 autre stack contenant l'application en production. 
+Avant d'initialiser la swarm, il nous faut tester les différentes images sur le RPI Host, pour s'assurer de leur bon fonctionnement. On créé donc un nouveau dossier dockerConfig au même niveau que le src dans le RPI Host pour y mettre tous les dockerfiles et les différents fichiers de configuration. 
 
 <h3 id="III_creationImageWeb"> C) Création de l'image pour le serveur web </h3>
 
 Pour créer le service web de notre application, nous avons besoin d'une image docker personnalisée.
 
 Cette dernière se base sur l'image existante **php:8.2-apache**, car elle contient un serveur apache capable de lire et d'exécuter des fichiers PHP.
-Elle doit contenir l'ensemble du front et back-end de l'application, soit les fichiers du site web.
+Elle doit contenir l'ensemble du front et back-end de l'application, soit les fichiers du site web. 
 
-Ensuite, on crée notre image personnalisée à l'aide d'un fichier **dockerfile**.
+Ensuite, on crée notre image personnalisée à l'aide d'un fichier **dockerfile**. Ce dockerfile va contenir des instructions pour nous permettre de créer une image standardisée et contenant les différents fichiers dont nous avons besoin sans devoir les intégrer manuellement à nos conteneurs. Chaque conteneur / service créé à partir de cette image personnalisée sera par conséquent identique et contiendra tout le nécéssaire pour l'éxécution de notre site web. 
+
+En premier lieu, on se retrouve donc avec un dockerfile nommé dockerfilePHP tel que : 
+
+```dockerfile
+
+FROM --platform=linux/arm/v7 php:8.2-apache
+
+COPY ./src/ /var/www/html/
+
+RUN chown -R www-data:www-data /var/www/html/
+
+```
+Ce dockerfile va donc créer une image personnalisée à partir de l'image existante **php:8.2-apache**, puis va copier l'intégralité du site se trouvant dans le répertoire src dans le répertoire /var/www/html/ du conteneur utilisant cette image. Ce répertoire sert en effet à accueilir des sites web. Enfin, on donne les droits de lecture dans le fichier /var/www/html/ à l'utilisateur. 
+
+L'image php:8.2-apache étant compatible avec différentes architectures, on précise qu'on utilise l'architecture arm/v7 32 bits de nos RPI et qu'il faut donc importer une image compatible avec cette dernière. 
+
+Après avoir écrit ce dockerfile, on va donc tester son bon fonctionnement sur le RPI Host. 
+
+On commence donc par build l'image qui découle de ce dockerfile : 
+
+```bash
+docker build -t phpimage -f dockerConfig/dockerfilePHP .
+```
+Cette commande nous permet donc de créer une image personnalisée nommée phpimage à partir du dockerfile dockerfilePHP
+
+Il faut par ailleurs se situer au niveau du répertoire src pour éxécuter cette commande. 
+
+Lorsqu'on a build l'image, on peut la run, et donc démarrer un conteneur avec la commande suivante : 
+
+```bash
+docker run -p 80:80 --name phpcont -dit phpimage
+```
+Cette commande nous permet donc de créer un conteneur en tache de fond à partir de l'image personnalisée phpimage. Ce conteneur est publié sur les ports 80:80 (port 80 du containeur sur le port 80 de la machine hote, en l'occurence le RPI Host) et est nommé phpcont. 
+
+<img src="Images/ImagesRapports/PHPContRapportInstall.PNG">
+
+Après le lancement du container, on peut se connecter dessus en bash avec la commande :
+
+```bash
+ docker exec -it phpcont bash
+```
+
+De la, il nous faut modifier les fichiers php-ini-development et php-ini-production, et décommenter les lignes concernant mysql. Cela aura pour effet de permettre l'utilisation de mysql par php.
+
+On doit également installer mysqli sur le containeur pour faire fonctionner mysql avec php. 
+
+On modifie donc le dockerfile pour nous permettre d'appliquer ces modifications à nos RPI zero plus tard. 
+
+```dockerfile
+FROM --platform=linux/arm/v7 php:8.2-apache
+
+COPY ./src/ /var/www/html/
+
+COPY ./dockerConfig/php.ini-development /usr/local/etc/php/
+
+COPY ./dockerConfig/php.ini-production /usr/local/etc/php/
+
+RUN chown -R www-data:www-data /var/www/html/
+
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+```
+On copie les versions modifiées des fichiers php-ini-development et php-ini-production dans leur emplacement présumé dans les conteneurs qui seront créés à partir de ce dockerfile.
+
+Après avoir réalisé toutes ces étapes, le container de test accède et nous permet d'accèder à notre site web. 
+
+ <img src="Images/ImagesRapports/SiteRapportInstall.PNG">
+
+La dernière version de notre site web n'étant pas encore installée au moment de la création de la branch, on ne voit que l'ancienne version du site web. Ce problème sera traité plus tard dans ce compte rendu. 
+
+Etant donné le fait que le conteneur de test sur lequel nous avons effectué nos manipulations convenait finalement à nos attentes, nous avons préféré créer une archive de l'image du container, pour pouvoir la recopier à l'identique et la réutiliser pour la création du service sur les RPI0. 
+
+Nous avons donc sauvegardé l'image grâce à la commande : 
+
+```bash
+docker save phpimage > phpimage.tar
+```
+
+On sauvegarde donc l'image sous la forme d'une archive tar qui sera utilisée pour créer notre service PHP sur nos RPI zero. 
 
 <h3 id="III_creationImageBaseDonnees"> D) Création de l'image pour la base de données </h3>
 
-Pour créer le service bd de notre application, nous avons besoin d'une image docker personnalisée.
+Après avoir créé le service web de notre application et confirmé son bon fonctionnement, nous avons pu passer à la réalisation du service bd de notre application. 
+
+Pour créer le service bd de notre application, nous avons aussi besoin d'une image docker personnalisée.
 
 Cette dernière se base sur l'image existante **mysql**, car elle contient déjà un système de gestion de base de données (SGBD).
 Elle doit contenir la base de données de notre application.
 
 Ensuite, on crée notre image personnalisée à l'aide d'un fichier **dockerfile**.
+
+On créé donc un dockerfile dockerfileMYSQL tel que : 
+
+```dockerfile
+FROM --platform=linux/arm/v7 clover/mysql
+
+COPY database_script.sql /docker-entrypoint-initdb.d/
+```
+
+Dans le dockerfile dockerfileMYSQL, il nous a fallu choisir une image mysql compatible avec l'architecture 32 bits armv7 de notre raspberry. Cependant cette dernière n'existant pas dans la version officielle de l'image mysql, il a fallu choisir une image non officielle.
+Nous avons donc décidé de choisir l'image clover/mysql. Cette image ayant plus de 10000 pulls, nous en avons déduit qu'elle était fiable et fonctionnelle.
+
+Il nous faut également placer notre script .sql dans un répertoire bien particulier du conteneur qui sera créé à partir de cette image, le répertoire **/docker-entrypoint-initdb.d/**. Ce répertoire permet d'exécuter facilement le script .sql pour créer la base de données après la création du container. 
+
+On peut alors, comme pour notre dockerfilePHP, commencer par build l'image à partir du dockerfileMYSQL : 
+
+```bash
+docker build -t sqlimage -f ../../dockerConfig/dockerfileMYSQL .
+```
+On créé donc une image personnalisée nommée sqlimage à partir du dockerfileMYSQL. Cette commande doit être exécutée a l'endroit ou est situé le script .sql. 
+
+Lorsqu'on a build l'image sql on peut la run pour démarrer un container avec la commande suivante : 
+
+```bash
+docker run --name mysqlcont -dit sqlimage
+```
+
+On créé donc un conteneur nommé mysqlcont à partir de l'image sqlimage. 
+Puis on se connecte en sh (bash n'existant pas sur cette image) à ce conteneur : 
+
+```bash
+docker exec -it mysqlcont sh
+```
+
+Après cela, il faut executer la commande suivant pour se accèder à mysql : 
+
+```bash
+mysql -h 127.0.0.1 -u root -proot
+```
+
+Il faut alors exécuter la commande ``` \. database_script.sql ``` dans le repertoire /docker-entrypoint-initdb.d/ cité plus tot. 
+Cette commande va nous permettre d'exécuter notre script .sql pour créer notre base de données. 
+
+Suite à ca, on arrive à correctement créer notre base de données selon notre script sql. 
+
+ <img src="Images/ImagesRapports/SQLContRapportInstall.PNG">
+
+la commande ``` \. database_script.sql ``` ne pouvant pas être exécutée dans le dockerfile avec l'attribut RUN, nous n'avons pas eu d'autre choix que de récupérer l'image liée à notre conteneur de test mysqlcont. 
+
+
+On exécute ensuite une nouvelle fois la commande suivante : 
+
+```bash
+docker save mysqlimage > mysqlimage.tar
+```
+
+On récupère une archive tar contenant l'image qui sera utilisée pour créer notre service SQL sur les RPI zero. 
+
+<h3 id="III_creationDockerSwarm"> B) Création du docker swarm</h3>
+
+On installe docker s'il ne l'est pas encore.
+Ensuite, on initialise un docker swarm, et on rajoute 4 workers, où le manager est le RasperryPi principal, et chaque worker est un RaspberryPi zero.
+L'objectif ensuite est d'avoir 1 stack contenant l'application déployée et 1 autre stack contenant l'application en production. 
 
 <h3 id="III_creationStackAppli"> E) Création du stack de l'application </h3>
 
