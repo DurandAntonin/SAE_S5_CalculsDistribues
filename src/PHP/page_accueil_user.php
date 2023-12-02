@@ -1,8 +1,19 @@
 <?php
+
+namespace PHP;
+
+
+include_once "Logger.php";
+include_once "LoggerInstance.php";
+include_once "MySQLDataManagement.php";
+include_once "Enum_niveau_logger.php";
+
 //on controle l'acces a cette page
 require_once "verif_identite_page_user.php";
 
 $user = unserialize($_SESSION["user"]);
+
+
 //echo $user->str();
 ?>
 
@@ -39,7 +50,6 @@ $user = unserialize($_SESSION["user"]);
                 ?>
         </nav>
     </header>
-
     <?php
         if ($user->getRole() == PHP\Enum_role_user::USER){
             echo "<div class='hidden top-0 float-right w-60 px-5 py-3 mr-2 dark:bg-gray-800 bg-deepblue rounded-lg shadow border dark:border-transparent animate-fade-down animate-duration-[400ms] animate-ease-in-out' id='popUpProfil'>
@@ -74,7 +84,6 @@ $user = unserialize($_SESSION["user"]);
                     ";
                 }
                 ?>
-
 <div class="h-screen items-center justify-center hidden" id="popUpFormProfil">
     <div class="container mx-auto">
     <div class="my-12 flex items-center justify-center px-6">

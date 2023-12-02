@@ -3,8 +3,7 @@ create database BlitzCalc_DB;
 
 use BlitzCalc_DB;
 
-drop table if exists Friends;
-drop table if exists User_activity;
+drop table if exists Logging;
 drop table if exists Users;
 drop table if exists Weak_passwords;
 
@@ -32,8 +31,7 @@ create table Logging(
     date datetime not null,
     ip varchar(15) not null,
     description text not null,
-    constraint pk_User_activity primary key (logId),
-    constraint fk_User_activity_Users foreign key(userId) references Users(userId)
+    constraint pk_User_activity primary key (logId)
 );
 
 create table Weak_passwords(
