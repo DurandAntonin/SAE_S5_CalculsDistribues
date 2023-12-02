@@ -7,56 +7,70 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <title>Connexion</title>
-    <link href="../CSS/style.css" rel="stylesheet">
+    <link href="../dist/output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">  
 </head>
-<body>
+<body class="bg-lightblue" style="font-family: 'Poppins', sans-serif;">
 
-<h1> BlitzCalc </h1>
+<header class="top-0 w-full shadow-md bg-lightblue">
+        <nav class="flex justify-center items-center w-auto  mx-auto">
+            <div class="container mx-auto flex items-center justify-center">
+              <div >
+                <a href="../index.html"><img src="../PICTURES/blitzcalc-high-resolution-logo-transparent.png" alt="Logo" class="h-20"></a>
+              </div>
+        </nav>
+    </header>
 
-<main>
-    <h2> Connexion </h2>
 
-    <form method="post" action="traitement_connexion.php">
-        <div>
-            <label for="login">Login</label>
-            <input type="text" id="login" name="login" min="2" max="25">
-        </div>
+    <div class="h-screen flex items-center justify-center">
+    <div class="container mx-auto">
+    <div class="my-12 flex items-center justify-center px-6">
+      <!-- Row -->
+     
+        <div class="w-full md:w-1/3 bg-deepblue rounded-3xl items-center">
+          <h2 class="text-3xl text-center text-white my-8">Se connecter</h2>
+          <form class="mb-4 rounded  px-8 pb-8 pt-6" method="post" action="traitement_connexion.php">
+            <div class="mb-4">
+                <label class="mb-2 block text-sm font-bold text-white" for="login"> Identifiant </label>
+                <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="login" name="login" placeholder="Identifiant" required/>
+            </div>
+            
+            <div class="mb-4">
+              <label class="mb-2 block text-sm font-bold text-white" for="password"> Mot de passe </label>
+              <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="password" name="password" type="password" placeholder="******************" required/>
+            </div>
+            <div class="mb-6 text-center">
+              <input type="submit" name="submit_connexion_user" value="Valider" class="w-3/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
+            </div>
+            <div class="flex justify-center mb-6 ">
+                <p id="erreur_message">
+                <?php
+                //on affiche ou non le message renvoye par la page traitement
+                $message = null;
+                $style = "'color: #EB3939'";
+                if (!empty($_SESSION["erreur_traitement_connexion"])){
+                    $message = $_SESSION["erreur_traitement_connexion"];
 
-        <div>
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="password"  min="6" max="25">
-        </div>
+                    //on supprime la variable dans la session
+                    unset($_SESSION["erreur_traitement_connexion"]);
+                }
+                if ($message != null)
+                    echo "<b style=$style>$message </b>";
+                ?>
+                </p>
+            </div>
+            <hr class="mb-6 border-t" />
 
-        <input type="submit" name="submit_connexion_user" value="Submit">
-    </form>
-
-    <form method="post" action="traitement_connexion.php">
-        <input type="submit" name="submit_connexion_visiteur" value="Accéder au site gratuitement">
-    </form>
-
-    <p id="erreur_message">
-        <?php
-        //on affiche ou non le message renvoye par la page traitement
-        $message = null;
-        $style = "'color: #EB3939'";
-        if (!empty($_SESSION["erreur_traitement_connexion"])){
-            $message = $_SESSION["erreur_traitement_connexion"];
-
-            //on supprime la variable dans la session
-            unset($_SESSION["erreur_traitement_connexion"]);
-        }
-        if ($message != null)
-            echo "<b style=$style>$message </b>";
-        ?>
-    </p>
-
-    <nav>
-        <ul>
-            <li> Pas encore inscrit ? <a href="page_inscription.php"> Créer un compte </a> </li>
-            <li> Retourner à la page d'accueil ? <a href="../index.html"> Cliquez ici </a> </li>
-        </ul>
-    </nav>
-</main>
+                <a href="page_inscription.php" class="text-sm text-opacity-200 float-right mt-6 mb-4 text-white hover:underline"> Pas encore inscrit ? </a> 
+                <a href="../index.html" class="text-sm text-opacity-200 float-left mt-6 mb-8 text-white hover:underline"> Mot de passe oublié ??</a> 
+    </form>  
+    </div>
+    </div>
+     </div>
+    </div>
+</div>
 
 </body>
 </html>

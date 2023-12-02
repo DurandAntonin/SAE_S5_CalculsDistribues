@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "tailwindcss": "^3.3.5"
+  },
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "sweetalert2": "^11.10.1",
+    "tailwindcss-animated": "^1.0.1",
+    "taos": "^1.0.5"
+  }
+}

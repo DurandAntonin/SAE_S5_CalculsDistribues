@@ -298,4 +298,7 @@ if (isset($_POST)){
         header("Location:page_profil.php");
     }
 }
+else{
+    header("Location:page_accueil_user.php");
+}
 ?>
