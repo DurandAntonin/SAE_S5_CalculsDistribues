@@ -53,6 +53,8 @@ Avec l’outil Figma les boutons sont cliquables et permettent une première id�
 
 <h3 id="recit_utilisation"> Récit d'utilisation </h3>
 
+L'application est hébergée sur le kit Cluster Hat. Chaque noeud doit pouvoir communique entre eux et surtout communiquer avec le rpi principal via ssh. Pour se connecter en ssh à un noeud du cluster depuis le rpi principal, on précise le hostname du noeud en question qui est enregistré dans le fichier config du serveur ssh.
+
 Le premier livrable est un système de connexion et d'inscription relié à une base de données.
 
 Texte 1 Description textuelle des cas d’utilisations : Le site permet directement à un visiteur de s'inscrire ou bien de se connecter via une page d’inscription ou de connexion. Ces deux choix correspondent à deux cas d’utilisation différents, le visiteur est déjà inscrit ou non.

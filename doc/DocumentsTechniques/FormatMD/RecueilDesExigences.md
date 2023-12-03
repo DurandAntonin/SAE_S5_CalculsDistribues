@@ -28,6 +28,7 @@ _Zehren William_
     <li> <a href="#chapitre_4"> Chapitre 4 – La technologie employée  </a> </li>
     <ol>
         <li> <a href="#exigences_techno"> Quelles sont les exigences technologiques pour ce système ? </a> </li>
+        <li> <a href="#exigences_interface_autre_systemes"> Avec quels systèmes ce système s'interfacera et avec quelles exigences ? </a> </li>
     </ol>
     <li> <a href="#chapitre_5"> Chapitre 5 – Autres exigences  </a> </li>
     <ol>
@@ -96,11 +97,10 @@ Les acteurs principaux sont les utilisateurs possédant un compte. Leurs objecti
 
 - L'utilisateur s'inscrit
 - L'utilisateur se connecte
-- Le gestionnaire se connecte
-- L'utilisateur inscrit utilise les différents modules de calculs distribués
-- L’utilisateur peut récupérer et modifier son mot de passe
-- L’utilisateur se déconnecter
-- Le gestionnaire peut supprimer des utilisateurs
+- L'utilisateur modifie ses informations personnelles comme son login, adresse mail, nom, prénom et mot de passe
+- L’utilisateur se déconnecte
+- L'utilisateur supprime son compte
+- Le visiteur non connecté accède au site
 
 <h3 style="color:#5d79e7;" id="cas_util_sys"> Les cas d’utilisation système. </h3>
 
@@ -112,7 +112,19 @@ Les acteurs principaux sont les utilisateurs possédant un compte. Leurs objecti
 
 <h3 style="color:#5d79e7;" id="exigences_techno"> Quelles sont les exigences technologiques pour ce système ? </h3>
 
-Le système doit être installé sur le Raspberry Cluster HAT v2 mis à disposition par l'IUT. 
+L'application est hébergée sur un kit Cluster Hat. Un kit cluster hat est composé d'un raspberry pi 4 qui est le rpi principal du cluster.
+Le rpi principal est relié à un contrôleur qui permet de gérer à l'aide du port GPIO du rpi principal(Général Purpose Input/Output) jusqu'à 4 rapsberry pi zero, qui sont les noeuds du cluster.
+Le rpi principal possède quatre ports USB 2.0, un port ethernet, un port micro sd, un port hdmi, un port micro hdmi ainsi qu'un port micro usb pour le relier au contrôleur.
+Le contôleur quant à lui possède en plus du port pour la liaison au rpi principal, quatre autre ports micro usb pour connecter 4 rpi zero.
+Chaque rpi zero possède deux ports micro usb, un port micro sd, un mini port hdmi ainsi qu'un connecteur 40 pin compatible avec le cluster.
+
+Le rpi principal est un **Raspberry Pi 4 Model B**. Le processeur, d'architecture 32 bits, est composé de 4 coeurs chacun cadencé à 1.5Ghz. La taille de la mémoire ram est de 4Go.
+Pour ce qui est des 4 autre rpi, ce sont des **Raspberry Pi Zero W Rev 1.1**, le processeur utilise l'architecture _ARMv6-compatible processor rev7 (v61)_. L'architecture est donc de type 32 bits. Le processeur possède 1 coeur cadencé à 1Ghz. La taile de la mémoire ram est de 512Mo.
+
+<h3 style="color:#5d79e7;" id="exigences_interface_autre_systemes"> Avec quels systèmes ce système s'interfacera et avec quelles exigences ? </h3>
+
+Les différents noeuds du kit Cluster Hat doivent pour communiquer en ensemble ou communiquer avec le rpi host.
+Les différents sous-systèmes du kit Cluster Hat doivent être opérationnels comme le système ssh, et doivent de plus pouvoir ommuniqués entre eux comme les services MySql et Web (comprenant le serveur Apache avec PHP et nodeJs) de l'application.
 
 <h2 style="color:#5d79e7; page-break-before: always" id="chapitre_5"> Chapitre 5 – Autres exigences </h2>
 
@@ -120,32 +132,83 @@ Le système doit être installé sur le Raspberry Cluster HAT v2 mis à disposit
 
 <h4 style="color:#5d79e7;" id="participants"> Qui sont les participants au projet ? </h4>
 
-**Les participants du projet sont:**
+**Les développeurs du projet:**
 
 - Antonin Durand
 - Benjamin Parciany
 - Maxime Jougla
 - William Zehren
+- Thomas Dufaud
+
+**Le(s) client(s) du projet:**
+
+- Fabrice Hoguin
 
 <h4 style="color:#5d79e7;" id="valeurs"> Quelles valeurs devront être privilégiées ? (exemple : simplicité, disponibilité, rapidité, souplesse etc... ) </h4>
 
-Le site web doit être accessible depuis n'importe quelle machine connecté à internet, de plus la navigation dans le site doit être rapide, efficace et clair pour une expérience utilisateur positive.
+Le site web doit satisfaire les valeurs de disponibilité, robustesse, modularité, maintenabilité et portabilité, qui sont présentes dans la norme **ISO/IEC 25010:12**.
+
+Le site web doit être accessible depuis n'importe quelle machine connectée à internet et à n'importe quand.
+L'application doit être utile et efficace pour le domaine d'expertise du client, en utilisant des calculs distribuées par exemple.
+De plus la navigation dans le site doit être rapide, efficace et claire pour une expérience utilisateur positive.
+Ensuite, l'application doit pouvoir être déployée sur différents environnements d'exécution (Distribution Linux, Windows).
+Enfin, le site web doit être durable dans le temps, maintenable sans trop de complication, ainsi que évolutif facilement.
 
 <h4 style="color:#5d79e7;" id="retours_visibilite"> Quels retours ou quelle visibilité sur le projet les utilisateurs et commanditaires souhaitent-ils ? </h4>
 
-Aucun retour particulier n'est demandé.
+Une communication est mise en place avec notre client pour valider le cahier des charges, les différents livrables.
 
-<h4 style="color:#5d79e7;" id="jsp"> Que peut-on acheter ? Que doit-on construire ? Qui sont nos concurrents ? </h4>
+<h5 id="sprint1"> a) Squelette du site </h5>
+
+- Date de début du sprint : **24/11/2023**
+- Date de fin du sprint : **04/12/2023**
+
+Le premier sprint correspond à l'initialisation de l'application et de ses services, ainsi que du Kit Cluster hat hébergeant l'application.
+Premièrement, nous installerons les services Apache, PHP, MySQL dans le kit Cluster.
+Deuxièmement, un système de connexion, inscription et gestion de compte sera mis en place dans l'application.
+
+<h5 id="sprint2"> b) 1er module et fonctionnalités utilisateurs admin </h5>
+
+- Date de début du sprint : **04/12/2023**
+- Date de fin du sprint : **25/12/2023**
+
+Le deuxième sprint correspond à la réalisation du premier module de calcul en fonction du cahier des charges donné par un de nos professeurs.
+L'objectif est de calculer les nombres premiers entre 1 et n en utilisant le calcul distribué sur les 4 pi zero.
+
+Durant ce sprint, seront développées les différentes fonctionnalités de l'utilisateur administrateur de l'application. 
+Il pourra visualiser les différents utilisateurs de cette dernière, les rechercher, mais pourra aussi supprimer des comptes utilisateurs et visualiser les différentes actions effectuées par les utilisateurs inscrits sur l'application.
+
+<h5 id="sprint3"> c) 2ème module  </h5>
+
+- Date de début du sprint : **25/12/2023**
+- Date de fin du sprint : **08/01/2024**
+
+Dans ce sprint, sera développé un deuxième module pour l'utilisateur inscrit, utilisant le machine learning.
+Ce dernier pourra envoyer une image de voiture à l'application qui devra retourner le modèle de la voiture. Cette image sera passée à plusieurs modèles qui prédiront l'image de manière parallèle, pour une meilleure prédiction.
+
+<h5 id="sprint4"> c) 3ème module  </h5>
+
+- Date de début du sprint : **08/01/2024**
+- Date de fin du sprint : **22/01/2024**
+
+L'objectif de ce troisième livrable est de développer un autre module pour l'application. L'utilisateur pourra dans ce module calculer une valeur numérique approchée en utilisant des techniques probabilistes. Ce calcul devra être effectué de manière distribuée sur les différents rpi zero du kit Cluster Hat.
+
+<h4 style="color:#5d79e7;" id="concurrence"> Que peut-on acheter ? Que doit-on construire ? Qui sont nos concurrents ? </h4>
 
 Aucun produit ne doit être acheté pour pouvoir utiliser pleinement le site web, aucun élément doit être construit. Pour se connecter au site web, il suffit de se connecter à internet. Les concurrents sont les autres groupes de SAE.
 
-<h4 style="color:#5d79e7;" id="autres_exigences"> Quels sont les autres exigences du processus ? (exemple : tests, installation, etc...) </h4>
+<h4 style="color:#5d79e7;" id="autres_exigences"> Quelles sont les autres exigences du processus ? (exemple : tests, installation, etc...) </h4>
+
+Installation et prise en main du kit Cluster Hat.
+Tests de connexion en ssh entre les rpi pour vérifier la bonne installation du Cluster Hat.
 
 <h4 style="color:#5d79e7;" id="dependance"> À quelle dépendance le projet est-il soumis ? </h4>
 
 Il y a une contrainte de temps, la SAE se termine en janvier. Le projet doit également mettre en place du parallélisme afin de profiter du cluster pi.
+Il y a également des contraintes de temps pour chaque sprint.
 
 <h3 style="color:#5d79e7;" id="regles_metier"> Règles métier</h3>
+
 
 <h3 style="color:#5d79e7;" id="perfs"> Performances</h3>
 
@@ -153,7 +216,7 @@ Le stockage des données dans la base de données doit être performante, ainsi 
 
 <h3 style="color:#5d79e7;" id="ope_secu_doc"> Opérations, sécurité, documentation</h3>
 
-Le Raspberry Cluster HAT contenant le système doit être sécurisé. Les fonctions et le code doit être documenté.
+Le Raspberry Cluster HAT contenant le système doit être sécurisé. Les fonctions et le code doivent être documentés.
 
 <h3 style="color:#5d79e7;" id="utilisation"> Utilisation et utilisabilité</h3>
 
@@ -161,7 +224,8 @@ Pour pouvoir utiliser pleinement le site, il suffit de se connecter à internet 
 
 <h3 style="color:#5d79e7;" id="maintenance_porta"> Maintenance et portabilité</h3>
 
-Régler les éventuels bugs et améliorer le style des pages du site web.
+Régler les éventuels bugs présents dans l'application. <br>
+Avoir un suivi des erreurs et opérations non voulues dans l'application.
 
 <h3 style="color:#5d79e7;" id="questions"> Questions non résolues ou reportées à plus tard</h3>
 

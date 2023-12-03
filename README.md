@@ -10,11 +10,16 @@ _Zehren William_
 L'objectif de ce projet est de permettre à des utilisateurs de réaliser du calcul distribué ou parallèle, grâce à un kit cluster. <br> 
 Ces calculs seront accessibles depuis un site web dans lequel seront exécutés différents programmes. <br>
 
+Sur le site, l'utilisateur a le choix de s'inscrire ou de se connecter s'il possède déjà un compte sur le site. Une fois connecté, il peut cliquer sur son profil pour voir ses informations personnelles et les changer s'il le souhaite.
+Les modules ne sont pas encore disponibles sur le site, mais l'utilisateur connecté pourra y accéder les utiliser. <br>
+L'utilisateur peut aussi accéder au site sans inscription et connexion, et voir les prochains modules. Cependant, il ne peut pas modifier son profil et utiliser les calculs réalisés dans les modules n'utiliserons pas le calcul distribué.
+
+
 ### Install Tailwind
 
 Tutoriel du [site de Tailwind](https://tailwindcss.com/docs/installation). Il faut avant avoir installé Node.js.
 
-Pour installer les dépendances du projets. Il faut executer cette commande dans le même répertoire que package.json.
+Pour installer les dépendances du projet. Il faut executer cette commande dans le même répertoire que package.json.
 ```bash
 npm install
 ```
