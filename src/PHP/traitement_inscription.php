@@ -40,10 +40,10 @@ if (isset($_POST) && !empty($_POST["submit_inscription"])){
             && strlen($firstName_form) == strlen($firstName)){
 
             //on vérifie que les champs sont valides
-            if (strlen($mail_form) >= $VARIABLES_GLOBALES["taille_champ_mail"][0] && strlen($mail_form) <= $VARIABLES_GLOBALES["taille_champ_mail"][1]
-                && strlen($login_form) >= $VARIABLES_GLOBALES["taille_champ_texte"][0] && strlen($login_form) <= $VARIABLES_GLOBALES["taille_champ_texte"][1]
-                && strlen($lastName_form) >= $VARIABLES_GLOBALES["taille_champ_texte"][0] && strlen($lastName_form) <= $VARIABLES_GLOBALES["taille_champ_texte"][1]
-                && strlen($firstName_form) >= $VARIABLES_GLOBALES["taille_champ_texte"][0] && strlen($firstName_form) <= $VARIABLES_GLOBALES["taille_champ_texte"][1]
+            if (strlen($mail) >= $VARIABLES_GLOBALES["taille_champ_mail"][0] && strlen($mail) <= $VARIABLES_GLOBALES["taille_champ_mail"][1]
+                && strlen($login) >= $VARIABLES_GLOBALES["taille_champ_texte"][0] && strlen($login) <= $VARIABLES_GLOBALES["taille_champ_texte"][1]
+                && strlen($lastName) >= $VARIABLES_GLOBALES["taille_champ_texte"][0] && strlen($lastName) <= $VARIABLES_GLOBALES["taille_champ_texte"][1]
+                && strlen($firstName) >= $VARIABLES_GLOBALES["taille_champ_texte"][0] && strlen($firstName) <= $VARIABLES_GLOBALES["taille_champ_texte"][1]
                 && strlen($password_form) >= $VARIABLES_GLOBALES["taille_champ_mdp"][0] && strlen($password_form) <= $VARIABLES_GLOBALES["taille_champ_mdp"][1]
                 && strlen($password_confirm_form) >= $VARIABLES_GLOBALES["taille_champ_mdp"][0] && strlen($password_confirm_form) <= $VARIABLES_GLOBALES["taille_champ_mdp"][1]
             ){
@@ -92,7 +92,7 @@ if (isset($_POST) && !empty($_POST["submit_inscription"])){
                                     if ($resultVerifSoliditePasword["result"]){
                                         //on créer le user, on enregistre l'action dans un fichier de log, on l'enregistre dans la bd et on le redirige vers sa page
                                         $uuid = guidv4();
-                                        $user = new User($uuid, $mail, $login, $lastName_form, $firstName_form, Enum_role_user::USER);
+                                        $user = new User($uuid, $mail, $login, $lastName, $firstName, Enum_role_user::USER);
 
                                         $resultInsertUser = $sqlData->insert_user("Users", $user, hash_password($password_form));
                                         $sqlData->close_connexion_to_db();
