@@ -5,13 +5,13 @@
   "taille_message_prive" : [1,255],
   "listSpecialCharactersMail" : [" ", "!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", "/", ":", "\\", "<", ">", "=","{", "}", "°", "^", "|", "~"],
   "listSpecialCharactersText" : ["!", "\"", "#", "$", "%", "&", "(", ")", "*", "+", ",", "-", "/", ":", "\\", "<", ">", "=","{", "}", "°", "^", "|", "~"],
-  "bd_hostname" : "localhost",
+  "bd_hostname" : "172.19.181.4",
   "bd_username" : "BlitzCalc_DB_user",
   "bd_password" : "azerty",
   "bd_database" : "BlitzCalc_DB",
   "prefixe_fic_log" : "ficlog_",
-  "chemin_dossier_logs_error" : "C:\\Users\\AntoninDurand\\Documents\\SAE_S5_CalculsDistribues\\src\\LOGS\\logs_error\\",
-  "chemin_dossier_logs_info" : "C:\\Users\\AntoninDurand\\Documents\\SAE_S5_CalculsDistribues\\src\\LOGS\\logs_info\\",
+  "chemin_dossier_logs_error" : "/var/www/html/",
+  "chemin_dossier_logs_info" : "/var/www/html/",
   "entete_fic_logs_erreurs" : ["Erreur", "Date de l'erreur"],
   "entete_fic_logs_users_actions" : ["IP", "Descriptif de l'action", "IdUser", "Date de l'action"],
   "entete_fic_logs_tentatives_connexions_users" : ["IP", "Date de la tentative", "Informations entrees"],
@@ -31,7 +31,7 @@
   "loggerConf" : {
     "loggerFile" : {
         "logLevel" : "INFO",
-        "logRepo" : "C:\\Users\\AntoninDurand\\Documents\\SAE_S5_CalculsDistribues\\src\\LOGS\\",
+        "logRepo" : "/var/www/html/",
         "logToDb" : 0
     },
     "loggerDb" : {
