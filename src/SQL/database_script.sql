@@ -13,7 +13,7 @@ create user BlitzCalc_DB_user identified by 'azerty';
 grant select, update, insert, delete on BlitzCalc_DB.* to BlitzCalc_DB_user;
 
 create table Users(
-    userId varchar(36) default uuid(),
+    userId varchar(36) not null,
     userMail varchar(35) not null,
     login varchar(25) not null,
     lastName varchar(25) not null,
@@ -25,7 +25,7 @@ create table Users(
 );
 
 create table Logging(
-    logId varchar(36) default uuid(),
+    logId varchar(36) not null,
     logLevel varchar(10) check (logLevel in ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL')),
     userId varchar(36) not null,
     date datetime not null,
@@ -38,9 +38,9 @@ create table Weak_passwords(
       password varchar(255) not null
 );
 
-insert into Users(userMail, login, lastName, firstName, password, role) values
-    ('admin@test.fr', 'admin', 'Durand', 'Antonin', '$2y$10$PEbJSfCoHk8a1jNbyhn1tOv7fLeYh3oPV5Ag3ysmQs0RHLaMPaUzK', 'ADMIN'),
-    ('test.man@sfr.fr', 'test', 'test', 'man', '$2y$10$PEbJSfCoHk8a1jNbyhn1tOv7fLeYh3oPV5Ag3ysmQs0RHLaMPaUzK', 'USER');
+insert into Users(userId, userMail, login, lastName, firstName, password, role) values
+    ('68937b83-5ddd-4a46-956c-bce168417f13', 'admin@test.fr', 'admin', 'Durand', 'Antonin', '$2y$10$PEbJSfCoHk8a1jNbyhn1tOv7fLeYh3oPV5Ag3ysmQs0RHLaMPaUzK', 'ADMIN'),
+    ('91a47833-c88c-47a7-8a44-5fc3e6c3abdc', 'test.man@sfr.fr', 'test', 'test', 'man', '$2y$10$PEbJSfCoHk8a1jNbyhn1tOv7fLeYh3oPV5Ag3ysmQs0RHLaMPaUzK', 'USER');
 
 
 INSERT INTO Weak_passwords(password) VALUES
@@ -4826,8 +4826,7 @@ INSERT INTO Weak_passwords(password) VALUES
                                               ('jammin'),
                                               ('intel'),
                                               ('idontkno'),
-                                              ('huai');
-INSERT INTO `weak_passwords` (`password`) VALUES
+                                              ('huai'),
                                               ('harry1'),
                                               ('goaway'),
                                               ('gameover'),
@@ -9449,8 +9448,7 @@ INSERT INTO `weak_passwords` (`password`) VALUES
                                               ('forlife'),
                                               ('fitter'),
                                               ('feelgood'),
-                                              ('fallon');
-INSERT INTO `weak_passwords` (`password`) VALUES
+                                              ('fallon'),
                                               ('escalade'),
                                               ('enters'),
                                               ('emil'),
