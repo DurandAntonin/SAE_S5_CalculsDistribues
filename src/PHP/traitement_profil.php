@@ -247,6 +247,9 @@ if (isset($_POST)){
                             if ($errorDuringChange){
                                 if ($messageForUser == "")
                                     $messageForUser = $_SESSION["notif_erreur_interne"];
+
+                                //on enregistre l'erreur
+                                $loggerFile->info($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Changements profil user annulés|Message:{$messageForUser}");
                             }
                             else{
                                 $messageForUser = $VARIABLES_GLOBALES["notif_changements_reussis"];

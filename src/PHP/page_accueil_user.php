@@ -44,15 +44,15 @@ $user = unserialize($_SESSION["user"]);
         <div class="float-right">
             <?php
             //seul le user inscrit peut voir son profil
-            if ($user->getRole() == Enum_role_user::USER){
-                echo "<img src='../PICTURES/IconeProfil.png' alt='profile picture' class='h-10 mr-10 cursor-pointer' onclick='showProfil()' id='showProfil'>   
+            /**if ($user->getRole() == Enum_role_user::VISITEUR){
+                echo "
                     ";
-            }
+            }*/
             ?>
+            <img src='../PICTURES/IconeProfil.png' alt='profile picture' class='h-10 mr-10 cursor-pointer' onclick='showProfil()' id='showProfil'>
     </nav>
 </header>
 <?php
-if ($user->getRole() == Enum_role_user::USER){
     echo "<div class='hidden top-0 float-right w-60 px-5 py-3 mr-2 dark:bg-gray-800 bg-deepblue rounded-lg shadow border dark:border-transparent animate-fade-down animate-duration-[400ms] animate-ease-in-out' id='popUpProfil'>
             <ul class='space-y-3 text-white'>
               <li class='font-medium'>
@@ -62,16 +62,19 @@ if ($user->getRole() == Enum_role_user::USER){
                   </div>";
     echo $user->getLogin();
     echo "</a>
-              </li>
-              <li class='font-medium'>
+             </li>";
+    //on affiche les settings si le user est inscrit
+    if ($user->getRole() == Enum_role_user::USER){
+        echo "<li class='font-medium'>
                 <a href='#' class='flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700' onclick='showFormProfile()' id='linkShowProfil'>
                   <div class='mr-3'>
                     <svg class='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z'></path><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'></path></svg>
                   </div>
                   Setting
                 </a>
-              </li>
-              <hr class='dark:border-gray-700'>
+              </li>";
+    }
+    echo"<hr class='dark:border-gray-700'>
               <li class='font-medium'>
                 <a href='page_deconnexion.php' class='flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-red-600'>
                   <div class='mr-3 text-red-600'>
@@ -81,9 +84,7 @@ if ($user->getRole() == Enum_role_user::USER){
                 </a>
               </li>
             </ul>
-          </div>    
-                    ";
-}
+          </div>";
 ?>
 
 <p id="erreur_message">
@@ -121,33 +122,33 @@ if ($user->getRole() == Enum_role_user::USER){
                 <input type="hidden" id="submit_supprimer_compte" name="submit_supprimer_compte" value="">
                     <div class="mb-4">
                         <label class="mb-2 block text-sm font-bold text-white" for="login"> Identifiant </label>
-                        <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="login" name="login" placeholder="Identifiant" value="<?php echo $user->getLogin(); ?>" required/>
+                        <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="login" name="login" placeholder="Identifiant" value="<?php echo $user->getLogin(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
                     </div>
                     <div class="mb-4 md:flex md:justify-between">
 
                         <div class="mb-4 md:mb-0 md:mr-2">
                             <label class="mb-2 block text-sm font-bold text-white" for="first_name"> Prénom </label>
-                            <input class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="first_name" name="first_name" type="text" placeholder="Prénom" value="<?php echo $user->getFirstName(); ?>" required/>
+                            <input class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="first_name" name="first_name" type="text" placeholder="Prénom" value="<?php echo $user->getFirstName(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
                         </div>
                         <div class="md:ml-2">
                             <label class="mb-2 block text-sm font-bold text-white" for="last_name"> Nom </label>
-                            <input class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="last_name" name="last_name" type="text" placeholder="Nom" value="<?php echo $user->getLastName(); ?>" required/>
+                            <input class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="last_name" name="last_name" type="text" placeholder="Nom" value="<?php echo $user->getLastName(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
                         </div>
                     </div>
                     <div class="mb-4">
                         <label class="mb-2 block text-sm font-bold text-white" for="email"> Email </label>
-                        <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="email" type="email" name="email" placeholder="Email" value="<?php echo $user->getMail(); ?>" required/>
+                        <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="email" type="email" name="email" placeholder="Email" value="<?php echo $user->getMail(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mail"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mail"][1];?>" required/>
                     </div>
                     <div class="mb-4 md:flex md:justify-between">
                         <div class="mb-4 md:mb-0 md:mr-2">
                             <label class="mb-2 block text-sm font-bold text-white" for="password"> Mot de passe </label>
-                            <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border border-red-500 px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="password" name="password" type="password" placeholder="******************"/>
+                            <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border border-red-500 px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="password" name="password" type="password" placeholder="******************" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][1];?>"/>
                             <p class="text-xs italic text-red-500">Choisissez un mot de passe</p>
                             <p class="text-xs italic text-red-500">différent du précédent.</p>
                         </div>
                         <div class="md:ml-2">
                             <label class="mb-2 block text-sm font-bold text-white" for="password_confirm"> Confirmez le mot de passe</label>
-                            <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="password_confirm" name="password_confirm" type="password" placeholder="******************"/>
+                            <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="password_confirm" name="password_confirm" type="password" placeholder="******************" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][1];?>"/>
                         </div>
                     </div>
                     <div class="text-center">
