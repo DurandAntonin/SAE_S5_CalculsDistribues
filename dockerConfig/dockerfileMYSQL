@@ -1,5 +1,5 @@
 FROM --platform=linux/arm/v7 clover/mysql
 
 COPY ./database_script.sql /docker-entrypoint-initdb.d/
-
-
+RUN chown -R mysql:mysql /docker-entrypoint-initdb.d/ \
+    && chmod 755 -R /docker-entrypoint-initdb.d/
