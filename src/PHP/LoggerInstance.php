@@ -258,7 +258,7 @@ class LoggerInstance
             }
 
             //on a un fichier de log par mois
-            $fileName = $logLeveRepo . "\logsprogramme_" . $date->format("Ym");
+            $fileName = $logLeveRepo . "/log_" . $date->format("Ym");
 
             //on tente d'ouvrir le fichier de log, dans lequel on insère le niveau, la date et le message du log
             $curseur = fopen($fileName, "a+");
