@@ -1,5 +1,9 @@
-FROM --platform=linux/arm/v7 clover/mysql
+FROM clover/mysql
 
 COPY ./database_script.sql /docker-entrypoint-initdb.d/
 RUN chown -R mysql:mysql /docker-entrypoint-initdb.d/ \
     && chmod 755 -R /docker-entrypoint-initdb.d/
+
+WORKIR /docker-entrypoint-initdb.d/
+
+RUN mysql -h 127.0.0.1 -u root -proot -e 'source database_script.sql'
