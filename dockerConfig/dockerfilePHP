@@ -1,4 +1,4 @@
-FROM --platform=linux/arm/v7 php:8.2-apache
+FROM php:8.2-apache
 
 COPY ./src/ /var/www/html/
 
@@ -9,4 +9,3 @@ COPY ./dockerConfig/php.ini-production /usr/local/etc/php/
 RUN chown -R www-data:www-data /var/www/html/
 
 RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
-
