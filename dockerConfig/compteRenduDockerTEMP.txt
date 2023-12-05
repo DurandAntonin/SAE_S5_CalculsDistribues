@@ -52,9 +52,9 @@ On peut désormais sauvegarder notre image grace a la commande : docker save php
 
 docker build -t sqlimage -f ../../dockerConfig/dockerfileMYSQL . (pour le dockerfileMYSQL)(il faut se mettre dans la directory ou se situe le fichier .sql)
 
-Lorsqu'on a build l'image sql on peut la run pour démarrer un container avec la commande suivante : 
+Lorsqu'on  a build l'image sql on peut la run pour démarrer un container avec la commande suivante : 
 
-docker run --name sqlcont -dit sqlimage
+docker run -p 3306:3306 --name sqlcont -dit sqlimage
 
 puis on peut se connecter en sh sur ce dernier : 
 
@@ -84,5 +84,25 @@ le stack deploy ressemble donc à :
 
 
 
-Cependant, il faut installer les images sur tous les nodes concernés par le docker stack deploy 
+Cependant, il faut installer les images sur tous les nodes concernés par le docker stack deploy.
+
+
+les RPI0 étant trop peu puissants pour accepter un scp de 300mo(la taille des images), il faut publier les images sur docker hub.
+
+MYSQL : 
+
+Il faut donc se créer un repository sur docker hub, ce dernier est nommé mysqlsae
+
+il faut ensuite renommer l'image a mettre sur docker hub telle que : wzehren/mysqlsae, pour que l'image aille sur le repo du meme nom et du même compte. 
+
+On peut désormais accèder a l'image depuis le RPI0 qui accueillera le service mysql. 
+
+on créé donc un dossier dockerConfig pour y mettre le script .sql 
+
+
+
+
+
+
+
 
