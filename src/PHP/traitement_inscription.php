@@ -98,8 +98,6 @@ if (isset($_POST) && !empty($_POST["submit_inscription"])){
                                         $sqlData->close_connexion_to_db();
 
                                         if ($resultInsertUser["error"] == 0){
-                                            //on démarre une session pour stocker le user
-                                            session_start();
 
                                             $loggerBd->info($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription utilisateur");
                                             $loggerBd->info($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Connexion user {$user->getRole()->name}");
