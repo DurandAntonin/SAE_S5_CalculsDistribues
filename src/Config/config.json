@@ -5,7 +5,7 @@
   "taille_message_prive" : [1,255],
   "listSpecialCharactersMail" : [" ", "!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", "/", ":", "\\", "<", ">", "=","{", "}", "°", "^", "|", "~"],
   "listSpecialCharactersText" : ["!", "\"", "#", "$", "%", "&", "(", ")", "*", "+", ",", "-", "/", ":", "\\", "<", ">", "=","{", "}", "°", "^", "|", "~"],
-  "bd_hostname" : "localhost",
+  "bd_hostname" : "172.19.181.254",
   "bd_username" : "BlitzCalc_DB_user",
   "bd_password" : "azerty",
   "bd_database" : "BlitzCalc_DB",
@@ -31,7 +31,7 @@
   "loggerConf" : {
     "loggerFile" : {
         "logLevel" : "INFO",
-        "logRepo" : "/var/www/html/",
+        "logRepo" : "/var/www/html/LOGS/",
         "logToDb" : 0
     },
     "loggerDb" : {
