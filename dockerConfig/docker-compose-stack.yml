@@ -8,7 +8,7 @@ services:
     deploy:
       placement:
         constraints: [node.labels.service == web ]
-      replicas: 3
+      replicas: 4
 
   servicebd:
     image: wzehren/mysqlsae
