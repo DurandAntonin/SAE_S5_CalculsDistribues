@@ -121,7 +121,21 @@ On a une interface que l’on va nommer "MySqli" reliant le composant “MySQLDa
 L’étude du système ainsi que sa modélisation à l’aide de la vue composant-connecteur nous a 
 permis de représenter le système qui est le site web. Nous allons représenter maintenant le système du point de vue de son déploiement à l’aide de la vue d’attribution.  
 
-Le serveur, la base de données et les pages sont stockées dans une machine Kit Cluster Hat qu’on va appeler "Serveur Kit Cluster Hat" contenant ces composants. De plus, comme le site web doit être accessible pour tous les ordinateurs étant sur le même réseau que la machine "Serveur Kit Cluster Hat", on a le composant Navigateur ainsi que les pages web envoyées par le serveur qui sont dans la machine du client, qu’on va appeler Client Web. Il peut y avoir 0 ou n Client Web car plusieurs utilisateurs peuvent se connecteur au serveur. Il peut également y avoir 0 ou n "Serveur Kit Cluster Hat", car des réplicas de ce serveur peuvent être créées.  
+On définit donc trois noeuds principaux, le Navigateur, le RPI Host et Les quatre RPI Zero. 
+
+**Remarque : Seulement un seul d'entre eux sera modélisé pour faciliter la compréhension du diagramme, mais ces derniers sont tous structurés de la même manière**
+
+Le serveur et les pages sont stockées dans les quatre RPI Zero, dans un noeud contenant ces composants qu’on appele "Worker". Ce noeud "Worker" modélise le role de worker que les RPI Zero ont dans le swarm docker installé sur le Cluster. Ce même noeud est imbriqué dans un autre noeud, qui est le noeud "RPIs Zero" et qui modélise les quatre RPI Zero. 
+
+La base de données quant à elle, est stockée dans le RPI Host, dans un noeud contenant ce composant qu’on appele "Manager". Ce noeud "Manager" modélise le role de manager que le RPI Host à dans le swarm docker installé sur le Cluster.
+Ce même noeud est imbriqué dans un autre noeud, qui est le noeud "RPI Host" et qui modélise le RPI Host. 
+
+De plus, comme le site web doit être accessible pour tous les ordinateurs étant sur le même réseau que la machine "Serveur Kit Cluster Hat", on a le composant Navigateur ainsi que les pages web envoyées par le serveur qui sont dans la machine du client, qu’on va appeler Client Web.
+
+Ces noeuds contienent également chacun un composant SSH qui modélise la communication entre les différents noeud du système.
+
+Il peut y avoir 0 ou n Client Web car plusieurs utilisateurs peuvent se connecteur au serveur (RPI Host + RPIs Zero). Il peut également y avoir 0 ou n "RPI Host" et 0 ou n "RPIs Zero", car des réplicas de ce serveur peuvent être créées.  
+
 
 Enfin, les 2 machines sont reliées par une connexion internet, représentée par une relation d’association dans le diagramme.
 
