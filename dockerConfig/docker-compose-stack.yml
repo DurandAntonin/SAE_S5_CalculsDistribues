@@ -1,0 +1,20 @@
+version: "3.0"
+
+services:
+  serviceweb:
+    image: wzehren/phpsae
+    ports:
+      - "80:80"
+    deploy:
+      placement:
+        constraints: [node.labels.service == web ]
+      replicas: 4
+
+  servicebd:
+    image: wzehren/mysqlsae
+    ports:
+      - "3306:3306"
+    deploy:
+      placement:
+        constraints: [node.labels.service == sql ]
+      replicas: 1
