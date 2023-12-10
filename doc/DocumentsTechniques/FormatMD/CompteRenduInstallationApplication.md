@@ -14,8 +14,9 @@ _Zehren William_
 <li><a href="#installationKitCluster">II- Installation du kit Cluster hat </a></li>
 <ul>
     <li><a href="#I_A"> A) Choix des images pour le kit Cluster Hat </a></li>
-    <li><a href="#I_B"> B) Installation des images sur chaque Raspberry pi et premier démarrage </a></li>
+    <li><a href="#I_B"> B) Installation des images sur chaque Raspberry Pi et premier démarrage </a></li>
     <li><a href="#I_C"> C) Configuration du ssh des Raspberry pi du kut Cluster Hat </a></li>
+    <li><a href="#I_D"> D) Installation du service Fail2Ban sur le Raspeberry Pi host </a></li>
 </ul>
 <li><a href="#II_installationApplication">III- Installation de l'application </a></li>
 <ul>
@@ -84,7 +85,7 @@ dev@cnat:~ $ arp -a
 ```
 Ainsi, le sous-réseau en **172.19.181.0** a été créé par le RPI host, pour contenir les 4 RPI zero.
 
-<h3 style="color:#5d79e7; page-break-before: always" id="I_C"> C) Configuration du ssh des Raspberry pi du kut Cluster Hat </h3>
+<h3 style="color:#5d79e7; page-break-before: always" id="I_C"> C) Configuration du ssh des Raspberry Pi du kit Cluster Hat </h3>
 
 Ensuite, la troisième étape est la configuration du système de connexion en ssh entre le RPI host et les 4 RPI zero, dans les 2 sens, pour faciliter la communication entre le RPI host et ces derniers. 
 
@@ -149,7 +150,10 @@ Host pi4
     User pi
 ```
 
-On utilise la commande **ssh-keygen -t rsa** sur chaque RPI zero. Cela nous génère un couple de clés privée/publique, et nous enregistrons la clé publique générée dans le RPI host grâce à la commande **ssh-copy-id @cnat**. 
+Maintenant que l'on peut communiquer rapidement avec ssh on va créer une clé ssh et la partager aux autres nodes avec la commande ```ssh-copy-id```.
+Pour créer une clé ssh on utilise la commande ```ssh-keygen -t rsa```, sans lui donner de nom ou de passphrase. On obtient deux clés shh : ```id_rsa``` et ```id_rsa.pub``` c'est la clé publique que l'on va partager (ne jamais partager sa clé privé) avec la commande ```ssh-copy-id IPNode```. <br>
+On va faire cette manipulation une première fois sur le node principal et partager la clé ssh à chaque nodes. Une fois que c'est fait on va se connecter sur chaque node pour faire la même procédure à l'exception que l'on ne partagera la clé publique de chaque node seulement au node principal.
+
 Une fois cela fait, on peut se connecter en ssh au RPI host depuis n'importe quel RPI zero sans avoir à fournir un mot de passe comme le montre la commande ci-dessous :
 ```bash
 dev@cnat:~ $ ssh pi1
@@ -165,7 +169,46 @@ Last login: Fri Dec  1 20:13:44 2023 from 172.19.181.254
 pi@p1:~ $
 ```
 
-Il ne reste plus qu'à effectuer les mêmes commandes sur le RPI host, pour pouvoir se connecter en ssh à n'importe quel RPI zero depuis ce dernier sans avoir à entrer de mot de passe.
+<h3 style="color:#5d79e7; page-break-before: always" id="I_D"> D) Installation du service Fail2Ban sur le Raspeberry Pi host </h3>
+
+On installe **Fail2ban** grâce à la commande ci-dessous, qui est une application analysant les différents logs de nombreux services, comme SSH, Apache, FTP, et bannissant temporairement les adresses ip à l'origine de motifs de connexions, de requêtes au préalablement indiqués comme suspectes et non désirables.
+
+```bash
+dev@cnat:~ $ sudo apt install fail2ban
+dev@cnat:~ $ sudo systemctl start fail2ban
+dev@cnat:~ $ sudo systemctl enable fail2ban
+```
+
+Dans notre cas, l'objectif est de bannir temporairement les adresses ip à l'origine des tentatives de connexions en ssh au rpi host échouées. Pour ce faire, nous avons modifier le fichier __/etc/fail2ban/jail.d/defaults-debian.conf_, pour créer une 'prison' pour le service sshd.
+
+```bash
+dev@cnat:~ $ sudo cat /etc/fail2ban/jail.d/defaults-debian.conf
+[sshd]
+enabled = true
+port = 22
+logpath = /var/log/auth.log
+banaction = iptables
+maxretry = 5
+bantime = 120
+```
+
+Comme indiqué dans la commande ci-dessus, nous avons spécifié de nombreux paramètres pour la prison, comme le port du service sshd, le fichier du log de ce dernier à écouter, la méthode bannissement utilisée qui est iptables et qui permet de bannir seulement un port ou tous les ports de l'adresse ip suspecte.
+On précise ensuite le nombre d'essais maximum après quoi fail2ban bannit l'adresse ip avec le paramètre _maxretry_.
+Et enfin, on indique la durée de bannissement de cettre adresse ip, qui est mis à 120s soit 2min.
+
+On active aussi le filtre récidive, qui permet de poursuivre le banissement si l'adresse ip essaie encore de se connecter en ssh sans succès. Pour ce faire, on ajoute les lignes suivante dans le fichier __/etc/fail2ban/jail.d/defaults-debian.conf_.
+```bash
+[recidive]
+enabled = true
+logpath = /var/log/fail2ban.log
+bantime = 1h
+```
+Ainsi, fail2ban va bannir l'adresse ip pendant 1h si cette dernière récidive.
+
+Pour que fail2ban prenne en compte ces changements, on redémarre le service à l'aide de la commande suivante :
+```bash
+dev@cnat:~ $ sudo systemctl reload fail2ban
+```
 
 <h2 style="color:#5d79e7; page-break-before: always" id="II_installationApplication"> III- Installation de l'application  </h2>
 
