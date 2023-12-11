@@ -26,6 +26,7 @@ _Zehren William_
         <li><a href="#cu6"> CU#6 </a></li>
         <li><a href="#cu7"> CU#7 </a></li>
         <li><a href="#cu8"> CU#8 </a></li>
+        <li><a href="#cu9"> CU#9 </a></li>
         </ul>
     </ol>
 </ol>
@@ -65,14 +66,22 @@ Si le visiteur n’est pas inscrit, alors il devra remplir un formulaire et rens
 Si l'utilisateur se connecte avec les identifiants de l’administrateur, il n’aura pas accès aux mêmes fonctionnalités que les inscrits « classique » mais à une page exclusive.
 
 L'utilisateur connecté peut accéder à son profil en cliquant sur l'image profil en haut à droite de la page d'accueil une fois ce dernier connecté. Un formulaire sous forme de pop-up se dévoile et affiche le login, adresse mail, nom et prénom de l'utilisateur dans plusieurs champs. L'utilisateur saisit dans le(s) champ(s) adéquat(s) le ou les nouvelles informations personnelles qu'il veut modifier, puis clique ensuite sur le bouton valider pour enregistrer ces nouvelles dernières.
-Si l'utilisateur modifier son mot de passe, il doit aussi saisir le nouveau mot de passe dans deux champs, puis cliquer sur valider.
+Si l'utilisateur modifier son mot de passe, il doit aussi saisir le nouveau mot de passe dans deux champs, puis cliquer sur valider. 
+
+Le deuxième livrable contient un module de calcul des nombres premiers ainsi que les fonctionnalités de l'utilisateur administrateur.
+Un utilisateur accède au module de calcul des nombres premiers, soit en étant déjà inscrit, ou en y accédant en étant comme non connecté. Il clique ensuite sur le module en question depuis la page principale pour accéder à la page de ce dernier.
+Puis, il saisit la borne minmimum _n_ et la borne maximum _m_ et clique sur valider pour calculer les nombres premiers compris entre _n_ et _m_.
+Une fois les nombres premiers calculés, le temps d'exécution du calcul ainsi que la liste de ces derniers sont affichés dans la page du module. Si l'utilisateur est connecté, le calcul s'effectue de manière distribuée sur les 4 rpi zeros, alors que si l'utilisateur est non connecté, le calcul s'effectue sur un seul rpi zero et  une pop-up s'affiche invitant l'utilisateur à se connecter pour profiter de la puissance du calcul distribué.
 
 Ci-dessous les différents niveaux des cas d'utilisation:
 **Niveau stratégique**:
+- L'utilisateur 
+- L'utilisateur utilise des modules
 
 **Niveau utilisateur**:
 - S'inscrire
 - Supprimer son compte
+- L'utilisateur utilise le module de calcul des nombres premiers
 
 **Niveau sous-fonctions**:
 - Se connecter
@@ -550,6 +559,55 @@ Scénario alternatif 3.1 :
 2. L'erreur est enregistrée à l'aide d'un logger
 3. L’inscrit est redirigé vers son profil
 4. Un message d'erreur est affiché à l'utilisateur
+
+**Informations connexes** : /
+
+<h4 id="cu9"> CU#9 : Utilisation du module de calcul des nombres premiers</h4> 
+
+**Nom** : L'utilisateur utilise le module de calcul des nombres premiers\
+**Contexte d’utilisation** : Utilisation normale du site\
+**Portée** : site web, base de données\
+**Niveau** : utilisateur\
+**Acteur principal** : utilisateur\
+**Précondition** : /\
+**Garantie minimale** : pas de garantie\
+**Garantie de succès** : L'utilisateur visualise les nombres premiers calculés \
+**Déclencheur** : L'utilisateur clique sur le module \
+**Scénario nominal** :
+
+1. L'utilisateur se connecte et clique sur le module depuis la page principale
+
+2. Le site affiche la page du module
+
+3. L'utilisateur remplit 2 champs pour les bornes n et m pour calculer les nombre premiers situés entre n et m
+
+4. L'utilisateur clique sur le bouton calculer
+        
+5. Le site exécute un script qui effectue le calcul des nombres premiers de manière distribué sur les 4 rpi zeros
+
+6. Le site affiche le temps d'exécution du calcul des nombres premiers ainsi que la liste de ces derniers
+
+**Extension** : /\
+**Liste des variantes** : \
+
+Scénario alternatif 1.1:
+- L'utilisateur accède à la page principale sans se connecter et clique sur le module
+
+Scénario alternatif 4.1:
+- L'utilisateur a entré des valeurs incorrectes pour les bornes n et m : n < 0 ou m <= n ou m > 2000
+- Le script de calcul n'est pas exécuté
+- Le site affiche un message d'erreur à l'utilisateur
+
+Scénario alternatif 5.1:
+- Les rpi zeros ne sont pas accessibles en mode connexion ssh
+- Le script s'arrête prématurément et renvoie une erreur
+- Le site affiche une erreur à l'utilisateur 
+
+Scénario alternatif 5.2:
+- L'utilisateur qui appuie sur le bouton calculer est non inscrit, le script ne s'exécute que sur un rpi zero
+
+Scénario alternatif 6.1:
+- L'utilisateur n'étant pas inscrit, une pop-up s'affiche pour l'inviter à se connecter ou à s'inscrire, pour profiter de la puissance du calcul distribué
 
 **Informations connexes** : /
 
