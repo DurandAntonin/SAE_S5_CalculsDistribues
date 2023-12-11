@@ -57,13 +57,15 @@ L'application est hébergée sur le kit Cluster Hat. Chaque noeud doit pouvoir c
 
 Le premier livrable est un système de connexion et d'inscription relié à une base de données.
 
-Texte 1 Description textuelle des cas d’utilisations : Le site permet directement à un visiteur de s'inscrire ou bien de se connecter via une page d’inscription ou de connexion. Ces deux choix correspondent à deux cas d’utilisation différents, le visiteur est déjà inscrit ou non.
+Texte 1 Description textuelle des cas d’utilisations : Le site permet directement à un visiteur de s'inscrire, de se connecter via une page d’inscription ou de connexion ou d'accéder au site directement. Il permet aussi à l'utilisateur connecté de voir ses informations personnelles et de les modifier. Ces fonctionnalités correspondent aux cas d'utilisations.
 
 Si le visiteur est déjà inscrit, il sera en mesure de se connecter (sous-fonctions) à chacune de ses visites sur le site en remplissant et en envoyant le formulaire qu’il aura rempli avec son identifiant et son mot de passe (sous-fonctions). Si l’inscrit commet une erreur en remplissant le formulaire ou qu’il n’est simplement pas inscrit alors il sera renvoyé sur le formulaire avec un message lui disant que les informations renseignées sont erronées. Après une connexion réussie, l’utilisateur inscrit se retrouvera sur une page dite principale à partir de laquelle il pourra accéder, via des boutons, à une page simulant les futurs modules de calcul disponible sur le site. Il pourra également accéder à son profil, où il sera en mesure de modifier son mot de passe, nom, prénom, identifiant et adresse mail ou bien de se déconnecter et de revenir à la page d'inscription.
 
 Si le visiteur n’est pas inscrit, alors il devra remplir un formulaire et renseigner son identifiant et son mot de passe qu’il devra confirmer. Après son inscription validée, les données sont communiquées à la base de données et sont enregistrées. Le visiteur maintenant inscrit arrivera directement sur la page principale et pourra profiter de toutes les fonctionnalités du site. 
-
 Si l'utilisateur se connecte avec les identifiants de l’administrateur, il n’aura pas accès aux mêmes fonctionnalités que les inscrits « classique » mais à une page exclusive.
+
+L'utilisateur connecté peut accéder à son profil en cliquant sur l'image profil en haut à droite de la page d'accueil une fois ce dernier connecté. Un formulaire sous forme de pop-up se dévoile et affiche le login, adresse mail, nom et prénom de l'utilisateur dans plusieurs champs. L'utilisateur saisit dans le(s) champ(s) adéquat(s) le ou les nouvelles informations personnelles qu'il veut modifier, puis clique ensuite sur le bouton valider pour enregistrer ces nouvelles dernières.
+Si l'utilisateur modifier son mot de passe, il doit aussi saisir le nouveau mot de passe dans deux champs, puis cliquer sur valider.
 
 Ci-dessous les différents niveaux des cas d'utilisation:
 **Niveau stratégique**:
@@ -264,24 +266,38 @@ Scénario alternatif 6.6 :
 
 Scénario alternatif 1.1 :
 1. Le formulaire est vide
-2. Un message d'erreur est affiché
+2. L’inscrit est redirigé vers son profil
+3. Un message d'erreur est affiché
 
 Scénario alternatif 3.1 :
 1. La taille du mot de passe saisi par l'inscrit n'est pas valide
 2. Le serveur refuse l’insertion des données
-3. Un message d'erreur est affiché
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
 
 Scénario alternatif 3.2 :
 1. Le mot de passe est similaire à l’ancien mot de passe
 2. Le serveur refuse le changement de mot de passe
-3. L’inscrit est redirigé sur la page de changement de mot de passe
+3. L’inscrit est redirigé sur la page profil
 4. Un message lui disant de ne pas choir le même mot de passe est affiché
 
 Scénario alternatif 3.3 :
 1. Les deux mots de passe renseignés sont différents
 2. Le serveur refuse le changement de mot de passe
-3. L’inscrit est redirigé sur la page de changement de mot de passe
-4. Un message lui disant que les mots de passe étaient différents est affiché
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur lui disant que les deux mots de passe sont différents est affiché
+
+Scénario alternatif 3.4 :
+1. Le mot de passe est trop fragile
+2. Le serveur refuse le changement de mot de passe
+3. L’inscrit est redirigé sur la page profil
+4. Un message lui disant que le mot de passe est fragile
+
+Scénario alternatif 3.5 :
+1. La requête pour le mot de passe dans la base de données à échouée
+2. L'erreur est enregistrée à l'aide d'un logger
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché à l'utilisateur
 
 **Informations connexes** : /
 
@@ -313,7 +329,8 @@ Scénario alternatif 3.3 :
 
 Scénario alternatif 1.1 :
 1. Le formulaire est vide
-2. Un message d'erreur est affiché
+2. L’inscrit est redirigé vers son profil
+3. Un message d'erreur est affiché
 
 Scénario alternatif 3.1 :
 1. L'inscrit saisit une adresse mail avec des caractères spéciaux
@@ -323,12 +340,20 @@ Scénario alternatif 3.1 :
 Scénario alternatif 3.2 :
 1. La taille de l'adresse mail saisie par l'inscrit n'est pas valide
 2. Le serveur refuse l’insertion des données
-3. Un message d'erreur est affiché
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
 
 Scénario alternatif 3.3 :
-1. L'adresse mail est similaire à l’ancienne adresse mail
+1. L'adresse mail est similaire à l’ancienne adresse mail et ou déjà prise
 2. Le serveur refuse le changement d'adresse mail
-3. L’inscrit est redirigé sur la page de profil
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
+
+Scénario alternatif 3.4 :
+1. La requête pour changer l'adresse mail dans la base de données à échouée
+2. L'erreur est enregistrée à l'aide d'un logger
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché à l'utilisateur
 
 **Informations connexes** : /
 
@@ -361,22 +386,32 @@ Scénario alternatif 3.3 :
 
 Scénario alternatif 1.1 :
 1. Le formulaire est vide
-2. Un message d'erreur est affiché
+2. L’inscrit est redirigé vers son profil
+3. Un message d'erreur est affiché
 
 Scénario alternatif 3.1 :
 1. L'inscrit saisit un login avec des caractères spéciaux
 2. Le serveur refuse l’insertion des données
-3. Le visiteur est redirigé sur la page connexion avec un message d'erreur
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
 
 Scénario alternatif 3.2 :
 1. La taille du login saisi par l'inscrit n'est pas valide
 2. Le serveur refuse l’insertion des données
-3. Un message d'erreur est affiché
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
 
 Scénario alternatif 3.3 :
-1. Le login est similaire à l'ancien login
+1. Le login est similaire à l'ancien login et ou déjà pris
 2. Le serveur refuse le changement du login
-3. L’inscrit est redirigé sur la page de profil
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
+
+Scénario alternatif 3.4 :
+1. La requête pour changer le login dans la base de données à échouée
+2. L'erreur est enregistrée à l'aide d'un logger
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché à l'utilisateur
 
 **Informations connexes** : /
 
@@ -409,22 +444,26 @@ Scénario alternatif 3.3 :
 
 Scénario alternatif 1.1 :
 1. Le formulaire est vide
-2. Un message d'erreur est affiché
+2. L’inscrit est redirigé vers son profil
+3. Un message d'erreur est affiché
 
 Scénario alternatif 3.1 :
-1. L'inscrit saisit une nom avec des caractères spéciaux
+1. L'inscrit saisit un nom avec des caractères spéciaux
 2. Le serveur refuse l’insertion des données
-3. Un message d'erreur est affiché 
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
 
 Scénario alternatif 3.2 :
 1. La taille du nom saisi par l'inscrit n'est pas valide
 2. Le serveur refuse l’insertion des données
-3. Un message d'erreur est affiché
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
 
 Scénario alternatif 3.3 :
-1. Le nom est similaire à l'ancien nom
-2. Le serveur refuse le changement du nom
-3. Un message d'erreur est affiché
+1. La requête pour changer le nom dans la base de données à échouée
+2. L'erreur est enregistrée à l'aide d'un logger
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché à l'utilisateur
 
 **Informations connexes** : /
 
@@ -459,19 +498,22 @@ Scénario alternatif 1.1 :
 2. Un message d'erreur est affiché
 
 Scénario alternatif 3.1 :
-1. L'inscrit saisit prénom avec des caractères spéciaux
+1. L'inscrit saisit le prénom avec des caractères spéciaux
 2. Le serveur refuse l’insertion des données
-3. Un message d'erreur est affiché
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
 
 Scénario alternatif 3.2 :
 1. La taille du prénom saisi par l'inscrit n'est pas valide
 2. Le serveur refuse l’insertion des données
-3. Un message d'erreur est affiché
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
 
 Scénario alternatif 3.3 :
-1. Le prénom est similaire à l'ancien prénom
-2. Le serveur refuse le changement du prénom
-3. Un message d'erreur est affiché
+1. La requête pour changer le prénom dans la base de données à échouée
+2. L'erreur est enregistrée à l'aide d'un logger
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché à l'utilisateur
 
 **Informations connexes** : /
 
@@ -501,6 +543,13 @@ Scénario alternatif 3.3 :
 
 
 **Extension** : /\
-**Liste des variantes** : /
+**Liste des variantes** : 
+
+Scénario alternatif 3.1 :
+1. La requête pour supprimer le compte dans la base de données à échouée
+2. L'erreur est enregistrée à l'aide d'un logger
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché à l'utilisateur
+
 **Informations connexes** : /
 
