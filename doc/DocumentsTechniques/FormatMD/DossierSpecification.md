@@ -27,6 +27,9 @@ _Zehren William_
         <li><a href="#cu7"> CU#7 </a></li>
         <li><a href="#cu8"> CU#8 </a></li>
         <li><a href="#cu9"> CU#9 </a></li>
+        <li><a href="#cu10"> CU10 </a></li>
+        <li><a href="#cu11"> CU#11 </a></li>
+        <li><a href="#cu12"> CU#12 </a></li>
         </ul>
     </ol>
 </ol>
@@ -75,20 +78,24 @@ Une fois les nombres premiers calculés, le temps d'exécution du calcul ainsi q
 
 Ci-dessous les différents niveaux des cas d'utilisation:
 **Niveau stratégique**:
-- L'utilisateur 
 - L'utilisateur utilise des modules
+- L'administrateur administre le site web
 
 **Niveau utilisateur**:
 - S'inscrire
 - Supprimer son compte
-- L'utilisateur utilise le module de calcul des nombres premiers
+- Utilisation du module de calcul des nombres premiers
+- Rechercher des utilisateurs
+- Rechercher des logs
 
 **Niveau sous-fonctions**:
 - Se connecter
+- Se déconnecter
 - Changer son login
 - Changer son adresse mail
 - Changer son nom
 - Changer son prénom
+- Visualiser les statistiques du site
 
 <h3 style="page-break-before: always" id="cas_utilisations_detailles"> Cas d'utilisations détaillés </h3>
 
@@ -196,9 +203,9 @@ Scénario alternatif 6.9 :
 
 3. Le site affiche la page de connexion.
 
-4. L’inscrit remplit les formulaires.
+4. L’inscrit remplit le formulaires.
 
-5. L’inscrit appui sur le bouton valider pour se connecter.
+5. L’inscrit appuie sur le bouton valider pour se connecter.
 
 6. Les données sont transmises à la base de données
 
@@ -594,7 +601,7 @@ Scénario alternatif 1.1:
 - L'utilisateur accède à la page principale sans se connecter et clique sur le module
 
 Scénario alternatif 4.1:
-- L'utilisateur a entré des valeurs incorrectes pour les bornes n et m : n < 0 ou m <= n ou m > 2000
+- L'utilisateur a entré des valeurs incorrectes pour les bornes n et m : n < 0 ou m <= n ou m > valeur maximale
 - Le script de calcul n'est pas exécuté
 - Le site affiche un message d'erreur à l'utilisateur
 
@@ -611,3 +618,123 @@ Scénario alternatif 6.1:
 
 **Informations connexes** : /
 
+<h4 id="cu10"> CU#10 : Visualiser les statistiques du site</h4> 
+
+**Nom** : L'administrateur visualise les statistiques du site\
+**Contexte d’utilisation** : Utilisation normale du site\
+**Portée** : site web, base de données\
+**Niveau** : sous-fonction\
+**Acteur principal** : administrateur\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté en tant qu'administrateur</u> **(CU#2)**\
+**Garantie minimale** : pas de garantie\
+**Garantie de succès** : L'administrateur visualise les statistiques du site \
+**Déclencheur** : L'administrateur se connecte\
+**Scénario nominal** :
+
+1. L'administrateur clique sur le bouton lié à la période de temps souhaitée (Jour, Semaine, Mois, Tout) pour visualier les statistiques
+
+2. Le site exécute des scripts pour récupérer ces statistiques en fonction de la période choisie
+
+3. Le site affiche les statistiques renvoyées par les scripts
+
+**Extension** : /\
+**Liste des variantes** : \
+
+Scénario alternatif 2.1:
+- Une erreur est survenue lors de l'exécution d'un des scripts
+- Le script s'arrête prématurément et renvoie une erreur
+- Le site affiche ne change pas les statistiques et affiche une erreur à l'administrateur
+
+**Informations connexes** : /
+
+<h4 id="cu11"> CU#11 : Rechercher des utilisateurs</h4> 
+
+**Nom** : L'administrateur recherche des utilisateurs\
+**Contexte d’utilisation** : Utilisation normale du site\
+**Portée** : site web, base de données\
+**Niveau** : utilisateur\
+**Acteur principal** : administrateur\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté en tant qu'administrateur</u> **(CU#2)**\
+**Garantie minimale** : pas de garantie\
+**Garantie de succès** : L'administrateur visualise les utilisateurs  \
+**Déclencheur** : L'administrateur clique sur le bouton rechercher des utilisateurs\
+**Scénario nominal** :
+
+1. Le site affiche une pop-up avec un formulaire
+
+2. L'administrateur sélectionne sur quel attribut de l'utilisateur effectuer la recherche
+
+3. L'administrateur entre dans un champ la chaîne de caractères à rechercher
+
+4. L'administrateur clique sur le bouton rechercher
+
+5. Le site exécute un script qui recherche les utilisateurs dans la base de données en fonction des valeurs saisies par l'administrateur
+
+6. Le site affiche les différents utilisateurs de cette recherche
+
+**Extension** : /\
+**Liste des variantes** : \
+
+Scénario alternatif 2.1:
+- L'administrateur essaie de sélectionner un attribut qui ne définit par un utilisateur
+- Un message d'erreur est affiché à l'administrateur
+
+Scénario alternatif 3.1:
+- La taille de la chaîne de caractères est incorrecte
+- Un message d'erreur est affiché à l'administrateur
+
+Scénario alternatif 3.2:
+- La chaîne de caractères contient des caractères spéciaux
+- Un message d'erreur est affiché à l'utilisateur
+
+Scénario alternatif 4.1:
+- Une erreur est survenue lors de l'exécution du script
+- La recherche est annulée
+- Un message d'erreur est affiché à l'administrateur
+
+**Informations connexes** : /
+
+<h4 id="cu12"> CU#12 : Rechercher des logs</h4> 
+
+**Nom** : L'administrateur recherche des logs (journaux)\
+**Contexte d’utilisation** : Utilisation normale du site\
+**Portée** : site web, base de données\
+**Niveau** : utilisateur\
+**Acteur principal** : administrateur\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté en tant qu'administrateur</u> **(CU#2)**\
+**Garantie minimale** : pas de garantie\
+**Garantie de succès** : L'administrateur visualise les logs  \
+**Déclencheur** : L'administrateur clique sur le bouton rechercher des logs\
+**Scénario nominal** :
+
+1. Le site affiche une pop-up avec un formulaire
+
+2. L'administrateur entre dans un champ les mots-clés (attributs sur lesquels effectuer la recherche de logs) et valeurs associées
+
+3. L'administrateur clique sur le bouton rechercher
+
+4. Le site exécute un script qui recherche les logs dans la base de données en fonction des mots-clés et valeurs saisies par l'administrateur
+
+5. Le site affiche les différents logs de cette recherche
+
+**Extension** : /\
+**Liste des variantes** : \
+
+Scénario alternatif 3.1:
+- L'administrateur essaie de sélectionner un mot clé qui ne définit pas un log
+- Un message d'erreur est affiché à l'administrateur
+
+Scénario alternatif 3.2:
+- La taille d'une valeur associé à un mot-clé est incorrecte
+- Un message d'erreur est affiché à l'administrateur
+
+Scénario alternatif 3.3:
+- Des caractères spéciaux autre que le caractères pour séparer les mots-clés sont présents
+- Un message d'erreur est affiché à l'utilisateur
+
+Scénario alternatif 4.1:
+- Une erreur est survenue lors de l'exécution du script
+- La recherche est annulée
+- Un message d'erreur est affiché à l'administrateur
+
+**Informations connexes** : /
