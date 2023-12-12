@@ -19,6 +19,7 @@ $user = unserialize($_SESSION["user"]);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.min.css">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="shortcut icon" type="image/png" href="../PICTURES/blitzcalc-favicon-color.png"/>
 </head>
 <body class="bg-lightblue" style="font-family: 'Poppins', sans-serif;">
 
@@ -88,20 +89,26 @@ $user = unserialize($_SESSION["user"]);
         <div>
             <p class="text-3xl text-deepblue flex flex-row justify-between items-center mx-2"><ion-icon name="home" class="mx-2  "></ion-icon>Dashboard</p>
         </div>
-        <div class="flex p-2 w-1/3 justify-center float-right">
-            <button class="min-w-auto w-32 h-10 bg-deepblue p-2 rounded-l-xl hover:bg-white hover:text-deepblue transition-colors duration-50 hover:animate-pulse ease-out text-white font-semibold">
-                Jour
-            </button>
-            <button class="min-w-auto w-32 h-10 bg-deepblue p-2 rounded-none hover:bg-white hover:text-deepblue transition-colors duration-50 hover:animate-pulse ease-out text-white font-semibold">
-                Semaine
-            </button>
-            <button class="min-w-auto w-32 h-10 bg-deepblue p-2 rounded-none hover:bg-white hover:text-deepblue transition-colors duration-50 hover:animate-pulse ease-out text-white font-semibold">
-                Mois
-            </button>
-            <button class="min-w-auto w-32 h-10 bg-deepblue p-2 rounded-r-xl hover:bg-white hover:text-deepblue transition-colors duration-50 hover:animate-pulse ease-out text-white font-semibold">
-                Tout
-            </button>
+      <div class="grid w-[40rem] grid-cols-4 gap-2 rounded-xl bg-deepblue p-2 text-white">
+        <div>
+            <input type="radio" name="option" id="jour" value="jour" class="peer hidden" checked />
+            <label for="jour" class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Jour</label>
         </div>
+        <div>
+            <input type="radio" name="option" id="semaine" value="semaine" class="peer hidden" />
+            <label for="semaine" class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Semaine</label>
+        </div>
+
+        <div>
+            <input type="radio" name="option" id="mois" value="mois" class="peer hidden" />
+            <label for="mois" class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Mois</label>
+        </div>
+
+        <div>
+            <input type="radio" name="option" id="tout" value="tout" class="peer hidden" />
+            <label for="tout" class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Tout</label>
+        </div>
+    </div>
     </div>
 </section>
     <footer class="relative bg-deepblue pt-8 pb-6">
