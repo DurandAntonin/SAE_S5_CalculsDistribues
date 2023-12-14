@@ -12,6 +12,7 @@ $user = unserialize($_SESSION["user"]);
     <meta charset="UTF-8">
     <title>BlitzCalc</title>
     <script defer src = "../JS/accueil_script.js"> </script>
+    <script defer src = "../JS/accueil_admin_script.js"> </script>
     <link href="../dist/output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -110,240 +111,248 @@ $user = unserialize($_SESSION["user"]);
         </div>
       </div>
     </div>
-    <main class="flex-1 overflow-x-hidden overflow-y-auto">
-                <div class="container px-6 py-8 mx-auto">
-                    <div class="mt-4">
-                        <div class="flex flex-wrap -mx-6">
-                            <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
-                                <div class="flex items-center px-5 py-6 bg-white rounded-md">
-                                    <div class="p-4 h-16 w-16 bg-lyellow  rounded-full">
-                                    <ion-icon name="people" class="text-3xl "></ion-icon>
-                                    </div>
-    
-                                    <div class="mx-5">
-                                        <h4 class="text-2xl font-semibold text-gray-700">8,282</h4>
-                                        <div class="text-deepblue ">Nombres d'utilisateurs</div>
-                                    </div>
-                                </div>
-                            </div>
-    
-                            <div class="w-full px-6 mt-6 sm:w-1/2 xl:w-1/3 sm:mt-0">
-                                <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
-                                    <div class="p-4  h-16 w-16 bg-lyellow rounded-full">
-                                        <ion-icon name="key" class="text-3xl "></ion-icon>
-                                    </div>
-    
-                                    <div class="mx-5">
-                                        <h4 class="text-2xl font-semibold text-gray-700">200,521</h4>
-                                        <div class="text-deepblue">Nombres de visites</div>
+        <main class="flex-1 overflow-x-hidden overflow-y-auto">
+                    <div class="container px-6 py-8 mx-auto">
+                        <div class="mt-4">
+                            <div class="flex flex-wrap -mx-6">
+                                <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
+                                    <div class="flex items-center px-5 py-6 bg-white rounded-md">
+                                        <div class="p-4 h-16 w-16 bg-lyellow  rounded-full">
+                                        <ion-icon name="people" class="text-3xl "></ion-icon>
+                                        </div>
+        
+                                        <div class="mx-5">
+                                            <h4 class="text-2xl font-semibold text-gray-700">8,282</h4>
+                                            <div class="text-deepblue ">Nombres d'utilisateurs</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-    
-                            <div class="w-full px-6 mt-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
-                                <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
-                                    <div class="p-4  h-16 w-16 bg-lyellow rounded-full">
-                                        <ion-icon name="calculator" class="text-3xl"></ion-icon>
+        
+                                <div class="w-full px-6 mt-6 sm:w-1/2 xl:w-1/3 sm:mt-0">
+                                    <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
+                                        <div class="p-4  h-16 w-16 bg-lyellow rounded-full">
+                                            <ion-icon name="key" class="text-3xl "></ion-icon>
+                                        </div>
+        
+                                        <div class="mx-5">
+                                            <h4 class="text-2xl font-semibold text-gray-700">200,521</h4>
+                                            <div class="text-deepblue">Nombres de visites</div>
+                                        </div>
                                     </div>
-    
-                                    <div class="mx-5">
-                                        <h4 class="text-2xl font-semibold text-gray-700">215,542</h4>
-                                        <div class="text-deepblue">Utilisation des modules</div>
+                                </div>
+        
+                                <div class="w-full px-6 mt-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
+                                    <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
+                                        <div class="p-4  h-16 w-16 bg-lyellow rounded-full">
+                                            <ion-icon name="calculator" class="text-3xl"></ion-icon>
+                                        </div>
+        
+                                        <div class="mx-5">
+                                            <h4 class="text-2xl font-semibold text-gray-700">215,542</h4>
+                                            <div class="text-deepblue">Utilisation des modules</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-    
-                    <div class="mt-8">
-    
-                    </div>
-    
-                    <div class="flex flex-col mt-8">
-                        <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                            <div
-                                class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
-                                <table class="min-w-full">
-                                    <thead>
-                                        <tr>
-                                            <th
-                                                class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                                Machine</th>
-                                            <th
-                                                class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                                % Processeur</th>
-                                            <th
-                                                class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                                % Mémoire</th>
-                                            <th
-                                                class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                                Uptime</th>
-                                        </tr>
-                                    </thead>
-    
-                                    <tbody class="bg-white">
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="flex items-center">
-                                                    <div class="flex-shrink-0 w-10 h-10">
-                                                        <img class="w-10 h-10 rounded-full"
-                                                            src="../PICTURES/pi4.png"
-                                                            alt="">
-                                                    </div>
-    
-                                                    <div class="ml-4">
-                                                        <div class="text-sm font-medium leading-5 text-gray-900">cnat
-                                                        </div>
-                                                        <div class="text-sm leading-5 text-gray-500">172.19.181.1</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-    
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="text-sm leading-5 text-gray-900">14.7 %</div>
-                                                <div class="text-sm leading-5 text-gray-500">0.8 GHz</div>
-                                            </td>
-    
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                            <div class="text-sm leading-5 text-gray-900">14.4 %</div>
-                                                <div class="text-sm leading-5 text-gray-500">0.766 Go</div>
-                                            </td>
-    
-                                            <td
-                                                class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                                up 5 days, 7 hours, 50 minutes</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="flex items-center">
-                                                    <div class="flex-shrink-0 w-10 h-10">
-                                                        <img class="w-10 h-10 rounded-full"
-                                                            src="../PICTURES/pi0.png"
-                                                            alt="">
-                                                    </div>
-    
-                                                    <div class="ml-4">
-                                                        <div class="text-sm font-medium leading-5 text-gray-900">pi1
-                                                        </div>
-                                                        <div class="text-sm leading-5 text-gray-500">172.19.181.254</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-    
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="text-sm leading-5 text-gray-900">5.7 %</div>
-                                                <div class="text-sm leading-5 text-gray-500">0.5 GHz</div>
-                                            </td>
-    
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                            <div class="text-sm leading-5 text-gray-900">45.9 %</div>
-                                                <div class="text-sm leading-5 text-gray-500">0.233 Go</div>
-                                            </td>
-    
-                                            <td
-                                                class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                                up 4 days, 21 hours, 25 minutes</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="flex items-center">
-                                                    <div class="flex-shrink-0 w-10 h-10">
-                                                        <img class="w-10 h-10 rounded-full"
-                                                            src="../PICTURES/pi0.png"
-                                                            alt="">
-                                                    </div>
-    
-                                                    <div class="ml-4">
-                                                        <div class="text-sm font-medium leading-5 text-gray-900">pi2
-                                                        </div>
-                                                        <div class="text-sm leading-5 text-gray-500">172.19.181.254</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-    
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="text-sm leading-5 text-gray-900">5.7 %</div>
-                                                <div class="text-sm leading-5 text-gray-500">0.5 GHz</div>
-                                            </td>
-    
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                            <div class="text-sm leading-5 text-gray-900">45.9 %</div>
-                                                <div class="text-sm leading-5 text-gray-500">0.233 Go</div>
-                                            </td>
-    
-                                            <td
-                                                class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                                up 4 days, 21 hours, 25 minutes</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="flex items-center">
-                                                    <div class="flex-shrink-0 w-10 h-10">
-                                                        <img class="w-10 h-10 rounded-full"
-                                                            src="../PICTURES/pi0.png"
-                                                            alt="">
-                                                    </div>
-    
-                                                    <div class="ml-4">
-                                                        <div class="text-sm font-medium leading-5 text-gray-900">pi3
-                                                        </div>
-                                                        <div class="text-sm leading-5 text-gray-500">172.19.181.254</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-    
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="text-sm leading-5 text-gray-900">5.7 %</div>
-                                                <div class="text-sm leading-5 text-gray-500">0.5 GHz</div>
-                                            </td>
-    
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                            <div class="text-sm leading-5 text-gray-900">45.9 %</div>
-                                                <div class="text-sm leading-5 text-gray-500">0.233 Go</div>
-                                            </td>
-    
-                                            <td
-                                                class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                                up 4 days, 21 hours, 25 minutes</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="flex items-center">
-                                                    <div class="flex-shrink-0 w-10 h-10">
-                                                        <img class="w-10 h-10 rounded-full"
-                                                            src="../PICTURES/pi0.png"
-                                                            alt="">
-                                                    </div>
-    
-                                                    <div class="ml-4">
-                                                        <div class="text-sm font-medium leading-5 text-gray-900">pi4
-                                                        </div>
-                                                        <div class="text-sm leading-5 text-gray-500">172.19.181.254</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-    
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="text-sm leading-5 text-gray-900">5.7 %</div>
-                                                <div class="text-sm leading-5 text-gray-500">0.5 GHz</div>
-                                            </td>
-    
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                            <div class="text-sm leading-5 text-gray-900">45.9 %</div>
-                                                <div class="text-sm leading-5 text-gray-500">0.233 Go</div>
-                                            </td>
-    
-                                            <td
-                                                class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                                up 4 days, 21 hours, 25 minutes</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+        
+                        <div class="mt-8">
+        
                         </div>
+
+                        <div class="flex justify-between items-center w-auto  mx-auto my-20">
+        
+                            <div class="flex flex-col mt-8 w-3/4">
+                                <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+                                    <div
+                                        class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
+                                        <table class="min-w-full">
+                                            <thead>
+                                                <tr>
+                                                    <th
+                                                        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                                                        Machine</th>
+                                                    <th
+                                                        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                                                        % Processeur</th>
+                                                    <th
+                                                        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                                                        % Mémoire</th>
+                                                    <th
+                                                        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                                                        Uptime</th>
+                                                </tr>
+                                            </thead>
+            
+                                            <tbody class="bg-white">
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                        <div class="flex items-center">
+                                                            <div class="flex-shrink-0 w-10 h-10">
+                                                                <img class="w-10 h-10 rounded-full"
+                                                                    src="../PICTURES/pi4.png"
+                                                                    alt="">
+                                                            </div>
+            
+                                                            <div class="ml-4">
+                                                                <div class="text-sm font-medium leading-5 text-gray-900">cnat
+                                                                </div>
+                                                                <div class="text-sm leading-5 text-gray-500">172.19.181.254</div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+            
+                                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                        <div class="text-sm leading-5 text-gray-900">14.7 %</div>
+                                                        <div class="text-sm leading-5 text-gray-500">0.8 GHz</div>
+                                                    </td>
+            
+                                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                    <div class="text-sm leading-5 text-gray-900">14.4 %</div>
+                                                        <div class="text-sm leading-5 text-gray-500">0.766 Go</div>
+                                                    </td>
+            
+                                                    <td
+                                                        class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
+                                                        up 5 days, 7 hours, 50 minutes</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                        <div class="flex items-center">
+                                                            <div class="flex-shrink-0 w-10 h-10">
+                                                                <img class="w-10 h-10 rounded-full"
+                                                                    src="../PICTURES/pi0.png"
+                                                                    alt="">
+                                                            </div>
+            
+                                                            <div class="ml-4">
+                                                                <div class="text-sm font-medium leading-5 text-gray-900">pi1
+                                                                </div>
+                                                                <div class="text-sm leading-5 text-gray-500">172.19.181.1</div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+            
+                                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                        <div class="text-sm leading-5 text-gray-900">5.7 %</div>
+                                                        <div class="text-sm leading-5 text-gray-500">0.5 GHz</div>
+                                                    </td>
+            
+                                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                    <div class="text-sm leading-5 text-gray-900">45.9 %</div>
+                                                        <div class="text-sm leading-5 text-gray-500">0.233 Go</div>
+                                                    </td>
+            
+                                                    <td
+                                                        class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
+                                                        up 4 days, 21 hours, 25 minutes</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                        <div class="flex items-center">
+                                                            <div class="flex-shrink-0 w-10 h-10">
+                                                                <img class="w-10 h-10 rounded-full"
+                                                                    src="../PICTURES/pi0.png"
+                                                                    alt="">
+                                                            </div>
+            
+                                                            <div class="ml-4">
+                                                                <div class="text-sm font-medium leading-5 text-gray-900">pi2
+                                                                </div>
+                                                                <div class="text-sm leading-5 text-gray-500">172.19.181.2</div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+            
+                                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                        <div class="text-sm leading-5 text-gray-900">5.7 %</div>
+                                                        <div class="text-sm leading-5 text-gray-500">0.5 GHz</div>
+                                                    </td>
+            
+                                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                    <div class="text-sm leading-5 text-gray-900">45.9 %</div>
+                                                        <div class="text-sm leading-5 text-gray-500">0.233 Go</div>
+                                                    </td>
+            
+                                                    <td
+                                                        class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
+                                                        up 4 days, 21 hours, 25 minutes</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                        <div class="flex items-center">
+                                                            <div class="flex-shrink-0 w-10 h-10">
+                                                                <img class="w-10 h-10 rounded-full"
+                                                                    src="../PICTURES/pi0.png"
+                                                                    alt="">
+                                                            </div>
+            
+                                                            <div class="ml-4">
+                                                                <div class="text-sm font-medium leading-5 text-gray-900">pi3
+                                                                </div>
+                                                                <div class="text-sm leading-5 text-gray-500">172.19.181.3</div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+            
+                                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                        <div class="text-sm leading-5 text-gray-900">5.7 %</div>
+                                                        <div class="text-sm leading-5 text-gray-500">0.5 GHz</div>
+                                                    </td>
+            
+                                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                    <div class="text-sm leading-5 text-gray-900">45.9 %</div>
+                                                        <div class="text-sm leading-5 text-gray-500">0.233 Go</div>
+                                                    </td>
+            
+                                                    <td
+                                                        class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
+                                                        up 4 days, 21 hours, 25 minutes</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                        <div class="flex items-center">
+                                                            <div class="flex-shrink-0 w-10 h-10">
+                                                                <img class="w-10 h-10 rounded-full"
+                                                                    src="../PICTURES/pi0.png"
+                                                                    alt="">
+                                                            </div>
+            
+                                                            <div class="ml-4">
+                                                                <div class="text-sm font-medium leading-5 text-gray-900">pi4
+                                                                </div>
+                                                                <div class="text-sm leading-5 text-gray-500">172.19.181.4</div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+            
+                                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                        <div class="text-sm leading-5 text-gray-900">5.7 %</div>
+                                                        <div class="text-sm leading-5 text-gray-500">0.5 GHz</div>
+                                                    </td>
+            
+                                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                    <div class="text-sm leading-5 text-gray-900">45.9 %</div>
+                                                        <div class="text-sm leading-5 text-gray-500">0.233 Go</div>
+                                                    </td>
+            
+                                                    <td
+                                                        class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
+                                                        up 4 days, 21 hours, 25 minutes</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                    </div>
+                    <div class="rounded-lg w-1/3  mt-4">
+                        <h1 class="text-2xl text-deepblue mb-8"> Répartition des Connexions</h1>
+                    <canvas class="p-1 ml-40 mr-40" id="chartPie"></canvas>
+                </div>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                     </div>
                 </div>
-            </main>
+                </main>
 </section>
     <footer class="relative bg-deepblue pt-8 pb-6">
         <div class="container mx-auto px-4">
