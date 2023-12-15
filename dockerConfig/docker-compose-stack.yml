@@ -18,3 +18,5 @@ services:
       placement:
         constraints: [node.labels.service == sql ]
       replicas: 1
+    volumes:
+      - "/var/lib/mysql_volume_app:/var/lib/mysql"
