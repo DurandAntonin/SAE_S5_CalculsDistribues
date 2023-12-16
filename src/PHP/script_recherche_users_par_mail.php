@@ -2,10 +2,7 @@
 namespace PHP;
 
 include_once "Utility.php";
-
-include_once "Enum_fic_logs.php";
 include_once "MySQLDataManagement.php";
-include_once "Enum_fic_logs.php";
 include "Pagination.php";
 
 session_start();

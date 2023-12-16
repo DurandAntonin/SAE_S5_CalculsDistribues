@@ -234,21 +234,6 @@ class User
     }
 
     /**
-     * Affiche l'utilisateur pour l'afficher dans une page internet.
-     *
-     * @deprecated 1.0 N'est plus utilisée dans le code, et va être supprimé dans la prochaine version. Est remplacée par la méthode magique __toString
-     *
-     * @return string
-     *
-     * @version 1.0
-     *
-     */
-    public function str(): string
-    {
-        return "<br><br>Id : ". $this->userId . "Mail : " . $this->userMail . "<br>Login : " . $this->login . "<br>Last name : " . $this->lastName . "<br>First name : " . $this->firstName . "<br>Role : " . $this->role->str() . "<br>";
-    }
-
-    /**
      * Sérialise l'objet utilisateur, en stockant ses champs et valeur dans une chaîne de caractères.
      *
      * @return string Utilisateur sérialisé

@@ -2,8 +2,6 @@
 
 namespace PHP;
 
-require_once "Enum_fic_logs.php";
-
 /**
  * Vérifie si un champ d'un formulaire en HTML est valide, i.e si le nombre de caractères du champ est compris dans une borne.
  *
@@ -50,71 +48,6 @@ function compare_passwords(string $string_to_verify, string $password_hash): boo
 }
 
 /**
- * Enregistre un log dans un répertoire en fonction de son type, spécifiée par l'énumération _$repo_logs_
- *
- * @deprecated 1.0 N'est plus utilisée dans le code, sera enlevée dans la version suivante
- *
- * @param array $info_a_stocker
- * @param Enum_fic_logs $repo_logs
- * @param array $VARS
- * @return void
- *
- * @see Enum_fic_logs
- *
- * @version 1.0
- */
-function enregistrement_actions_dans_logs(array $info_a_stocker, Enum_fic_logs $repo_logs, array $VARS): void
-{
-    $repo_a_utiliser = "";
-    $entete_fic_logs = "";
-
-    //on regarde quel repértoire utiliser à stocker pour le log
-    switch ($repo_logs){
-        case Enum_fic_logs::REPO_LOGS_ERREURS:
-            $repo_a_utiliser = "../LOGS/logs_programme/";
-            $entete_fic_logs = $VARS["entete_fic_logs_erreurs"];
-            break;
-
-        case Enum_fic_logs::REPO_LOGS_USERS_ACTIONS :
-            $repo_a_utiliser = "../LOGS/logs_users_actions/";
-            $entete_fic_logs = $VARS["entete_fic_logs_users_actions"];
-            break;
-
-        case  Enum_fic_logs::REPO_LOGS_TENTATIVES_CONNEXIONS_USERS :
-            $repo_a_utiliser = "../LOGS/logs_tentatives_connexions_users/";
-            $entete_fic_logs = $VARS["entete_fic_logs_tentatives_connexions_users"];
-            break;
-    }
-
-    $date_log = date("Y") . date("m");
-    $nom_fichier_log = $repo_a_utiliser . $VARS["prefixe_fic_log"] . $date_log . ".csv";
-
-    /**print_r($info_a_stocker);
-    echo "<br>";
-    print_r($repo_logs);
-    echo "<br>";
-    echo $date_log;
-    echo "<br>";
-    echo $nom_fichier_log;
-    echo "<br>";*/
-
-    //on a un fichier de log pour chaque mois, on regarde s'il existe, sinon on le créé avec une entete
-    if (!file_exists($nom_fichier_log)){
-        $curseur = fopen($nom_fichier_log,"w");
-        fputcsv($curseur, $entete_fic_logs, ";");
-        fputcsv($curseur, $info_a_stocker, ";");
-        fclose($curseur);
-    }
-    else{
-        //on insère les info à stocker à la fin du fichier
-        $curseur = fopen($nom_fichier_log, "a");
-        fputcsv($curseur, $info_a_stocker, ";");
-        fclose($curseur);
-    }
-}
-
-
-/**
  * Importe la configuration de l'application stockée dans un fichier Json, puis la convertie en une liste associative.
  *
  * @return mixed
@@ -130,23 +63,6 @@ function import_config(): mixed
     //on transforme la chaine de caractere en un objet json, qu'on returne
     return json_decode($file_content, true);
 }
-
-/**
- * Retourne la date d'aujourd'hui selon l'horaire UTC+1 (Europe/Paris), avec des microsecondes
- *
- * @deprecated 1.0 N'est plus utilisée dans le code, sera enlevée dans la version suivante
- *
- * @return \DateTime
- *
- * @version 1.0
- */
-function getTodayDateWithMilliSeconds(): \DateTime
-{
-    date_default_timezone_set("Europe/Paris");
-    $now = \DateTime::createFromFormat('U.u', microtime(true));
-    return $now;
-}
-
 
 /**
  * Retourne la date d'aujourd'hui selon l'horaire UTC+1 (Europe/Paris)

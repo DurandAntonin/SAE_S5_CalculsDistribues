@@ -9,9 +9,7 @@ use PHP\User;
 use function PHP\getTodayDate;
 use function PHP\import_config;
 
-include_once "Enum_fic_logs.php";
 include_once "MySQLDataManagement.php";
-include_once "Enum_fic_logs.php";
 include_once "Utility.php";
 
 session_start();
