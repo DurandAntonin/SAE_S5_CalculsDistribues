@@ -176,6 +176,61 @@ $user = unserialize($_SESSION["user"]);
         </div>
     </div>
 </div>      
+<div class="flex h-screen items-center justify-center">
+  <div  class="wrapper text-gray-900 antialiased animate-fade-left animate-duration-[400ms] animate-ease-in-out"   id="0">
+  <img src="https://i.pinimg.com/564x/b1/6a/44/b16a443978512bffecd043e7ac687ed4.jpg" alt="" class="w-full rounded-xl object-cover object-center shadow-md" />
+    <div class="relative px-4 -mt-16">
+      <div class="rounded-lg bg-white p-6 shadow-lg">
+        <div class="flex items-baseline">
+          <span class="inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Maths </span>
+          <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Calculs distribués </span>
+          <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> MPI </span>
+        </div>
+
+        <h4 class="mt-1 truncate text-xl font-semibold uppercase leading-tight">Calculs Des Nombres premiers</h4>
+
+        <div class="mt-1">
+          145
+          <span class="text-sm text-gray-600">utilisations</span>
+        </div>
+        <div class="">
+          <form method="post" action="PHP/module1.php">
+                    <div class="">
+                        <input type="submit" name="submit_connexion_visiteur" value="Utiliser" class="w-64 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer">
+                    </div>
+                </form> 
+        </div>
+      </div>
+    </div>
+  </div>
+  <div  class="wrapper text-gray-900 antialiased hidden animate-fade-left animate-duration-[400ms] animate-ease-in-out" id="1">
+  <img src="https://i.pinimg.com/564x/fb/5a/3f/fb5a3f88bc2e396ef073cc89e4a12a50.jpg" alt="" class="w-full rounded-xl object-cover object-center shadow-md" />
+    <div class="relative px-4 -mt-16">
+      <div class="rounded-lg bg-white p-6 shadow-lg">
+        <div class="flex items-baseline">
+          <span class="inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Maths </span>
+          <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Probabilités </span>
+          <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Calculs distribués </span>
+          <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> MPI </span>
+        </div>
+
+        <h4 class="mt-1 truncate text-xl font-semibold uppercase leading-tight">Approximation de Pi avec Monte-Carlo </h4>
+
+        <div class="mt-1">
+          32
+          <span class="text-sm text-gray-600">utilisations</span>
+        </div>
+        <div class="">
+          <form method="post" action="PHP/module1.php">
+                    <div class="">
+                        <input type="submit" name="submit_connexion_visiteur" value="Utiliser" class="w-64 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer">
+                    </div>
+                </form> 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </section>
     <footer class="relative bg-deepblue pt-8 pb-6">
         <div class="container mx-auto px-4">

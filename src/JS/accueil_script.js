@@ -2,6 +2,10 @@ const profil = document.querySelector('#popUpProfil');
 const showProfile = document.querySelector('#showProfil');
 const formProfil = document.querySelector('#popUpFormProfil');
 const linkShowProfil = document.querySelector('#linkShowProfil');
+
+
+
+
 var showed = false;
 var showedF = false;
 
@@ -93,3 +97,25 @@ function confirmDelete(){
     }
   });
 }
+
+var changes = 0;
+
+function changeModule(){
+  changes ++;
+  var mod = changes % 2
+  var modS = mod.toString();
+
+  console.log(modS, mod);
+
+  var modules = document.getElementsByClassName('wrapper');
+  var module = document.getElementById(modS);
+  console.log(module);
+
+  Array.prototype.forEach.call(modules,function(elem){
+    elem.classList.add("hidden");
+  });
+  
+  module.classList.remove('hidden');
+}
+
+setInterval(changeModule,4000);
