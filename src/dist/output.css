@@ -889,6 +889,11 @@ select {
   margin-bottom: 2.25rem;
 }
 
+.-my-10 {
+  margin-top: -2.5rem;
+  margin-bottom: -2.5rem;
+}
+
 .-mt-16 {
   margin-top: -4rem;
 }
@@ -961,6 +966,10 @@ select {
   margin-top: 0.25rem;
 }
 
+.mt-20 {
+  margin-top: 5rem;
+}
+
 .mt-4 {
   margin-top: 1rem;
 }
@@ -971,6 +980,26 @@ select {
 
 .mt-8 {
   margin-top: 2rem;
+}
+
+.mb-20 {
+  margin-bottom: 5rem;
+}
+
+.mb-12 {
+  margin-bottom: 3rem;
+}
+
+.mt-12 {
+  margin-top: 3rem;
+}
+
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
+.-mt-10 {
+  margin-top: -2.5rem;
 }
 
 .block {
@@ -1009,10 +1038,6 @@ select {
   height: 4rem;
 }
 
-.h-2\/3 {
-  height: 66.666667%;
-}
-
 .h-20 {
   height: 5rem;
 }
@@ -1029,10 +1054,6 @@ select {
   height: 100vh;
 }
 
-.h-1\/3 {
-  height: 33.333333%;
-}
-
 .min-h-\[15vh\] {
   min-height: 15vh;
 }
@@ -1047,10 +1068,6 @@ select {
 
 .w-16 {
   width: 4rem;
-}
-
-.w-2\/3 {
-  width: 66.666667%;
 }
 
 .w-2\/4 {
@@ -1092,10 +1109,6 @@ select {
 
 .w-screen {
   width: 100vw;
-}
-
-.w-80 {
-  width: 20rem;
 }
 
 .min-w-full {
@@ -1155,20 +1168,6 @@ select {
   animation: fade-down 1s both;
 }
 
-@keyframes rotate-y {
-  0% {
-    transform: rotateY(360deg);
-  }
-
-  100% {
-    transform: rotateY(0);
-  }
-}
-
-.animate-rotate-y {
-  animation: rotate-y 1s both;
-}
-
 @keyframes fade-left {
   0% {
     opacity: 0;
@@ -1183,6 +1182,20 @@ select {
 
 .animate-fade-left {
   animation: fade-left 1s both;
+}
+
+@keyframes rotate-y {
+  0% {
+    transform: rotateY(360deg);
+  }
+
+  100% {
+    transform: rotateY(0);
+  }
+}
+
+.animate-rotate-y {
+  animation: rotate-y 1s both;
 }
 
 .cursor-pointer {
@@ -1371,19 +1384,9 @@ select {
   background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
 
-.bg-teal-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(153 246 228 / var(--tw-bg-opacity));
-}
-
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.bg-yellow-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(234 179 8 / var(--tw-bg-opacity));
 }
 
 .object-cover {
@@ -1643,11 +1646,6 @@ select {
 .text-red-600 {
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity));
-}
-
-.text-teal-800 {
-  --tw-text-opacity: 1;
-  color: rgb(17 94 89 / var(--tw-text-opacity));
 }
 
 .text-white {
@@ -1991,6 +1989,16 @@ select {
   .md\:rounded-t-none {
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
+  }
+
+  .md\:rounded-l-xl {
+    border-top-left-radius: 0.75rem;
+    border-bottom-left-radius: 0.75rem;
+  }
+
+  .md\:rounded-t-xl {
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
   }
 
   .md\:text-3xl {

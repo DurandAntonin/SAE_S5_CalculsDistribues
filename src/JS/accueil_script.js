@@ -102,7 +102,7 @@ var changes = 0;
 
 function changeModule(){
   changes ++;
-  var mod = changes % 2
+  var mod = changes % 3
   var modS = mod.toString();
 
   console.log(modS, mod);
