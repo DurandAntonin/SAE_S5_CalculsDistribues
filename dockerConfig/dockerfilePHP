@@ -1,11 +1,14 @@
 FROM php:8.2-apache
 
+VOLUME /hostpipe
+
+RUN apt update \
+    && apt upgrade \
+    && apt clean
+
 COPY ./src/ /var/www/html/
-
 COPY ./dockerConfig/php.ini-development /usr/local/etc/php/
-
 COPY ./dockerConfig/php.ini-production /usr/local/etc/php/
 
-RUN chown -R www-data:www-data /var/www/html/
-
-RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+RUN chown -R www-data:www-data /var/www/html/ \
+    && docker-php-ext-install mysqli && docker-php-ext-enable mysqli

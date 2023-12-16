@@ -9,6 +9,8 @@ services:
       placement:
         constraints: [node.labels.service == web ]
       replicas: 4
+    volumes:
+      - "/home/pi/pipeDockerSwarm:/hostpipe"
 
   servicebd:
     image: wzehren/mysqlsae
@@ -18,3 +20,5 @@ services:
       placement:
         constraints: [node.labels.service == sql ]
       replicas: 1
+    volumes:
+      - "/var/lib/mysql_volume_app:/var/lib/mysql"

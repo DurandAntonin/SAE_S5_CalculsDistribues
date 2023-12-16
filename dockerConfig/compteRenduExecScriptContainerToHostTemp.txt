@@ -1,0 +1,44 @@
+https://stackoverflow.com/questions/32163955/how-to-run-shell-script-on-host-from-docker-container
+
+#Dans le rpi zeo pi2
+
+#on crée un pipe
+mkfifo /home/pi/repo_exec_result_mpi
+
+#on vérifie que c'est bien un pipe avec la commande
+ls -lh /home/pi/repo_exec_result_mpi
+
+#on teste le pipe avec la commande dans la 1ere fenetre
+trail -f /home/pi/repo_exec_result_mpi
+
+#dans la 2eme fenetre on fait
+echo "test pipe" > /home/pi/repo_exec_result_mpi
+#on doit obtenir "test pipe" dans la 1ere fenetre
+
+#pour pouvoir exécuter des commandes et visualiser le résultat des commandes dans le pipe, on fait la commande suivante dans la 1ere fenetre
+eval "$(cat /home/pi/repo_exec_result_mpi)"
+
+#puis on peut exécuter une commande dans la fenetre 2
+echo "ssh cnat mpiexec -n 3 --host pi2,pi3,pi4 python prime.py 100 --mca btl_tcp_if_include 172.19.181.0/24" > repo_exec_result_mpi
+#dans la fenetre 1, on voit bien que les nombres premiers, le temps d'exécution du programmme sont affichés dans le pipe
+
+
+#ensuite, pour guarder le pipe ouvert indéfinimment, on fait
+while true; do eval "$(cat /home/pi/repo_exec_result_mpi)"; done
+
+#ensuite, l'objectif est de pouvoir exécuter une commande depuis un conteneur docker, et récupérer le résultat du pipe
+#on crée un volume dans le dockerfile de l'image web pour permettre d'avoir un répertoire persisant à la fois dans le host et dans le conteneur
+VOLUME repo_exec_result_mpi
+#dans le rpi zero, on met le pipe dans le repo /home/pi/pipeDockerSwarm
+#dans le docker-compose du stack, dans le service phpsae, on spécifie le volume
+volumes:
+      - /home/pi/pipeDockerSwarm:/hostpipe
+#on rebuild l'image php, puis on la tag et on la push dans le depot docker hub
+docker build -t phpimage -f dockerConfig/dockerfilePHP .
+docker tag phpimage wzehren/phpsae
+#on relance le stack dans le swarm depuis le rpi host
+docker stack deploy --compose-file docker-compose-stack.yml appli
+#depuis le container, on essaie d'exécuter une commande dans le pipe
+echo "ssh cnat mpiexec -n 3 --host pi2,pi3,pi4 python prime.py 100 --mca btl_tcp_if_include 172.19.181.0/24" > repo_exec_result_mpi
+
+
