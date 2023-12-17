@@ -43,6 +43,11 @@ class User
     private Enum_role_user $role;
 
     /**
+     * @var string Date d'inscription de l'utilisateur
+     */
+    private string $registrationDate;
+
+    /**
      * Permet de construire une instance de cette classe avec des champs par défaut
      *
      * @return static L'instance de cette classe
@@ -52,7 +57,7 @@ class User
      */
     public static function defaultUser(): static
     {
-        return new static(guidv4(), "null","Visiteur","null", "null",Enum_role_user::VISITEUR);
+        return new static(guidv4(), "null","Visiteur","null", "null",Enum_role_user::VISITEUR, "null");
     }
 
     /**
@@ -67,13 +72,14 @@ class User
      *
      * @version 1.0
      */
-    function __construct(string $parUserId, string $parUserMail, string $parLogin, string $parLastName, string $parFirstName, Enum_role_user $parRole){
+    function __construct(string $parUserId, string $parUserMail, string $parLogin, string $parLastName, string $parFirstName, Enum_role_user $parRole, string $parRegistrationDate){
         $this->userId = $parUserId;
         $this -> userMail = $parUserMail;
         $this->login = $parLogin;
         $this -> lastName = $parLastName;
         $this -> firstName = $parFirstName;
         $this -> role = $parRole;
+        $this->registrationDate = $parRegistrationDate;
     }
 
     /**
@@ -178,6 +184,18 @@ class User
     }
 
     /**
+     * Getter du champ _registrationDate_
+     *
+     * @return string
+     *
+     * @version 1.0
+     */
+    public function getRegistrationDate(): string
+    {
+        return $this->registrationDate;
+    }
+
+    /**
      * Setter du champ _userMail_
      *
      * @param string $newUserMail
@@ -268,7 +286,7 @@ class User
      * @version 1.0
      */
     public function __sleep(){
-        return array('userId', 'userMail', 'login', 'lastName', 'firstName', 'role');
+        return array('userId', 'userMail', 'login', 'lastName', 'firstName', 'role', 'registrationDate');
     }
 
     /**
