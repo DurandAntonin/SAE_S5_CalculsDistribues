@@ -97,6 +97,49 @@ function confirmDelete(){
     }
   });
 }
+document.addEventListener('DOMContentLoaded', function () {
+  // Récupérer l'élément de la barre de progression
+  var progressBar = document.querySelector('.bg-blue-800');
+
+  // Intervalle de mise à jour du timer en millisecondes (par exemple, toutes les secondes)
+  var interval = 50;
+
+  // Fonction de mise à jour du timer
+  function updateProgressBar() {
+    // Augmenter la valeur de width (ajustez selon vos besoins)
+    var newWidth = parseInt(progressBar.style.width) + 1;
+
+    // Limiter la valeur de width à 100
+    if (newWidth > 100) {
+        newWidth = 100;
+
+        // Réinitialiser la barre de progression à 0% après un délai
+        setTimeout(resetProgressBar, 1);
+    }
+
+      // Mettre à jour la largeur de la barre de progression
+      progressBar.style.width = newWidth + '%';
+  }
+
+  // Fonction de réinitialisation de la barre de progression
+  function resetProgressBar() {
+      progressBar.style.width = '0%';
+      // Relancer le timer après la réinitialisation
+      //startTimer();
+      clearInterval(window.timer);
+  }
+
+  // Fonction pour démarrer le timer
+  function startTimer() {
+    var timer = setInterval(updateProgressBar, interval);
+
+    // Stocker le timer dans une propriété de fenêtre pour pouvoir le réinitialiser plus tard
+    window.timer = timer;
+  }
+
+  // Démarrer le timer initialement
+  startTimer();
+  });
 
 var changes = 0;
 
@@ -109,7 +152,6 @@ function changeModule(){
 
   var modules = document.getElementsByClassName('wrapper');
   var module = document.getElementById(modS);
-  console.log(module);
 
   Array.prototype.forEach.call(modules,function(elem){
     elem.classList.add("hidden");
@@ -118,4 +160,4 @@ function changeModule(){
   module.classList.remove('hidden');
 }
 
-setInterval(changeModule,4000);
+setInterval(changeModule,5000);
