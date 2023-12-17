@@ -181,51 +181,6 @@ class MySQLDataManagement{
     }
 
     /**
-     * Exécute une requête SQL pour récupérer l'ensemble des utilisateurs de la base de données
-     *
-     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
-     *  [ <br>
-     *      '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
-     *      '**errorMessage**' string : message d'erreur <br>
-     *      '**result**' null<br>
-     *  ] <br>
-     *
-     * @param string $table Table SQL contenant les informations des utilisateurs
-     * @return array
-     *
-     * @see Logging
-     *
-     * @version 1.0
-     */
-    public function get_users(string $table): array
-    {
-        //on va stocker les différents paramètres de renvoi dans une liste
-        $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
-
-        try{
-            $request = "select * from $table";
-
-            //on exécute la requete pour obtenir tous les users
-            $stmt = $this->connector->prepare($request);
-            $stmt -> execute();
-
-            //on récupere les résultats sous forme d'une liste
-            $results = $stmt -> get_result();
-
-
-            //on retourne une liste de users mappée
-            return $this->mappMySqliResultToUser($results);
-        }
-        catch (\mysqli_sql_exception $e) {
-            //on enregistre dans la liste des param de result, le message d'erreur
-            $listeResultParamsFunction["error"] = 1;
-            $listeResultParamsFunction["errorMessage"] = $e;
-        }
-
-        return $listeResultParamsFunction;
-    }
-
-    /**
      * Exécute une requête SQL pour insérer un enregistrement log.
      *
      * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
@@ -423,7 +378,7 @@ class MySQLDataManagement{
         $result = array();
 
         try{
-            $request = "select userId, userMail, login, lastName, firstName, password, role from $table where login = ?";
+            $request = "select userId, userMail, login, lastName, firstName, password, role, registrationDate from $table where login = ?";
 
             //on exécute la requete pour obtenir un user d'après un mail
             $stmt = $this->connector->prepare($request);
@@ -1036,6 +991,171 @@ class MySQLDataManagement{
     }
 
     /**
+     * Exécute une requête SQL pour sélectionner le nombre d'utilisateurs inscrits dans une période de temps donnée. <br>
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null <br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les informations des utilisateurs
+     * @param string $startDate date de début au format 'YYYY-MM-DD'
+     * @param string $endDate date de fin au format 'YYYY-MM-DD'
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @version 1.0
+     */
+    public function get_nb_users_with_registration_dates(string $table, string $startDate, string $endDate): array
+    {
+        //on va stocker les différents paramètres de renvoi dans une liste
+        $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
+
+        try{
+            $request = "select count(userId) from $table where registrationDate >= ? and registrationDate <= ?";
+
+            //on exécute la requete pour récupérer les différents utilisateurs en fonction de leur date d'enregistrement
+            $stmt = $this->connector->prepare($request);
+            $stmt-> bind_param("ss", $startDate, $endDate);
+            $stmt -> execute();
+
+            //on récupere les résultats sous forme d'une liste
+            $results = $stmt -> get_result();
+
+            $ligne = $results->fetch_row();
+            $listeResultParamsFunction["result"] = $ligne[0];
+        }
+        catch (\mysqli_sql_exception $e) {
+            //on enregistre dans la liste des param de result, le message d'erreur
+            $listeResultParamsFunction["error"] = 1;
+            $listeResultParamsFunction["errorMessage"] = $e;
+        }
+
+        return $listeResultParamsFunction;
+    }
+
+    /**
+     * Exécute une requête SQL pour sélectionner le nombre de connexions utilisateurs et visiteurs dans le site dans une période de temps donnée. <br>
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null <br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les journaux de connexion utilisateurs
+     * @param string $startDate date de début au format 'YYYY-MM-DD'
+     * @param string $endDate date de fin au format 'YYYY-MM-DD'
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @version 1.0
+     */
+    public function get_nb_visits_with_dates(string $table, string $startDate, string $endDate): array
+    {
+        //on va stocker les différents paramètres de renvoi dans une liste
+        $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
+
+        try{
+            $request = "select logId, description from $table where cast(date as DATE) >= ? 
+                                                        and cast(date as DATE) <= ? 
+                                                        and logLevel = ?
+                                                        and description like ?";
+
+            //on définit les critères de recherches des journaux
+            $logLevel = Enum_niveau_logger::INFO->name;
+            $descriptionStartWith = "Connexion%";
+
+            //on exécute la requete pour récupérer toutes les connexions utilisateurs et visiteurs
+            $stmt = $this->connector->prepare($request);
+            $stmt-> bind_param("ssss", $startDate, $endDate, $logLevel, $descriptionStartWith);
+            $stmt -> execute();
+
+            //on récupere les résultats sous forme d'une liste
+            $results = $stmt -> get_result();
+
+            //on compte le nombre de connexions USER et VISITEUR
+            $userRole = Enum_role_user::USER->name;
+            $visiteurRole = Enum_role_user::VISITEUR->name;
+            $nbConnexionsUser = 0;
+            $nbConnexionsVisiteur = 0;
+
+            while ($ligne = $results->fetch_row()){
+                if (str_contains($ligne[1], $userRole))
+                    $nbConnexionsUser ++;
+
+                elseif (str_contains($ligne[1], $visiteurRole))
+                    $nbConnexionsVisiteur ++;
+            }
+
+            $listeResultParamsFunction["result"] = [$userRole => $nbConnexionsUser, $visiteurRole => $nbConnexionsVisiteur];
+        }
+        catch (\mysqli_sql_exception $e) {
+            //on enregistre dans la liste des param de result, le message d'erreur
+            $listeResultParamsFunction["error"] = 1;
+            $listeResultParamsFunction["errorMessage"] = $e;
+        }
+
+        return $listeResultParamsFunction;
+    }
+
+    /**
+     * Exécute une requête SQL pour sélectionner le nombre d'utilisations des modules du site dans une période de temps donnée. <br>
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null <br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les journaux d'utilisation des modules
+     * @param string $startDate date de début au format 'YYYY-MM-DD'
+     * @param string $endDate date de fin au format 'YYYY-MM-DD'
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @version 1.0
+     */
+    public function get_nb_module_uses_with_dates(string $table, string $startDate, string $endDate): array
+    {
+        //on va stocker les différents paramètres de renvoi dans une liste
+        $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
+
+        try{
+            $request = "select count(logId) from $table where cast(date as DATE) >= ? 
+                                                        and cast(date as DATE) <= ? 
+                                                        and logLevel = ?
+                                                        and description like ?";
+
+            //on définit les critères de recherches des journaux
+            $logLevel = Enum_niveau_logger::INFO->name;
+            $descriptionStartWith = "Utilisation module%";
+
+            //on exécute la requete pour récupérer le nombre d'utilisations des modules
+            $stmt = $this->connector->prepare($request);
+            $stmt-> bind_param("ssss", $startDate, $endDate, $logLevel, $descriptionStartWith);
+            $stmt -> execute();
+
+            //on récupere les résultats sous forme d'une liste
+            $results = $stmt -> get_result();
+
+            $ligne = $results->fetch_row();
+            $listeResultParamsFunction["result"] = $ligne[0];
+        }
+        catch (\mysqli_sql_exception $e) {
+            //on enregistre dans la liste des param de result, le message d'erreur
+            $listeResultParamsFunction["error"] = 1;
+            $listeResultParamsFunction["errorMessage"] = $e;
+        }
+
+        return $listeResultParamsFunction;
+    }
+
+    /**
      * Ferme la connexion au serveur MySQL
      *
      * @return void
@@ -1066,9 +1186,9 @@ class MySQLDataManagement{
             $user = "";
 
             if ($listResultsUsers["role"] == "USER")
-                $user = new User($listResultsUsers["userId"], $listResultsUsers["userMail"], $listResultsUsers["login"], $listResultsUsers["lastName"], $listResultsUsers["firstName"], Enum_role_user::USER);
+                $user = new User($listResultsUsers["userId"], $listResultsUsers["userMail"], $listResultsUsers["login"], $listResultsUsers["lastName"], $listResultsUsers["firstName"], Enum_role_user::USER, $listResultsUsers["registrationDate"]);
             elseif ($listResultsUsers["role"] == "ADMIN")
-                $user = new \PHP\User($listResultsUsers["userId"], $listResultsUsers["userMail"], $listResultsUsers["login"], $listResultsUsers["lastName"], $listResultsUsers["firstName"], Enum_role_user::ADMIN);
+                $user = new User($listResultsUsers["userId"], $listResultsUsers["userMail"], $listResultsUsers["login"], $listResultsUsers["lastName"], $listResultsUsers["firstName"], Enum_role_user::ADMIN, $listResultsUsers["registrationDate"]);
             else
                 continue;
 
