@@ -1,9 +1,9 @@
 #!/bin/bash
 
-nbArgumentsScript=2
+nbArgumentsScript=1
 hostName=
 repoOutputFile=/home/pi/pipeDockerSwarm/outputsStats/
-outputFileName=statsClusterHat_
+outputFileName=
 outputFile=
 enteteFile="piName;cpuUsage;cpuFrequency;memTotal;memUsed;uptime"
 
@@ -18,8 +18,11 @@ rpiNameList[4]="pi4"
 
 #on vérifie qu'on a passé le nom du fichier en paramètre
 if (( $#==$nbArgumentsScript )); then
-  outputFileName="${outputFile}$1.csv"
-  hostName="$2"
+  outputFileName="$1"
+
+  #on récupère le hostname courant dans le réseau
+  hostName=$(hostname)
+  hostName="pi$(expr substr $hostName 2 1)"
 
   #on vérifie que le répertoire output existe bien
   if [[ -d "$repoOutputFile" ]]; then
@@ -60,7 +63,7 @@ if (( $#==$nbArgumentsScript )); then
       cpuFrequencyStat=$(echo $cpuFrequencyStat 1000000 | awk '{print $1/$2}')
 
       #on stocke ces stats dans une chaine de caracteres, espaces par des ';'
-      piStats="${hostNameStat};${cpuUsageStat};${cpuFrequencyStat};${memTotal};${memUsed};${uptimeStat};"
+      piStats="${hostNameStat};${cpuUsageStat};${cpuFrequencyStat};${memTotal};${memUsed};${uptimeStat}"
       #echo $cpuUsageStat
       #on écrit ajoute cette ligne a la fin du fichier
       echo $piStats >> $outputFile
