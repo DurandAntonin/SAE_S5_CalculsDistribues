@@ -1168,10 +1168,10 @@ class MySQLDataManagement{
     }
 
     /**
-     *
+     * Transforme les utilisateurs retournés par une requête sql en une liste d'objets de type User
      *
      * @param mysqli_result $result
-     * @return array
+     * @return array Liste de users mappés
      *
      * @see User
      *
@@ -1183,15 +1183,10 @@ class MySQLDataManagement{
 
         //on mappe chaque résultat à un objet User, stocké dans une liste
         while ($listResultsUsers = $result->fetch_array(MYSQLI_ASSOC)){
-            $user = "";
+            //on crée un type énuméré en fonction du rôle du user sous forme d'une chaîne de caractères
+            $userRole = Enum_role_user::fromName($listResultsUsers["role"]);
 
-            if ($listResultsUsers["role"] == "USER")
-                $user = new User($listResultsUsers["userId"], $listResultsUsers["userMail"], $listResultsUsers["login"], $listResultsUsers["lastName"], $listResultsUsers["firstName"], Enum_role_user::USER, $listResultsUsers["registrationDate"]);
-            elseif ($listResultsUsers["role"] == "ADMIN")
-                $user = new User($listResultsUsers["userId"], $listResultsUsers["userMail"], $listResultsUsers["login"], $listResultsUsers["lastName"], $listResultsUsers["firstName"], Enum_role_user::ADMIN, $listResultsUsers["registrationDate"]);
-            else
-                continue;
-
+            $user = new User($listResultsUsers["userId"], $listResultsUsers["userMail"], $listResultsUsers["login"], $listResultsUsers["lastName"], $listResultsUsers["firstName"], $userRole, $listResultsUsers["registrationDate"]);
             $listUsers[] = $user;
         }
 
