@@ -98,47 +98,118 @@ function confirmDelete(){
   });
 }
 document.addEventListener('DOMContentLoaded', function () {
-  // Récupérer l'élément de la barre de progression
-  var progressBar = document.querySelector('.bg-blue-800');
+  var pg0 = document.getElementById('pgbar0');
+  var pg1 = document.getElementById('pgbar1');
+  var pg2 = document.getElementById('pgbar2');
 
-  // Intervalle de mise à jour du timer en millisecondes (par exemple, toutes les secondes)
+  let pgbars = [pg0,pg1,pg2];
+
   var interval = 50;
 
-  // Fonction de mise à jour du timer
-  function updateProgressBar() {
-    // Augmenter la valeur de width (ajustez selon vos besoins)
-    var newWidth = parseInt(progressBar.style.width) + 1;
+  var timers = [];
 
-    // Limiter la valeur de width à 100
-    if (newWidth > 100) {
+  var current = 0;
+
+
+  
+  function updateProgressBar() {
+
+    var progressBar = pgbars[current];
+
+    progressBar.style.width = 'O%';
+    
+    var newWidth = 1;
+
+    var timer = setInterval(function(){
+      newWidth ++;
+
+      if (newWidth > 100) {
         newWidth = 100;
 
-        // Réinitialiser la barre de progression à 0% après un délai
+        
+        clearInterval(timer);
         setTimeout(resetProgressBar, 1);
     }
 
-      // Mettre à jour la largeur de la barre de progression
+      
       progressBar.style.width = newWidth + '%';
+    },interval);
+
+    timers.push(timer);
   }
 
-  // Fonction de réinitialisation de la barre de progression
+  
   function resetProgressBar() {
-      progressBar.style.width = '0%';
-      // Relancer le timer après la réinitialisation
-      //startTimer();
-      clearInterval(window.timer);
+    var currentProgressBar = pgbars[current];
+    currentProgressBar.style.width = '0%';
+    
+    current++;
+
+    if(current>=pgbars.length){
+      current = 0;
+    }
+
+    startTimer();
+    //clearInterval(window.timer);
   }
 
-  // Fonction pour démarrer le timer
+  function resetAllProgressBars() {
+    pgbars.forEach(function (bar) {
+        bar.style.width = '0%';
+    });
+
+    timers.forEach(function (timer) {
+        clearInterval(timer);
+    });
+
+    timers = [];
+}
+
+  
   function startTimer() {
-    var timer = setInterval(updateProgressBar, interval);
 
-    // Stocker le timer dans une propriété de fenêtre pour pouvoir le réinitialiser plus tard
-    window.timer = timer;
+    setTimeout(updateProgressBar, 0);
+
   }
 
-  // Démarrer le timer initialement
+  
   startTimer();
+
+  var mod0 = document.getElementById('blockMod0');
+  if (mod0) {
+      mod0.addEventListener('click', function () {
+        console.log("click");
+        
+
+        current = 0;
+        resetAllProgressBars();
+        //startTimer();
+      });
+  }
+
+  var mod1 = document.getElementById('blockMod1');
+  if (mod1) {
+      mod1.addEventListener('click', function () {
+        console.log("click");
+        
+
+        current = 1;
+        resetAllProgressBars();
+        //startTimer();
+      });
+  }
+
+  var mod2 = document.getElementById('blockMod2');
+  if (mod2) {
+      mod2.addEventListener('click', function () {
+        console.log("click");
+        
+
+        current = 2;
+        resetAllProgressBars();
+        //startTimer();
+      });
+  }
   });
 
 var changes = 0;

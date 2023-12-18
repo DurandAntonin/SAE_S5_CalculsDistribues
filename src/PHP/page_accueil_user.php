@@ -264,15 +264,15 @@ $user = unserialize($_SESSION["user"]);
   </div>
   <div class="w-1/5">
       <div class="flex flex-col justify-center h-screen -mt-10">
-          <div
-            class="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white my-5">
+          <div id="blockMod0"
+            class="relative flex flex-col cursor-pointer md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white my-5">
             <div class="w-full md:w-1/3 bg-white grid place-items-center">
               <img src="https://i.pinimg.com/564x/b1/6a/44/b16a443978512bffecd043e7ac687ed4.jpg" alt="tailwind logo" class="rounded-xl" />
             </div>
             <div class="w-full md:w-2/3 bg-white flex items-center justify-center p-3">
               <h3 class="font-black text-gray-800 md:text-xl text-xl">Calculs Des Nombres premiers</h3>
             </div>
-            <div id="pgbar1"
+            <div 
         class="absolute bottom-0 left-0"
         x-data="{ width: '0' }"
         x-init="$watch('width', value => { if (value > 100) { width = 100 } if (value == 0) { width = 10 } })"
@@ -284,8 +284,8 @@ $user = unserialize($_SESSION["user"]);
                 aria-valuemin="0"
                 aria-valuemax="100"
                 >
-                <div 
-                    class="bg-blue-800 rounded h-1 text-center" 
+                <div id="pgbar0"
+                    class="bg-deepblue rounded h-1 text-center" 
                     :style="`width: ${width}%; transition: width 0.2s;`"
                     >
                 </div>
@@ -296,23 +296,64 @@ $user = unserialize($_SESSION["user"]);
           </div>
           
 
-          <div
-            class="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white my-5">
+          <div id="blockMod1"
+            class="relative flex flex-col cursor-pointer md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white my-5">
             <div class="w-full md:w-1/3 bg-white grid place-items-center">
               <img src="https://i.pinimg.com/564x/fb/5a/3f/fb5a3f88bc2e396ef073cc89e4a12a50.jpg" alt="tailwind logo" class="rounded-xl" />
             </div>
             <div class="w-full md:w-2/3 bg-white flex items-center justify-center p-3">
               <h3 class="font-black text-gray-800 md:text-xl text-xl">Approximation de Pi avec Monte-Carlo</h3>
             </div>
+            <div 
+        class="absolute bottom-0 left-0"
+        x-data="{ width: '0' }"
+        x-init="$watch('width', value => { if (value > 100) { width = 100 } if (value == 0) { width = 10 } })"
+        >
+          <div 
+                class=" rounded h-1" 
+                role="progressbar" 
+                :aria-valuenow="width"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                >
+                <div id="pgbar1"
+                    class="bg-deepblue rounded h-1 text-center" 
+                    :style="`width: ${width}%; transition: width 0.2s;`"
+                    >
+                </div>
+            </div>
+            <div class="mt-1 mx-40">
+            </div>
           </div>
-          <div
-            class="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white my-5">
+          </div>
+          <div id="blockMod2"
+            class="relative flex flex-col cursor-pointer md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white my-5">
             <div class="w-full md:w-1/3 bg-white grid place-items-center">
               <img src="https://i.pinimg.com/564x/a2/5d/55/a25d55ca8aaec95c732607d9b2c7eeed.jpg" alt="tailwind logo" class="rounded-xl" />
             </div>
             <div class="w-full md:w-2/3 bg-white flex items-center justify-center p-3">
               <h3 class="font-black text-gray-800 md:text-xl text-xl">Car@Net</h3>
             </div>
+            <div 
+        class="absolute bottom-0 left-0"
+        x-data="{ width: '0' }"
+        x-init="$watch('width', value => { if (value > 100) { width = 100 } if (value == 0) { width = 10 } })"
+        >
+          <div 
+                class=" rounded h-1" 
+                role="progressbar" 
+                :aria-valuenow="width"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                >
+                <div id="pgbar2"
+                    class="bg-deepblue rounded h-1 text-center" 
+                    :style="`width: ${width}%; transition: width 0.2s;`"
+                    >
+                </div>
+            </div>
+            <div class="mt-1 mx-40">
+        </div>
           </div>
         </div>     
     </div>
