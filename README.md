@@ -12,7 +12,9 @@ Ces calculs seront accessibles depuis un site web dans lequel seront exécutés 
 
 Sur le site, l'utilisateur a le choix de s'inscrire ou de se connecter s'il possède déjà un compte sur le site. Une fois connecté, il peut cliquer sur son profil pour voir ses informations personnelles et les changer s'il le souhaite.
 Les modules ne sont pas encore disponibles sur le site, mais l'utilisateur connecté pourra y accéder les utiliser. <br>
-L'utilisateur peut aussi accéder au site sans inscription et connexion, et voir les prochains modules. Cependant, il ne peut pas modifier son profil et utiliser les calculs réalisés dans les modules n'utiliserons pas le calcul distribué.
+L'utilisateur peut aussi accéder au site sans inscription et connexion, et voir les prochains modules. Cependant, il ne peut pas modifier son profil et utiliser les calculs réalisés dans les modules n'utiliserons pas le calcul distribué. <br>
+Un premier module de calcul de nombres premiers est accessible et utilisable par n'importe quel utilisateur, qu'il soit connecté ou non. Cependant, seul un utilisateur connecté pourra utiliser le calcul distribué pour accélérer la vitesse de calcul. 
+
 
 
 ### Install Tailwind
