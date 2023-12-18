@@ -1,26 +1,5 @@
 window.onload = init
 
-let dataPie = {
-    labels: ["Utilisateurs", "Visiteurs"],
-    datasets: [
-    {
-        label: "Nombres",
-        data: [300, 50],
-        backgroundColor: [
-        "rgb(255, 220, 0)",
-        "rgb(0, 35, 70)",
-        ],
-        hoverOffset: 4,
-    },
-    ],
-};
-
-let configPie = {
-    type: "pie",
-    data: dataPie,
-    options: {},
-};
-
 const enumTimeFilters = {
     jour: 0,
     semaine:1,
@@ -28,7 +7,7 @@ const enumTimeFilters = {
     tout:3
 }
 
-var chartBar = new Chart(document.getElementById("chartPie"), configPie);
+let chartBar
 
 //elements html contenant les stats deu site
 let elemNbUsers
@@ -176,9 +155,13 @@ function resultRequestGetStatsSite(){
         elemNbModuleUsers.innerHTML = newStatNbModuleUses
 
         //enfin, on met a jour le camembert de la repartition des connexions
-        chartBar.config._config.data.datasets[0].data = [resultRequestGetNbVisits.result["USER"], resultRequestGetNbVisits.result["VISITEUR"]]
+        //console.log(chartBar)
+        if (chartBar != null)
+            chartBar.destroy()
+
+        let configPie = configChartBarCanva(resultRequestGetNbVisits.result["USER"], resultRequestGetNbVisits.result["VISITEUR"])
+        chartBar = new Chart(document.getElementById("chartPie"), configPie);
         chartBar.render()
-        //console.log(chartBar.config._config.data.datasets[0].data)
     }
 }
 
@@ -218,4 +201,29 @@ function resultRequestGetStatsClusterHat(){
 
 function getTimeFilterValueFromKey(key){
     return Object.keys(enumTimeFilters).indexOf(key)
+}
+
+function configChartBarCanva(nbUsers, nbVisiteurs){
+    let dataPie = {
+        labels: ["Utilisateurs", "Visiteurs"],
+        datasets: [
+            {
+                label: "Nombres",
+                data: [nbUsers, nbVisiteurs],
+                backgroundColor: [
+                    "rgb(255, 220, 0)",
+                    "rgb(0, 35, 70)",
+                ],
+                hoverOffset: 4,
+            },
+        ],
+    };
+
+    let configPie = {
+        type: "pie",
+        data: dataPie,
+        options: {},
+    };
+
+    return configPie
 }
