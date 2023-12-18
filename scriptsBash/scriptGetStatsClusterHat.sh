@@ -44,7 +44,6 @@ if (( $#==$nbArgumentsScript )); then
 
       #on se connecte pas en ssh si on recupere les stats du rpi hostname dans leque le script s'execute
       if [[ $i = $hostName ]]; then
-        echo "ici"
         cpuUsageStat=$(top -b -n 1 | grep "Cpu" | awk '{print $2}')
         cpuFrequencyStat=$(sudo cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq)
         memTotal=$(free -m | grep "Mem" | awk '{print $2}')

@@ -27,6 +27,8 @@
   "notif_erreur_login_existant" : "Le login est déjà pris",
   "notif_changements_reussis" : "Informations prises en compte",
   "notif_erreur_mail_existant" : "L'adresse mail est déjà prise",
+  "chemin_script_get_stats_cluster_hat" : "/var/www/html/scriptsBash/scriptGetStatsClusterHat.sh",
+  "repertoire_resultat_script_get_stats_cluster_hat" : "/hostpipe/outputsStats/",
 
   "loggerConf" : {
     "loggerFile" : {

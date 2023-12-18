@@ -42,13 +42,15 @@ let listStatsClusterHat
 let listTimeFilters
 let currentTimeFilterValue = 1 //0=jour 1=semaine 2=mois 3=tout
 
+//intervalle de temps pour rafraichir les stats du cluster hat
+let intertalTimeGetStatsClusterHat = 10000
 
 function init(){
     //on récupère les différents éléments html stockant les stats du site, du cluster hat et champs select
     elemNbUsers = document.getElementById("nb-users")
     elemNbVisits = document.getElementById("nb-visits")
     elemNbModuleUsers = document.getElementById("nb-module-uses")
-    listStatsClusterHat = Array.from(document.getElementById("tbody-table-stats").firstElementChild.children)
+    listStatsClusterHat = Array.from(document.getElementById("tbody-table-stats").children)
     listTimeFilters = Array.from(document.getElementsByClassName("time-filter"))
 
     //par défaut on met le time filter value a 0 (== défaut)
@@ -60,7 +62,11 @@ function init(){
 
     //on load les stats du site au chargement de la page
     requestSetStatsSite()
-    console.log(listStatsClusterHat)
+    //console.log(listStatsClusterHat)
+
+    //on load les stats du cluster hat toutes les n secondes
+    requestGetStatsClusterHat()
+    //let timerRequestGetStatsClusterHat = setInterval(requestGetStatsClusterHat, intertalTimeGetStatsClusterHat)
 }
 
 function changeStatsBasedTimeFilter(){
@@ -106,6 +112,16 @@ function requestSetStatsSite(){
     requestGetStatsSite.send(JSON.stringify({"timeFilter":[startDate, endDate]}))
 
     requestGetStatsSite.onreadystatechange = resultRequestGetStatsSite
+}
+
+function requestGetStatsClusterHat(){
+    //on crée et exécute une requête js vers un script php pour récupérer les stats du cluster hat en fonction
+    let requestGetStatsSite = new XMLHttpRequest()
+    requestGetStatsSite.open("POST","script_get_stats_cluster_hat.php");
+    requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
+    requestGetStatsSite.send()
+
+    requestGetStatsSite.onreadystatechange = resultRequestGetStatsClusterHat
 }
 
 function resultRequestGetStatsSite(){
@@ -162,8 +178,42 @@ function resultRequestGetStatsSite(){
         //enfin, on met a jour le camembert de la repartition des connexions
         chartBar.config._config.data.datasets[0].data = [resultRequestGetNbVisits.result["USER"], resultRequestGetNbVisits.result["VISITEUR"]]
         chartBar.render()
-        console.log(chartBar.options)
+        //console.log(chartBar.config._config.data.datasets[0].data)
     }
+}
+
+function resultRequestGetStatsClusterHat(){
+    if (this.readyState === 4 && this.status === 200) {
+        let resultScript = this.response
+        //console.log(resultScript)
+
+        let resultScriptParsed = JSON.parse(resultScript)
+        //console.log(resultScriptParsed)
+
+        let objectStatsClusterHat = resultScriptParsed.result
+        //console.log(listStatsClusterHat)
+
+        //pour chaque rpi du cluster hat, on met à jour les statistiques
+        for (let i=0;i<listStatsClusterHat.length;i++){
+            let statsRpi = objectStatsClusterHat[i]
+            let statCpuPourcent = (statsRpi.cpuUsage)
+            let statCpuFrequency = statsRpi.cpuFrequency
+            let statMemUsedPourcent = ((parseInt(statsRpi.memUsed) / parseInt(statsRpi.memTotal)) * 100).toPrecision(4)
+            let statMemUsed = parseInt(statsRpi.memUsed) * Math.pow(10,-3)
+            let statUptime = statsRpi.uptime
+
+            //on met à jour les stats du rpi dans le tableau
+            let trStatsRpi = listStatsClusterHat[i].children
+            //console.log(trStatsRpi[3].children)
+
+            trStatsRpi[1].children[0].innerHTML = `${statCpuPourcent} %`
+            trStatsRpi[1].children[1].innerHTML = `${statCpuFrequency} GHz`
+            trStatsRpi[2].children[0].innerHTML = `${statMemUsedPourcent} %`
+            trStatsRpi[2].children[1].innerHTML = `${statMemUsed} Go`
+            trStatsRpi[3].innerHTML = statUptime
+        }
+    }
+
 }
 
 function getTimeFilterValueFromKey(key){
