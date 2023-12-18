@@ -30,6 +30,7 @@ _Zehren William_
         <li><a href="#cu10"> CU10 </a></li>
         <li><a href="#cu11"> CU#11 </a></li>
         <li><a href="#cu12"> CU#12 </a></li>
+        <li><a href="#cu13"> CU#13 </a></li>
         </ul>
     </ol>
 </ol>
@@ -71,10 +72,12 @@ Si l'utilisateur se connecte avec les identifiants de l’administrateur, il n�
 L'utilisateur connecté peut accéder à son profil en cliquant sur l'image profil en haut à droite de la page d'accueil une fois ce dernier connecté. Un formulaire sous forme de pop-up se dévoile et affiche le login, adresse mail, nom et prénom de l'utilisateur dans plusieurs champs. L'utilisateur saisit dans le(s) champ(s) adéquat(s) le ou les nouvelles informations personnelles qu'il veut modifier, puis clique ensuite sur le bouton valider pour enregistrer ces nouvelles dernières.
 Si l'utilisateur modifier son mot de passe, il doit aussi saisir le nouveau mot de passe dans deux champs, puis cliquer sur valider. 
 
-Le deuxième livrable contient un module de calcul des nombres premiers ainsi que les fonctionnalités de l'utilisateur administrateur.
-Un utilisateur accède au module de calcul des nombres premiers, soit en étant déjà inscrit, ou en y accédant en étant comme non connecté. Il clique ensuite sur le module en question depuis la page principale pour accéder à la page de ce dernier.
-Puis, il saisit la borne minmimum _n_ et la borne maximum _m_ et clique sur valider pour calculer les nombres premiers compris entre _n_ et _m_.
-Une fois les nombres premiers calculés, le temps d'exécution du calcul ainsi que la liste de ces derniers sont affichés dans la page du module. Si l'utilisateur est connecté, le calcul s'effectue de manière distribuée sur les 4 rpi zeros, alors que si l'utilisateur est non connecté, le calcul s'effectue sur un seul rpi zero et  une pop-up s'affiche invitant l'utilisateur à se connecter pour profiter de la puissance du calcul distribué.
+Le deuxième livrable contient un module de calcul des nombres premiers ainsi que les fonctionnalités de l'utilisateur administrateur. <br>
+Un utilisateur accède au module de calcul des nombres premiers, soit en étant déjà inscrit, ou en y accédant en étant comme non connecté. Il clique ensuite sur le module en question depuis la page principale pour accéder à la page de ce dernier.<br>
+Puis, il saisit la borne minmimum _n_ et la borne maximum _m_ et clique sur valider pour calculer les nombres premiers compris entre _n_ et _m_. Par défaut, le calcul ne s'effectue que sur un seul rpi. <br>
+Une fois les nombres premiers calculés, le temps d'exécution du calcul ainsi que la liste de ces derniers sont affichés dans la page du module.
+Un bouton en dessous du résultat permet de passer du mode calcul non distribué au mode de calcul distribué. <br>
+Si l'utilisateur qui clique sur le bouton est un visiteur, une pop-up s'affiche invitant l'utilisateur à se connecter ou à s'inscrire pour profiter de la puissance du calcul distribué, sinon il n'y a pas de pop-up, et le calcul passe en mode distribué.
 
 Ci-dessous les différents niveaux des cas d'utilisation:
 **Niveau stratégique**:
@@ -491,7 +494,7 @@ Scénario alternatif 3.3 :
 **Niveau** : sous-fonction\
 **Acteur principal** : utilisateur inscrit\
 **Intervenants et intérêts** : /\
-**Précondition** : <u>Être inscrit sur le site et s’être connecter</u> **(CU#2)**\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté</u> **(CU#2)**\
 **Garantie minimale** : pas de garantie\
 **Garantie de succès** : Le prénom est modifié\
 **Déclencheur** : l’inscrit clique sur le bouton valider les changements\
@@ -541,7 +544,7 @@ Scénario alternatif 3.3 :
 **Niveau** : utilisateur\
 **Acteur principal** : utilisateur inscrit\
 **Intervenants et intérêts** : /\
-**Précondition** : <u>Être inscrit sur le site et s’être connecter</u> **(CU#2)**\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté</u> **(CU#2)**\
 **Garantie minimale** : pas de garantie\
 **Garantie de succès** : Le compte est supprimé\
 **Déclencheur** : l’inscrit clique sur le bouton supprimer son compte\
@@ -569,9 +572,9 @@ Scénario alternatif 3.1 :
 
 **Informations connexes** : /
 
-<h4 id="cu9"> CU#9 : Utilisation du module de calcul des nombres premiers</h4> 
+<h4 id="cu9"> CU#9 : Utilisation du module de calcul des nombres premiers par un utilisateur visiteur</h4> 
 
-**Nom** : L'utilisateur utilise le module de calcul des nombres premiers\
+**Nom** : L'utilisateur inscrit utilise le module de calcul des nombres premiers\
 **Contexte d’utilisation** : Utilisation normale du site\
 **Portée** : site web, base de données\
 **Niveau** : utilisateur\
@@ -588,37 +591,85 @@ Scénario alternatif 3.1 :
 
 3. L'utilisateur remplit 2 champs pour les bornes n et m pour calculer les nombre premiers situés entre n et m
 
-4. L'utilisateur clique sur le bouton calculer
-        
-5. Le site exécute un script qui effectue le calcul des nombres premiers de manière distribué sur les 4 rpi zeros
+4. L'utilisateur choisit le mode de calcul non distribué
 
-6. Le site affiche le temps d'exécution du calcul des nombres premiers ainsi que la liste de ces derniers
+5. L'utilisateur clique sur le bouton calculer
+        
+6. Le site exécute un script qui effectue le calcul des nombres premiers de manière distribué sur le rpi zero
+
+7. Le site affiche le temps d'exécution du calcul des nombres premiers ainsi que la liste de ces derniers
 
 **Extension** : /\
 **Liste des variantes** : \
 
-Scénario alternatif 1.1:
-- L'utilisateur accède à la page principale sans se connecter et clique sur le module
-
 Scénario alternatif 4.1:
+- L'utilisateur choisit le mode de calcul distribué
+- Le mode n'est pas activé
+- Une pop-up s'affiche invitant l'utilisateur à s'inscrire, se connecter
+- L'utilisateur se connecte, s'inscrit ou ferme la pop-up
+
+Scénario alternatif 5.1:
 - L'utilisateur a entré des valeurs incorrectes pour les bornes n et m : n < 0 ou m <= n ou m > valeur maximale
 - Le script de calcul n'est pas exécuté
 - Le site affiche un message d'erreur à l'utilisateur
 
-Scénario alternatif 5.1:
+Scénario alternatif 6.1:
 - Les rpi zeros ne sont pas accessibles en mode connexion ssh
 - Le script s'arrête prématurément et renvoie une erreur
 - Le site affiche une erreur à l'utilisateur 
 
-Scénario alternatif 5.2:
-- L'utilisateur qui appuie sur le bouton calculer est non inscrit, le script ne s'exécute que sur un rpi zero
+**Informations connexes** : /
 
-Scénario alternatif 6.1:
-- L'utilisateur n'étant pas inscrit, une pop-up s'affiche pour l'inviter à se connecter ou à s'inscrire, pour profiter de la puissance du calcul distribué
+<h4 id="cu10"> CU#10 : Utilisation du module de calcul des nombres premiers par un utilisateur inscrit</h4> 
+
+**Nom** : L'utilisateur inscrit utilise le module de calcul des nombres premiers\
+**Contexte d’utilisation** : Utilisation normale du site\
+**Portée** : site web, base de données\
+**Niveau** : utilisateur\
+**Acteur principal** : utilisateur\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté</u> **(CU#2)**\
+**Garantie minimale** : pas de garantie\
+**Garantie de succès** : L'utilisateur visualise les nombres premiers calculés \
+**Déclencheur** : L'utilisateur clique sur le module \
+**Scénario nominal** :
+
+1. L'utilisateur appuie sur le bouton "essayer sans inscription" depuis la page d'accueil
+
+2. Le site affiche la page d'accueil avec les modules
+
+3. L'utilisateur clique sur le module de calcul des nombres premiers
+
+4. Le site affiche la page du module
+
+5. L'utilisateur remplit 2 champs pour les bornes n et m pour calculer les nombre premiers situés entre n et m
+
+6. L'utilisateur choisit le mode de calcul distribué
+
+7. L'utilisateur clique sur le bouton calculer
+        
+8. Le site exécute un script qui effectue le calcul des nombres premiers de manière distribué sur les 4 rpi zeros
+
+9. Le site affiche le temps d'exécution du calcul des nombres premiers ainsi que la liste de ces derniers
+
+**Extension** : /\
+**Liste des variantes** : \
+
+Scénario alternatif 5.1:
+- L'utilisateur a entré des valeurs incorrectes pour les bornes n et m : n < 0 ou m <= n ou m > valeur maximale
+- Le script de calcul n'est pas exécuté
+- Le site affiche un message d'erreur à l'utilisateur
+
+Scénario alternatif 8.1:
+- Les rpi zeros ne sont pas accessibles en mode connexion ssh
+- Le script s'arrête prématurément et renvoie une erreur
+- Le site affiche une erreur à l'utilisateur 
+
+Scénario alternatif 8.2:
+- Le mode de calcul est sur non distribué, le calcul ne s'effectue que sur un seul rpi
 
 **Informations connexes** : /
 
-<h4 id="cu10"> CU#10 : Visualiser les statistiques du site</h4> 
+<h4 id="cu11"> CU#11 : Visualiser les statistiques du site</h4> 
 
 **Nom** : L'administrateur visualise les statistiques du site\
 **Contexte d’utilisation** : Utilisation normale du site\
@@ -647,7 +698,7 @@ Scénario alternatif 2.1:
 
 **Informations connexes** : /
 
-<h4 id="cu11"> CU#11 : Rechercher des utilisateurs</h4> 
+<h4 id="cu12"> CU#12 : Rechercher des utilisateurs</h4> 
 
 **Nom** : L'administrateur recherche des utilisateurs\
 **Contexte d’utilisation** : Utilisation normale du site\
@@ -675,26 +726,26 @@ Scénario alternatif 2.1:
 **Extension** : /\
 **Liste des variantes** : \
 
-Scénario alternatif 2.1:
+Scénario alternatif 4.1:
 - L'administrateur essaie de sélectionner un attribut qui ne définit par un utilisateur
 - Un message d'erreur est affiché à l'administrateur
 
-Scénario alternatif 3.1:
+Scénario alternatif 4.1:
 - La taille de la chaîne de caractères est incorrecte
 - Un message d'erreur est affiché à l'administrateur
 
-Scénario alternatif 3.2:
+Scénario alternatif 4.2:
 - La chaîne de caractères contient des caractères spéciaux
 - Un message d'erreur est affiché à l'utilisateur
 
-Scénario alternatif 4.1:
+Scénario alternatif 5.1:
 - Une erreur est survenue lors de l'exécution du script
 - La recherche est annulée
 - Un message d'erreur est affiché à l'administrateur
 
 **Informations connexes** : /
 
-<h4 id="cu12"> CU#12 : Rechercher des logs</h4> 
+<h4 id="cu13"> CU#13 : Rechercher des logs</h4> 
 
 **Nom** : L'administrateur recherche des logs (journaux)\
 **Contexte d’utilisation** : Utilisation normale du site\
@@ -709,30 +760,32 @@ Scénario alternatif 4.1:
 
 1. Le site affiche une pop-up avec un formulaire
 
-2. L'administrateur entre dans un champ les mots-clés (attributs sur lesquels effectuer la recherche de logs) et valeurs associées
+2. L'administrateur sélectionne un attribut de recherche parmis une liste d'attributs définissant un log
 
-3. L'administrateur clique sur le bouton rechercher
+3. L'administrateur entre dans un champ la chaîne de caractères à rechercher
 
-4. Le site exécute un script qui recherche les logs dans la base de données en fonction des mots-clés et valeurs saisies par l'administrateur
+4. L'administrateur clique sur le bouton rechercher
 
-5. Le site affiche les différents logs de cette recherche
+5. Le site exécute un script qui recherche les logs dans la base de données en fonction des mots-clés et valeurs saisies par l'administrateur
+
+6. Le site affiche les différents logs de cette recherche
 
 **Extension** : /\
 **Liste des variantes** : \
 
-Scénario alternatif 3.1:
+Scénario alternatif 4.1:
 - L'administrateur essaie de sélectionner un mot clé qui ne définit pas un log
 - Un message d'erreur est affiché à l'administrateur
 
-Scénario alternatif 3.2:
+Scénario alternatif 4.2:
 - La taille d'une valeur associé à un mot-clé est incorrecte
 - Un message d'erreur est affiché à l'administrateur
 
-Scénario alternatif 3.3:
-- Des caractères spéciaux autre que le caractères pour séparer les mots-clés sont présents
+Scénario alternatif 4.3:
+- Des caractères spéciaux sont présents dans la chaîne à rechercher
 - Un message d'erreur est affiché à l'utilisateur
 
-Scénario alternatif 4.1:
+Scénario alternatif 5.1:
 - Une erreur est survenue lors de l'exécution du script
 - La recherche est annulée
 - Un message d'erreur est affiché à l'administrateur
