@@ -178,7 +178,7 @@ $user = unserialize($_SESSION["user"]);
     </div>
 </div>   
 <p class="text-3xl text-deepblue pt-10 text-center">Bienvenue <b><?php echo $user->getLogin(); ?></b></p>   
-<div class="flex h-screen items-center justify-center">
+<div class="flex h-screen items-center justify-center" id="sectionModules">
 <div class="inline-flex flex-row justify-center items-center md:flex p-20">
   <div class="w-full">
       <div  class="wrapper text-gray-900 antialiased animate-fade-left animate-duration-[400ms] animate-ease-in-out"   id="0">

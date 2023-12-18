@@ -2,6 +2,9 @@ const profil = document.querySelector('#popUpProfil');
 const showProfile = document.querySelector('#showProfil');
 const formProfil = document.querySelector('#popUpFormProfil');
 const linkShowProfil = document.querySelector('#linkShowProfil');
+const sectionModules = document.querySelector('#sectionModules');
+
+
 
 
 
@@ -37,6 +40,8 @@ function showFormProfile() {
   if (!showedF) {
     formProfil.classList.remove("hidden");
     formProfil.classList.add("flex");
+    sectionModules.classList.remove("flex");
+    sectionModules.classList.add("hidden");
     showedF = true;
     showProfil();
     document.addEventListener('click', handleClickOutsideF);
@@ -44,6 +49,8 @@ function showFormProfile() {
   } else {
     formProfil.classList.add("hidden");
     formProfil.classList.remove("flex");
+    sectionModules.classList.add("flex");
+    sectionModules.classList.remove("hidden");
     showedF = false;
     document.removeEventListener('click', handleClickOutsideF);
 
@@ -75,9 +82,11 @@ showProfile.addEventListener('click', function(event) {
   event.stopPropagation();
 });
 
-linkShowProfil.addEventListener('click', function(event) {
-  event.stopPropagation();
-});
+if(linkShowProfil){
+  linkShowProfil.addEventListener('click', function(event) {
+    event.stopPropagation();
+  });
+}
 
 function confirmDelete(){
   Swal.fire({
@@ -97,6 +106,8 @@ function confirmDelete(){
     }
   });
 }
+
+
 document.addEventListener('DOMContentLoaded', function () {
   var pg0 = document.getElementById('pgbar0');
   var pg1 = document.getElementById('pgbar1');
