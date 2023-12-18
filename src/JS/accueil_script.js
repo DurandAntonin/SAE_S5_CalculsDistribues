@@ -184,6 +184,11 @@ document.addEventListener('DOMContentLoaded', function () {
         current = 0;
         resetAllProgressBars();
         //startTimer();
+
+        changes = -1;
+        changeModule();
+
+        clearInterval(intervalId);
       });
   }
 
@@ -196,6 +201,11 @@ document.addEventListener('DOMContentLoaded', function () {
         current = 1;
         resetAllProgressBars();
         //startTimer();
+
+        changes = 0;
+        changeModule();
+
+        clearInterval(intervalId);
       });
   }
 
@@ -208,11 +218,17 @@ document.addEventListener('DOMContentLoaded', function () {
         current = 2;
         resetAllProgressBars();
         //startTimer();
+
+
+        changes = 1;
+        changeModule();
+        clearInterval(intervalId);
       });
   }
   });
 
 var changes = 0;
+
 
 function changeModule(){
   changes ++;
@@ -231,4 +247,5 @@ function changeModule(){
   module.classList.remove('hidden');
 }
 
-setInterval(changeModule,5000);
+
+var intervalId = setInterval(changeModule,5000);
