@@ -279,6 +279,21 @@ class User
     }
 
     /**
+     * Renvoi la liste des noms des champs de la classe
+     *
+     * @return array Liste des noms des champs
+     */
+    public function getListFieldNames() : array
+    {
+        $listFieldNames = array();
+        foreach ($this as $field){
+            $listFieldNames[] = $field;
+        }
+
+        return $listFieldNames;
+    }
+
+    /**
      * Méthode magique qui retourne l'objet sérializé pour permettre son stockage dans la variable **$_SESSION**.
      *
      * @return string[] Liste des champs de l'objet

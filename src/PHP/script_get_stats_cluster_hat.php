@@ -74,3 +74,6 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
     //en renvoie le résultat des requetes au script js sous format json
     echo json_encode($listeResultParams);
 }
+else{
+    $header("Location:page_accueil_admin.php");
+}

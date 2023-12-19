@@ -1156,6 +1156,102 @@ class MySQLDataManagement{
     }
 
     /**
+     * Exécute une requête SQL pour sélectionner les utilisateurs en fonction d'un de leur attribut. L'attribut mot de passe ne peut être utilisé comme attribut de recherche. <br>
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null <br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les informations des utilisateurs
+     * @param string $searchAttribute l'attribut de recherche (userId, login, mail, nom, prenom, date d'inscription)
+     * @param string $stringToSearch la valeur à rechercher pour l'attribut de recherche
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @version 1.0
+     */
+    public function get_users_with_attribute(string $table, string $searchAttribute, string $stringToSearch): array
+    {
+        //on va stocker les différents paramètres de renvoi dans une liste
+        $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
+
+        try{
+            $request = "select userId, userMail, login, lastName, firstName, role, registrationDate from $table where $searchAttribute like ?";
+
+            $stringResearched = "%{$stringToSearch}%";
+
+            //on exécute la requete pour récupérer les utilisateurs en fonction d'un attribut de recherche
+            $stmt = $this->connector->prepare($request);
+            $stmt-> bind_param("s", $stringResearched);
+            $stmt -> execute();
+
+            //on récupere les résultats sous forme d'une liste
+            $results = $stmt -> get_result();
+
+            //on retourne une liste de users mappée
+            $listeResultParamsFunction["result"] = $this->mappMySqliResultToUser($results);
+        }
+        catch (\mysqli_sql_exception $e) {
+            //on enregistre dans la liste des param de result, le message d'erreur
+            $listeResultParamsFunction["error"] = 1;
+            $listeResultParamsFunction["errorMessage"] = $e;
+        }
+
+        return $listeResultParamsFunction;
+    }
+
+    /**
+     * Exécute une requête SQL pour sélectionner les logs (journaux) en fonction d'un de leur attribut. L'attribut IP ne peut être utilisé comme attribut de recherche.<br>
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null <br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les journaux d'utilisation des modules
+     * @param string $searchAttribute l'attribut de recherche (logId, logLevel, userId, date, description)
+     * @param string $stringToSearch la valeur à rechercher pour l'attribut de recherche
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @version 1.0
+     */
+    public function get_logs_with_attribute(string $table, string $searchAttribute, string $stringToSearch): array
+    {
+        //on va stocker les différents paramètres de renvoi dans une liste
+        $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
+
+        try{
+            $request = "select userId, userMail, login, lastName, firstName, role, registrationDate from $table where $searchAttribute like ?";
+
+            $stringResearched = "%{$stringToSearch}%";
+
+            //on exécute la requete pour récupérer les logs en fonction d'un attribut de recherche
+            $stmt = $this->connector->prepare($request);
+            $stmt-> bind_param("s", $stringResearched);
+            $stmt -> execute();
+
+            //on récupere les résultats sous forme d'une liste
+            $results = $stmt -> get_result();
+
+            //on retourne une liste de users mappée
+            $listeResultParamsFunction["result"] = $this->mappMySqliResultToLog($results);
+        }
+        catch (\mysqli_sql_exception $e) {
+            //on enregistre dans la liste des param de result, le message d'erreur
+            $listeResultParamsFunction["error"] = 1;
+            $listeResultParamsFunction["errorMessage"] = $e;
+        }
+
+        return $listeResultParamsFunction;
+    }
+
+    /**
      * Ferme la connexion au serveur MySQL
      *
      * @return void
@@ -1192,6 +1288,33 @@ class MySQLDataManagement{
 
         //on renvoie la liste des Users
         return $listUsers;
+    }
+
+    /**
+     * Transforme les logs retournés par une requête sql en une liste d'objets de type Logging
+     *
+     * @param mysqli_result $result
+     * @return array Liste de logs mappés
+     *
+     * @see User
+     *
+     * @version 1.0
+     */
+    private function mappMySqliResultToLog(mysqli_result $result): array
+    {
+        $listLogs = array();
+
+        //on mappe chaque résultat à un objet User, stocké dans une liste
+        while ($listInfoLog = $result->fetch_array(MYSQLI_ASSOC)){
+            //on convertit le niveau du log sous format string en un type énuméré équivalent
+            $logLevel = Enum_niveau_logger::fromName($listInfoLog["logLevel"]);
+
+            $log = new Logging($listInfoLog["logId"], $logLevel, $listInfoLog["userId"], $listInfoLog["parDate"], $listInfoLog["parIp"], $listInfoLog["parDescription"]);
+            $listLogs[] = $log;
+        }
+
+        //on renvoie la liste des logs
+        return $listLogs;
     }
 
     /**

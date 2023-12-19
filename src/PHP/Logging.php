@@ -66,6 +66,19 @@ class Logging{
     }
 
     /**
+     * Permet de construire une instance de cette classe avec des champs par défaut
+     *
+     * @return static L'instance de cette classe
+     * @throws \Exception
+     *
+     * @version 1.0
+     */
+    public static function defaultLogging(): static
+    {
+        return new static(guidv4(), Enum_niveau_logger::DEBUG,"null", getTodayDate(), "null","null");
+    }
+
+    /**
      * Méthode magique, retourne l'objet sous forme d'une chaîne de caractères lorsque ce dernier est affiché.
      *
      * @return string L'objet retourné sous forme d'une chaîne de caractères
@@ -273,6 +286,22 @@ class Logging{
     public function setDescription(string $description): void
     {
         $this->description = $description;
+    }
+
+    /**
+     * Renvoi la liste des noms des champs de la classe
+     *
+     * @return array Liste des noms des champs
+     */
+    public function getListFieldNames() : array
+    {
+        $listFieldNames = array();
+        foreach ($this as $field){
+            //on ne prend pas le champ
+            $listFieldNames[] = $field;
+        }
+
+        return $listFieldNames;
     }
 
 }
