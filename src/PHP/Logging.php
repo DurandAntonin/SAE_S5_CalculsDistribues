@@ -66,6 +66,19 @@ class Logging{
     }
 
     /**
+     * Permet de construire une instance de cette classe avec des champs par défaut
+     *
+     * @return static L'instance de cette classe
+     * @throws \Exception
+     *
+     * @version 1.0
+     */
+    public static function defaultLogging(): static
+    {
+        return new static(guidv4(), Enum_niveau_logger::DEBUG,"null", getTodayDate(), "null","null");
+    }
+
+    /**
      * Méthode magique, retourne l'objet sous forme d'une chaîne de caractères lorsque ce dernier est affiché.
      *
      * @return string L'objet retourné sous forme d'une chaîne de caractères
@@ -273,6 +286,59 @@ class Logging{
     public function setDescription(string $description): void
     {
         $this->description = $description;
+    }
+
+    /**
+     * Sérialise l'objet utilisateur, en stockant ses champs et valeur dans une chaîne de caractères.
+     *
+     * @return string Utilisateur sérialisé
+     *
+     * @version 1.0
+     */
+    public function serialise(): string
+    {
+        $loggingSerialised = "{";
+
+        //on parcourt les champs de l'objet
+        foreach ($this as $nameField => $valueField){
+            $value = $valueField;
+
+            //on convertit le role du user en un string
+            if (gettype($valueField) != "string")
+                $value = $valueField->str();
+
+            $loggingSerialised .= "\"$nameField\" : \"$value\",";
+        }
+        //on enlève la virgule en trop
+        $loggingSerialised = rtrim($loggingSerialised, ",");
+
+        return $loggingSerialised . "}";
+    }
+
+    /**
+     * Renvoi la liste des noms des champs de la classe
+     *
+     * @return array Liste des noms des champs
+     */
+    public function getListFieldNames() : array
+    {
+        $listFieldNames = array();
+        foreach ($this as $field){
+            //on ne prend pas le champ
+            $listFieldNames[] = $field;
+        }
+
+        return $listFieldNames;
+    }
+
+    /**
+     * Retourne le nom de classe sous forme de chaîne de caractères
+     *
+     * @return string Nom de la classe
+     */
+    public static function getClassName() : string
+    {
+        return get_class();
     }
 
 }

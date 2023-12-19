@@ -20,6 +20,7 @@ create table Users(
     firstName varchar(25) not null,
     password varchar(256) not null,
     role varchar(10) not null default 'USER',
+    registrationDate date not null,
     constraint pk_Users primary key(userId),
     constraint ck_Users_role check ( role in ('ADMIN', 'USER') )
 );
@@ -38,9 +39,9 @@ create table Weak_passwords(
       password varchar(255) not null
 );
 
-insert into Users(userId, userMail, login, lastName, firstName, password, role) values
-    ('68937b83-5ddd-4a46-956c-bce168417f13', 'admin@test.fr', 'admin', 'Durand', 'Antonin', '$2y$10$PEbJSfCoHk8a1jNbyhn1tOv7fLeYh3oPV5Ag3ysmQs0RHLaMPaUzK', 'ADMIN'),
-    ('91a47833-c88c-47a7-8a44-5fc3e6c3abdc', 'test.man@sfr.fr', 'test', 'test', 'man', '$2y$10$PEbJSfCoHk8a1jNbyhn1tOv7fLeYh3oPV5Ag3ysmQs0RHLaMPaUzK', 'USER');
+insert into Users(userId, userMail, login, lastName, firstName, password, role, registrationDate) values
+    ('68937b83-5ddd-4a46-956c-bce168417f13', 'admin@test.fr', 'admin', 'admin', 'man', '$2y$10$PEbJSfCoHk8a1jNbyhn1tOv7fLeYh3oPV5Ag3ysmQs0RHLaMPaUzK', 'ADMIN', '2023-12-17'),
+    ('91a47833-c88c-47a7-8a44-5fc3e6c3abdc', 'test.man@sfr.fr', 'test', 'test', 'man', '$2y$10$PEbJSfCoHk8a1jNbyhn1tOv7fLeYh3oPV5Ag3ysmQs0RHLaMPaUzK', 'USER', '2023-08-01');
 
 
 INSERT INTO Weak_passwords(password) VALUES

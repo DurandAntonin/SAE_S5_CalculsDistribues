@@ -19,18 +19,23 @@ enum Enum_niveau_logger : int
 
     case CRITICAL = 5;
 
-    public static function names(): array
+    /**
+     * Retourne la valeur de l'instance de cette énumération sous forme de chaîne de caractères
+     *
+     * @return string
+     *
+     * @version 1.0
+     */
+    public function str() : string
     {
-        return array_column(self::cases(), 'name');
-    }
-
-    public static function values(): array
-    {
-        return array_column(self::cases(), 'value');
-    }
-    public static function array(): array
-    {
-        return array_combine(self::values(), self::names());
+        return match ($this) {
+            Enum_niveau_logger::DEBUG => "DEBUG",
+            Enum_niveau_logger::INFO => "INFO",
+            Enum_niveau_logger::WARNING => "WARNING",
+            Enum_niveau_logger::ERROR => "ERROR",
+            Enum_niveau_logger::CRITICAL => "CRITICAL",
+            default => "",
+        };
     }
 
     /**
