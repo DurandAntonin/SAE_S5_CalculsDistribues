@@ -16,6 +16,11 @@ _Zehren William_
         <li> <a href="#concepArchi"> Conception architecturale </a> </li>
         <li> <a href="#concepDeta"> Conception détaillée </a> </li>
     </ol>
+    <li> <a href="#livr2"> Conception Livrable 2 </a> </li>
+    <ol>
+        <li> <a href="#concepArchi2"> Conception architecturale </a> </li>
+        <li> <a href="#concepDeta2"> Conception détaillée </a> </li>
+    </ol>
 </ol>
 
 
@@ -67,7 +72,7 @@ Le composant serveur est dans le kit cluster hat et le navigateur est un composa
 | index.html                               |                                                             |                                        |
 | Serveur Web                              | A tous les objets .php, .html, .css, .json, a une interface | Ecoute les requêtes du navigateur      |
 | Navigateur Web                           |                                                             | Lit les fichiers, exécute des requêtes |
-| Base de données                          | a les tables Logging, Users, Weak_passwords  |                                        |
+| Base de données                          | a les tables Logging, Users, Weak_passwords                 |                                        |
 
 
 
@@ -77,13 +82,13 @@ Ces derniers sont des abstractions respectives des objets : "page_accueil.php", 
 
 On définit ensuite le composant "Navigateur", abstraction de l'objet "Navigateur web", qui correspond au client voulant accèder au site web. On définit également le composant "Serveur", abstraction de l'objet "Serveur web". Enfin, on définit le composant "Base de données", abstraction de l'objet "Base de données". 
 
-On peut constater que certains composants d’objets sont similaires, on externalise donc le style de chaque page pour le mettre dans un objet, fichier appelé “style.charte.css”. Cela va être montré dans la partie conception 
+On peut constater que certains composants d’objets sont similaires, on externalise donc le style de chaque page pour le mettre dans un objet, fichier appelé "style.css". Cela va être montré dans la partie conception 
 détaillée. 
 
-On crée aussi 3 packages, le premier appelé CSS contenant l'objet « style.css », le 
-deuxième appelé HTML contenant l'objet « index.html, le troisième intitulé PHP contenant tous les objets en .php.
+On crée aussi 4 packages, le premier appelé CSS contenant l'objet "style.css", le 
+deuxième appelé HTML contenant l'objet "index.html", le troisième intitulé PHP contenant tous les objets en ".php" et le quatrième intitulé JSON contenant tous les objets ".json".
 
-On représente les relations entre “BD” et 
+On représente les relations entre "BD" et 
 "Logging","Users","Weak_passwords". 
 
 <div style="text-align:center">
@@ -100,18 +105,18 @@ Ensuite, représente les relations entre les packages dans le diagramme de packa
 
 On va utiliser la vue composants-connecteurs pour modéliser le système.   
 
-Les composants “Serveur” et “Navigateur” sont de stéréotype “executable”, le composant “DB” est de stéréotype “database” avant les composants “utilisateur”, “utilisation_module” qui sont de stéréotype “table” et enfin tous les autres composants sont de stéréotype “file”.  
+Les composants "Serveur" et "Navigateur" sont de stéréotype "executable", le composant "DB" est de stéréotype "database", les composants "Logging", "Users" et "Weak_passwords" qui sont de stéréotype "table" et enfin tous les autres composants sont de stéréotype "file".  
 
-On a la même interface nommée « IRequeteWeb » entre « Navigateur » et « Serveur ». On a des relations de dépendances entre « Serveur » et les composants de stéréotype « file ». De même entre le “Navigateur” et les composants de stéréotype “html”.  
+On a la même interface nommée "IRequeteWeb" entre "Navigateur" et "Serveur". On a des relations de dépendances entre "Serveur" et les composants de stéréotype "file". De même entre le "Navigateur" et les composants d'extension "html".  
 
-Le composant « Serveur » interprète les composants en .php et envoi les fichiers html correspondants au « Navigateur ».  
+Le composant "Serveur" interprète les composants en .php et envoi les fichiers html correspondants au "Navigateur".  
 
-On a une interface entre les composants “Navigateur” et “Serveur” que l’on va nommer 
-“IRequeteWeb”. On a des relations de dépendances entre “Serveur” et les composants de stéréotype “file”, de même entre le “Navigateur” et les composants de stéréotype html.  
+On a une interface entre les composants "Navigateur" et "Serveur" que l’on va nommer 
+"IRequeteWeb". On a des relations de dépendances entre "Serveur" et les composants de stéréotype "file", de même entre le "Navigateur" et les composants d'extension "html".  
 
 On modélise cette vue à l’aide d’un diagramme de composants ci-dessous :
 
-On a une interface que l’on va nommer "MySqli" reliant le composant “MySQLDataManagement.php” avec le composant “Base de données”. 
+On a une interface que l’on va nommer "MySqli" reliant le composant "MySQLDataManagement.php" avec le composant "Base de données". 
 
 <div style="text-align:center">
 <img src="../DiagrammesUML/PNG_DiagrammesUML/L1_diagComposants.PNG" width="700px">
@@ -123,7 +128,7 @@ permis de représenter le système qui est le site web. Nous allons représenter
 
 On définit donc trois noeuds principaux, le Navigateur, le RPI Host et Les quatre RPI Zero. 
 
-**Remarque : Seulement un seul d'entre eux sera modélisé pour faciliter la compréhension du diagramme, mais ces derniers sont tous structurés de la même manière**
+**Remarque : Seulement un RPI Zero sur les quatres sera modélisé pour faciliter la compréhension du diagramme, mais ces derniers sont tous structurés de la même manière**
 
 Le serveur et les pages sont stockées dans les quatre RPI Zero, dans un noeud contenant ces composants qu’on appele "Worker". Ce noeud "Worker" modélise le role de worker que les RPI Zero ont dans le swarm docker installé sur le Cluster. Ce même noeud est imbriqué dans un autre noeud, qui est le noeud "RPIs Zero" et qui modélise les quatre RPI Zero. 
 
@@ -185,9 +190,103 @@ La table Logging comporte 6 colonnes, à savoir logId de type varchar, logLevel 
 
 La table Weak_passwords comporte une seule colonne password de type varchar avec des contraintes d'intégrité telles que : le nombre de caractères contenus dans cette colonne doit être de 256 au maximum et elle ne peut pas être nulle. 
 
+<h2 style="color:#5d79e7; id=livr2 ; page-break-before: always"> Conception Livrable 2 </h2>
 
+<h3 style="color:#5d79e7; id=concepArchi2"> Conception architecturale </h3>
 
+Le domaine du problème est le site web BlitzCalc, on décompose donc ce système en sous-systèmes.
 
+L'architecture reste la même que dans le livrable 1 cependant on doit rajouter des composants et en supprimer certains. 
+
+Les composants qui sont supprimés de l'architecture sont les suivants : "verif_identite_page_user_inscrit_only.php", " Enum_fic_logs.php" et "script_recherche_users_par_mail.php". 
+
+Les composants qui sont ajoutés au système sont les suivants :
+
+| Objet                                      | Etat                                                        | Comportement                           |
+|--------------------------------------------|-------------------------------------------------------------|----------------------------------------|
+| accueil_admin_script.js                    |                                                             |                                        |
+| page_module_nombres_premiers.js            |                                                             |                                        |
+| script_get_stats_site.php                  |                                                             |                                        |
+| script_get_stats_cluster_hat.php           |                                                             |                                        |
+| scriptGetStatsClusterHat.sh                |                                                             |                                        |
+| script_get_users_or_logs_with_attribute.php|                                                             |                                        |
+| script_calcul_nombre_premiers.php          |                                                             |                                        |
+| page_module_nombres_premiers.php           |                                                             |                                        |
+| output.css                                 |                                                             |                                        |
+            
+A partir de ce tableau, on peut définir les composants suivants : "accueil_admin_script.js", "output.css", "page_module_nombres_premiers.js", "script_get_stats_site.php", "script_get_stats_cluster_hat.php","scriptGetStatsClusterHat.sh","script_get_users_or_logs_with_attribute.php","script_calcul_nombre_premiers.php" et "page_module_nombres_premiers.php".
+
+Ces derniers sont des abstractions respectives des objets : "accueil_admin_script.js", "output.css", "page_module_nombres_premiers.js", "script_get_stats_site.php", "script_get_stats_cluster_hat.php","scriptGetStatsClusterHat.sh","script_get_users_or_logs_with_attribute.php","script_calcul_nombre_premiers.php" et "page_module_nombres_premiers.php".
+
+Le composant "output.css" contient désormais le style de chaque composant concerné du site. Le composant "style.css" ne sert maintenant qu'a appeler des librairies nécéssaires pour le style. 
+
+On crée aussi 6 packages, le premier appelé CSS contenant l'objet "style.css", le 
+deuxième appelé HTML contenant l'objet "index.html", le troisième intitulé PHP contenant tous les objets en ".php", le quatrième intitulé JSON contenant tous les objets ".json", le cinquième intitulé BASH contenant l'objet "scriptGetStatsClusterHat.sh" et le sixième intitulé JS contient tous les objets ".js".
+
+La base de données quant à elle ne change pas d'un point de vue architectural. 
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L2_diagBD.PNG" width="700px">
+<p> Diagramme BD du livrable 2 </p>
+</div>
+
+On représente les relations entre les packages dans le diagramme de packages ci-dessous.
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L2_diagPackages.PNG" width="700px">
+<p> Diagramme de packages du livrable 2 </p>
+</div>
+
+On va utiliser la vue composants-connecteurs pour modéliser le système. 
+
+Les composants "Serveur" et "Navigateur" sont de stéréotype "executable", le composant "DB" est de stéréotype "database", les composants "Logging", "Users" et "Weak_passwords" qui sont de stéréotype "table" et enfin tous les autres composants sont de stéréotype "file".  
+
+On a la même interface nommée "IRequeteWeb" entre "Navigateur" et "Serveur". On a des relations de dépendance entre "Serveur" et les composants de stéréotype "file". De même entre le "Navigateur" et les composants d'extension "html", "js" et "css".  
+
+Le composant "Serveur" interprète les composants en ".php" et envoie les fichiers html correspondants au "Navigateur".  
+
+On a une interface entre les composants "Navigateur" et "Serveur" que l’on va nommer 
+"IRequeteWeb". On a des relations de dépendances entre "Serveur" et les composants de stéréotype "file", de même entre le "Navigateur" et les composants d'extension "html" "css" et "js".  
+
+On modélise cette vue à l’aide d’un diagramme de composants ci-dessous :
+
+On a une interface que l’on va nommer "MySqli" reliant le composant "MySQLDataManagement.php" avec le composant "Base de données". 
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L2_diagComposants.PNG" width="700px">
+<p> Diagramme de composants du livrable 2 </p>
+</div>
+
+Le système qui héberge le site reste exactement le même que lors du livrable 1, à savoir trois noeuds principaux : le Navigateur, le RPI Host et Les quatre RPI Zero. 
+
+**Remarque : Seulement un RPI Zero sur les quatres sera modélisé pour faciliter la compréhension du diagramme, mais ces derniers sont tous structurés de la même manière**
+
+On représente donc ces noeuds de la même manière que dans le livrable précédent, grâce à un diagramme de déploiement. 
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L2_diagDeploiement.PNG" width="700px">
+<p> Diagramme de déploiement du livrable 2 </p>
+</div>
+
+<h3 style="color:#5d79e7; id=concepDeta2 ; page-break-before: always"> Conception détaillée </h3>
+
+En ayant défini les dépendances et les associations entre tous les objets, on obtient alors une structure telle que : 
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L2_diagClasses.PNG" width="700px">
+<p> Diagramme de classes du livrable 2 (1)</p>
+</div>
+
+On commence par analyser les différentes classes .php, à savoir "Logger.php", "LoggerInstance.php", "Logging.php", "MySQLDataManagement.php", "User.php" et "Utility.php".
+
+On analyse aussi les énumérations "Enum_niveau_logger.php" et "Enum_role_user.php".
+
+Pour faciliter l'analyse de ces dernieres, on réalise un diagramme de classe ne contenant que ces classes, leurs paramètres et leurs méthodes et ces énumérations. Il servira a modéliser les dépendances et les associations entre ces dernières. 
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L2_diagClasses_2.PNG" width="700px">
+<p> Diagramme de classes du livrable 2 (2)</p>
+</div>
 
 
 
