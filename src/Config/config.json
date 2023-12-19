@@ -5,7 +5,7 @@
   "taille_message_prive" : [1,255],
   "listSpecialCharactersMail" : [" ", "!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", "/", ":", "\\", "<", ">", "=","{", "}", "°", "^", "|", "~"],
   "listSpecialCharactersText" : ["!", "\"", "#", "$", "%", "&", "(", ")", "*", "+", ",", "-", "/", ":", "\\", "<", ">", "=","{", "}", "°", "^", "|", "~"],
-  "bd_hostname" : "127.0.0.1",
+  "bd_hostname" : "172.19.181.254",
   "bd_username" : "BlitzCalc_DB_user",
   "bd_password" : "azerty",
   "bd_database" : "BlitzCalc_DB",
@@ -31,7 +31,7 @@
   "loggerConf" : {
     "loggerFile" : {
         "logLevel" : "INFO",
-        "logRepo" : "/home/mjougla/Documents/GitHub/SAE_S5_CalculsDistribues/src/LOGS/",
+        "logRepo" : "/var/www/html/LOGS/",
         "logToDb" : 0
     },
     "loggerDb" : {
@@ -39,7 +39,7 @@
       "logRepo" : "",
       "logToDb" : 1,
       "configDbConnexion" : {
-        "bdHostname" : "127.0.0.1",
+        "bdHostname" : "172.19.181.254",
         "bdUsername" : "BlitzCalc_DB_user",
         "bdPassword" : "azerty",
         "bdDatabase" : "BlitzCalc_DB",
