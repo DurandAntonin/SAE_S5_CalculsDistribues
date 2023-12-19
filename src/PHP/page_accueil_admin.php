@@ -381,30 +381,32 @@ $user = unserialize($_SESSION["user"]);
       <!-- items -->
       <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
         <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
+        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
           <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
+            <span class="mr-2">ID : 007886</span>
           </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
+          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
           <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
+            <span class="mr-2">Nom : Zehren</span>
+            <span class="mr-2">Prénom: William</span>
           </div>
+          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
 
           <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon>      </div>
       </div>
       <!-- items -->
       <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
         <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
+        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
           <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
+            <span class="mr-2">ID : 007886</span>
           </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
+          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
           <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
+            <span class="mr-2">Nom : Zehren</span>
+            <span class="mr-2">Prénom: William</span>
           </div>
+          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
 
           <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
         </div>
@@ -412,119 +414,126 @@ $user = unserialize($_SESSION["user"]);
       <!-- items -->
       <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
         <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
+        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
           <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
+            <span class="mr-2">ID : 007886</span>
           </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
+          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
           <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
+            <span class="mr-2">Nom : Zehren</span>
+            <span class="mr-2">Prénom: William</span>
           </div>
+          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
 
           <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
         </div>
       </div>
       <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
         <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
+        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
           <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
+            <span class="mr-2">ID : 007886</span>
           </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
+          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
           <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
+            <span class="mr-2">Nom : Zehren</span>
+            <span class="mr-2">Prénom: William</span>
           </div>
+          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
 
           <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
         </div>
       </div>
       <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
         <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
+        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
           <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
+            <span class="mr-2">ID : 007886</span>
           </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
+          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
           <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
+            <span class="mr-2">Nom : Zehren</span>
+            <span class="mr-2">Prénom: William</span>
           </div>
+          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
           <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
         </div>
       </div>
       <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
         <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
+        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
           <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
+            <span class="mr-2">ID : 007886</span>
           </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
+          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
           <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
+            <span class="mr-2">Nom : Zehren</span>
+            <span class="mr-2">Prénom: William</span>
           </div>
+          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
 
           <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
         </div>
       </div>
       <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
         <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
+        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
           <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
+            <span class="mr-2">ID : 007886</span>
           </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
+          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
           <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
+            <span class="mr-2">Nom : Zehren</span>
+            <span class="mr-2">Prénom: William</span>
           </div>
+          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
 
           <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
         </div>
       </div>
       <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
         <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
+        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
           <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
+            <span class="mr-2">ID : 007886</span>
           </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
+          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
           <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
+            <span class="mr-2">Nom : Zehren</span>
+            <span class="mr-2">Prénom: William</span>
           </div>
+          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
 
           <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
         </div>
       </div>
       <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
         <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
+        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
           <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
+            <span class="mr-2">ID : 007886</span>
           </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
+          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
           <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
+            <span class="mr-2">Nom : Zehren</span>
+            <span class="mr-2">Prénom: William</span>
           </div>
-
+          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
           <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
         </div>
       </div>
       <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
         <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
+        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
           <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
+            <span class="mr-2">ID : 007886</span>
           </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
+          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
           <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
+            <span class="mr-2">Nom : Zehren</span>
+            <span class="mr-2">Prénom: William</span>
           </div>
+          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
 
           <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
         </div>
