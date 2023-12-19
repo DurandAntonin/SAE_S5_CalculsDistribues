@@ -304,6 +304,16 @@ class Logging{
         return $listFieldNames;
     }
 
+    /**
+     * Retourne le nom de classe sous forme de chaîne de caractères
+     *
+     * @return string Nom de la classe
+     */
+    public static function getClassName() : string
+    {
+        return get_class();
+    }
+
 }
 
 

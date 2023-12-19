@@ -294,6 +294,16 @@ class User
     }
 
     /**
+     * Retourne le nom de classe sous forme de chaîne de caractères
+     *
+     * @return string Nom de la classe
+     */
+    public static function getClassName() : string
+    {
+        return get_class();
+    }
+
+    /**
      * Méthode magique qui retourne l'objet sérializé pour permettre son stockage dans la variable **$_SESSION**.
      *
      * @return string[] Liste des champs de l'objet
