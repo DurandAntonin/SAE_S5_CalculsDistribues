@@ -23,6 +23,9 @@ var chartBar = new Chart(document.getElementById("chartPie"), configPie);
 
 const listUsers = document.querySelector('#popUpUsers');
 const btnShowUsers = document.querySelector('#showUsers');
+const contentUsers = document.querySelector('#contentUsers');
+
+const contentLogs = document.querySelector('#contentLogs');
 
 var showed = false;
 
@@ -43,7 +46,7 @@ function showUsers() {
 
 function handleClickOutside(event) {
 
-if (!profil.contains(event.target)) {
+if (!contentUsers.contains(event.target)) {
     listUsers.classList.add("hidden");
     showed = false;
 
@@ -54,3 +57,37 @@ if (!profil.contains(event.target)) {
 btnShowUsers.addEventListener('click', function(event) {
     event.stopPropagation();
   });
+
+  const listLogs = document.querySelector('#popUpLogs');
+  const btnShowLogs = document.querySelector('#showLogs');
+  
+  var showedL = false;
+  
+  function showLogs() {
+      console.log("click");
+      if (!showedL) {
+        listLogs.classList.remove("hidden");
+        showedL = true;
+    
+        document.addEventListener('click', handleClickOutsideL);
+      } else {
+        listLogs.classList.add("hidden");
+        showedL = false;
+    
+        document.removeEventListener('click', handleClickOutsideL);
+      }
+    }
+  
+  function handleClickOutsideL(event) {
+  
+  if (!contentLogs.contains(event.target)) {
+      listLogs.classList.add("hidden");
+      showedL = false;
+  
+      document.removeEventListener('click', handleClickOutsideL);
+  }
+  }
+  
+  btnShowLogs.addEventListener('click', function(event) {
+      event.stopPropagation();
+    });
