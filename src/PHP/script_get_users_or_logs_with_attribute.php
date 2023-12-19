@@ -52,7 +52,17 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
 
                     //on regarde si une erreur est survenue au cours du script
                     if ($resultRequestGetUsers["error"] == 0){
-                        $listeResultParams["result"] = $resultRequestGetUsers["result"];
+                        //on stocke le nom de la classe des objets
+                        $listeResultParams["result"]["classResearched"] = $classResearched;
+
+                        //on stocke aussi la liste des objets serialisés dans un autre champ
+                        $listUserSerialised = array();
+                        foreach ($resultRequestGetUsers["result"] as $user){
+                            $userSerialised = $user->serialise();
+                            $listUserSerialised[] = $userSerialised;
+                        }
+
+                        $listeResultParams["result"]["listObjectSerialised"] = json_encode($listUserSerialised);
                     }
                     else{
                         $errorMessage = $resultRequestGetUsers["errorMessage"];
@@ -80,7 +90,17 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
 
                     //on regarde si une erreur est survenue au cours du script
                     if ($resultRequestGetLogging["error"] == 0){
-                        $listeResultParams["result"] = $resultRequestGetLogging["result"];
+                        //on stocke le nom de la classe des objets
+                        $listeResultParams["result"]["classResearched"] = $classResearched;
+
+                        //on stocke aussi la liste des objets serialisés dans un autre champ
+                        $listLoggingSerialised = array();
+                        foreach ($resultRequestGetLogging["result"] as $logging){
+                            $loggingSerialised = $logging->serialise();
+                            $listLoggingSerialised[] = $loggingSerialised;
+                        }
+
+                        $listeResultParams["result"]["listObjectSerialised"] = json_encode($listLoggingSerialised);
                     }
                     else{
                         $errorMessage = $resultRequestGetLogging["errorMessage"];

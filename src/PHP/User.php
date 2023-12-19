@@ -258,7 +258,7 @@ class User
      *
      * @version 1.0
      */
-    public function serialize(): string
+    public function serialise(): string
     {
         $userSerialized = "{";
 

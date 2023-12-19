@@ -24,6 +24,18 @@ let currentTimeFilterValue = 1 //0=jour 1=semaine 2=mois 3=tout
 //intervalle de temps pour rafraichir les stats du cluster hat
 let intertalTimeGetStatsClusterHat = 10000
 
+//éléments pour la recherche et l'affichage des utilisateurs selon un attribut
+let researchBarUsers
+let attributeSelectedUserResearch
+let buttonSubmitResearchUsers
+let listUsers
+
+//éléments pour la recherche et l'affichage des logs selon un attribut
+let researchBarLogging
+let attributeSelectedLoggingResearch
+let buttonSubmitResearchLogging
+let listLogging
+
 function init(){
     //on récupère les différents éléments html stockant les stats du site, du cluster hat et champs select
     elemNbUsers = document.getElementById("nb-users")
@@ -31,6 +43,14 @@ function init(){
     elemNbModuleUsers = document.getElementById("nb-module-uses")
     listStatsClusterHat = Array.from(document.getElementById("tbody-table-stats").children)
     listTimeFilters = Array.from(document.getElementsByClassName("time-filter"))
+    researchBarUsers = document.getElementById("research-bar-user")
+    attributeSelectedUserResearch = document.getElementById("select-user-attribute")
+    buttonSubmitResearchUsers = document.getElementById("button-submit-research-users")
+    listUsers = document.getElementById("div-user-list")
+    researchBarLogging = document.getElementById("research-bar-logging")
+    attributeSelectedLoggingResearch = document.getElementById("select-logging-attribute")
+    buttonSubmitResearchLogging = document.getElementById("button-submit-research-logging")
+    listLogging = document.getElementById("div-logging-list")
 
     //par défaut on met le time filter value a 0 (== défaut)
     currentTimeFilterValue = enumTimeFilters.jour
@@ -38,6 +58,10 @@ function init(){
 
     //on associé des événements onclick pour les time filters des stats
     listTimeFilters.forEach((timeFilter) => timeFilter.onclick = changeStatsBasedTimeFilter)
+
+    //on associe un événement on click pour lancer la recherche sur les boutons de recherche logging et users
+    buttonSubmitResearchUsers.onclick = requestResearchUsersOrLogging
+    buttonSubmitResearchLogging.onclick = requestResearchUsersOrLogging
 
     //on load les stats du site au chargement de la page
     requestSetStatsSite()
@@ -101,6 +125,32 @@ function requestGetStatsClusterHat(){
     requestGetStatsSite.send()
 
     requestGetStatsSite.onreadystatechange = resultRequestGetStatsClusterHat
+}
+
+function requestResearchUsersOrLogging(){
+    let fieldToSearch
+    let stringToSearch
+    let classResearched
+
+    //on regarde quel bouton a été appuyé
+    if (this.id === buttonSubmitResearchUsers.id){
+        fieldToSearch = attributeSelectedUserResearch.value
+        stringToSearch = researchBarUsers.value
+        classResearched = buttonSubmitResearchUsers.name
+    }
+    else{
+        fieldToSearch = attributeSelectedLoggingResearch.value
+        stringToSearch = researchBarLogging.value
+        classResearched = buttonSubmitResearchLogging.name
+    }
+
+    //on crée et exécute une requête js vers un script php pour rechercher des users ou logging en fonction d'un attribut sélectionné
+    let requestGetStatsSite = new XMLHttpRequest()
+    requestGetStatsSite.open("POST","script_get_stats_cluster_hat.php");
+    requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
+    requestGetStatsSite.send(JSON.stringify({"fieldToSearch": fieldToSearch, "stringToSeaerch" : stringToSearch, "classResearched" : classResearched}))
+
+    requestGetStatsSite.onreadystatechange = resultRequestResearchUsersOrLogging
 }
 
 function resultRequestGetStatsSite(){
@@ -199,6 +249,38 @@ function resultRequestGetStatsClusterHat(){
 
 }
 
+function resultRequestResearchUsersOrLogging(){
+    if (this.readyState === 4 && this.status === 200) {
+        //on récupère le résultat du script
+        let resultScript = this.response
+        //console.log(resultScript)
+
+        let resultScriptParsed = JSON.parse(resultScript)
+
+        //on regarde si une erreur a été renvoyée
+        if (resultScriptParsed.error === 0){
+            let listResults = resultScriptParsed.result
+
+            //on récupère la classe de recherche qui sera l'identifiant de l'élément html qui va stocker cette liste d'objets serialisés
+            let htmlElemclassResearched = listResults.classResearched
+
+            //et on récupère la liste des objets de cette classe sérialisé
+            let listObjectSerialised = listResults.listObjectSerialised
+
+            //on ajoute chaque objet serialisé dans l'objet html en fonction de sa classe
+            for (let i=0;i<listObjectSerialised.length;i++){
+                if (htmlElemclassResearched === "Users")
+                    createHtmlElementForSerialisedUsers(listUsers, listObjectSerialised[i])
+                else
+                    createHtmlElementForSerialisedLogging(listLogging, listObjectSerialised[i])
+            }
+        }
+        else{
+            console.log("Erreur : " + resultScriptParsed.errorMessage)
+        }
+    }
+}
+
 function getTimeFilterValueFromKey(key){
     return Object.keys(enumTimeFilters).indexOf(key)
 }
@@ -226,4 +308,54 @@ function configChartBarCanva(nbUsers, nbVisiteurs){
     };
 
     return configPie
+}
+
+
+function createHtmlElementForSerialisedUsers(divListUsers, userSerialised){
+    let divUserGlob = document.createElement("div")
+    divUserGlob.setAttribute("class", "flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative")
+
+    let divUser = document.createElement("div")
+    divUser.setAttribute("class", "grid grid-flow-col grid-rows-2")
+
+    //div contenant le login du user
+    let subDivLogin = document.createElement("div")
+    subDivLogin.setAttribute("class", "mr-20 text-lg font-bold text-white")
+
+    //div contenant l'ID du user
+    let subDivId = document.createElement("div")
+    let spanDivId = document.createElement("span")
+    spanDivId.setAttribute("class", "mr-2")
+    spanDivId.appendChild(spanDivId)
+
+    //div contenant le mail du user
+    let subDivMail = document.createElement("div")
+    subDivMail.setAttribute("class", "text-lg font-bold text-white")
+
+    //div contenant le nom et prénom du user
+    let subDivFirstNameLastName = document.createElement("div")
+    let spanLastName = document.createElement("span")
+    let spanFirstName = document.createElement("span")
+    spanLastName.setAttribute("class", "mr-2")
+    spanFirstName.setAttribute("class", "mr-2")
+    subDivFirstNameLastName.append(spanLastName, spanFirstName)
+
+    //icone pour supprimer un user
+    let iconeDeleteUser = document.createElement("ion-icon")
+    iconeDeleteUser.setAttribute("name", "trash")
+    iconeDeleteUser.setAttribute("class", "w-7 h-7 text-red-700 absolute right-2 cursor-pointer")
+
+    //on ajoute une chaine de caractère pour chaque span et div
+    spanDivId.innerHTML = "ID : " + userSerialised.userId
+    subDivMail.innerHTML = "Adresse mail : " + userSerialised.userMail
+    spanLastName.innerHTML = "Nom : " + userSerialised.lastName
+    spanFirstName.innerHTML = "Prénom : " + userSerialised.firstName
+
+    //on ajoute les différents éléments div dans l'élément div
+    divUser.append(subDivLogin, subDivId, subDivMail, subDivFirstNameLastName, iconeDeleteUser)
+    divUserGlob.append(divUser)
+    divListUsers.append(divUserGlob)
+}
+
+function createHtmlElementForSerialisedLogging(divListLogging, loggingSerialised){
 }

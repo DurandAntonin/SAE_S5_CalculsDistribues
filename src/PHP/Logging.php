@@ -289,6 +289,33 @@ class Logging{
     }
 
     /**
+     * Sérialise l'objet utilisateur, en stockant ses champs et valeur dans une chaîne de caractères.
+     *
+     * @return string Utilisateur sérialisé
+     *
+     * @version 1.0
+     */
+    public function serialise(): string
+    {
+        $loggingSerialised = "{";
+
+        //on parcourt les champs de l'objet
+        foreach ($this as $nameField => $valueField){
+            $value = $valueField;
+
+            //on convertit le role du user en un string
+            if (gettype($valueField) != "string")
+                $value = $valueField->str();
+
+            $loggingSerialised .= "\"$nameField\" : \"$value\",";
+        }
+        //on enlève la virgule en trop
+        $loggingSerialised = rtrim($loggingSerialised, ",");
+
+        return $loggingSerialised . "}";
+    }
+
+    /**
      * Renvoi la liste des noms des champs de la classe
      *
      * @return array Liste des noms des champs
