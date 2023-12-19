@@ -31,6 +31,7 @@ _Zehren William_
         <li><a href="#cu11"> CU#11 </a></li>
         <li><a href="#cu12"> CU#12 </a></li>
         <li><a href="#cu13"> CU#13 </a></li>
+        <li><a href="#cu14"> CU#14 </a></li>
         </ul>
     </ol>
 </ol>
@@ -87,9 +88,11 @@ Ci-dessous les différents niveaux des cas d'utilisation:
 **Niveau utilisateur**:
 - S'inscrire
 - Supprimer son compte
-- Utilisation du module de calcul des nombres premiers
+- Utilisation du module de calcul des nombres premiers par un utilisateur visiteur
+- Utilisation du module de calcul des nombres premiers par un utilisateur inscrit
 - Rechercher des utilisateurs
 - Rechercher des logs
+- Supprimer un compte utilisateur
 
 **Niveau sous-fonctions**:
 - Se connecter
@@ -788,6 +791,41 @@ Scénario alternatif 4.3:
 Scénario alternatif 5.1:
 - Une erreur est survenue lors de l'exécution du script
 - La recherche est annulée
+- Un message d'erreur est affiché à l'administrateur
+
+**Informations connexes** : /
+
+<h4 id="cu14"> CU#14 : Supprimer un utilisateur</h4> 
+
+**Nom** : L'administrateur supprime un utilisateur\
+**Contexte d’utilisation** : Utilisation normale du site\
+**Portée** : site web, base de données\
+**Niveau** : utilisateur\
+**Acteur principal** : administrateur\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté en tant qu'administrateur</u> **(CU#2)**\
+**Garantie minimale** : pas de garantie\
+**Garantie de succès** : L'administrateur supprime un compte utilisateur \
+**Déclencheur** : L'administrateur clique sur le bouton supprimer un compte \
+**Scénario nominal** :
+
+1. Le site affiche une pop-up de confirmation
+
+2. L'administrateur clique sur le bouton confirmer la suppression du compte
+
+3. Le site exécute un script qui supprime l'utilisateur sélectionné dans la base de données
+
+4. Le site affiche la nouvelle liste des utilisateurs qui ne contient plus l'utilisateur précédemment supprimé
+
+**Extension** : /\
+**Liste des variantes** : \
+
+Scénario alternatif 2.1:
+- L'administrateur clique sur le bouton annuler la suppression
+- L'utilisateur n'est pas supprimé de la base de données
+
+Scénario alternatif 3.1:
+- Une erreur est survenue lors de l'exécution du script
+- La suppression est annulée
 - Un message d'erreur est affiché à l'administrateur
 
 **Informations connexes** : /
