@@ -93,21 +93,21 @@ $user = unserialize($_SESSION["user"]);
       <div class="grid w-[40rem] grid-cols-4 gap-2 rounded-xl bg-deepblue p-2 text-white">
         <div>
             <input type="radio" name="option" id="jour" value="jour" class="peer hidden" checked />
-            <label for="jour" class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Jour</label>
+            <label for="jour" class="time-filter block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Jour</label>
         </div>
         <div>
             <input type="radio" name="option" id="semaine" value="semaine" class="peer hidden" />
-            <label for="semaine" class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Semaine</label>
+            <label for="semaine" class="time-filter block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Semaine</label>
         </div>
 
         <div>
             <input type="radio" name="option" id="mois" value="mois" class="peer hidden" />
-            <label for="mois" class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Mois</label>
+            <label for="mois" class="time-filter block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Mois</label>
         </div>
 
         <div>
             <input type="radio" name="option" id="tout" value="tout" class="peer hidden" />
-            <label for="tout" class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Tout</label>
+            <label for="tout" class="time-filter block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Tout</label>
         </div>
       </div>
     </div>
@@ -122,7 +122,7 @@ $user = unserialize($_SESSION["user"]);
                                         </div>
         
                                         <div class="mx-5">
-                                            <h4 class="text-2xl font-semibold text-gray-700">8,282</h4>
+                                            <h4 id="nb-users" class="text-2xl font-semibold text-gray-700">8,282</h4>
                                             <div class="text-deepblue ">Nombres d'utilisateurs</div>
                                         </div>
                                     </div>
@@ -135,7 +135,7 @@ $user = unserialize($_SESSION["user"]);
                                         </div>
         
                                         <div class="mx-5">
-                                            <h4 class="text-2xl font-semibold text-gray-700">200,521</h4>
+                                            <h4 id="nb-visits" class="text-2xl font-semibold text-gray-700">200,521</h4>
                                             <div class="text-deepblue">Nombres de visites</div>
                                         </div>
                                     </div>
@@ -148,7 +148,7 @@ $user = unserialize($_SESSION["user"]);
                                         </div>
         
                                         <div class="mx-5">
-                                            <h4 class="text-2xl font-semibold text-gray-700">215,542</h4>
+                                            <h4 id="nb-module-uses" class="text-2xl font-semibold text-gray-700">215,542</h4>
                                             <div class="text-deepblue">Utilisation des modules</div>
                                         </div>
                                     </div>
@@ -184,7 +184,7 @@ $user = unserialize($_SESSION["user"]);
                                                 </tr>
                                             </thead>
             
-                                            <tbody class="bg-white">
+                                            <tbody id="tbody-table-stats" class="bg-white">
                                                 <tr>
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                         <div class="flex items-center">
@@ -362,12 +362,12 @@ $user = unserialize($_SESSION["user"]);
     <form class="flex items-center my-5">
       <label for="voice-search" class="sr-only">Search</label>
       <div class="relative w-full">
-        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+        <div id="button-submit-research-users" class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
           <svg class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
         </div>
-        <input type="text" id="search" class="block w-full rounded-lg border border-white bg-deepblue p-2.5 pl-10 text-sm text-white focus:border-lightblue focus:ring-lightblue" placeholder="Rechercher un utilisateur" required />
+        <input type="text" id="research-bar-user" class="block w-full rounded-lg border border-white bg-deepblue p-2.5 pl-10 text-sm text-white focus:border-lightblue focus:ring-lightblue" placeholder="Rechercher un utilisateur" required />
       </div>
-      <select class="ml-2 inline-flex items-center rounded-lg border border-white bg-deepblue px-3 py-2.5 text-sm font-medium text-white hover:bg-deepblue focus:outline-none focus:ring-4 focus:ring-lightblue">
+      <select id="select-user-attribute" class="ml-2 inline-flex items-center rounded-lg border border-white bg-deepblue px-3 py-2.5 text-sm font-medium text-white hover:bg-deepblue focus:outline-none focus:ring-4 focus:ring-lightblue">
         <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
         <option value="">--Trier par--</option>
         <option value="login">Login</option>
@@ -548,12 +548,12 @@ $user = unserialize($_SESSION["user"]);
     <form class="flex items-center my-5">
       <label for="voice-search" class="sr-only">Search</label>
       <div class="relative w-full">
-        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+        <div id="button-submit-research-logging" class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
           <svg class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
         </div>
-        <input type="text" id="search" class="block w-full rounded-lg border border-white bg-deepblue p-2.5 pl-10 text-sm text-white focus:border-lightblue focus:ring-lightblue" placeholder="Rechercher un logs" required />
+        <input type="text" id="research-bar-logging" class="block w-full rounded-lg border border-white bg-deepblue p-2.5 pl-10 text-sm text-white focus:border-lightblue focus:ring-lightblue" placeholder="Rechercher un logs" required />
       </div>
-      <select class="ml-2 inline-flex items-center rounded-lg border border-white bg-deepblue px-3 py-2.5 text-sm font-medium text-white hover:bg-deepblue focus:outline-none focus:ring-4 focus:ring-lightblue">
+      <select id="select-logging-attribute" class="ml-2 inline-flex items-center rounded-lg border border-white bg-deepblue px-3 py-2.5 text-sm font-medium text-white hover:bg-deepblue focus:outline-none focus:ring-4 focus:ring-lightblue">
         <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
         <option value="">--Trier par--</option>
         <option value="level">Level</option>

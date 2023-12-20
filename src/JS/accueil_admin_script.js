@@ -7,78 +7,15 @@ const enumTimeFilters = {
     tout:3
 }
 
-const listUsers = document.querySelector('#popUpUsers');
+const popUplistLogs = document.querySelector('#popUpLogs');
+const btnShowLogs = document.querySelector('#showLogs');
+const popUplistUsers = document.querySelector('#popUpUsers');
 const btnShowUsers = document.querySelector('#showUsers');
 const contentUsers = document.querySelector('#contentUsers');
-
 const contentLogs = document.querySelector('#contentLogs');
 
+var showedL = false;
 var showed = false;
-
-function showUsers() {
-    console.log("click");
-    if (!showed) {
-      listUsers.classList.remove("hidden");
-      showed = true;
-  
-      document.addEventListener('click', handleClickOutside);
-    } else {
-      listUsers.classList.add("hidden");
-      showed = false;
-  
-      document.removeEventListener('click', handleClickOutside);
-    }
-  }
-
-function handleClickOutside(event) {
-
-if (!contentUsers.contains(event.target)) {
-    listUsers.classList.add("hidden");
-    showed = false;
-
-    document.removeEventListener('click', handleClickOutside);
-}
-}
-
-btnShowUsers.addEventListener('click', function(event) {
-    event.stopPropagation();
-  });
-
-  const listLogs = document.querySelector('#popUpLogs');
-  const btnShowLogs = document.querySelector('#showLogs');
-  
-  var showedL = false;
-  
-  function showLogs() {
-      console.log("click");
-      if (!showedL) {
-        listLogs.classList.remove("hidden");
-        showedL = true;
-    
-        document.addEventListener('click', handleClickOutsideL);
-      } else {
-        listLogs.classList.add("hidden");
-        showedL = false;
-    
-        document.removeEventListener('click', handleClickOutsideL);
-      }
-    }
-  
-  function handleClickOutsideL(event) {
-  
-  if (!contentLogs.contains(event.target)) {
-      listLogs.classList.add("hidden");
-      showedL = false;
-  
-      document.removeEventListener('click', handleClickOutsideL);
-  }
-  }
-  
-  btnShowLogs.addEventListener('click', function(event) {
-      event.stopPropagation();
-    });
-
-
 let chartBar
 
 //elements html contenant les stats deu site
@@ -109,6 +46,16 @@ let buttonSubmitResearchLogging
 let listLogging
 
 function init(){
+    btnShowUsers.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+
+    btnShowLogs.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+
+    var showedL = false;
+
     //on récupère les différents éléments html stockant les stats du site, du cluster hat et champs select
     elemNbUsers = document.getElementById("nb-users")
     elemNbVisits = document.getElementById("nb-visits")
@@ -118,11 +65,11 @@ function init(){
     researchBarUsers = document.getElementById("research-bar-user")
     attributeSelectedUserResearch = document.getElementById("select-user-attribute")
     buttonSubmitResearchUsers = document.getElementById("button-submit-research-users")
-    listUsers = document.getElementById("div-user-list")
+    listUsers = document.getElementById("contentUsers")
     researchBarLogging = document.getElementById("research-bar-logging")
     attributeSelectedLoggingResearch = document.getElementById("select-logging-attribute")
     buttonSubmitResearchLogging = document.getElementById("button-submit-research-logging")
-    listLogging = document.getElementById("div-logging-list")
+    listLogging = document.getElementById("contentLogs")
 
     //par défaut on met le time filter value a 0 (== défaut)
     currentTimeFilterValue = enumTimeFilters.jour
@@ -140,7 +87,7 @@ function init(){
     //console.log(listStatsClusterHat)
 
     //on load les stats du cluster hat toutes les n secondes
-    requestGetStatsClusterHat()
+    //requestGetStatsClusterHat()
     //let timerRequestGetStatsClusterHat = setInterval(requestGetStatsClusterHat, intertalTimeGetStatsClusterHat)
 }
 
@@ -177,8 +124,8 @@ function requestSetStatsSite(){
             break;
     }
 
-    //console.log("Date de début : " + startDate)
-    //console.log("Date de fin : " + endDate)
+    console.log("Date de début : " + startDate)
+    console.log("Date de fin : " + endDate)
 
     //on crée et exécute une requête js vers un script php pour récupérer les stats du site en fonction du filtre de temps
     let requestGetStatsSite = new XMLHttpRequest()
@@ -430,4 +377,54 @@ function createHtmlElementForSerialisedUsers(divListUsers, userSerialised){
 }
 
 function createHtmlElementForSerialisedLogging(divListLogging, loggingSerialised){
+}
+
+function showLogs() {
+    console.log("click");
+    if (!showedL) {
+        popUplistLogs.classList.remove("hidden");
+        showedL = true;
+
+        document.addEventListener('click', handleClickOutsideL);
+    } else {
+        popUplistLogs.classList.add("hidden");
+        showedL = false;
+
+        document.removeEventListener('click', handleClickOutsideL);
+    }
+}
+
+function handleClickOutsideL(event) {
+
+    if (!contentLogs.contains(event.target)) {
+        popUplistLogs.classList.add("hidden");
+        showedL = false;
+
+        document.removeEventListener('click', handleClickOutsideL);
+    }
+}
+
+function showUsers() {
+    console.log("click");
+    if (!showed) {
+        popUplistUsers.classList.remove("hidden");
+        showed = true;
+
+        document.addEventListener('click', handleClickOutside);
+    } else {
+        popUplistUsers.classList.add("hidden");
+        showed = false;
+
+        document.removeEventListener('click', handleClickOutside);
+    }
+}
+
+function handleClickOutside(event) {
+
+    if (!contentUsers.contains(event.target)) {
+        popUplistUsers.classList.add("hidden");
+        showed = false;
+
+        document.removeEventListener('click', handleClickOutside);
+    }
 }
