@@ -643,7 +643,7 @@ class MySQLDataManagement{
         $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
 
         try{
-            $request = "insert into $table(userId, userMail, login, lastName, firstName, password) values(?, ?, ?, ?, ?, ?)";
+            $request = "insert into $table(userId, userMail, login, lastName, firstName, password, registrationDate) values(?, ?, ?, ?, ?, ?, ?)";
 
             //on exécute la requete pour insérer un nouvel user
             $stmt = $this->connector->prepare($request);
@@ -653,7 +653,8 @@ class MySQLDataManagement{
             $userMail = $userToInsert->getMail();
             $lastName = $userToInsert->getLastName();
             $firstName = $userToInsert->getFirstName();
-            $stmt->bind_param("ssssss",$userId, $userMail, $login, $lastName, $firstName, $userPassword);
+            $registrationDate = $userToInsert->getRegistrationDate();
+            $stmt->bind_param("sssssss",$userId, $userMail, $login, $lastName, $firstName, $userPassword, $registrationDate);
 
             $stmt->execute();
         }

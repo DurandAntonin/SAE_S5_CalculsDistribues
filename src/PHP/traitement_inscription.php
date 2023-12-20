@@ -91,7 +91,7 @@ if (isset($_POST) && !empty($_POST["submit_inscription"])){
                                     if ($resultVerifSoliditePasword["result"]){
                                         //on créer le user, on enregistre l'action dans un fichier de log, on l'enregistre dans la bd et on le redirige vers sa page
                                         $uuid = guidv4();
-                                        $user = new User($uuid, $mail, $login, $lastName, $firstName, Enum_role_user::USER);
+                                        $user = new User($uuid, $mail, $login, $lastName, $firstName, Enum_role_user::USER, getTodayDate()->format("Y-m-d H:i:s"));
 
                                         $resultInsertUser = $sqlData->insert_user("Users", $user, hash_password($password_form));
                                         $sqlData->close_connexion_to_db();
