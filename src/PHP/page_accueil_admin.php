@@ -377,7 +377,7 @@ $user = unserialize($_SESSION["user"]);
         <option value="prenom">Prénom</option>
       </select>
     </form>
-    <div class="w-full overflow-y-auto h-4/5 rounded-xl bg-deepblue p-1 shadow-xl border border-white">
+    <div id="div-liste-users" class="w-full overflow-y-auto h-4/5 rounded-xl bg-deepblue p-1 shadow-xl border border-white">
       <!-- items -->
       <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
         <div class="grid grid-flow-col grid-rows-2 ">
@@ -563,7 +563,7 @@ $user = unserialize($_SESSION["user"]);
         <option value="date">Date</option>
       </select>
     </form>
-    <div class="w-full overflow-y-auto h-4/5 rounded-xl bg-deepblue p-1 shadow-xl border border-white">
+    <div id="div-list-logging" class="w-full overflow-y-auto h-4/5 rounded-xl bg-deepblue p-1 shadow-xl border border-white">
       <!-- items -->
       <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
         <div class="grid grid-flow-col grid-rows-2 ">

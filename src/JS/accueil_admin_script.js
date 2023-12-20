@@ -65,11 +65,11 @@ function init(){
     researchBarUsers = document.getElementById("research-bar-user")
     attributeSelectedUserResearch = document.getElementById("select-user-attribute")
     buttonSubmitResearchUsers = document.getElementById("button-submit-research-users")
-    listUsers = document.getElementById("contentUsers")
+    listUsers = document.getElementById("div-liste-users")
     researchBarLogging = document.getElementById("research-bar-logging")
     attributeSelectedLoggingResearch = document.getElementById("select-logging-attribute")
     buttonSubmitResearchLogging = document.getElementById("button-submit-research-logging")
-    listLogging = document.getElementById("contentLogs")
+    listLogging = document.getElementById("div-list-logging")
 
     //par défaut on met le time filter value a 0 (== défaut)
     currentTimeFilterValue = enumTimeFilters.jour
@@ -359,6 +359,10 @@ function createHtmlElementForSerialisedUsers(divListUsers, userSerialised){
     spanFirstName.setAttribute("class", "mr-2")
     subDivFirstNameLastName.append(spanLastName, spanFirstName)
 
+    //div pour la date d'inscription du user
+    let subDivRegistrationDate = document.createElement("div")
+    subDivRegistrationDate.setAttribute("class", "text-lg font-bold text-white")
+
     //icone pour supprimer un user
     let iconeDeleteUser = document.createElement("ion-icon")
     iconeDeleteUser.setAttribute("name", "trash")
@@ -369,14 +373,61 @@ function createHtmlElementForSerialisedUsers(divListUsers, userSerialised){
     subDivMail.innerHTML = "Adresse mail : " + userSerialised.userMail
     spanLastName.innerHTML = "Nom : " + userSerialised.lastName
     spanFirstName.innerHTML = "Prénom : " + userSerialised.firstName
+    subDivRegistrationDate.innerHTML = "Inscription : " + userSerialised.registrationDate
 
     //on ajoute les différents éléments div dans l'élément div
-    divUser.append(subDivLogin, subDivId, subDivMail, subDivFirstNameLastName, iconeDeleteUser)
+    divUser.append(subDivLogin, subDivId, subDivMail, subDivFirstNameLastName, subDivRegistrationDate, iconeDeleteUser)
     divUserGlob.append(divUser)
     divListUsers.append(divUserGlob)
 }
 
 function createHtmlElementForSerialisedLogging(divListLogging, loggingSerialised){
+    let divLoggingGlob = document.createElement("div")
+    divLoggingGlob.setAttribute("class", "flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative")
+
+    let divLogging = document.createElement("div")
+    divLogging.setAttribute("class", "grid grid-flow-col grid-rows-2")
+
+    //div pour le log level du logging
+    let subDivLogLevel = document.createElement("div")
+    subDivLogLevel.setAttribute("class", "mr-20 text-lg font-bold text-white")
+
+    //div pour l'id du logging
+    let subDivLogId = document.createElement("div")
+    let spanLogId = document.createElement("span")
+    subDivLogId.setAttribute("class", "text-xs text-white")
+    spanLogId.setAttribute("class", "mr-2")
+    subDivLogId.appendChild(spanLogId)
+
+    //div pour la description du logging
+    let subDivDescription = document.createElement("div")
+    subDivDescription.setAttribute("class", "text-lg font-bold text-white mr-20")
+
+    //div pour le user id et l'ip du logging
+    let subDivUserIdIp = document.createElement("div")
+    let spanUserId = document.createElement("span")
+    let spanIp = document.createElement("span")
+    subDivUserIdIp.setAttribute("class", "text-xs text-white")
+    spanUserId.setAttribute("class", "mr-2")
+    spanIp.setAttribute("class", "mr-2")
+    subDivUserIdIp.append(spanUserId, spanIp)
+
+    //div pour la date du logging
+    let subDivDate = document.createElement("div")
+    subDivDate.setAttribute("class", "text-lg font-bold text-white absolute right-2")
+
+    //on ajoute une chaine de caractère pour chaque span et div
+    subDivLogLevel.innerHTML = "ID : " + loggingSerialised.logLevel
+    spanLogId.innerHTML = "Adresse mail : " + loggingSerialised.logId
+    subDivDescription.innerHTML = "Nom : " + loggingSerialised.description
+    spanUserId.innerHTML = "Prénom : " + loggingSerialised.userId
+    spanIp.innerHTML = "Inscription : " + loggingSerialised.ip
+    subDivDate.innerHTML = "Inscription : " + loggingSerialised.date
+
+    //on ajoute les différents éléments div dans l'élément div
+    divLogging.append(subDivLogLevel, subDivLogId, subDivDescription, subDivDate)
+    divLoggingGlob.append(divLogging)
+    divListLogging.append(divLoggingGlob)
 }
 
 function showLogs() {
