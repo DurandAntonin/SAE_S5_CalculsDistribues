@@ -35,7 +35,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
 
     //on exécute la commande
     exec($command,$output,$resultCode);
-    $resultat_calcul = $resultCode[0];
+    //$resultat_calcul = $resultCode[0];
 
     //on attend n secondes le temps que la commande s'exécute
     sleep(40);

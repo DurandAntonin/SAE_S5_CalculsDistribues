@@ -118,7 +118,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
                 else{
                     //on renvoie une erreur
                     $errorMessage = $VARIABLES_GLOBALES["notif_erreur_attribut_incorrect"];
-                    $loggerBd->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Attribut de recherche de la classe $classResearched inconnu");
+                    $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Attribut de recherche de la classe $classResearched inconnu");
                     $listeResultParams["error"] = 1;
                     $listeResultParams["errorMessage"] =  $errorMessage;
                 }
@@ -126,7 +126,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
 
             default :
                 #le nom de la classe n'est pas reconu, on affiche une erreur
-                $loggerBd->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Nom de classe inconnu");
+                $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Nom de classe inconnu");
                 $listeResultParams["error"] = 1;
                 $listeResultParams["errorMessage"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
         }
