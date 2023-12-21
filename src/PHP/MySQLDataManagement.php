@@ -1228,7 +1228,7 @@ class MySQLDataManagement{
         $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
 
         try{
-            $request = "select userId, userMail, login, lastName, firstName, role, registrationDate from $table where $searchAttribute like ?";
+            $request = "select logId, logLevel, userId, date, ip, description from $table where $searchAttribute like ?";
 
             $stringResearched = "%{$stringToSearch}%";
 
@@ -1310,7 +1310,10 @@ class MySQLDataManagement{
             //on convertit le niveau du log sous format string en un type énuméré équivalent
             $logLevel = Enum_niveau_logger::fromName($listInfoLog["logLevel"]);
 
-            $log = new Logging($listInfoLog["logId"], $logLevel, $listInfoLog["userId"], $listInfoLog["parDate"], $listInfoLog["parIp"], $listInfoLog["parDescription"]);
+            //on convertit la date en un objet de type DateTime
+            $date = \DateTime::createFromFormat("Y-m-d H:i:s", $listInfoLog["date"]);
+
+            $log = new Logging($listInfoLog["logId"], $logLevel, $listInfoLog["userId"], $date, $listInfoLog["ip"], $listInfoLog["description"]);
             $listLogs[] = $log;
         }
 
