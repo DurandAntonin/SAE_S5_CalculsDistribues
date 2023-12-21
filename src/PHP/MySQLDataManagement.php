@@ -325,7 +325,7 @@ class MySQLDataManagement{
         $result = array();
 
         try{
-            $request = "select userId, userMail, login, lastName, firstName, password, role from $table where userMail = ?";
+            $request = "select userId, userMail, login, lastName, firstName, password, role, registrationDate from $table where userMail = ?";
 
             //on exécute la requete pour obtenir un user d'après un mail
             $stmt = $this->connector->prepare($request);
