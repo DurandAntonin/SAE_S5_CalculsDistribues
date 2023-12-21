@@ -18,8 +18,9 @@ $chaine_JSON = file_get_contents("php://input");
 
 if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/json-charset=utf-8") {
     $paramExecRequete = json_decode($chaine_JSON, true);
-    $fieldSearch = $paramExecRequete["fieldSearch"];
-    $stringToSearch = $paramExecRequete["stringToSearch"];
+    //print_r($paramExecRequete);
+    $fieldSearch = $paramExecRequete["fieldToSearch"];
+    $stringToSearch = $paramExecRequete["stringSearch"];
     $classResearched = $paramExecRequete["classResearched"];
 
     $user = unserialize($_SESSION["user"]);
@@ -40,11 +41,14 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
     $sqlData = new MySQLDataManagement($VARIABLES_GLOBALES["bd_hostname"], $VARIABLES_GLOBALES["bd_username"], $VARIABLES_GLOBALES["bd_password"], $VARIABLES_GLOBALES["bd_database"]);
 
     if ($sqlData->getConnectionErreur() == 0) {
+        //echo User::getClassName();
         //on regarde sur quelle classe effectuer la recherche
         switch ($classResearched){
+
             case User::getClassName():
                 //on vérifie que l'attribut de recherche est valide
                 $listFieldNamesUser = $user->getListFieldNames();
+                //print_r($listFieldNamesUser);
 
                 if (in_array($fieldSearch, $listFieldNamesUser)){
                     //on va exécuter une requete sql pour sélectionner les users en fonction du filtre de recherche
@@ -84,10 +88,12 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
                 //on vérifie que l'attribut de recherche est valide
                 $listFieldNamesLogging = Logging::defaultLogging()->getListFieldNames();
 
+                //echo $fieldSearch;
+
                 if (in_array($fieldSearch, $listFieldNamesLogging)){
                     //on va exécuter une requete sql pour sélectionner les users en fonction du filtre de recherche
                     $resultRequestGetLogging = $sqlData->get_logs_with_attribute("Logging", $fieldSearch, $stringToSearch);
-
+                    //print_r($resultRequestGetLogging);
                     //on regarde si une erreur est survenue au cours du script
                     if ($resultRequestGetLogging["error"] == 0){
                         //on stocke le nom de la classe des objets
@@ -104,7 +110,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
                     }
                     else{
                         $errorMessage = $resultRequestGetLogging["errorMessage"];
-                        $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur script_get_users_with_attribute|Erreur:{$errorMessage}}");
+                        $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Script_get_users_with_attribute|Erreur:{$errorMessage}}");
                         $listeResultParams["error"] = 1;
                         $listeResultParams["errorMessage"] = $errorMessage;
                     }
@@ -112,7 +118,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
                 else{
                     //on renvoie une erreur
                     $errorMessage = $VARIABLES_GLOBALES["notif_erreur_attribut_incorrect"];
-                    $loggerBd->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Warning attribut de recherche de la classe $classResearched inconnu");
+                    $loggerBd->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Attribut de recherche de la classe $classResearched inconnu");
                     $listeResultParams["error"] = 1;
                     $listeResultParams["errorMessage"] =  $errorMessage;
                 }
@@ -120,7 +126,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
 
             default :
                 #le nom de la classe n'est pas reconu, on affiche une erreur
-                $loggerBd->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Warning nom de classe inconnu");
+                $loggerBd->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Nom de classe inconnu");
                 $listeResultParams["error"] = 1;
                 $listeResultParams["errorMessage"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
         }
@@ -130,7 +136,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
     }
     else{
         //on renvoie une erreur
-        $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur script_get_users_with_attribute|Erreur:{$sqlData->getConnectionErreurMessage()}");
+        $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Script_get_users_logging_with_attribute|Erreur:{$sqlData->getConnectionErreurMessage()}");
         $listeResultParams["error"] = 1;
         $listeResultParams["errorMessage"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
     }

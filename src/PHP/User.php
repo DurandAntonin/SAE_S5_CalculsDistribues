@@ -286,8 +286,8 @@ class User
     public function getListFieldNames() : array
     {
         $listFieldNames = array();
-        foreach ($this as $field){
-            $listFieldNames[] = $field;
+        foreach ($this as $nameField=>$valueField){
+            $listFieldNames[] = $nameField;
         }
 
         return $listFieldNames;
@@ -300,7 +300,10 @@ class User
      */
     public static function getClassName() : string
     {
-        return get_class();
+        $className = get_class();
+
+        //on enelève le namespace de la chaine
+        return explode("\\", $className)[1];
     }
 
     /**
