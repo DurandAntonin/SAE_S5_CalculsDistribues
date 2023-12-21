@@ -201,7 +201,7 @@ $user = unserialize($_SESSION["user"]);
             </div>
 
             <div class="mb-4 md:mb-0 md:mr-2 flex justify-center items-center">
-                <p class="border border-white h-80 w-3/4 rounded-xl"></p>
+                <p class="border-2 border-white h-80 w-3/4 rounded-xl"></p>
             </div>
             <div class="md:mb-0 md:mr-2 flex justify-center items-center">
                 <p class="inline-block align-baseline text-sm text-opacity-200 text-white" href="page_connexion.php"> Temps d'exécution : 243.12s </p>
@@ -230,6 +230,20 @@ $user = unserialize($_SESSION["user"]);
 
             <hr class="mb-6 border-t" />
             <div class="text-center">
+            <div class="flex items-center justify-center w-full">
+  
+  <label for="toggleB" class="flex flex-col items-center cursor-pointer">
+    <div class="relative">
+      <input type="checkbox" id="toggleB" class="sr-only">
+      <div class="block bg-deepblue w-24 h-8 rounded-full border-2 border-white"></div>
+      <div class="dot absolute left-1 top-1 bg-lightblue w-6 h-6 rounded-full transition"></div>
+    </div>
+    <div class="ml-3 text-white font-medium">
+      CALCUL DISTRIBUE <b class="text-red-700"> INACTIF</b>
+    </div>
+  </label>
+
+</div>
               
                 </div>
             </form>
