@@ -301,11 +301,18 @@ class Logging{
 
         //on parcourt les champs de l'objet
         foreach ($this as $nameField => $valueField){
-            $value = $valueField;
+            $value = null;
+
+            //on convertit la date en chaine de caracteres
+            if (gettype($valueField) != "string" && get_class($valueField) == "DateTime")
+                $value = $valueField->format('Y-m-d H:i:s');
 
             //on convertit le role du user en un string
-            if (gettype($valueField) != "string")
+            else if (gettype($valueField) != "string")
                 $value = $valueField->str();
+
+            else
+                $value = $valueField;
 
             $loggingSerialised .= "\"$nameField\" : \"$value\",";
         }
@@ -323,9 +330,9 @@ class Logging{
     public function getListFieldNames() : array
     {
         $listFieldNames = array();
-        foreach ($this as $field){
+        foreach ($this as $nameField=>$valueField){
             //on ne prend pas le champ
-            $listFieldNames[] = $field;
+            $listFieldNames[] = $nameField;
         }
 
         return $listFieldNames;
@@ -338,7 +345,10 @@ class Logging{
      */
     public static function getClassName() : string
     {
-        return get_class();
+        $className = get_class();
+
+        //on enelève le namespace de la chaine
+        return explode("\\", $className)[1];
     }
 
 }
