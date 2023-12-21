@@ -40,7 +40,7 @@ $user = unserialize($_SESSION["user"]);
     <nav class="flex justify-between items-center w-auto  mx-auto">
         <div class="container mx-auto flex items-center justify-between">
             <div >
-                <a href="../index.html"><img src="../PICTURES/blitzcalc-high-resolution-logo-transparent.png" alt="Logo" class="h-20"></a>
+                <a href="page_accueil_user.php"><img src="../PICTURES/blitzcalc-high-resolution-logo-transparent.png" alt="Logo" class="h-20"></a>
             </div>
             <?php
             //seul le user inscrit peut voir son profil
@@ -198,7 +198,7 @@ $user = unserialize($_SESSION["user"]);
                 <span class="text-sm text-gray-600">utilisations</span>
               </div>
               <div class="">
-                <form method="post" action="PHP/module1.php">
+                <form method="post" action="page_module1.php">
                           <div class="">
                               <input type="submit" name="submit_connexion_visiteur" value="Utiliser" class="w-64 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer">
                           </div>

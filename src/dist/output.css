@@ -1032,6 +1032,26 @@ select {
   margin-top: 2rem;
 }
 
+.ml-10 {
+  margin-left: 2.5rem;
+}
+
+.ml-40 {
+  margin-left: 10rem;
+}
+
+.mr-40 {
+  margin-right: 10rem;
+}
+
+.mr-16 {
+  margin-right: 4rem;
+}
+
+.ml-36 {
+  margin-left: 9rem;
+}
+
 .block {
   display: block;
 }
@@ -1102,6 +1122,14 @@ select {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-2\/3 {
+  height: 66.666667%;
+}
+
+.h-80 {
+  height: 20rem;
 }
 
 .min-h-\[15vh\] {
@@ -1175,6 +1203,14 @@ select {
 
 .w-screen {
   width: 100vw;
+}
+
+.w-1\/4 {
+  width: 25%;
+}
+
+.w-1\/2 {
+  width: 50%;
 }
 
 .min-w-full {
@@ -1266,6 +1302,16 @@ select {
 
 .animate-rotate-y {
   animation: rotate-y 1s both;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 
 .cursor-pointer {
@@ -1833,6 +1879,10 @@ select {
 
 .drop-shadow-md {
   --tw-drop-shadow: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
