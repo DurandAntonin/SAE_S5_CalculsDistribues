@@ -1180,7 +1180,7 @@ class MySQLDataManagement{
         $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
 
         try{
-            $request = "select userId, userMail, login, lastName, firstName, role, registrationDate from $table where $searchAttribute like ?";
+            $request = "select userId, userMail, login, lastName, firstName, role, registrationDate from $table where $searchAttribute like ? order by userMail, login, lastName, firstName, registrationDate desc";
 
             $stringResearched = "%{$stringToSearch}%";
 
@@ -1228,7 +1228,7 @@ class MySQLDataManagement{
         $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
 
         try{
-            $request = "select logId, logLevel, userId, date, ip, description from $table where $searchAttribute like ?";
+            $request = "select logId, logLevel, userId, date, ip, description from $table where $searchAttribute like ? order by date desc";
 
             $stringResearched = "%{$stringToSearch}%";
 
