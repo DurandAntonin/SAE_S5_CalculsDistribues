@@ -100,6 +100,19 @@ function changeStatsBasedTimeFilter(){
     requestSetStatsSite()
 }
 
+function deleteUser(){
+    let userIdToDelete = this.id
+    console.log(userIdToDelete)
+
+    //on crée et exécute une requête js vers un script php pour supprimer l'utilisateur
+    let requestGetStatsSite = new XMLHttpRequest()
+    requestGetStatsSite.open("POST","script_supprimer_compte_utilisateur.php");
+    requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
+    requestGetStatsSite.send(JSON.stringify({"userIdToDelete": userIdToDelete}))
+
+    requestGetStatsSite.onreadystatechange = resultRequestDeleteUser
+}
+
 function requestSetStatsSite(){
     //on crée la date de début et la date de fin en fonction du time filter pour filtrer les recherches
     let startDate = ""
@@ -156,20 +169,12 @@ function requestResearchUsersOrLogging(){
         fieldToSearch = attributeSelectedUserResearch.value
         stringToSearch = researchBarUsers.value
         classResearched = buttonSubmitResearchUsers.name
-        console.log(attributeSelectedUserResearch)
-        console.log(buttonSubmitResearchUsers)
     }
     else{
         fieldToSearch = attributeSelectedLoggingResearch.value
         stringToSearch = researchBarLogging.value
         classResearched = buttonSubmitResearchLogging.name
     }
-
-    console.log("Recherche")
-    //console.log("Chaine de caractères saisie : " + stringToSearch)
-    //console.log("Taille de la chaine de caractères saisie : " + stringToSearch.length)
-    //console.log("Attribué de recherche sélectionné : " + fieldToSearch)
-    //console.log("Classe de la recherche : " + classResearched)
 
     //on vérifie que la chaine de caractères saisies n'est pas vide ainsi que l'attribut de recherche
     if (stringToSearch.length !== 0){
@@ -283,15 +288,14 @@ function resultRequestResearchUsersOrLogging(){
     if (this.readyState === 4 && this.status === 200) {
         //on récupère le résultat du script
         let resultScript = this.response
-        console.log(resultScript)
+        //console.log(resultScript)
 
         let resultScriptParsed = JSON.parse(resultScript)
-        console.log(resultScriptParsed)
+        //console.log(resultScriptParsed)
 
         //on regarde si une erreur a été renvoyée
         if (resultScriptParsed.error === 0){
             let listResults = resultScriptParsed.result
-            console.log(listResults.listObjectSerialised)
 
             //on récupère la classe de recherche qui sera l'identifiant de l'élément html qui va stocker cette liste d'objets serialisés
             let htmlElemclassResearched = listResults.classResearched
@@ -307,7 +311,7 @@ function resultRequestResearchUsersOrLogging(){
             for (let i=0;i<listObjectSerialised.length;i++){
                 //on déserialise l'objet
                 let objectUnserialised = JSON.parse(listObjectSerialised[i])
-                console.log(objectUnserialised)
+                //console.log(objectUnserialised)
 
                 if (htmlElemclassResearched === "User"){
                     createHtmlElementForSerialisedUsers(listUsers, objectUnserialised)
@@ -321,6 +325,36 @@ function resultRequestResearchUsersOrLogging(){
             console.log("Erreur : " + resultScriptParsed.errorMessage)
         }
     }
+}
+
+function resultRequestDeleteUser() {
+    if (this.readyState === 4 && this.status === 200) {
+        let resultScript = this.response
+        //console.log(resultScript)
+
+        let resultScriptParsed = JSON.parse(resultScript)
+        //console.log(resultScriptParsed)
+
+        //on regarde si le script a retourné une erreur
+        if (resultScriptParsed.error === 0){
+
+            //on parcourt la liste des users retournées par la requete pour le supprimer graphiquement
+            for (let i=0;i<listUsers.children.length; i++){
+                let userNode = listUsers.children[i]
+
+                //on supprime si l'id du user == id du user supprimé
+                if (userNode.children[0].children[1].id === resultScriptParsed["result"]){
+                    userNode.remove()
+                    break
+                }
+            }
+
+        }
+        else{
+            console.log("Erreur : " + resultScriptParsed.errorMessage)
+        }
+    }
+
 }
 
 function getTimeFilterValueFromKey(key){
@@ -367,6 +401,7 @@ function createHtmlElementForSerialisedUsers(divListUsers, userSerialised){
     //div contenant l'ID du user
     let subDivId = document.createElement("div")
     let spanDivId = document.createElement("span")
+    subDivId.setAttribute("id", userSerialised.userId)
     subDivId.setAttribute("class", "text-xs text-white")
     spanDivId.setAttribute("class", "mr-2")
     subDivId.appendChild(spanDivId)
@@ -392,6 +427,7 @@ function createHtmlElementForSerialisedUsers(divListUsers, userSerialised){
     let iconeDeleteUser = document.createElement("ion-icon")
     iconeDeleteUser.setAttribute("name", "trash")
     iconeDeleteUser.setAttribute("class", "w-7 h-7 text-red-700 absolute right-2 cursor-pointer")
+    iconeDeleteUser.setAttribute("id", userSerialised.userId)
 
     //on ajoute une chaine de caractère pour chaque span et div
     subDivLogin.innerHTML = "Login : " + userSerialised.login
@@ -401,12 +437,13 @@ function createHtmlElementForSerialisedUsers(divListUsers, userSerialised){
     spanFirstName.innerHTML = "Prénom : " + userSerialised.firstName
     subDivRegistrationDate.innerHTML = "Inscription : " + userSerialised.registrationDate
 
+    //on associe un événement on click pour l'icone pour supprimer le user associé
+    iconeDeleteUser.onclick = deleteUser
+
     //on ajoute les différents éléments div dans l'élément div
     divUser.append(subDivLogin, subDivId, subDivMail, subDivFirstNameLastName, subDivRegistrationDate, iconeDeleteUser)
     divUserGlob.append(divUser)
     divListUsers.append(divUserGlob)
-
-    console.log(divUserGlob)
 }
 
 function createHtmlElementForSerialisedLogging(divListLogging, loggingSerialised){
@@ -459,7 +496,6 @@ function createHtmlElementForSerialisedLogging(divListLogging, loggingSerialised
 }
 
 function showLogs() {
-    //console.log("click");
     if (!showedL) {
         popUplistLogs.classList.remove("hidden");
         showedL = true;
@@ -471,6 +507,9 @@ function showLogs() {
 
         document.removeEventListener('click', handleClickOutsideL);
     }
+
+    //on enlève les logging retournés par la dernière requete
+    deleteChildNodes(listLogging)
 }
 
 function handleClickOutsideL(event) {
@@ -483,7 +522,6 @@ function handleClickOutsideL(event) {
 }
 
 function showUsers() {
-    console.log("click");
     if (!showed) {
         popUplistUsers.classList.remove("hidden");
         showed = true;
@@ -496,9 +534,8 @@ function showUsers() {
         document.removeEventListener('click', handleClickOutside);
     }
 
-    //on enlève les users, logging retournés par la dernière requete
+    //on enlève les users retournés par la dernière requete
     deleteChildNodes(listUsers)
-    deleteChildNodes(listLogging)
 }
 
 function handleClickOutside(event) {
@@ -514,7 +551,6 @@ function handleClickOutside(event) {
 
 function deleteChildNodes(fatherNode){
     while (fatherNode.hasChildNodes()){
-        //console.log(fatherNode.firstChild)
         fatherNode.removeChild(fatherNode.firstChild)
     }
 }
