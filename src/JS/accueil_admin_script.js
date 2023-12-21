@@ -124,8 +124,8 @@ function requestSetStatsSite(){
             break;
     }
 
-    console.log("Date de début : " + startDate)
-    console.log("Date de fin : " + endDate)
+    //console.log("Date de début : " + startDate)
+    //console.log("Date de fin : " + endDate)
 
     //on crée et exécute une requête js vers un script php pour récupérer les stats du site en fonction du filtre de temps
     let requestGetStatsSite = new XMLHttpRequest()
@@ -156,6 +156,8 @@ function requestResearchUsersOrLogging(){
         fieldToSearch = attributeSelectedUserResearch.value
         stringToSearch = researchBarUsers.value
         classResearched = buttonSubmitResearchUsers.name
+        console.log(attributeSelectedUserResearch)
+        console.log(buttonSubmitResearchUsers)
     }
     else{
         fieldToSearch = attributeSelectedLoggingResearch.value
@@ -163,13 +165,22 @@ function requestResearchUsersOrLogging(){
         classResearched = buttonSubmitResearchLogging.name
     }
 
-    //on crée et exécute une requête js vers un script php pour rechercher des users ou logging en fonction d'un attribut sélectionné
-    let requestGetStatsSite = new XMLHttpRequest()
-    requestGetStatsSite.open("POST","script_get_stats_cluster_hat.php");
-    requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
-    requestGetStatsSite.send(JSON.stringify({"fieldToSearch": fieldToSearch, "stringToSeaerch" : stringToSearch, "classResearched" : classResearched}))
+    console.log("Recherche")
+    //console.log("Chaine de caractères saisie : " + stringToSearch)
+    //console.log("Taille de la chaine de caractères saisie : " + stringToSearch.length)
+    //console.log("Attribué de recherche sélectionné : " + fieldToSearch)
+    //console.log("Classe de la recherche : " + classResearched)
 
-    requestGetStatsSite.onreadystatechange = resultRequestResearchUsersOrLogging
+    //on vérifie que la chaine de caractères saisies n'est pas vide ainsi que l'attribut de recherche
+    if (stringToSearch.length !== 0){
+        //on crée et exécute une requête js vers un script php pour rechercher des users ou logging en fonction d'un attribut sélectionné
+        let requestGetStatsSite = new XMLHttpRequest()
+        requestGetStatsSite.open("POST","script_get_users_or_logs_with_attribute.php");
+        requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
+        requestGetStatsSite.send(JSON.stringify({"fieldToSearch": fieldToSearch, "stringSearch" : stringToSearch, "classResearched" : classResearched}))
+
+        requestGetStatsSite.onreadystatechange = resultRequestResearchUsersOrLogging
+    }
 }
 
 function resultRequestGetStatsSite(){
@@ -272,26 +283,38 @@ function resultRequestResearchUsersOrLogging(){
     if (this.readyState === 4 && this.status === 200) {
         //on récupère le résultat du script
         let resultScript = this.response
-        //console.log(resultScript)
+        console.log(resultScript)
 
         let resultScriptParsed = JSON.parse(resultScript)
+        console.log(resultScriptParsed)
 
         //on regarde si une erreur a été renvoyée
         if (resultScriptParsed.error === 0){
             let listResults = resultScriptParsed.result
+            console.log(listResults.listObjectSerialised)
 
             //on récupère la classe de recherche qui sera l'identifiant de l'élément html qui va stocker cette liste d'objets serialisés
             let htmlElemclassResearched = listResults.classResearched
 
-            //et on récupère la liste des objets de cette classe sérialisé
-            let listObjectSerialised = listResults.listObjectSerialised
+            //et on récupère la liste des objets de cette classe sérialisé qu'on transforme en objet js
+            let listObjectSerialised = JSON.parse(listResults.listObjectSerialised)
+
+            //on enlève les anciens résultats
+            deleteChildNodes(listUsers)
+            deleteChildNodes(listLogging)
 
             //on ajoute chaque objet serialisé dans l'objet html en fonction de sa classe
             for (let i=0;i<listObjectSerialised.length;i++){
-                if (htmlElemclassResearched === "Users")
-                    createHtmlElementForSerialisedUsers(listUsers, listObjectSerialised[i])
-                else
-                    createHtmlElementForSerialisedLogging(listLogging, listObjectSerialised[i])
+                //on déserialise l'objet
+                let objectUnserialised = JSON.parse(listObjectSerialised[i])
+                console.log(objectUnserialised)
+
+                if (htmlElemclassResearched === "User"){
+                    createHtmlElementForSerialisedUsers(listUsers, objectUnserialised)
+                }
+                else{
+                    createHtmlElementForSerialisedLogging(listLogging, objectUnserialised)
+                }
             }
         }
         else{
@@ -344,17 +367,19 @@ function createHtmlElementForSerialisedUsers(divListUsers, userSerialised){
     //div contenant l'ID du user
     let subDivId = document.createElement("div")
     let spanDivId = document.createElement("span")
+    subDivId.setAttribute("class", "text-xs text-white")
     spanDivId.setAttribute("class", "mr-2")
-    spanDivId.appendChild(spanDivId)
+    subDivId.appendChild(spanDivId)
 
     //div contenant le mail du user
     let subDivMail = document.createElement("div")
-    subDivMail.setAttribute("class", "text-lg font-bold text-white")
+    subDivMail.setAttribute("class", "text-lg font-bold text-white mr-20")
 
     //div contenant le nom et prénom du user
     let subDivFirstNameLastName = document.createElement("div")
     let spanLastName = document.createElement("span")
     let spanFirstName = document.createElement("span")
+    subDivFirstNameLastName.setAttribute("class", "text-xs text-white")
     spanLastName.setAttribute("class", "mr-2")
     spanFirstName.setAttribute("class", "mr-2")
     subDivFirstNameLastName.append(spanLastName, spanFirstName)
@@ -369,7 +394,8 @@ function createHtmlElementForSerialisedUsers(divListUsers, userSerialised){
     iconeDeleteUser.setAttribute("class", "w-7 h-7 text-red-700 absolute right-2 cursor-pointer")
 
     //on ajoute une chaine de caractère pour chaque span et div
-    spanDivId.innerHTML = "ID : " + userSerialised.userId
+    subDivLogin.innerHTML = "Login : " + userSerialised.login
+    spanDivId.innerHTML = "ID : " + userSerialised.userId.substring(0,8)
     subDivMail.innerHTML = "Adresse mail : " + userSerialised.userMail
     spanLastName.innerHTML = "Nom : " + userSerialised.lastName
     spanFirstName.innerHTML = "Prénom : " + userSerialised.firstName
@@ -379,6 +405,8 @@ function createHtmlElementForSerialisedUsers(divListUsers, userSerialised){
     divUser.append(subDivLogin, subDivId, subDivMail, subDivFirstNameLastName, subDivRegistrationDate, iconeDeleteUser)
     divUserGlob.append(divUser)
     divListUsers.append(divUserGlob)
+
+    console.log(divUserGlob)
 }
 
 function createHtmlElementForSerialisedLogging(divListLogging, loggingSerialised){
@@ -417,21 +445,21 @@ function createHtmlElementForSerialisedLogging(divListLogging, loggingSerialised
     subDivDate.setAttribute("class", "text-lg font-bold text-white absolute right-2")
 
     //on ajoute une chaine de caractère pour chaque span et div
-    subDivLogLevel.innerHTML = "ID : " + loggingSerialised.logLevel
-    spanLogId.innerHTML = "Adresse mail : " + loggingSerialised.logId
-    subDivDescription.innerHTML = "Nom : " + loggingSerialised.description
-    spanUserId.innerHTML = "Prénom : " + loggingSerialised.userId
-    spanIp.innerHTML = "Inscription : " + loggingSerialised.ip
-    subDivDate.innerHTML = "Inscription : " + loggingSerialised.date
+    subDivLogLevel.innerHTML = "LogLevel : " + loggingSerialised.logLevel
+    spanLogId.innerHTML = "LogId : " + loggingSerialised.logId.substring(0,8)
+    subDivDescription.innerHTML = "Description : " + loggingSerialised.description
+    spanUserId.innerHTML = "UserId : " + loggingSerialised.userId.substring(0,8)
+    spanIp.innerHTML = "IP : " + loggingSerialised.ip
+    subDivDate.innerHTML = "Date : " + loggingSerialised.date
 
     //on ajoute les différents éléments div dans l'élément div
-    divLogging.append(subDivLogLevel, subDivLogId, subDivDescription, subDivDate)
+    divLogging.append(subDivLogLevel, subDivLogId, subDivDescription, subDivUserIdIp, subDivDate)
     divLoggingGlob.append(divLogging)
     divListLogging.append(divLoggingGlob)
 }
 
 function showLogs() {
-    console.log("click");
+    //console.log("click");
     if (!showedL) {
         popUplistLogs.classList.remove("hidden");
         showedL = true;
@@ -446,7 +474,6 @@ function showLogs() {
 }
 
 function handleClickOutsideL(event) {
-
     if (!contentLogs.contains(event.target)) {
         popUplistLogs.classList.add("hidden");
         showedL = false;
@@ -468,14 +495,26 @@ function showUsers() {
 
         document.removeEventListener('click', handleClickOutside);
     }
+
+    //on enlève les users, logging retournés par la dernière requete
+    deleteChildNodes(listUsers)
+    deleteChildNodes(listLogging)
 }
 
 function handleClickOutside(event) {
-
     if (!contentUsers.contains(event.target)) {
         popUplistUsers.classList.add("hidden");
         showed = false;
 
         document.removeEventListener('click', handleClickOutside);
+
+
+    }
+}
+
+function deleteChildNodes(fatherNode){
+    while (fatherNode.hasChildNodes()){
+        //console.log(fatherNode.firstChild)
+        fatherNode.removeChild(fatherNode.firstChild)
     }
 }
