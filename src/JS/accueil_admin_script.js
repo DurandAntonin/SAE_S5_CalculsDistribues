@@ -30,8 +30,12 @@ let listStatsClusterHat
 let listTimeFilters
 let currentTimeFilterValue = 1 //0=jour 1=semaine 2=mois 3=tout
 
-//intervalle de temps pour rafraichir les stats du cluster hat
-let intertalTimeGetStatsClusterHat = 10000
+//intervalle de temps en ms pour rafraichir les stats du cluster hat
+let intertalTimeGetStatsClusterHat = 60000
+//temps en ms avant d'exécuter une requete ajax pour récupérer les données du cluster hat dans un fichier
+let timeToWaitToGetStatsClusterHat = 40000
+//nom du dernier fichier contenant les stats du cluster hat
+let fileNameStatsClusterHat
 
 //éléments pour la recherche et l'affichage des utilisateurs selon un attribut
 let researchBarUsers
@@ -53,8 +57,6 @@ function init(){
     btnShowLogs.addEventListener('click', function(event) {
         event.stopPropagation();
     });
-
-    var showedL = false;
 
     //on récupère les différents éléments html stockant les stats du site, du cluster hat et champs select
     elemNbUsers = document.getElementById("nb-users")
@@ -87,8 +89,8 @@ function init(){
     //console.log(listStatsClusterHat)
 
     //on load les stats du cluster hat toutes les n secondes
-    //requestGetStatsClusterHat()
-    //let timerRequestGetStatsClusterHat = setInterval(requestGetStatsClusterHat, intertalTimeGetStatsClusterHat)
+    requestSetStatsClusterHat()
+    //let timerRequestGetStatsClusterHat = setInterval(requestSetStatsClusterHat, intertalTimeGetStatsClusterHat)
 }
 
 function changeStatsBasedTimeFilter(){
@@ -149,14 +151,16 @@ function requestSetStatsSite(){
     requestGetStatsSite.onreadystatechange = resultRequestGetStatsSite
 }
 
-function requestGetStatsClusterHat(){
+function requestSetStatsClusterHat(){
     //on crée et exécute une requête js vers un script php pour récupérer les stats du cluster hat en fonction
     let requestGetStatsSite = new XMLHttpRequest()
     requestGetStatsSite.open("POST","script_get_stats_cluster_hat.php");
     requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
-    requestGetStatsSite.send()
 
-    requestGetStatsSite.onreadystatechange = resultRequestGetStatsClusterHat
+    //on envoi le mode d'exécution du script voulu
+    requestGetStatsSite.send(JSON.stringify({"execMode" : 0}))
+
+    requestGetStatsSite.onreadystatechange = resultRequestSetStatsClusterHatInFile
 }
 
 function requestResearchUsersOrLogging(){
@@ -247,10 +251,43 @@ function resultRequestGetStatsSite(){
     }
 }
 
-function resultRequestGetStatsClusterHat(){
+async function resultRequestSetStatsClusterHatInFile() {
     if (this.readyState === 4 && this.status === 200) {
         let resultScript = this.response
-        //console.log(resultScript)
+        console.log(resultScript)
+
+        let resultScriptParsed = JSON.parse(resultScript)
+
+        //on vérifie qu'il n'y a pas d'erreur
+        if (resultScriptParsed.error === 0) {
+            //on récupère le nom du fichier contenant les stats du kit cluster hat
+            fileNameStatsClusterHat = resultScriptParsed.result
+
+            //on attend n secondes le temps que les stats soient écrites dans le fichier
+            //puis on exécute une deuxième requete pour lire dans le fichier
+            await new Promise(r => setTimeout(requestGetStatsClusterHatInFile, timeToWaitToGetStatsClusterHat))
+        } else {
+            console.log("Erreur : " + resultScriptParsed.errorMessage)
+        }
+
+    }
+}
+
+function requestGetStatsClusterHatInFile(){
+    let requestGetStatsSiteInFile = new XMLHttpRequest()
+    requestGetStatsSiteInFile.open("POST","script_get_stats_cluster_hat.php");
+    requestGetStatsSiteInFile.setRequestHeader("Content-Type","application/json-charset=utf-8");
+
+    //on envoie le mode d'exécution du script voulu
+    requestGetStatsSiteInFile.send(JSON.stringify({"execMode" : 1, "fileName" : fileNameStatsClusterHat}))
+
+    requestGetStatsSiteInFile.onreadystatechange = resultRequestGetStatsClusterHatInFIle
+}
+
+function resultRequestGetStatsClusterHatInFIle(){
+    if (this.readyState === 4 && this.status === 200) {
+        let resultScript = this.response
+        console.log(resultScript)
 
         let resultScriptParsed = JSON.parse(resultScript)
         //console.log(resultScriptParsed)
@@ -277,6 +314,9 @@ function resultRequestGetStatsClusterHat(){
             trStatsRpi[2].children[1].innerHTML = `${statMemUsed} Go`
             trStatsRpi[3].innerHTML = statUptime
         }
+    }
+    else{
+        console.log("Reponse en cours")
     }
 
 }
