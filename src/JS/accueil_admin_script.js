@@ -176,16 +176,13 @@ function requestResearchUsersOrLogging(){
         classResearched = buttonSubmitResearchLogging.name
     }
 
-    //on vérifie que la chaine de caractères saisies n'est pas vide ainsi que l'attribut de recherche
-    if (stringToSearch.length !== 0){
-        //on crée et exécute une requête js vers un script php pour rechercher des users ou logging en fonction d'un attribut sélectionné
-        let requestGetStatsSite = new XMLHttpRequest()
-        requestGetStatsSite.open("POST","script_get_users_or_logs_with_attribute.php");
-        requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
-        requestGetStatsSite.send(JSON.stringify({"fieldToSearch": fieldToSearch, "stringSearch" : stringToSearch, "classResearched" : classResearched}))
+    //on crée et exécute une requête js vers un script php pour rechercher des users ou logging en fonction d'un attribut sélectionné
+    let requestGetStatsSite = new XMLHttpRequest()
+    requestGetStatsSite.open("POST","script_get_users_or_logs_with_attribute.php");
+    requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
+    requestGetStatsSite.send(JSON.stringify({"fieldToSearch": fieldToSearch, "stringSearch" : stringToSearch, "classResearched" : classResearched}))
 
-        requestGetStatsSite.onreadystatechange = resultRequestResearchUsersOrLogging
-    }
+    requestGetStatsSite.onreadystatechange = resultRequestResearchUsersOrLogging
 }
 
 function resultRequestGetStatsSite(){

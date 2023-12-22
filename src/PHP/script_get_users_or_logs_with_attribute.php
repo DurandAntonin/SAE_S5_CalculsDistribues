@@ -50,78 +50,118 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
                 $listFieldNamesUser = $user->getListFieldNames();
                 //print_r($listFieldNamesUser);
 
-                if (in_array($fieldSearch, $listFieldNamesUser)){
+                $resultRequestGetUsers = null;
+
+                //on retourne tous les users si la chaine de caracteres est vide
+                if (strlen($fieldSearch) == 0){
                     //on va exécuter une requete sql pour sélectionner les users en fonction du filtre de recherche
-                    $resultRequestGetUsers = $sqlData->get_users_with_attribute("Users", $fieldSearch, $stringToSearch);
+                    $resultRequestGetUsers = $sqlData->get_users("Users");
 
                     //on regarde si une erreur est survenue au cours du script
                     if ($resultRequestGetUsers["error"] == 0){
                         //on stocke le nom de la classe des objets
                         $listeResultParams["result"]["classResearched"] = $classResearched;
-
-                        //on stocke aussi la liste des objets serialisés dans un autre champ
-                        $listUserSerialised = array();
-                        foreach ($resultRequestGetUsers["result"] as $user){
-                            $userSerialised = $user->serialise();
-                            $listUserSerialised[] = $userSerialised;
-                        }
-
-                        $listeResultParams["result"]["listObjectSerialised"] = json_encode($listUserSerialised);
                     }
                     else{
                         $errorMessage = $resultRequestGetUsers["errorMessage"];
-                        $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur script_get_users_with_attribute|Erreur:{$errorMessage}}");
+                        $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur script_get_users_logging_with_attribute|Erreur:{$errorMessage}}");
                         $listeResultParams["error"] = 1;
                         $listeResultParams["errorMessage"] = $errorMessage;
                     }
                 }
                 else{
-                    //on renvoie une erreur
-                    $errorMessage = $VARIABLES_GLOBALES["notif_erreur_attribut_incorrect"];
-                    $loggerBd->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Warning attribut de recherche de la classe $classResearched inconnu");
-                    $listeResultParams["error"] = 1;
-                    $listeResultParams["errorMessage"] =  $errorMessage;
+                    if (in_array($fieldSearch, $listFieldNamesUser)){
+                        //on va exécuter une requete sql pour sélectionner les users en fonction du filtre de recherche
+                        $resultRequestGetUsers = $sqlData->get_users_with_attribute("Users", $fieldSearch, $stringToSearch);
+
+                        //on regarde si une erreur est survenue au cours du script
+                        if ($resultRequestGetUsers["error"] == 0){
+                            //on stocke le nom de la classe des objets
+                            $listeResultParams["result"]["classResearched"] = $classResearched;
+                        }
+                        else{
+                            $errorMessage = $resultRequestGetUsers["errorMessage"];
+                            $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur script_get_users_logging_with_attribute|Erreur:{$errorMessage}}");
+                            $listeResultParams["error"] = 1;
+                            $listeResultParams["errorMessage"] = $errorMessage;
+                        }
+                    }
+                    else{
+                        //on renvoie une erreur
+                        $errorMessage = $VARIABLES_GLOBALES["notif_erreur_attribut_incorrect"];
+                        $loggerBd->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Warning attribut de recherche de la classe $classResearched inconnu");
+                        $listeResultParams["error"] = 1;
+                        $listeResultParams["errorMessage"] =  $errorMessage;
+                    }
                 }
+
+                //on stocke la liste des objets serialisés dans un autre champ
+                $listUserSerialised = array();
+                foreach ($resultRequestGetUsers["result"] as $user){
+                    $userSerialised = $user->serialise();
+                    $listUserSerialised[] = $userSerialised;
+                }
+
+                $listeResultParams["result"]["listObjectSerialised"] = json_encode($listUserSerialised);
                 break;
 
             case Logging::getClassName():
                 //on vérifie que l'attribut de recherche est valide
                 $listFieldNamesLogging = Logging::defaultLogging()->getListFieldNames();
 
-                //echo $fieldSearch;
+                $resultRequestGetLogging = null;
 
-                if (in_array($fieldSearch, $listFieldNamesLogging)){
+                //on regarde si la chaine a rechercher est vide
+                if (strlen($fieldSearch) == 0){
                     //on va exécuter une requete sql pour sélectionner les users en fonction du filtre de recherche
-                    $resultRequestGetLogging = $sqlData->get_logs_with_attribute("Logging", $fieldSearch, $stringToSearch);
-                    //print_r($resultRequestGetLogging);
+                    $resultRequestGetLogging = $sqlData->get_logs("Logging");
+
                     //on regarde si une erreur est survenue au cours du script
                     if ($resultRequestGetLogging["error"] == 0){
                         //on stocke le nom de la classe des objets
                         $listeResultParams["result"]["classResearched"] = $classResearched;
-
-                        //on stocke aussi la liste des objets serialisés dans un autre champ
-                        $listLoggingSerialised = array();
-                        foreach ($resultRequestGetLogging["result"] as $logging){
-                            $loggingSerialised = $logging->serialise();
-                            $listLoggingSerialised[] = $loggingSerialised;
-                        }
-
-                        $listeResultParams["result"]["listObjectSerialised"] = json_encode($listLoggingSerialised);
                     }
                     else{
                         $errorMessage = $resultRequestGetLogging["errorMessage"];
-                        $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Script_get_users_with_attribute|Erreur:{$errorMessage}}");
+                        $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur script_get_users_logging_with_attribute|Erreur:{$errorMessage}}");
                         $listeResultParams["error"] = 1;
                         $listeResultParams["errorMessage"] = $errorMessage;
                     }
                 }
                 else{
-                    //on renvoie une erreur
-                    $errorMessage = $VARIABLES_GLOBALES["notif_erreur_attribut_incorrect"];
-                    $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Attribut de recherche de la classe $classResearched inconnu");
-                    $listeResultParams["error"] = 1;
-                    $listeResultParams["errorMessage"] =  $errorMessage;
+                    if (in_array($fieldSearch, $listFieldNamesLogging)){
+                        //on va exécuter une requete sql pour sélectionner les users en fonction du filtre de recherche
+                        $resultRequestGetLogging = $sqlData->get_logs_with_attribute("Logging", $fieldSearch, $stringToSearch);
+                        //print_r($resultRequestGetLogging);
+                        //on regarde si une erreur est survenue au cours du script
+                        if ($resultRequestGetLogging["error"] == 0){
+                            //on stocke le nom de la classe des objets
+                            $listeResultParams["result"]["classResearched"] = $classResearched;
+                        }
+                        else{
+                            $errorMessage = $resultRequestGetLogging["errorMessage"];
+                            $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "script_get_users_logging_with_attribute|Erreur:{$errorMessage}}");
+                            $listeResultParams["error"] = 1;
+                            $listeResultParams["errorMessage"] = $errorMessage;
+                        }
+                    }
+                    else{
+                        //on renvoie une erreur
+                        $errorMessage = $VARIABLES_GLOBALES["notif_erreur_attribut_incorrect"];
+                        $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Attribut de recherche de la classe $classResearched inconnu");
+                        $listeResultParams["error"] = 1;
+                        $listeResultParams["errorMessage"] =  $errorMessage;
+                    }
                 }
+
+                //on stocke aussi la liste des objets serialisés dans un autre champ
+                $listLoggingSerialised = array();
+                foreach ($resultRequestGetLogging["result"] as $logging){
+                    $loggingSerialised = $logging->serialise();
+                    $listLoggingSerialised[] = $loggingSerialised;
+                }
+
+                $listeResultParams["result"]["listObjectSerialised"] = json_encode($listLoggingSerialised);
                 break;
 
             default :
