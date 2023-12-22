@@ -211,12 +211,14 @@ Les composants qui sont ajoutés au système sont les suivants :
 | scriptGetStatsClusterHat.sh                |                                                             |                                        |
 | script_get_users_or_logs_with_attribute.php|                                                             |                                        |
 | script_calcul_nombre_premiers.php          |                                                             |                                        |
+| script_supprimer_compte_utilisateur.php    |                                                             |                                        |
+| script_get_utilisation_modules.php         |                                                             |                                        |
 | page_module_nombres_premiers.php           |                                                             |                                        |
 | output.css                                 |                                                             |                                        |
             
-A partir de ce tableau, on peut définir les composants suivants : "accueil_admin_script.js", "output.css", "page_module_nombres_premiers.js", "script_get_stats_site.php", "script_get_stats_cluster_hat.php","scriptGetStatsClusterHat.sh","script_get_users_or_logs_with_attribute.php","script_calcul_nombre_premiers.php" et "page_module_nombres_premiers.php".
+A partir de ce tableau, on peut définir les composants suivants : "accueil_admin_script.js", "output.css", "page_module_nombres_premiers.js", "script_get_stats_site.php", "script_get_stats_cluster_hat.php","scriptGetStatsClusterHat.sh","script_get_users_or_logs_with_attribute.php","script_get_utilisation_modules.php","script_supprimer_compte_utilisateur.php","script_calcul_nombre_premiers.php" et "page_module_nombres_premiers.php".
 
-Ces derniers sont des abstractions respectives des objets : "accueil_admin_script.js", "output.css", "page_module_nombres_premiers.js", "script_get_stats_site.php", "script_get_stats_cluster_hat.php","scriptGetStatsClusterHat.sh","script_get_users_or_logs_with_attribute.php","script_calcul_nombre_premiers.php" et "page_module_nombres_premiers.php".
+Ces derniers sont des abstractions respectives des objets : "accueil_admin_script.js", "output.css", "page_module_nombres_premiers.js", "script_get_stats_site.php", "script_get_stats_cluster_hat.php","scriptGetStatsClusterHat.sh","script_get_users_or_logs_with_attribute.php","script_get_utilisation_modules.php","script_supprimer_compte_utilisateur.php","script_calcul_nombre_premiers.php" et "page_module_nombres_premiers.php".
 
 Le composant "output.css" contient désormais le style de chaque composant concerné du site. Le composant "style.css" ne sert maintenant qu'a appeler des librairies nécéssaires pour le style. 
 
