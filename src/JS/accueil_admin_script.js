@@ -420,11 +420,17 @@ function createHtmlElementForSerialisedUsers(divListUsers, userSerialised){
     let subDivRegistrationDate = document.createElement("div")
     subDivRegistrationDate.setAttribute("class", "text-lg font-bold text-white")
 
-    //icone pour supprimer un user
-    let iconeDeleteUser = document.createElement("ion-icon")
-    iconeDeleteUser.setAttribute("name", "trash")
-    iconeDeleteUser.setAttribute("class", "w-7 h-7 text-red-700 absolute right-2 cursor-pointer")
-    iconeDeleteUser.setAttribute("id", userSerialised.userId)
+    //icone pour supprimer un user si ce dernier a le role USER
+    let iconeDeleteUser
+    if (userSerialised.role === "USER"){
+        iconeDeleteUser = document.createElement("ion-icon")
+        iconeDeleteUser.setAttribute("name", "trash")
+        iconeDeleteUser.setAttribute("class", "w-7 h-7 text-red-700 absolute right-2 cursor-pointer")
+        iconeDeleteUser.setAttribute("id", userSerialised.userId)
+
+        //on associe un événement on click pour l'icone pour supprimer le user associé
+        iconeDeleteUser.onclick = deleteUser
+    }
 
     //on ajoute une chaine de caractère pour chaque span et div
     subDivLogin.innerHTML = "Login : " + userSerialised.login
@@ -434,11 +440,14 @@ function createHtmlElementForSerialisedUsers(divListUsers, userSerialised){
     spanFirstName.innerHTML = "Prénom : " + userSerialised.firstName
     subDivRegistrationDate.innerHTML = "Inscription : " + userSerialised.registrationDate
 
-    //on associe un événement on click pour l'icone pour supprimer le user associé
-    iconeDeleteUser.onclick = deleteUser
-
     //on ajoute les différents éléments div dans l'élément div
-    divUser.append(subDivLogin, subDivId, subDivMail, subDivFirstNameLastName, subDivRegistrationDate, iconeDeleteUser)
+    divUser.append(subDivLogin, subDivId, subDivMail, subDivFirstNameLastName, subDivRegistrationDate)
+
+    console.log(iconeDeleteUser)
+    //on ajoute l'icone pour delete le user si elle a été définie
+    if (iconeDeleteUser !== undefined)
+        divUser.append(iconeDeleteUser)
+
     divUserGlob.append(divUser)
     divListUsers.append(divUserGlob)
 }
