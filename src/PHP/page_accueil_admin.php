@@ -11,7 +11,7 @@ $user = unserialize($_SESSION["user"]);
 <head>
     <meta charset="UTF-8">
     <title>BlitzCalc</title>
-    <script defer src = "../JS/accueil_script.js"> </script>
+    <!--<script defer src = "../JS/accueil_script.js"> </script>-->
     <script defer src = "../JS/accueil_admin_script.js"> </script>
     <link href="../dist/output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -122,7 +122,7 @@ $user = unserialize($_SESSION["user"]);
                                         </div>
         
                                         <div class="mx-5">
-                                            <h4 id="nb-users" class="text-2xl font-semibold text-gray-700">8,282</h4>
+                                            <h4 id="nb-users" class="text-2xl font-semibold text-gray-700">0</h4>
                                             <div class="text-deepblue ">Nombres d'utilisateurs</div>
                                         </div>
                                     </div>
@@ -135,7 +135,7 @@ $user = unserialize($_SESSION["user"]);
                                         </div>
         
                                         <div class="mx-5">
-                                            <h4 id="nb-visits" class="text-2xl font-semibold text-gray-700">200,521</h4>
+                                            <h4 id="nb-visits" class="text-2xl font-semibold text-gray-700">0</h4>
                                             <div class="text-deepblue">Nombres de visites</div>
                                         </div>
                                     </div>
@@ -148,7 +148,7 @@ $user = unserialize($_SESSION["user"]);
                                         </div>
         
                                         <div class="mx-5">
-                                            <h4 id="nb-module-uses" class="text-2xl font-semibold text-gray-700">215,542</h4>
+                                            <h4 id="nb-module-uses" class="text-2xl font-semibold text-gray-700">0</h4>
                                             <div class="text-deepblue">Utilisation des modules</div>
                                         </div>
                                     </div>
@@ -203,13 +203,13 @@ $user = unserialize($_SESSION["user"]);
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                        <div class="text-sm leading-5 text-gray-900">14.7 %</div>
-                                                        <div clasistUserss="text-sm leading-5 text-gray-500">0.8 GHz</div>
+                                                        <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="text-sm leading-5 text-gray-900">14.4 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.766 Go</div>
+                                                    <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td
@@ -234,13 +234,13 @@ $user = unserialize($_SESSION["user"]);
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                        <div class="text-sm leading-5 text-gray-900">5.7 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.5 GHz</div>
+                                                        <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="text-sm leading-5 text-gray-900">45.9 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.233 Go</div>
+                                                    <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td
@@ -265,13 +265,13 @@ $user = unserialize($_SESSION["user"]);
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                        <div class="text-sm leading-5 text-gray-900">5.7 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.5 GHz</div>
+                                                        <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="text-sm leading-5 text-gray-900">45.9 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.233 Go</div>
+                                                    <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td
@@ -296,13 +296,13 @@ $user = unserialize($_SESSION["user"]);
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                        <div class="text-sm leading-5 text-gray-900">5.7 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.5 GHz</div>
+                                                        <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="text-sm leading-5 text-gray-900">45.9 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.233 Go</div>
+                                                    <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td
@@ -327,13 +327,13 @@ $user = unserialize($_SESSION["user"]);
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                        <div class="text-sm leading-5 text-gray-900">5.7 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.5 GHz</div>
+                                                        <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="text-sm leading-5 text-gray-900">45.9 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.233 Go</div>
+                                                    <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td
@@ -358,7 +358,7 @@ $user = unserialize($_SESSION["user"]);
 <div class="fixed left-0 top-0 z-40 h-full w-full select-none bg-gray-200 bg-opacity-50 hidden" id="popUpUsers">
   <div class="relative z-50 mx-auto mt-36 w-3/6 p-10 bg-deepblue rounded-xl h-3/4" id="contentUsers">
   <ion-icon name="close" class="text-white right-0 my-9 mr-6 top-0 absolute text-3xl cursor-pointer" onclick="showUsers()"></ion-icon>
-    <p class="text-white text-2xl text-center">Liste des utilisateur inscrits</p>
+    <p class="text-white text-2xl text-center">Rechercher des utilisateurs</p>
     <form class="flex items-center my-5">
       <label for="voice-search" class="sr-only">Search</label>
       <div class="relative w-full">
@@ -400,7 +400,7 @@ $user = unserialize($_SESSION["user"]);
 <div class="fixed left-0 top-0 z-40 h-full w-full select-none bg-gray-200 bg-opacity-50 hidden" id="popUpLogs">
   <div class="relative z-50 mx-auto mt-36 w-3/6 p-10 bg-deepblue rounded-xl h-3/4" id="contentLogs">
   <ion-icon name="close" class="text-white right-0 my-9 mr-6 top-0 absolute text-3xl cursor-pointer" onclick="showLogs()"></ion-icon>
-    <p class="text-white text-2xl text-center">Liste des Logs</p>
+    <p class="text-white text-2xl text-center">Rechercher des logs</p>
     <form class="flex items-center my-5">
       <label for="voice-search" class="sr-only">Search</label>
       <div class="relative w-full">
