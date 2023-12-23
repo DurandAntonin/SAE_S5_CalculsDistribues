@@ -35,7 +35,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
     //1 = récupère les stats du fichier
     if ($execMode == 0){
         //on donne au fichier un nom précis
-        $outputFileName = guidv4() . "csv";
+        $outputFileName = guidv4() . ".csv";
 
         $output = null;
         $resultCode = null;
@@ -45,7 +45,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
         //echo $command;
 
         //on exécute la commande
-        //exec($command,$output,$resultCode);
+        exec($command,$output,$resultCode);
         //$resultat_calcul = $resultCode[0];
 
         //on renvoi aus script le nom du fichier contenant les stats du cluster hat
@@ -75,6 +75,9 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
                 $listStatsClusterHat[] = $listStatsRpi;
             }
             fclose($fp);
+
+            //on supprime le fichier
+            unlink($outputFile);
 
             //on ajoute la liste des stats du cluster hat dans la liste de renvoi
             $listeResultParams["result"] = $listStatsClusterHat;
