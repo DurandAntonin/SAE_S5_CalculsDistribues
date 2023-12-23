@@ -296,12 +296,12 @@ function resultRequestGetStatsClusterHatInFIle(){
         //console.log(listStatsClusterHat)
 
         //pour chaque rpi du cluster hat, on met à jour les statistiques
-        for (let i=0;i<listStatsClusterHat.length;i++){
+        for (let i=0;i<objectStatsClusterHat.length;i++){
             let statsRpi = objectStatsClusterHat[i]
             let statCpuPourcent = (statsRpi.cpuUsage)
             let statCpuFrequency = statsRpi.cpuFrequency
             let statMemUsedPourcent = ((parseInt(statsRpi.memUsed) / parseInt(statsRpi.memTotal)) * 100).toPrecision(4)
-            let statMemUsed = parseInt(statsRpi.memUsed) * Math.pow(10,-3)
+            let statMemUsed = (parseInt(statsRpi.memUsed) * Math.pow(10,-3)).toPrecision(4)
             let statUptime = statsRpi.uptime
 
             //on met à jour les stats du rpi dans le tableau
