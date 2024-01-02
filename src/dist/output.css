@@ -981,6 +981,10 @@ input:checked ~ .dot {
   margin-bottom: 2rem;
 }
 
+.ml-16 {
+  margin-left: 4rem;
+}
+
 .ml-2 {
   margin-left: 0.5rem;
 }
@@ -991,10 +995,6 @@ input:checked ~ .dot {
 
 .ml-3 {
   margin-left: 0.75rem;
-}
-
-.ml-36 {
-  margin-left: 9rem;
 }
 
 .ml-4 {
@@ -1051,6 +1051,22 @@ input:checked ~ .dot {
 
 .mt-8 {
   margin-top: 2rem;
+}
+
+.mr-5 {
+  margin-right: 1.25rem;
+}
+
+.mr-10 {
+  margin-right: 2.5rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mt-10 {
+  margin-top: 2.5rem;
 }
 
 .block {
@@ -1218,6 +1234,10 @@ input:checked ~ .dot {
   width: 100vw;
 }
 
+.w-4\/6 {
+  width: 66.666667%;
+}
+
 .min-w-full {
   min-width: 100%;
 }
@@ -1369,6 +1389,10 @@ input:checked ~ .dot {
   justify-content: space-between;
 }
 
+.justify-around {
+  justify-content: space-around;
+}
+
 .gap-2 {
   gap: 0.5rem;
 }
@@ -1514,6 +1538,11 @@ input:checked ~ .dot {
 .bg-red-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+}
+
+.bg-red-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 38 38 / var(--tw-bg-opacity));
 }
 
 .bg-white {
@@ -1674,6 +1703,10 @@ input:checked ~ .dot {
 
 .text-center {
   text-align: center;
+}
+
+.text-right {
+  text-align: right;
 }
 
 .align-baseline {
@@ -2144,6 +2177,10 @@ input:checked ~ .dot {
     margin-bottom: 0px;
   }
 
+  .md\:ml-0 {
+    margin-left: 0px;
+  }
+
   .md\:ml-2 {
     margin-left: 0.5rem;
   }
@@ -2191,6 +2228,10 @@ input:checked ~ .dot {
 
   .md\:items-center {
     align-items: center;
+  }
+
+  .md\:justify-center {
+    justify-content: center;
   }
 
   .md\:justify-between {

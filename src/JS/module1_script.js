@@ -2,6 +2,7 @@ const profil = document.querySelector('#popUpProfil');
 const showProfile = document.querySelector('#showProfil');
 const formProfil = document.querySelector('#popUpFormProfil');
 const linkShowProfil = document.querySelector('#linkShowProfil');
+const popUpPasCo = document.querySelector('#popUpPasCo');
 
 var showed = false;
 var showedF = false;
@@ -80,4 +81,28 @@ if(linkShowProfil){
   linkShowProfil.addEventListener('click', function(event) {
     event.stopPropagation();
   });
+}
+
+
+function toggleCheck() {
+  if(document.getElementById("toggleB").checked === true){
+    if(document.getElementById("infoToggle").innerHTML == "user"){
+      document.getElementById("textCalcul").innerHTML = "ACTIF";
+    }
+    else{
+      popUpPasCo.classList.remove("hidden");
+      popUpPasCo.classList.add("flex");
+    }
+  } else {
+    popUpPasCo.classList.remove("flex");
+    popUpPasCo.classList.add("hidden");
+    document.getElementById("textCalcul").innerHTML = "INACTIF";
+  }
+}
+
+function closePopUp(){
+  var toggle = document.getElementById("toggleB");
+  toggle.checked = !toggle.checked;
+  popUpPasCo.classList.remove("flex");
+  popUpPasCo.classList.add("hidden");
 }
