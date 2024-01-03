@@ -175,7 +175,7 @@ La page "page_deconnexion.php" ne contient pas d'html et n'apparaitra jamais sur
 
 La page "page_accueil_admin.php" ne contient qu'un lien de déconnexion contenu dans un ```<ul><li>``` lui même contenu dans un ```<nav>```. Elle contient un ```<h1>``` qui permet d'afficher le nom de la page. Elle contient aussi un ```<h2>``` dans le ```<main>``` qui affiche le nom de l'admin.
 
-La page "page_accueil_user.php" ne contient qu'un lien de déconnexion contenu dans un ```<ul><li>``` lui meme contenu ```<nav>```.  Elle contient un ```<h1>``` qui permet d'afficher le nom de la page. Elle contient aussi un ```<h2>``` dans le ```<main>``` qui affiche le nom de l'utilisateur. 
+La page "page_accueil_user.php" ne contient qu'un lien de déconnexion contenu dans un ```<ul><li>``` lui meme contenu dans un ```<nav>```.  Elle contient un ```<h1>``` qui permet d'afficher le nom de la page. Elle contient aussi un ```<h2>``` dans le ```<main>``` qui affiche le nom de l'utilisateur. 
 
 La page "page_connexion.php" contient un ```<h2>``` qui permet d'afficher le nom de la page. Elle contient ensuite un ```<form>``` qui contient lui même deux ```<div>``` qui contiennent chacun un ```<label>``` et un ```<input>``` de  type text. Ce sont les champs de notre formulaire. Ce ```<form>``` contient également un ```<input>``` de type submit qui correspond au bouton de validation. Cette page contient un deuxième ```<form>``` qui contient un ```<input>``` de type submit. Elle contient aussi un ```<p>``` servant à l'affichage des erreurs. Enfin, elle contient un ```<ul>``` dans un ```<nav>```avec deux ```<li>``` qui contiennent chacun un ```<a>``` avec un href.  
 
@@ -289,6 +289,18 @@ Pour faciliter l'analyse de ces dernieres, on réalise un diagramme de classe ne
 <img src="../DiagrammesUML/PNG_DiagrammesUML/L2_diagClasses_2.PNG" width="700px">
 <p> Diagramme de classes du livrable 2 (2)</p>
 </div>
+
+On analyse maintenant comment sont constitués les objets en .php suivants : "page_module_nombres_premiers.php" et "page_accueil_admin.php". Les autres objets n'ayant pas été changés, il ne seront pas analysés de nouveau ici. 
+
+Chaque page contient désormais un header et un footer, excepté les pages "page_inscription", "page_connexion" et "page_deconnexion".  
+
+Le header contient un ```<nav>```, qui contient lui-même un ```<div>``` contenant lui même un autre ```<div>```. Ce dernier contient un ```<a>``` permettant d'afficher le logo de BlitzCalc ainsi qu'un ```<div>``` contenant également un ```<img>``` qui stocke une icone de profil. Cette icone de profil est cliquable et lorsqu'on clique dessus, un ```<div>``` apparait. Ce dernier contient un ```<ul>``` qui contient lui meme plusieurs ```<li>```
+
+Le footer quant à lui contient
+
+La page "page_accueil_admin.php" 
+
+La page "page_module_nombres_premiers.php" contient un ```<h2>``` qui permet d'afficher le nom de la page. Elle contient ensuite un ```<form>``` 
 
 
 
