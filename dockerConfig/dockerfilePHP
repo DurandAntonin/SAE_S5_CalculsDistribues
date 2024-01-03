@@ -2,9 +2,9 @@ FROM php:8.2-apache
 
 VOLUME /hostpipe
 
-RUN apt update \
-    && apt upgrade \
-    && apt clean
+RUN apt update -y \
+    && apt upgrade -y \
+    && apt clean -y
 
 COPY ./src/ /var/www/html/
 COPY ./dockerConfig/php.ini-development /usr/local/etc/php/
