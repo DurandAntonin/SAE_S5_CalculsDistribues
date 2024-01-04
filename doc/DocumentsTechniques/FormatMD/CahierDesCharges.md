@@ -14,6 +14,7 @@ _Zehren William_
     <li> <a href="#enonce"> Enoncé  </a> </li>
     <ol>
         <li> <a href="#livrable_1"> Livrable 1 - Squelette du site </a> </li>
+        <li> <a href="#livrable_2"> Livrable 2 - 1er module et fonctionnalités utilisateur admin </li>
     </ol>
     <li> <a href="#prerequis"> Prérequis  </a>  </li>
     <ol>
@@ -72,6 +73,21 @@ Comme ils n'ont pas de compte utilisateur, ils ne pourront pas accéder à leur 
 
 L'administrateur quant à lui, n'aura accès qu'à une page qui lui sera dédiée, sur laquelle il pourra gérer les différents utilisateurs inscrits. Cette fonctionnalité sera développée dans le livrable 2. 
 
+<h3 id="livrable_2"> Livrable 2 - 1er module et fonctionnalités utilisateur admin </h3>
+
+Le deuxième livrable consiste en premier lieu à développer un premier module de calculs utilisant le calcul distribué. <br>
+Ce module permet de calculer les nombres premiers compris entre les bornes _n_ et _m_ saisis par l'utilisateur. Ce dernier est accessible depuis la page d'accueil à la fois pour les utilisateurs connectés et pour les utilisateurs non inscrits.
+Le temps d'exécution du calcul des nombres premiers ainsi que la liste de ces derniers sont affichés à l'utilisateur. <br>
+Le calcul s'effectue de manière distribué sur les 4 rpi zeros uniquement pour l'utilisateur connecté. <br>
+Pour l'utilisateur non inscrit, le calcul s'effectue seulement sur un rpi zero, mais un bouton permet à l'utilisateur de passer en mode "calcul distribué", et donc d'utiliser les autres rpi zero. Lors que l'utilisateur non inscrit clique sur le bouton, une pop-up s'affiche et invite l'utilisateur à s'inscrire ou à se connecter s'il souhaite calculer les nombres premiers en utilisant la puissance du calcul distribué. <br> 
+L'utilisateur connecté voit également ce bouton, et peut passer en mode "calcul distribué" ou non, pour tester la différence de vitesse d'exécution par exemple. 
+
+Dans un deuxième temps seront développées les différentes fonctionnalités liées à l'utilisateur administrateur du site. <br>
+La première fonctionnalité est le visionnage des différentes statistiques du site, à savoir le nombre de visites, d'utilisateurs inscrits et d'utilisations des modules du site ainsi que le pourcentage d'utilisateurs connectés et non inscrits qui accèdent au site. L'administrateur pourra filtrer ces statistiques en fonction du jour, mois, semaine ou depuis le déploiement du site. <br>
+L'administrateur pourra aussi rechercher des utilisateurs inscrits en fonction d'un des critères id, login, adresse mail, nom, prénom et date d'inscription, ainsi que les journaux (logs) du site en fonction d'un des critères date, niveau du journal, l'identifiant de l'utilisateur à l'origine du log, description de ce dernier. Il pourra également supprimer des utilisateurs via un bouton de suppression. 
+
+<br>
+Enfin, il peut visualiser les statistiques du cluster hat, à savoir le pourcentage d'utilisation du processeur, de la mémoire ainsi que le uptime de chaque rpi du kit Cluster Hat, à savoir le rpi host et les 4 rpi zeros.
 
 <h2 style="color:#5d79e7; page-break-before: always" id="prerequis"> Prérequis </h2>
 
@@ -87,7 +103,9 @@ Une connaissance en __HTML__, __JS__, __CSS__ est ensuite nécessaire pour déve
 
 Il est aussi important de connaître les fondamentaux des base de données relationnelles, ainsi que les requêtes basiques en SQL, pour enregistrer et manipuler les données de l'application stockée dans un __SGBD MySQL__.
 
-Une connaissance de __Linux__ est nécessaire pour mettre à jour l'application hébergée sur le RaspberryPi 4 du kit Cluster.
+Une connaissance en __Linux__ et en __bash__ est nécessaire pour gérer, mettre à jour le kit Cluster Hat et l'application hébergée sur ce dernier ainsi que pour créer différents scripts utilisés dans le site.
+
+Une connaissance de __Python__ et de la librairie __MPI__ est nécessaire pour exécuter et maintenir le programme du 1er module de calcul des nombres premiers.
 
 Enfin, il est requis d'avoir des bases en programmation distribuée, pour pouvoir réaliser les programmes de calculs de l'application en utilisant le calcul distribué.
 

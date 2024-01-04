@@ -26,6 +26,12 @@ _Zehren William_
         <li><a href="#cu6"> CU#6 </a></li>
         <li><a href="#cu7"> CU#7 </a></li>
         <li><a href="#cu8"> CU#8 </a></li>
+        <li><a href="#cu9"> CU#9 </a></li>
+        <li><a href="#cu10"> CU10 </a></li>
+        <li><a href="#cu11"> CU#11 </a></li>
+        <li><a href="#cu12"> CU#12 </a></li>
+        <li><a href="#cu13"> CU#13 </a></li>
+        <li><a href="#cu14"> CU#14 </a></li>
         </ul>
     </ol>
 </ol>
@@ -57,27 +63,45 @@ L'application est hébergée sur le kit Cluster Hat. Chaque noeud doit pouvoir c
 
 Le premier livrable est un système de connexion et d'inscription relié à une base de données.
 
-Texte 1 Description textuelle des cas d’utilisations : Le site permet directement à un visiteur de s'inscrire ou bien de se connecter via une page d’inscription ou de connexion. Ces deux choix correspondent à deux cas d’utilisation différents, le visiteur est déjà inscrit ou non.
+Texte 1 Description textuelle des cas d’utilisations : Le site permet directement à un visiteur de s'inscrire, de se connecter via une page d’inscription ou de connexion ou d'accéder au site directement. Il permet aussi à l'utilisateur connecté de voir ses informations personnelles et de les modifier. Ces fonctionnalités correspondent aux cas d'utilisations.
 
 Si le visiteur est déjà inscrit, il sera en mesure de se connecter (sous-fonctions) à chacune de ses visites sur le site en remplissant et en envoyant le formulaire qu’il aura rempli avec son identifiant et son mot de passe (sous-fonctions). Si l’inscrit commet une erreur en remplissant le formulaire ou qu’il n’est simplement pas inscrit alors il sera renvoyé sur le formulaire avec un message lui disant que les informations renseignées sont erronées. Après une connexion réussie, l’utilisateur inscrit se retrouvera sur une page dite principale à partir de laquelle il pourra accéder, via des boutons, à une page simulant les futurs modules de calcul disponible sur le site. Il pourra également accéder à son profil, où il sera en mesure de modifier son mot de passe, nom, prénom, identifiant et adresse mail ou bien de se déconnecter et de revenir à la page d'inscription.
 
 Si le visiteur n’est pas inscrit, alors il devra remplir un formulaire et renseigner son identifiant et son mot de passe qu’il devra confirmer. Après son inscription validée, les données sont communiquées à la base de données et sont enregistrées. Le visiteur maintenant inscrit arrivera directement sur la page principale et pourra profiter de toutes les fonctionnalités du site. 
-
 Si l'utilisateur se connecte avec les identifiants de l’administrateur, il n’aura pas accès aux mêmes fonctionnalités que les inscrits « classique » mais à une page exclusive.
+
+L'utilisateur connecté peut accéder à son profil en cliquant sur l'image profil en haut à droite de la page d'accueil une fois ce dernier connecté. Un formulaire sous forme de pop-up se dévoile et affiche le login, adresse mail, nom et prénom de l'utilisateur dans plusieurs champs. L'utilisateur saisit dans le(s) champ(s) adéquat(s) le ou les nouvelles informations personnelles qu'il veut modifier, puis clique ensuite sur le bouton valider pour enregistrer ces nouvelles dernières.
+Si l'utilisateur modifier son mot de passe, il doit aussi saisir le nouveau mot de passe dans deux champs, puis cliquer sur valider. 
+
+Le deuxième livrable contient un module de calcul des nombres premiers ainsi que les fonctionnalités de l'utilisateur administrateur. <br>
+Un utilisateur accède au module de calcul des nombres premiers, soit en étant déjà inscrit, ou en y accédant en étant comme non connecté. Il clique ensuite sur le module en question depuis la page principale pour accéder à la page de ce dernier.<br>
+Puis, il saisit la borne minmimum _n_ et la borne maximum _m_ et clique sur valider pour calculer les nombres premiers compris entre _n_ et _m_. Par défaut, le calcul ne s'effectue que sur un seul rpi. <br>
+Une fois les nombres premiers calculés, le temps d'exécution du calcul ainsi que la liste de ces derniers sont affichés dans la page du module.
+Un bouton en dessous du résultat permet de passer du mode calcul non distribué au mode de calcul distribué. <br>
+Si l'utilisateur qui clique sur le bouton est un visiteur, une pop-up s'affiche invitant l'utilisateur à se connecter ou à s'inscrire pour profiter de la puissance du calcul distribué, sinon il n'y a pas de pop-up, et le calcul passe en mode distribué.
 
 Ci-dessous les différents niveaux des cas d'utilisation:
 **Niveau stratégique**:
+- L'utilisateur utilise des modules
+- L'administrateur administre le site web
 
 **Niveau utilisateur**:
 - S'inscrire
 - Supprimer son compte
+- Utilisation du module de calcul des nombres premiers par un utilisateur visiteur
+- Utilisation du module de calcul des nombres premiers par un utilisateur inscrit
+- Rechercher des utilisateurs
+- Rechercher des logs
+- Supprimer un compte utilisateur
 
 **Niveau sous-fonctions**:
 - Se connecter
+- Se déconnecter
 - Changer son login
 - Changer son adresse mail
 - Changer son nom
 - Changer son prénom
+- Visualiser les statistiques du site
 
 <h3 style="page-break-before: always" id="cas_utilisations_detailles"> Cas d'utilisations détaillés </h3>
 
@@ -185,9 +209,9 @@ Scénario alternatif 6.9 :
 
 3. Le site affiche la page de connexion.
 
-4. L’inscrit remplit les formulaires.
+4. L’inscrit remplit le formulaires.
 
-5. L’inscrit appui sur le bouton valider pour se connecter.
+5. L’inscrit appuie sur le bouton valider pour se connecter.
 
 6. Les données sont transmises à la base de données
 
@@ -264,24 +288,38 @@ Scénario alternatif 6.6 :
 
 Scénario alternatif 1.1 :
 1. Le formulaire est vide
-2. Un message d'erreur est affiché
+2. L’inscrit est redirigé vers son profil
+3. Un message d'erreur est affiché
 
 Scénario alternatif 3.1 :
 1. La taille du mot de passe saisi par l'inscrit n'est pas valide
 2. Le serveur refuse l’insertion des données
-3. Un message d'erreur est affiché
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
 
 Scénario alternatif 3.2 :
 1. Le mot de passe est similaire à l’ancien mot de passe
 2. Le serveur refuse le changement de mot de passe
-3. L’inscrit est redirigé sur la page de changement de mot de passe
+3. L’inscrit est redirigé sur la page profil
 4. Un message lui disant de ne pas choir le même mot de passe est affiché
 
 Scénario alternatif 3.3 :
 1. Les deux mots de passe renseignés sont différents
 2. Le serveur refuse le changement de mot de passe
-3. L’inscrit est redirigé sur la page de changement de mot de passe
-4. Un message lui disant que les mots de passe étaient différents est affiché
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur lui disant que les deux mots de passe sont différents est affiché
+
+Scénario alternatif 3.4 :
+1. Le mot de passe est trop fragile
+2. Le serveur refuse le changement de mot de passe
+3. L’inscrit est redirigé sur la page profil
+4. Un message lui disant que le mot de passe est fragile
+
+Scénario alternatif 3.5 :
+1. La requête pour le mot de passe dans la base de données à échouée
+2. L'erreur est enregistrée à l'aide d'un logger
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché à l'utilisateur
 
 **Informations connexes** : /
 
@@ -313,7 +351,8 @@ Scénario alternatif 3.3 :
 
 Scénario alternatif 1.1 :
 1. Le formulaire est vide
-2. Un message d'erreur est affiché
+2. L’inscrit est redirigé vers son profil
+3. Un message d'erreur est affiché
 
 Scénario alternatif 3.1 :
 1. L'inscrit saisit une adresse mail avec des caractères spéciaux
@@ -323,12 +362,20 @@ Scénario alternatif 3.1 :
 Scénario alternatif 3.2 :
 1. La taille de l'adresse mail saisie par l'inscrit n'est pas valide
 2. Le serveur refuse l’insertion des données
-3. Un message d'erreur est affiché
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
 
 Scénario alternatif 3.3 :
-1. L'adresse mail est similaire à l’ancienne adresse mail
+1. L'adresse mail est similaire à l’ancienne adresse mail et ou déjà prise
 2. Le serveur refuse le changement d'adresse mail
-3. L’inscrit est redirigé sur la page de profil
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
+
+Scénario alternatif 3.4 :
+1. La requête pour changer l'adresse mail dans la base de données à échouée
+2. L'erreur est enregistrée à l'aide d'un logger
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché à l'utilisateur
 
 **Informations connexes** : /
 
@@ -361,22 +408,32 @@ Scénario alternatif 3.3 :
 
 Scénario alternatif 1.1 :
 1. Le formulaire est vide
-2. Un message d'erreur est affiché
+2. L’inscrit est redirigé vers son profil
+3. Un message d'erreur est affiché
 
 Scénario alternatif 3.1 :
 1. L'inscrit saisit un login avec des caractères spéciaux
 2. Le serveur refuse l’insertion des données
-3. Le visiteur est redirigé sur la page connexion avec un message d'erreur
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
 
 Scénario alternatif 3.2 :
 1. La taille du login saisi par l'inscrit n'est pas valide
 2. Le serveur refuse l’insertion des données
-3. Un message d'erreur est affiché
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
 
 Scénario alternatif 3.3 :
-1. Le login est similaire à l'ancien login
+1. Le login est similaire à l'ancien login et ou déjà pris
 2. Le serveur refuse le changement du login
-3. L’inscrit est redirigé sur la page de profil
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
+
+Scénario alternatif 3.4 :
+1. La requête pour changer le login dans la base de données à échouée
+2. L'erreur est enregistrée à l'aide d'un logger
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché à l'utilisateur
 
 **Informations connexes** : /
 
@@ -409,22 +466,26 @@ Scénario alternatif 3.3 :
 
 Scénario alternatif 1.1 :
 1. Le formulaire est vide
-2. Un message d'erreur est affiché
+2. L’inscrit est redirigé vers son profil
+3. Un message d'erreur est affiché
 
 Scénario alternatif 3.1 :
-1. L'inscrit saisit une nom avec des caractères spéciaux
+1. L'inscrit saisit un nom avec des caractères spéciaux
 2. Le serveur refuse l’insertion des données
-3. Un message d'erreur est affiché 
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
 
 Scénario alternatif 3.2 :
 1. La taille du nom saisi par l'inscrit n'est pas valide
 2. Le serveur refuse l’insertion des données
-3. Un message d'erreur est affiché
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
 
 Scénario alternatif 3.3 :
-1. Le nom est similaire à l'ancien nom
-2. Le serveur refuse le changement du nom
-3. Un message d'erreur est affiché
+1. La requête pour changer le nom dans la base de données à échouée
+2. L'erreur est enregistrée à l'aide d'un logger
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché à l'utilisateur
 
 **Informations connexes** : /
 
@@ -436,7 +497,7 @@ Scénario alternatif 3.3 :
 **Niveau** : sous-fonction\
 **Acteur principal** : utilisateur inscrit\
 **Intervenants et intérêts** : /\
-**Précondition** : <u>Être inscrit sur le site et s’être connecter</u> **(CU#2)**\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté</u> **(CU#2)**\
 **Garantie minimale** : pas de garantie\
 **Garantie de succès** : Le prénom est modifié\
 **Déclencheur** : l’inscrit clique sur le bouton valider les changements\
@@ -459,19 +520,22 @@ Scénario alternatif 1.1 :
 2. Un message d'erreur est affiché
 
 Scénario alternatif 3.1 :
-1. L'inscrit saisit prénom avec des caractères spéciaux
+1. L'inscrit saisit le prénom avec des caractères spéciaux
 2. Le serveur refuse l’insertion des données
-3. Un message d'erreur est affiché
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
 
 Scénario alternatif 3.2 :
 1. La taille du prénom saisi par l'inscrit n'est pas valide
 2. Le serveur refuse l’insertion des données
-3. Un message d'erreur est affiché
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché
 
 Scénario alternatif 3.3 :
-1. Le prénom est similaire à l'ancien prénom
-2. Le serveur refuse le changement du prénom
-3. Un message d'erreur est affiché
+1. La requête pour changer le prénom dans la base de données à échouée
+2. L'erreur est enregistrée à l'aide d'un logger
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché à l'utilisateur
 
 **Informations connexes** : /
 
@@ -483,7 +547,7 @@ Scénario alternatif 3.3 :
 **Niveau** : utilisateur\
 **Acteur principal** : utilisateur inscrit\
 **Intervenants et intérêts** : /\
-**Précondition** : <u>Être inscrit sur le site et s’être connecter</u> **(CU#2)**\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté</u> **(CU#2)**\
 **Garantie minimale** : pas de garantie\
 **Garantie de succès** : Le compte est supprimé\
 **Déclencheur** : l’inscrit clique sur le bouton supprimer son compte\
@@ -501,6 +565,267 @@ Scénario alternatif 3.3 :
 
 
 **Extension** : /\
-**Liste des variantes** : /
+**Liste des variantes** : 
+
+Scénario alternatif 3.1 :
+1. La requête pour supprimer le compte dans la base de données à échouée
+2. L'erreur est enregistrée à l'aide d'un logger
+3. L’inscrit est redirigé vers son profil
+4. Un message d'erreur est affiché à l'utilisateur
+
 **Informations connexes** : /
 
+<h4 id="cu9"> CU#9 : Utilisation du module de calcul des nombres premiers par un utilisateur visiteur</h4> 
+
+**Nom** : L'utilisateur inscrit utilise le module de calcul des nombres premiers\
+**Contexte d’utilisation** : Utilisation normale du site\
+**Portée** : site web, base de données\
+**Niveau** : utilisateur\
+**Acteur principal** : utilisateur\
+**Précondition** : /\
+**Garantie minimale** : pas de garantie\
+**Garantie de succès** : L'utilisateur visualise les nombres premiers calculés \
+**Déclencheur** : L'utilisateur clique sur le module \
+**Scénario nominal** :
+
+1. L'utilisateur se connecte et clique sur le module depuis la page principale
+
+2. Le site affiche la page du module
+
+3. L'utilisateur remplit 2 champs pour les bornes n et m pour calculer les nombre premiers situés entre n et m
+
+4. L'utilisateur choisit le mode de calcul non distribué
+
+5. L'utilisateur clique sur le bouton calculer
+        
+6. Le site exécute un script qui effectue le calcul des nombres premiers de manière distribué sur le rpi zero
+
+7. Le site affiche le temps d'exécution du calcul des nombres premiers ainsi que la liste de ces derniers
+
+**Extension** : /\
+**Liste des variantes** : \
+
+Scénario alternatif 4.1:
+- L'utilisateur choisit le mode de calcul distribué
+- Le mode n'est pas activé
+- Une pop-up s'affiche invitant l'utilisateur à s'inscrire, se connecter
+- L'utilisateur se connecte, s'inscrit ou ferme la pop-up
+
+Scénario alternatif 5.1:
+- L'utilisateur a entré des valeurs incorrectes pour les bornes n et m : n < 0 ou m <= n ou m > valeur maximale
+- Le script de calcul n'est pas exécuté
+- Le site affiche un message d'erreur à l'utilisateur
+
+Scénario alternatif 6.1:
+- Les rpi zeros ne sont pas accessibles en mode connexion ssh
+- Le script s'arrête prématurément et renvoie une erreur
+- Le site affiche une erreur à l'utilisateur 
+
+**Informations connexes** : /
+
+<h4 id="cu10"> CU#10 : Utilisation du module de calcul des nombres premiers par un utilisateur inscrit</h4> 
+
+**Nom** : L'utilisateur inscrit utilise le module de calcul des nombres premiers\
+**Contexte d’utilisation** : Utilisation normale du site\
+**Portée** : site web, base de données\
+**Niveau** : utilisateur\
+**Acteur principal** : utilisateur\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté</u> **(CU#2)**\
+**Garantie minimale** : pas de garantie\
+**Garantie de succès** : L'utilisateur visualise les nombres premiers calculés \
+**Déclencheur** : L'utilisateur clique sur le module \
+**Scénario nominal** :
+
+1. L'utilisateur appuie sur le bouton "essayer sans inscription" depuis la page d'accueil
+
+2. Le site affiche la page d'accueil avec les modules
+
+3. L'utilisateur clique sur le module de calcul des nombres premiers
+
+4. Le site affiche la page du module
+
+5. L'utilisateur remplit 2 champs pour les bornes n et m pour calculer les nombre premiers situés entre n et m
+
+6. L'utilisateur choisit le mode de calcul distribué
+
+7. L'utilisateur clique sur le bouton calculer
+        
+8. Le site exécute un script qui effectue le calcul des nombres premiers de manière distribué sur les 4 rpi zeros
+
+9. Le site affiche le temps d'exécution du calcul des nombres premiers ainsi que la liste de ces derniers
+
+**Extension** : /\
+**Liste des variantes** : \
+
+Scénario alternatif 5.1:
+- L'utilisateur a entré des valeurs incorrectes pour les bornes n et m : n < 0 ou m <= n ou m > valeur maximale
+- Le script de calcul n'est pas exécuté
+- Le site affiche un message d'erreur à l'utilisateur
+
+Scénario alternatif 8.1:
+- Les rpi zeros ne sont pas accessibles en mode connexion ssh
+- Le script s'arrête prématurément et renvoie une erreur
+- Le site affiche une erreur à l'utilisateur 
+
+Scénario alternatif 8.2:
+- Le mode de calcul est sur non distribué, le calcul ne s'effectue que sur un seul rpi
+
+**Informations connexes** : /
+
+<h4 id="cu11"> CU#11 : Visualiser les statistiques du site</h4> 
+
+**Nom** : L'administrateur visualise les statistiques du site\
+**Contexte d’utilisation** : Utilisation normale du site\
+**Portée** : site web, base de données\
+**Niveau** : sous-fonction\
+**Acteur principal** : administrateur\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté en tant qu'administrateur</u> **(CU#2)**\
+**Garantie minimale** : pas de garantie\
+**Garantie de succès** : L'administrateur visualise les statistiques du site \
+**Déclencheur** : L'administrateur se connecte\
+**Scénario nominal** :
+
+1. L'administrateur clique sur le bouton lié à la période de temps souhaitée (Jour, Semaine, Mois, Tout) pour visualier les statistiques
+
+2. Le site exécute des scripts pour récupérer ces statistiques en fonction de la période choisie
+
+3. Le site affiche les statistiques renvoyées par les scripts
+
+**Extension** : /\
+**Liste des variantes** : \
+
+Scénario alternatif 2.1:
+- Une erreur est survenue lors de l'exécution d'un des scripts
+- Le script s'arrête prématurément et renvoie une erreur
+- Le site affiche ne change pas les statistiques et affiche une erreur à l'administrateur
+
+**Informations connexes** : /
+
+<h4 id="cu12"> CU#12 : Rechercher des utilisateurs</h4> 
+
+**Nom** : L'administrateur recherche des utilisateurs\
+**Contexte d’utilisation** : Utilisation normale du site\
+**Portée** : site web, base de données\
+**Niveau** : utilisateur\
+**Acteur principal** : administrateur\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté en tant qu'administrateur</u> **(CU#2)**\
+**Garantie minimale** : pas de garantie\
+**Garantie de succès** : L'administrateur visualise les utilisateurs  \
+**Déclencheur** : L'administrateur clique sur le bouton rechercher des utilisateurs\
+**Scénario nominal** :
+
+1. Le site affiche une pop-up avec un formulaire
+
+2. L'administrateur sélectionne sur quel attribut de l'utilisateur effectuer la recherche
+
+3. L'administrateur entre dans un champ la chaîne de caractères à rechercher
+
+4. L'administrateur clique sur le bouton rechercher
+
+5. Le site exécute un script qui recherche les utilisateurs dans la base de données en fonction des valeurs saisies par l'administrateur
+
+6. Le site affiche les différents utilisateurs de cette recherche
+
+**Extension** : /\
+**Liste des variantes** : \
+
+Scénario alternatif 4.1:
+- L'administrateur essaie de sélectionner un attribut qui ne définit par un utilisateur
+- Un message d'erreur est affiché à l'administrateur
+
+Scénario alternatif 4.1:
+- La taille de la chaîne de caractères est incorrecte
+- Un message d'erreur est affiché à l'administrateur
+
+Scénario alternatif 4.2:
+- La chaîne de caractères contient des caractères spéciaux
+- Un message d'erreur est affiché à l'utilisateur
+
+Scénario alternatif 5.1:
+- Une erreur est survenue lors de l'exécution du script
+- La recherche est annulée
+- Un message d'erreur est affiché à l'administrateur
+
+**Informations connexes** : /
+
+<h4 id="cu13"> CU#13 : Rechercher des logs</h4> 
+
+**Nom** : L'administrateur recherche des logs (journaux)\
+**Contexte d’utilisation** : Utilisation normale du site\
+**Portée** : site web, base de données\
+**Niveau** : utilisateur\
+**Acteur principal** : administrateur\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté en tant qu'administrateur</u> **(CU#2)**\
+**Garantie minimale** : pas de garantie\
+**Garantie de succès** : L'administrateur visualise les logs  \
+**Déclencheur** : L'administrateur clique sur le bouton rechercher des logs\
+**Scénario nominal** :
+
+1. Le site affiche une pop-up avec un formulaire
+
+2. L'administrateur sélectionne un attribut de recherche parmis une liste d'attributs définissant un log
+
+3. L'administrateur entre dans un champ la chaîne de caractères à rechercher
+
+4. L'administrateur clique sur le bouton rechercher
+
+5. Le site exécute un script qui recherche les logs dans la base de données en fonction des mots-clés et valeurs saisies par l'administrateur
+
+6. Le site affiche les différents logs de cette recherche
+
+**Extension** : /\
+**Liste des variantes** : \
+
+Scénario alternatif 4.1:
+- L'administrateur essaie de sélectionner un mot clé qui ne définit pas un log
+- Un message d'erreur est affiché à l'administrateur
+
+Scénario alternatif 4.2:
+- La taille d'une valeur associé à un mot-clé est incorrecte
+- Un message d'erreur est affiché à l'administrateur
+
+Scénario alternatif 4.3:
+- Des caractères spéciaux sont présents dans la chaîne à rechercher
+- Un message d'erreur est affiché à l'utilisateur
+
+Scénario alternatif 5.1:
+- Une erreur est survenue lors de l'exécution du script
+- La recherche est annulée
+- Un message d'erreur est affiché à l'administrateur
+
+**Informations connexes** : /
+
+<h4 id="cu14"> CU#14 : Supprimer un utilisateur</h4> 
+
+**Nom** : L'administrateur supprime un utilisateur\
+**Contexte d’utilisation** : Utilisation normale du site\
+**Portée** : site web, base de données\
+**Niveau** : utilisateur\
+**Acteur principal** : administrateur\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté en tant qu'administrateur</u> **(CU#2)**\
+**Garantie minimale** : pas de garantie\
+**Garantie de succès** : L'administrateur supprime un compte utilisateur \
+**Déclencheur** : L'administrateur clique sur le bouton supprimer un compte \
+**Scénario nominal** :
+
+1. Le site affiche une pop-up de confirmation
+
+2. L'administrateur clique sur le bouton confirmer la suppression du compte
+
+3. Le site exécute un script qui supprime l'utilisateur sélectionné dans la base de données
+
+4. Le site affiche la nouvelle liste des utilisateurs qui ne contient plus l'utilisateur précédemment supprimé
+
+**Extension** : /\
+**Liste des variantes** : \
+
+Scénario alternatif 2.1:
+- L'administrateur clique sur le bouton annuler la suppression
+- L'utilisateur n'est pas supprimé de la base de données
+
+Scénario alternatif 3.1:
+- Une erreur est survenue lors de l'exécution du script
+- La suppression est annulée
+- Un message d'erreur est affiché à l'administrateur
+
+**Informations connexes** : /
