@@ -9,7 +9,7 @@ enteteFile="piName;cpuUsage;cpuFrequency;memTotal;memUsed;uptime"
 
 declare -a rpiNameList
 rpiNameList[0]="cnat"
-rpiNameList[1]="pi1"
+rpiNameList[1]="pi2"
 rpiNameList[2]="pi2"
 rpiNameList[3]="pi3"
 rpiNameList[4]="pi4"

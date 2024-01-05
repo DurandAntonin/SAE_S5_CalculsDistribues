@@ -325,7 +325,7 @@ class MySQLDataManagement{
         $result = array();
 
         try{
-            $request = "select userId, userMail, login, lastName, firstName, password, role from $table where userMail = ?";
+            $request = "select userId, userMail, login, lastName, firstName, password, role, registrationDate from $table where userMail = ?";
 
             //on exécute la requete pour obtenir un user d'après un mail
             $stmt = $this->connector->prepare($request);
@@ -391,6 +391,106 @@ class MySQLDataManagement{
 
             //on retourne une liste de users mappée
             $result = $this->mappMySqliResultToUser($results);
+        }
+        catch (\mysqli_sql_exception $e) {
+            //on enregistre dans la liste des param de result, le message d'erreur
+            $listeResultParamsFunction["error"] = 1;
+            $listeResultParamsFunction["errorMessage"] = $e;
+        }
+
+        $listeResultParamsFunction["result"] = $result;
+        return $listeResultParamsFunction;
+    }
+
+    /**
+     * Exécute une requête SQL pour retourner tous les utilisateurs de role USER de la table
+     *
+     * Les informations de l'utilisateur retourné sont mappées.
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null|boolean : boolean qui indique si des utilisateurs ont été renvoyés ou non<br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les informations des utilisateurs
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @see MySQLDataManagement::mappMySqliResultToUser()
+     *
+     * @version 1.0
+     */
+    public function get_users(string $table): array
+    {
+        //on va stocker les différents paramètres de renvoi dans une liste
+        $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
+
+        $result = array();
+
+        try{
+            $request = "select userId, userMail, login, lastName, firstName, password, role, registrationDate from $table order by userMail, login, lastName, firstName, registrationDate desc";
+
+            //on exécute la requete pour obtenir un user d'après un mail
+            $stmt = $this->connector->prepare($request);
+            $stmt -> execute();
+
+            //on récupere les résultats sous forme d'une liste
+            $results = $stmt -> get_result();
+
+            //on retourne une liste de users mappée
+            $result = $this->mappMySqliResultToUser($results);
+        }
+        catch (\mysqli_sql_exception $e) {
+            //on enregistre dans la liste des param de result, le message d'erreur
+            $listeResultParamsFunction["error"] = 1;
+            $listeResultParamsFunction["errorMessage"] = $e;
+        }
+
+        $listeResultParamsFunction["result"] = $result;
+        return $listeResultParamsFunction;
+    }
+
+    /**
+     * Exécute une requête SQL pour retourner tous les logs de la table
+     *
+     * Les informations de l'utilisateur retourné sont mappées.
+     *
+     * Les paramètres de retour sont stockés dans une liste sous la forme : <br>
+     *  [ <br>
+     *    '**error**' int : indique si une erreur est survenue durant l'exécution de la requête <br>
+     *    '**errorMessage**' string : message d'erreur <br>
+     *    '**result**' null|boolean : boolean qui indique si des utilisateurs ont été renvoyés ou non<br>
+     *  ] <br>
+     *
+     * @param string $table Table SQL contenant les informations des utilisateurs
+     *
+     * @return array Liste contenant les paramètres de retour
+     *
+     * @see MySQLDataManagement::mappMySqliResultToUser()
+     *
+     * @version 1.0
+     */
+    public function get_logs(string $table): array
+    {
+        //on va stocker les différents paramètres de renvoi dans une liste
+        $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
+
+        $result = array();
+
+        try{
+            $request = "select logId, logLevel, userId, date, ip, description from $table order by date desc";
+
+            //on exécute la requete pour obtenir un user d'après un mail
+            $stmt = $this->connector->prepare($request);
+            $stmt -> execute();
+
+            //on récupere les résultats sous forme d'une liste
+            $results = $stmt -> get_result();
+
+            //on retourne une liste de users mappée
+            $result = $this->mappMySqliResultToLog($results);
         }
         catch (\mysqli_sql_exception $e) {
             //on enregistre dans la liste des param de result, le message d'erreur
@@ -643,7 +743,7 @@ class MySQLDataManagement{
         $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
 
         try{
-            $request = "insert into $table(userId, userMail, login, lastName, firstName, password) values(?, ?, ?, ?, ?, ?)";
+            $request = "insert into $table(userId, userMail, login, lastName, firstName, password, registrationDate) values(?, ?, ?, ?, ?, ?, ?)";
 
             //on exécute la requete pour insérer un nouvel user
             $stmt = $this->connector->prepare($request);
@@ -653,7 +753,8 @@ class MySQLDataManagement{
             $userMail = $userToInsert->getMail();
             $lastName = $userToInsert->getLastName();
             $firstName = $userToInsert->getFirstName();
-            $stmt->bind_param("ssssss",$userId, $userMail, $login, $lastName, $firstName, $userPassword);
+            $registrationDate = $userToInsert->getRegistrationDate();
+            $stmt->bind_param("sssssss",$userId, $userMail, $login, $lastName, $firstName, $userPassword, $registrationDate);
 
             $stmt->execute();
         }
@@ -1179,7 +1280,7 @@ class MySQLDataManagement{
         $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
 
         try{
-            $request = "select userId, userMail, login, lastName, firstName, role, registrationDate from $table where $searchAttribute like ?";
+            $request = "select userId, userMail, login, lastName, firstName, role, registrationDate from $table where $searchAttribute like ? order by userMail, login, lastName, firstName, registrationDate desc";
 
             $stringResearched = "%{$stringToSearch}%";
 
@@ -1227,7 +1328,7 @@ class MySQLDataManagement{
         $listeResultParamsFunction = ["error"=>0, "errorMessage"=>"", "result"=>null];
 
         try{
-            $request = "select userId, userMail, login, lastName, firstName, role, registrationDate from $table where $searchAttribute like ?";
+            $request = "select logId, logLevel, userId, date, ip, description from $table where $searchAttribute like ? order by date desc";
 
             $stringResearched = "%{$stringToSearch}%";
 
@@ -1309,7 +1410,10 @@ class MySQLDataManagement{
             //on convertit le niveau du log sous format string en un type énuméré équivalent
             $logLevel = Enum_niveau_logger::fromName($listInfoLog["logLevel"]);
 
-            $log = new Logging($listInfoLog["logId"], $logLevel, $listInfoLog["userId"], $listInfoLog["parDate"], $listInfoLog["parIp"], $listInfoLog["parDescription"]);
+            //on convertit la date en un objet de type DateTime
+            $date = \DateTime::createFromFormat("Y-m-d H:i:s", $listInfoLog["date"]);
+
+            $log = new Logging($listInfoLog["logId"], $logLevel, $listInfoLog["userId"], $date, $listInfoLog["ip"], $listInfoLog["description"]);
             $listLogs[] = $log;
         }
 

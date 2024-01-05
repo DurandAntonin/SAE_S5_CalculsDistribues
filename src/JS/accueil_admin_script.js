@@ -7,78 +7,15 @@ const enumTimeFilters = {
     tout:3
 }
 
-const listUsers = document.querySelector('#popUpUsers');
+const popUplistLogs = document.querySelector('#popUpLogs');
+const btnShowLogs = document.querySelector('#showLogs');
+const popUplistUsers = document.querySelector('#popUpUsers');
 const btnShowUsers = document.querySelector('#showUsers');
 const contentUsers = document.querySelector('#contentUsers');
-
 const contentLogs = document.querySelector('#contentLogs');
 
+var showedL = false;
 var showed = false;
-
-function showUsers() {
-    console.log("click");
-    if (!showed) {
-      listUsers.classList.remove("hidden");
-      showed = true;
-  
-      document.addEventListener('click', handleClickOutside);
-    } else {
-      listUsers.classList.add("hidden");
-      showed = false;
-  
-      document.removeEventListener('click', handleClickOutside);
-    }
-  }
-
-function handleClickOutside(event) {
-
-if (!contentUsers.contains(event.target)) {
-    listUsers.classList.add("hidden");
-    showed = false;
-
-    document.removeEventListener('click', handleClickOutside);
-}
-}
-
-btnShowUsers.addEventListener('click', function(event) {
-    event.stopPropagation();
-  });
-
-  const listLogs = document.querySelector('#popUpLogs');
-  const btnShowLogs = document.querySelector('#showLogs');
-  
-  var showedL = false;
-  
-  function showLogs() {
-      console.log("click");
-      if (!showedL) {
-        listLogs.classList.remove("hidden");
-        showedL = true;
-    
-        document.addEventListener('click', handleClickOutsideL);
-      } else {
-        listLogs.classList.add("hidden");
-        showedL = false;
-    
-        document.removeEventListener('click', handleClickOutsideL);
-      }
-    }
-  
-  function handleClickOutsideL(event) {
-  
-  if (!contentLogs.contains(event.target)) {
-      listLogs.classList.add("hidden");
-      showedL = false;
-  
-      document.removeEventListener('click', handleClickOutsideL);
-  }
-  }
-  
-  btnShowLogs.addEventListener('click', function(event) {
-      event.stopPropagation();
-    });
-
-
 let chartBar
 
 //elements html contenant les stats deu site
@@ -93,8 +30,12 @@ let listStatsClusterHat
 let listTimeFilters
 let currentTimeFilterValue = 1 //0=jour 1=semaine 2=mois 3=tout
 
-//intervalle de temps pour rafraichir les stats du cluster hat
-let intertalTimeGetStatsClusterHat = 10000
+//intervalle de temps en ms pour rafraichir les stats du cluster hat
+let intertalTimeGetStatsClusterHat = 60000
+//temps en ms avant d'exécuter une requete ajax pour récupérer les données du cluster hat dans un fichier
+let timeToWaitToGetStatsClusterHat = 40000
+//nom du dernier fichier contenant les stats du cluster hat
+let fileNameStatsClusterHat
 
 //éléments pour la recherche et l'affichage des utilisateurs selon un attribut
 let researchBarUsers
@@ -109,6 +50,14 @@ let buttonSubmitResearchLogging
 let listLogging
 
 function init(){
+    btnShowUsers.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+
+    btnShowLogs.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+
     //on récupère les différents éléments html stockant les stats du site, du cluster hat et champs select
     elemNbUsers = document.getElementById("nb-users")
     elemNbVisits = document.getElementById("nb-visits")
@@ -118,11 +67,11 @@ function init(){
     researchBarUsers = document.getElementById("research-bar-user")
     attributeSelectedUserResearch = document.getElementById("select-user-attribute")
     buttonSubmitResearchUsers = document.getElementById("button-submit-research-users")
-    listUsers = document.getElementById("div-user-list")
+    listUsers = document.getElementById("div-liste-users")
     researchBarLogging = document.getElementById("research-bar-logging")
     attributeSelectedLoggingResearch = document.getElementById("select-logging-attribute")
     buttonSubmitResearchLogging = document.getElementById("button-submit-research-logging")
-    listLogging = document.getElementById("div-logging-list")
+    listLogging = document.getElementById("div-list-logging")
 
     //par défaut on met le time filter value a 0 (== défaut)
     currentTimeFilterValue = enumTimeFilters.jour
@@ -140,8 +89,8 @@ function init(){
     //console.log(listStatsClusterHat)
 
     //on load les stats du cluster hat toutes les n secondes
-    requestGetStatsClusterHat()
-    //let timerRequestGetStatsClusterHat = setInterval(requestGetStatsClusterHat, intertalTimeGetStatsClusterHat)
+    //requestSetStatsClusterHat()
+    let timerRequestGetStatsClusterHat = setInterval(requestSetStatsClusterHat, intertalTimeGetStatsClusterHat)
 }
 
 function changeStatsBasedTimeFilter(){
@@ -151,6 +100,19 @@ function changeStatsBasedTimeFilter(){
 
     //on appelle une autre méthode pour changer les stats en fonction du time filter
     requestSetStatsSite()
+}
+
+function deleteUser(){
+    let userIdToDelete = this.id
+    //console.log(userIdToDelete)
+
+    //on crée et exécute une requête js vers un script php pour supprimer l'utilisateur
+    let requestGetStatsSite = new XMLHttpRequest()
+    requestGetStatsSite.open("POST","script_supprimer_compte_utilisateur.php");
+    requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
+    requestGetStatsSite.send(JSON.stringify({"userIdToDelete": userIdToDelete}))
+
+    requestGetStatsSite.onreadystatechange = resultRequestDeleteUser
 }
 
 function requestSetStatsSite(){
@@ -189,14 +151,16 @@ function requestSetStatsSite(){
     requestGetStatsSite.onreadystatechange = resultRequestGetStatsSite
 }
 
-function requestGetStatsClusterHat(){
+function requestSetStatsClusterHat(){
     //on crée et exécute une requête js vers un script php pour récupérer les stats du cluster hat en fonction
     let requestGetStatsSite = new XMLHttpRequest()
     requestGetStatsSite.open("POST","script_get_stats_cluster_hat.php");
     requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
-    requestGetStatsSite.send()
 
-    requestGetStatsSite.onreadystatechange = resultRequestGetStatsClusterHat
+    //on envoi le mode d'exécution du script voulu
+    requestGetStatsSite.send(JSON.stringify({"execMode" : 0}))
+
+    requestGetStatsSite.onreadystatechange = resultRequestSetStatsClusterHatInFile
 }
 
 function requestResearchUsersOrLogging(){
@@ -218,9 +182,9 @@ function requestResearchUsersOrLogging(){
 
     //on crée et exécute une requête js vers un script php pour rechercher des users ou logging en fonction d'un attribut sélectionné
     let requestGetStatsSite = new XMLHttpRequest()
-    requestGetStatsSite.open("POST","script_get_stats_cluster_hat.php");
+    requestGetStatsSite.open("POST","script_get_users_or_logs_with_attribute.php");
     requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
-    requestGetStatsSite.send(JSON.stringify({"fieldToSearch": fieldToSearch, "stringToSeaerch" : stringToSearch, "classResearched" : classResearched}))
+    requestGetStatsSite.send(JSON.stringify({"fieldToSearch": fieldToSearch, "stringSearch" : stringToSearch, "classResearched" : classResearched}))
 
     requestGetStatsSite.onreadystatechange = resultRequestResearchUsersOrLogging
 }
@@ -287,7 +251,40 @@ function resultRequestGetStatsSite(){
     }
 }
 
-function resultRequestGetStatsClusterHat(){
+async function resultRequestSetStatsClusterHatInFile() {
+    if (this.readyState === 4 && this.status === 200) {
+        let resultScript = this.response
+        //console.log(resultScript)
+
+        let resultScriptParsed = JSON.parse(resultScript)
+
+        //on vérifie qu'il n'y a pas d'erreur
+        if (resultScriptParsed.error === 0) {
+            //on récupère le nom du fichier contenant les stats du kit cluster hat
+            fileNameStatsClusterHat = resultScriptParsed.result
+
+            //on attend n secondes le temps que les stats soient écrites dans le fichier
+            //puis on exécute une deuxième requete pour lire dans le fichier
+            await new Promise(r => setTimeout(requestGetStatsClusterHatInFile, timeToWaitToGetStatsClusterHat))
+        } else {
+            console.log("Erreur : " + resultScriptParsed.errorMessage)
+        }
+
+    }
+}
+
+function requestGetStatsClusterHatInFile(){
+    let requestGetStatsSiteInFile = new XMLHttpRequest()
+    requestGetStatsSiteInFile.open("POST","script_get_stats_cluster_hat.php");
+    requestGetStatsSiteInFile.setRequestHeader("Content-Type","application/json-charset=utf-8");
+
+    //on envoie le mode d'exécution du script voulu
+    requestGetStatsSiteInFile.send(JSON.stringify({"execMode" : 1, "fileName" : fileNameStatsClusterHat}))
+
+    requestGetStatsSiteInFile.onreadystatechange = resultRequestGetStatsClusterHatInFile
+}
+
+function resultRequestGetStatsClusterHatInFile(){
     if (this.readyState === 4 && this.status === 200) {
         let resultScript = this.response
         //console.log(resultScript)
@@ -298,25 +295,34 @@ function resultRequestGetStatsClusterHat(){
         let objectStatsClusterHat = resultScriptParsed.result
         //console.log(listStatsClusterHat)
 
-        //pour chaque rpi du cluster hat, on met à jour les statistiques
-        for (let i=0;i<listStatsClusterHat.length;i++){
-            let statsRpi = objectStatsClusterHat[i]
-            let statCpuPourcent = (statsRpi.cpuUsage)
-            let statCpuFrequency = statsRpi.cpuFrequency
-            let statMemUsedPourcent = ((parseInt(statsRpi.memUsed) / parseInt(statsRpi.memTotal)) * 100).toPrecision(4)
-            let statMemUsed = parseInt(statsRpi.memUsed) * Math.pow(10,-3)
-            let statUptime = statsRpi.uptime
+        //on vérifie qu'il n'y a pas eu d'erreur
+        if (resultScriptParsed.error === 0){
+            //pour chaque rpi du cluster hat, on met à jour les statistiques
+            for (let i=0;i<objectStatsClusterHat.length;i++){
+                let statsRpi = objectStatsClusterHat[i]
+                let statCpuPourcent = (statsRpi.cpuUsage)
+                let statCpuFrequency = statsRpi.cpuFrequency
+                let statMemUsedPourcent = ((parseInt(statsRpi.memUsed) / parseInt(statsRpi.memTotal)) * 100).toPrecision(4)
+                let statMemUsed = (parseInt(statsRpi.memUsed) * Math.pow(10,-3)).toPrecision(4)
+                let statUptime = statsRpi.uptime
 
-            //on met à jour les stats du rpi dans le tableau
-            let trStatsRpi = listStatsClusterHat[i].children
-            //console.log(trStatsRpi[3].children)
+                //on met à jour les stats du rpi dans le tableau
+                let trStatsRpi = listStatsClusterHat[i].children
+                //console.log(trStatsRpi[3].children)
 
-            trStatsRpi[1].children[0].innerHTML = `${statCpuPourcent} %`
-            trStatsRpi[1].children[1].innerHTML = `${statCpuFrequency} GHz`
-            trStatsRpi[2].children[0].innerHTML = `${statMemUsedPourcent} %`
-            trStatsRpi[2].children[1].innerHTML = `${statMemUsed} Go`
-            trStatsRpi[3].innerHTML = statUptime
+                trStatsRpi[1].children[0].innerHTML = `${statCpuPourcent} %`
+                trStatsRpi[1].children[1].innerHTML = `${statCpuFrequency} GHz`
+                trStatsRpi[2].children[0].innerHTML = `${statMemUsedPourcent} %`
+                trStatsRpi[2].children[1].innerHTML = `${statMemUsed} Go`
+                trStatsRpi[3].innerHTML = statUptime
+            }
         }
+        else{
+            console.log("Erreur GetStatsClusterHatInFile")
+        }
+    }
+    else{
+        console.log("Reponse en cours")
     }
 
 }
@@ -328,6 +334,7 @@ function resultRequestResearchUsersOrLogging(){
         //console.log(resultScript)
 
         let resultScriptParsed = JSON.parse(resultScript)
+        //console.log(resultScriptParsed)
 
         //on regarde si une erreur a été renvoyée
         if (resultScriptParsed.error === 0){
@@ -336,21 +343,61 @@ function resultRequestResearchUsersOrLogging(){
             //on récupère la classe de recherche qui sera l'identifiant de l'élément html qui va stocker cette liste d'objets serialisés
             let htmlElemclassResearched = listResults.classResearched
 
-            //et on récupère la liste des objets de cette classe sérialisé
-            let listObjectSerialised = listResults.listObjectSerialised
+            //et on récupère la liste des objets de cette classe sérialisé qu'on transforme en objet js
+            let listObjectSerialised = JSON.parse(listResults.listObjectSerialised)
+
+            //on enlève les anciens résultats
+            deleteChildNodes(listUsers)
+            deleteChildNodes(listLogging)
 
             //on ajoute chaque objet serialisé dans l'objet html en fonction de sa classe
             for (let i=0;i<listObjectSerialised.length;i++){
-                if (htmlElemclassResearched === "Users")
-                    createHtmlElementForSerialisedUsers(listUsers, listObjectSerialised[i])
-                else
-                    createHtmlElementForSerialisedLogging(listLogging, listObjectSerialised[i])
+                //on déserialise l'objet
+                let objectUnserialised = JSON.parse(listObjectSerialised[i])
+                //console.log(objectUnserialised)
+
+                if (htmlElemclassResearched === "User"){
+                    createHtmlElementForSerialisedUsers(listUsers, objectUnserialised)
+                }
+                else{
+                    createHtmlElementForSerialisedLogging(listLogging, objectUnserialised)
+                }
             }
         }
         else{
             console.log("Erreur : " + resultScriptParsed.errorMessage)
         }
     }
+}
+
+function resultRequestDeleteUser() {
+    if (this.readyState === 4 && this.status === 200) {
+        let resultScript = this.response
+        //console.log(resultScript)
+
+        let resultScriptParsed = JSON.parse(resultScript)
+        //console.log(resultScriptParsed)
+
+        //on regarde si le script a retourné une erreur
+        if (resultScriptParsed.error === 0){
+
+            //on parcourt la liste des users retournées par la requete pour le supprimer graphiquement
+            for (let i=0;i<listUsers.children.length; i++){
+                let userNode = listUsers.children[i]
+
+                //on supprime si l'id du user == id du user supprimé
+                if (userNode.children[0].children[1].id === resultScriptParsed["result"]){
+                    userNode.remove()
+                    break
+                }
+            }
+
+        }
+        else{
+            console.log("Erreur : " + resultScriptParsed.errorMessage)
+        }
+    }
+
 }
 
 function getTimeFilterValueFromKey(key){
@@ -397,37 +444,165 @@ function createHtmlElementForSerialisedUsers(divListUsers, userSerialised){
     //div contenant l'ID du user
     let subDivId = document.createElement("div")
     let spanDivId = document.createElement("span")
+    subDivId.setAttribute("id", userSerialised.userId)
+    subDivId.setAttribute("class", "text-xs text-white")
     spanDivId.setAttribute("class", "mr-2")
-    spanDivId.appendChild(spanDivId)
+    subDivId.appendChild(spanDivId)
 
     //div contenant le mail du user
     let subDivMail = document.createElement("div")
-    subDivMail.setAttribute("class", "text-lg font-bold text-white")
+    subDivMail.setAttribute("class", "text-lg font-bold text-white mr-20")
 
     //div contenant le nom et prénom du user
     let subDivFirstNameLastName = document.createElement("div")
     let spanLastName = document.createElement("span")
     let spanFirstName = document.createElement("span")
+    subDivFirstNameLastName.setAttribute("class", "text-xs text-white")
     spanLastName.setAttribute("class", "mr-2")
     spanFirstName.setAttribute("class", "mr-2")
     subDivFirstNameLastName.append(spanLastName, spanFirstName)
 
-    //icone pour supprimer un user
-    let iconeDeleteUser = document.createElement("ion-icon")
-    iconeDeleteUser.setAttribute("name", "trash")
-    iconeDeleteUser.setAttribute("class", "w-7 h-7 text-red-700 absolute right-2 cursor-pointer")
+    //div pour la date d'inscription du user
+    let subDivRegistrationDate = document.createElement("div")
+    subDivRegistrationDate.setAttribute("class", "text-lg font-bold text-white")
+
+    //icone pour supprimer un user si ce dernier a le role USER
+    let iconeDeleteUser
+    if (userSerialised.role === "USER"){
+        iconeDeleteUser = document.createElement("ion-icon")
+        iconeDeleteUser.setAttribute("name", "trash")
+        iconeDeleteUser.setAttribute("class", "w-7 h-7 text-red-700 absolute right-2 cursor-pointer")
+        iconeDeleteUser.setAttribute("id", userSerialised.userId)
+
+        //on associe un événement on click pour l'icone pour supprimer le user associé
+        iconeDeleteUser.onclick = deleteUser
+    }
 
     //on ajoute une chaine de caractère pour chaque span et div
-    spanDivId.innerHTML = "ID : " + userSerialised.userId
+    subDivLogin.innerHTML = "Login : " + userSerialised.login
+    spanDivId.innerHTML = "ID : " + userSerialised.userId.substring(0,8)
     subDivMail.innerHTML = "Adresse mail : " + userSerialised.userMail
     spanLastName.innerHTML = "Nom : " + userSerialised.lastName
     spanFirstName.innerHTML = "Prénom : " + userSerialised.firstName
+    subDivRegistrationDate.innerHTML = "Inscription : " + userSerialised.registrationDate
 
     //on ajoute les différents éléments div dans l'élément div
-    divUser.append(subDivLogin, subDivId, subDivMail, subDivFirstNameLastName, iconeDeleteUser)
+    divUser.append(subDivLogin, subDivId, subDivMail, subDivFirstNameLastName, subDivRegistrationDate)
+
+    //console.log(iconeDeleteUser)
+    //on ajoute l'icone pour delete le user si elle a été définie
+    if (iconeDeleteUser !== undefined)
+        divUser.append(iconeDeleteUser)
+
     divUserGlob.append(divUser)
     divListUsers.append(divUserGlob)
 }
 
 function createHtmlElementForSerialisedLogging(divListLogging, loggingSerialised){
+    let divLoggingGlob = document.createElement("div")
+    divLoggingGlob.setAttribute("class", "flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative")
+
+    let divLogging = document.createElement("div")
+    divLogging.setAttribute("class", "grid grid-flow-col grid-rows-2")
+
+    //div pour le log level du logging
+    let subDivLogLevel = document.createElement("div")
+    subDivLogLevel.setAttribute("class", "mr-20 text-lg font-bold text-white")
+
+    //div pour l'id du logging
+    let subDivLogId = document.createElement("div")
+    let spanLogId = document.createElement("span")
+    subDivLogId.setAttribute("class", "text-xs text-white")
+    spanLogId.setAttribute("class", "mr-2")
+    subDivLogId.appendChild(spanLogId)
+
+    //div pour la description du logging
+    let subDivDescription = document.createElement("div")
+    subDivDescription.setAttribute("class", "text-lg font-bold text-white mr-20")
+
+    //div pour le user id et l'ip du logging
+    let subDivUserIdIp = document.createElement("div")
+    let spanUserId = document.createElement("span")
+    let spanIp = document.createElement("span")
+    subDivUserIdIp.setAttribute("class", "text-xs text-white")
+    spanUserId.setAttribute("class", "mr-2")
+    spanIp.setAttribute("class", "mr-2")
+    subDivUserIdIp.append(spanUserId, spanIp)
+
+    //div pour la date du logging
+    let subDivDate = document.createElement("div")
+    subDivDate.setAttribute("class", "text-lg font-bold text-white absolute right-2")
+
+    //on ajoute une chaine de caractère pour chaque span et div
+    subDivLogLevel.innerHTML = "LogLevel : " + loggingSerialised.logLevel
+    spanLogId.innerHTML = "LogId : " + loggingSerialised.logId.substring(0,8)
+    subDivDescription.innerHTML = "Description : " + loggingSerialised.description
+    spanUserId.innerHTML = "UserId : " + loggingSerialised.userId.substring(0,8)
+    spanIp.innerHTML = "IP : " + loggingSerialised.ip
+    subDivDate.innerHTML = "Date : " + loggingSerialised.date
+
+    //on ajoute les différents éléments div dans l'élément div
+    divLogging.append(subDivLogLevel, subDivLogId, subDivDescription, subDivUserIdIp, subDivDate)
+    divLoggingGlob.append(divLogging)
+    divListLogging.append(divLoggingGlob)
+}
+
+function showLogs() {
+    if (!showedL) {
+        popUplistLogs.classList.remove("hidden");
+        showedL = true;
+
+        document.addEventListener('click', handleClickOutsideL);
+    } else {
+        popUplistLogs.classList.add("hidden");
+        showedL = false;
+
+        document.removeEventListener('click', handleClickOutsideL);
+    }
+
+    //on enlève les logging retournés par la dernière requete
+    deleteChildNodes(listLogging)
+}
+
+function handleClickOutsideL(event) {
+    if (!contentLogs.contains(event.target)) {
+        popUplistLogs.classList.add("hidden");
+        showedL = false;
+
+        document.removeEventListener('click', handleClickOutsideL);
+    }
+}
+
+function showUsers() {
+    if (!showed) {
+        popUplistUsers.classList.remove("hidden");
+        showed = true;
+
+        document.addEventListener('click', handleClickOutside);
+    } else {
+        popUplistUsers.classList.add("hidden");
+        showed = false;
+
+        document.removeEventListener('click', handleClickOutside);
+    }
+
+    //on enlève les users retournés par la dernière requete
+    deleteChildNodes(listUsers)
+}
+
+function handleClickOutside(event) {
+    if (!contentUsers.contains(event.target)) {
+        popUplistUsers.classList.add("hidden");
+        showed = false;
+
+        document.removeEventListener('click', handleClickOutside);
+
+
+    }
+}
+
+function deleteChildNodes(fatherNode){
+    while (fatherNode.hasChildNodes()){
+        fatherNode.removeChild(fatherNode.firstChild)
+    }
 }

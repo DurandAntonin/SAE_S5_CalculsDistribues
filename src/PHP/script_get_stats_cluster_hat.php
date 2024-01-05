@@ -13,62 +13,86 @@ session_start();
 //on charge les variables d'environnement
 $VARIABLES_GLOBALES = import_config();
 $header = getallheaders();
+$chaine_JSON = file_get_contents("php://input");
 
 
 if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/json-charset=utf-8") {
-    $user = unserialize($_SESSION["user"]);
-    $userId = $user->getId();
+    $paramExecRequete = json_decode($chaine_JSON, true);
+    $execMode = $paramExecRequete["execMode"];
 
     //on récupère le logger file pour enregistrer des événements
     $logger = unserialize($_SESSION["logger"]);
     $loggerFile = $logger->getLoggerInstance("loggerFile");
 
-    //on exécute une commande bash qui s'occupe d'écrire dans un fichier les statistiques du cluster hat
-    $output = null;
-    $resultCode = null;
-
-    //on donne au fichier un nom précis
-    $outputFileName = guidv4() . "csv";
-
-    $command = "echo \"{$VARIABLES_GLOBALES["chemin_script_get_stats_cluster_hat"]} {$outputFileName}\" > {$VARIABLES_GLOBALES["chemin_pipe_module_nb_premiers_dans_conteneur"]}";
-    //echo $command;
-
-    //on exécute la commande
-    exec($command,$output,$resultCode);
-    $resultat_calcul = $resultCode[0];
-
-    //on attend n secondes le temps que la commande s'exécute
-    sleep(40);
+    $user = unserialize($_SESSION["user"]);
+    $userId = $user->getId();
 
     //on va stocker dans une liste les paramètres de renvoi
     $listeResultParams = ["error"=>0, "errorMessage"=>"", "result"=>null];
-    $listStatsClusterHat = array();
 
-    //on regarde si le fichier a été créé
-    $outputFile = $VARIABLES_GLOBALES["repertoire_resultat_script_get_stats_cluster_hat"] . $outputFileName;
-    if (file_exists($outputFile)){
-        //on l'ouvre en mode csv, et on stocke dans le champ result les stats pour chaque rpi
-        $fp = fopen($outputFile, "r");
+    //on regarde quel est le mode d'exécution du script
+    //0 = exécute la commande pour écrire les stats du cluster dans un fichier
+    //1 = récupère les stats du fichier
+    if ($execMode == 0){
+        //on donne au fichier un nom précis
+        $outputFileName = guidv4() . ".csv";
 
-        //on saute l'entete
-        $header = fgetcsv($fp, "1024", ";");
+        $output = null;
+        $resultCode = null;
 
-        while ($ligne = fgetcsv($fp, "1024", ";")) {
-            $listStatsRpi = array();
-            for ($i = 0; $i < count($header); $i++) {
-                $listStatsRpi[$header[$i]] = $ligne[$i];
-            }
-            $listStatsClusterHat[] = $listStatsRpi;
-        }
-        fclose($fp);
+        //on exécute une commande bash qui s'occupe d'écrire dans un fichier les statistiques du cluster hat
+        $command = "echo \"{$VARIABLES_GLOBALES["chemin_script_get_stats_cluster_hat"]} {$outputFileName}\" > {$VARIABLES_GLOBALES["chemin_pipe_stats_cluster_hat_dans_conteneur"]}";
+        //echo $command;
 
-        //on ajoute la liste des stats du cluster hat dans la liste de renvoi
-        $listeResultParams["result"] = $listStatsClusterHat;
+        //on exécute la commande
+        exec($command,$output,$resultCode);
+        //$resultat_calcul = $resultCode[0];
+
+        //on renvoi aus script le nom du fichier contenant les stats du cluster hat
+        $listeResultParams["result"] = $outputFileName;
     }
+
+    elseif ($execMode == 1){
+        $fileName = $paramExecRequete["fileName"];
+
+        //on regarde si le fichier a été créé
+        $outputFile = $VARIABLES_GLOBALES["repertoire_resultat"] . $fileName;
+
+        $listStatsClusterHat = array();
+
+        if (file_exists($outputFile)){
+            //on l'ouvre en mode csv, et on stocke dans le champ result les stats pour chaque rpi
+            $fp = fopen($outputFile, "r");
+
+            //on saute l'entete
+            $header = fgetcsv($fp, "1024", ";");
+
+            while ($ligne = fgetcsv($fp, "1024", ";")) {
+                $listStatsRpi = array();
+                for ($i = 0; $i < count($header); $i++) {
+                    $listStatsRpi[$header[$i]] = $ligne[$i];
+                }
+                $listStatsClusterHat[] = $listStatsRpi;
+            }
+            fclose($fp);
+
+            //on supprime le fichier
+            unlink($outputFile);
+
+            //on ajoute la liste des stats du cluster hat dans la liste de renvoi
+            $listeResultParams["result"] = $listStatsClusterHat;
+        }
+        else{
+            //on enregistre a l'aide du logger le warning
+            $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Fichier {$outputFile} non créé ");
+            $listeResultParams["error"] = 1;
+        }
+    }
+
     else{
-        //on enregistre a l'aide du logger l'erreur
-        $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Fichier resultat_script_get_stats_cluster_hat non créé dans les 10 secondes de l'exécution du script");
-        $listeResultParams["connBd"]["error"] = 1;
+        //on enregistre a l'aide du logger le warning
+        $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Mode {$execMode} d'exécution de script_get_stats_cluster_hat inconnu");
+        $listeResultParams["error"] = 1;
     }
 
     //en renvoie le résultat des requetes au script js sous format json

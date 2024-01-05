@@ -11,7 +11,7 @@ $user = unserialize($_SESSION["user"]);
 <head>
     <meta charset="UTF-8">
     <title>BlitzCalc</title>
-    <script defer src = "../JS/accueil_script.js"> </script>
+    <!--<script defer src = "../JS/accueil_script.js"> </script>-->
     <script defer src = "../JS/accueil_admin_script.js"> </script>
     <link href="../dist/output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -93,21 +93,21 @@ $user = unserialize($_SESSION["user"]);
       <div class="grid w-[40rem] grid-cols-4 gap-2 rounded-xl bg-deepblue p-2 text-white">
         <div>
             <input type="radio" name="option" id="jour" value="jour" class="peer hidden" checked />
-            <label for="jour" class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Jour</label>
+            <label for="jour" class="time-filter block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Jour</label>
         </div>
         <div>
             <input type="radio" name="option" id="semaine" value="semaine" class="peer hidden" />
-            <label for="semaine" class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Semaine</label>
+            <label for="semaine" class="time-filter block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Semaine</label>
         </div>
 
         <div>
             <input type="radio" name="option" id="mois" value="mois" class="peer hidden" />
-            <label for="mois" class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Mois</label>
+            <label for="mois" class="time-filter block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Mois</label>
         </div>
 
         <div>
             <input type="radio" name="option" id="tout" value="tout" class="peer hidden" />
-            <label for="tout" class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Tout</label>
+            <label for="tout" class="time-filter block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Tout</label>
         </div>
       </div>
     </div>
@@ -122,7 +122,7 @@ $user = unserialize($_SESSION["user"]);
                                         </div>
         
                                         <div class="mx-5">
-                                            <h4 class="text-2xl font-semibold text-gray-700">8,282</h4>
+                                            <h4 id="nb-users" class="text-2xl font-semibold text-gray-700">0</h4>
                                             <div class="text-deepblue ">Nombres d'utilisateurs</div>
                                         </div>
                                     </div>
@@ -135,7 +135,7 @@ $user = unserialize($_SESSION["user"]);
                                         </div>
         
                                         <div class="mx-5">
-                                            <h4 class="text-2xl font-semibold text-gray-700">200,521</h4>
+                                            <h4 id="nb-visits" class="text-2xl font-semibold text-gray-700">0</h4>
                                             <div class="text-deepblue">Nombres de visites</div>
                                         </div>
                                     </div>
@@ -148,7 +148,7 @@ $user = unserialize($_SESSION["user"]);
                                         </div>
         
                                         <div class="mx-5">
-                                            <h4 class="text-2xl font-semibold text-gray-700">215,542</h4>
+                                            <h4 id="nb-module-uses" class="text-2xl font-semibold text-gray-700">0</h4>
                                             <div class="text-deepblue">Utilisation des modules</div>
                                         </div>
                                     </div>
@@ -184,7 +184,7 @@ $user = unserialize($_SESSION["user"]);
                                                 </tr>
                                             </thead>
             
-                                            <tbody class="bg-white">
+                                            <tbody id="tbody-table-stats" class="bg-white">
                                                 <tr>
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                         <div class="flex items-center">
@@ -203,13 +203,13 @@ $user = unserialize($_SESSION["user"]);
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                        <div class="text-sm leading-5 text-gray-900">14.7 %</div>
-                                                        <div clasistUserss="text-sm leading-5 text-gray-500">0.8 GHz</div>
+                                                        <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="text-sm leading-5 text-gray-900">14.4 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.766 Go</div>
+                                                    <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td
@@ -234,13 +234,13 @@ $user = unserialize($_SESSION["user"]);
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                        <div class="text-sm leading-5 text-gray-900">5.7 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.5 GHz</div>
+                                                        <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="text-sm leading-5 text-gray-900">45.9 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.233 Go</div>
+                                                    <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td
@@ -265,13 +265,13 @@ $user = unserialize($_SESSION["user"]);
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                        <div class="text-sm leading-5 text-gray-900">5.7 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.5 GHz</div>
+                                                        <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="text-sm leading-5 text-gray-900">45.9 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.233 Go</div>
+                                                    <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td
@@ -296,13 +296,13 @@ $user = unserialize($_SESSION["user"]);
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                        <div class="text-sm leading-5 text-gray-900">5.7 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.5 GHz</div>
+                                                        <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="text-sm leading-5 text-gray-900">45.9 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.233 Go</div>
+                                                    <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td
@@ -327,13 +327,13 @@ $user = unserialize($_SESSION["user"]);
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                        <div class="text-sm leading-5 text-gray-900">5.7 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.5 GHz</div>
+                                                        <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="text-sm leading-5 text-gray-900">45.9 %</div>
-                                                        <div class="text-sm leading-5 text-gray-500">0.233 Go</div>
+                                                    <div class="text-sm leading-5 text-gray-900">null</div>
+                                                        <div class="text-sm leading-5 text-gray-500">null</div>
                                                     </td>
             
                                                     <td
@@ -358,27 +358,27 @@ $user = unserialize($_SESSION["user"]);
 <div class="fixed left-0 top-0 z-40 h-full w-full select-none bg-gray-200 bg-opacity-50 hidden" id="popUpUsers">
   <div class="relative z-50 mx-auto mt-36 w-3/6 p-10 bg-deepblue rounded-xl h-3/4" id="contentUsers">
   <ion-icon name="close" class="text-white right-0 my-9 mr-6 top-0 absolute text-3xl cursor-pointer" onclick="showUsers()"></ion-icon>
-    <p class="text-white text-2xl text-center">Liste des utilisateur inscrits</p>
+    <p class="text-white text-2xl text-center">Rechercher des utilisateurs</p>
     <form class="flex items-center my-5">
       <label for="voice-search" class="sr-only">Search</label>
       <div class="relative w-full">
         <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
           <svg class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
         </div>
-        <input type="text" id="search" class="block w-full rounded-lg border border-white bg-deepblue p-2.5 pl-10 text-sm text-white focus:border-lightblue focus:ring-lightblue" placeholder="Rechercher un utilisateur" required />
+        <input type="text" id="research-bar-user" class="block w-full rounded-lg border border-white bg-deepblue p-2.5 pl-10 text-sm text-white focus:border-lightblue focus:ring-lightblue" placeholder="Rechercher un utilisateur" required />
       </div>
-      <select class="ml-2 inline-flex items-center rounded-lg border border-white bg-deepblue px-3 py-2.5 text-sm font-medium text-white hover:bg-deepblue focus:outline-none focus:ring-4 focus:ring-lightblue">
+      <select id="select-user-attribute" class="ml-2 inline-flex items-center rounded-lg border border-white bg-deepblue px-3 py-2.5 text-sm font-medium text-white hover:bg-deepblue focus:outline-none focus:ring-4 focus:ring-lightblue">
         <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
         <option value="">--Trier par--</option>
+        <option value="userId">ID</option>
         <option value="login">Login</option>
-        <option value="id">ID</option>
-        <option value="mail">Mail</option>
-        <option value="nom">Nom</option>
-        <option value="prenom">Prénom</option>
+        <option value="userMail">Mail</option>
+        <option value="lastName">Nom</option>
+        <option value="firstName">Prénom</option>
       </select>
+        <input type="button" name="User" value="Rechercher" id="button-submit-research-users" class="ml-2 inline-flex items-center rounded-lg border border-white bg-deepblue px-3 py-2.5 text-sm font-medium text-white hover:bg-deepblue focus:outline-none focus:ring-4 focus:ring-lightblue">
     </form>
-    <div class="w-full overflow-y-auto h-4/5 rounded-xl bg-deepblue p-1 shadow-xl border border-white">
-      <!-- items -->
+    <div id="div-liste-users" class="w-full overflow-y-auto h-4/5 rounded-xl bg-deepblue p-1 shadow-xl border border-white">
       <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
         <div class="grid grid-flow-col grid-rows-2 ">
         <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
@@ -394,177 +394,33 @@ $user = unserialize($_SESSION["user"]);
 
           <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon>      </div>
       </div>
-      <!-- items -->
-      <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">ID : 007886</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">Nom : Zehren</span>
-            <span class="mr-2">Prénom: William</span>
-          </div>
-          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
-
-          <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
-        </div>
-      </div>
-      <!-- items -->
-      <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">ID : 007886</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">Nom : Zehren</span>
-            <span class="mr-2">Prénom: William</span>
-          </div>
-          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
-
-          <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
-        </div>
-      </div>
-      <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">ID : 007886</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">Nom : Zehren</span>
-            <span class="mr-2">Prénom: William</span>
-          </div>
-          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
-
-          <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
-        </div>
-      </div>
-      <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">ID : 007886</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">Nom : Zehren</span>
-            <span class="mr-2">Prénom: William</span>
-          </div>
-          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
-          <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
-        </div>
-      </div>
-      <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">ID : 007886</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">Nom : Zehren</span>
-            <span class="mr-2">Prénom: William</span>
-          </div>
-          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
-
-          <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
-        </div>
-      </div>
-      <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">ID : 007886</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">Nom : Zehren</span>
-            <span class="mr-2">Prénom: William</span>
-          </div>
-          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
-
-          <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
-        </div>
-      </div>
-      <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">ID : 007886</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">Nom : Zehren</span>
-            <span class="mr-2">Prénom: William</span>
-          </div>
-          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
-
-          <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
-        </div>
-      </div>
-      <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">ID : 007886</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">Nom : Zehren</span>
-            <span class="mr-2">Prénom: William</span>
-          </div>
-          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
-          <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
-        </div>
-      </div>
-      <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-        <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">ID : 007886</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Adresse mail : test@gmail.com</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">Nom : Zehren</span>
-            <span class="mr-2">Prénom: William</span>
-          </div>
-          <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
-
-          <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon> 
-        </div>
-      </div>
     </div>
   </div>
 </div>
 <div class="fixed left-0 top-0 z-40 h-full w-full select-none bg-gray-200 bg-opacity-50 hidden" id="popUpLogs">
   <div class="relative z-50 mx-auto mt-36 w-3/6 p-10 bg-deepblue rounded-xl h-3/4" id="contentLogs">
   <ion-icon name="close" class="text-white right-0 my-9 mr-6 top-0 absolute text-3xl cursor-pointer" onclick="showLogs()"></ion-icon>
-    <p class="text-white text-2xl text-center">Liste des Logs</p>
+    <p class="text-white text-2xl text-center">Rechercher des logs</p>
     <form class="flex items-center my-5">
       <label for="voice-search" class="sr-only">Search</label>
       <div class="relative w-full">
         <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
           <svg class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
         </div>
-        <input type="text" id="search" class="block w-full rounded-lg border border-white bg-deepblue p-2.5 pl-10 text-sm text-white focus:border-lightblue focus:ring-lightblue" placeholder="Rechercher un logs" required />
+        <input type="text" id="research-bar-logging" class="block w-full rounded-lg border border-white bg-deepblue p-2.5 pl-10 text-sm text-white focus:border-lightblue focus:ring-lightblue" placeholder="Rechercher un logs" required />
       </div>
-      <select class="ml-2 inline-flex items-center rounded-lg border border-white bg-deepblue px-3 py-2.5 text-sm font-medium text-white hover:bg-deepblue focus:outline-none focus:ring-4 focus:ring-lightblue">
+      <select id="select-logging-attribute" class="ml-2 inline-flex items-center rounded-lg border border-white bg-deepblue px-3 py-2.5 text-sm font-medium text-white hover:bg-deepblue focus:outline-none focus:ring-4 focus:ring-lightblue">
         <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
         <option value="">--Trier par--</option>
-        <option value="level">Level</option>
-        <option value="logid">ID</option>
-        <option value="userid">UserID</option>
-        <option value="ip">IP</option>
+        <option value="logId">ID</option>
+        <option value="logLevel">Level</option>
+        <option value="userId">UserID</option>
+        <option value="description">Description</option>
         <option value="date">Date</option>
       </select>
+        <input type="button" name="Logging" value="Rechercher" id="button-submit-research-logging" class="ml-2 inline-flex items-center rounded-lg border border-white bg-deepblue px-3 py-2.5 text-sm font-medium text-white hover:bg-deepblue focus:outline-none focus:ring-4 focus:ring-lightblue">
     </form>
-    <div class="w-full overflow-y-auto h-4/5 rounded-xl bg-deepblue p-1 shadow-xl border border-white">
-      <!-- items -->
+    <div id="div-list-logging" class="w-full overflow-y-auto h-4/5 rounded-xl bg-deepblue p-1 shadow-xl border border-white">
       <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
         <div class="grid grid-flow-col grid-rows-2 ">
           <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
@@ -580,140 +436,6 @@ $user = unserialize($_SESSION["user"]);
           <div class=" text-lg font-bold text-white absolute right-2">Date : 2023-12-19 13:55:12 </div>        
         </div>
       </div>
-      <!-- items -->
-      <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
-          </div>
-
-          <div class=" text-lg font-bold text-white absolute right-2">Date : 2023-12-19 13:55:12 </div>
-        </div>
-      </div>
-      <!-- items -->
-      <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
-          </div>
-
-          <div class=" text-lg font-bold text-white absolute right-2">Date : 2023-12-19 13:55:12 </div>
-        </div>
-      </div>
-      <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
-          </div>
-
-          <div class=" text-lg font-bold text-white absolute right-2">Date : 2023-12-19 13:55:12 </div>
-        </div>
-      </div>
-      <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
-          </div>
-
-          <div class=" text-lg font-bold text-white absolute right-2">Date : 2023-12-19 13:55:12 </div>
-        </div>
-      </div>
-      <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
-          </div>
-
-          <div class=" text-lg font-bold text-white absolute right-2">Date : 2023-12-19 13:55:12 </div>
-        </div>
-      </div><div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
-          </div>
-
-          <div class=" text-lg font-bold text-white absolute right-2">Date : 2023-12-19 13:55:12 </div>
-        </div>
-      </div><div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
-          </div>
-
-          <div class=" text-lg font-bold text-white absolute right-2">Date : 2023-12-19 13:55:12 </div>
-        </div>
-      </div><div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
-          </div>
-
-          <div class=" text-lg font-bold text-white absolute right-2">Date : 2023-12-19 13:55:12 </div>
-        </div>
-      </div><div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-        <div class="grid grid-flow-col grid-rows-2 ">
-          <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">LogID : 007886-009975-90876-09865</span>
-          </div>
-          <div class="text-lg font-bold text-white mr-20">Description : Connexion user USER</div>
-          <div class="text-xs text-white">
-            <span class="mr-2">UserID : 90875-09889 </span>
-            <span class="mr-2">IP : 127.0.0.1</span>
-          </div>
-
-          <div class=" text-lg font-bold text-white absolute right-2">Date : 2023-12-19 13:55:12 </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 </section>
