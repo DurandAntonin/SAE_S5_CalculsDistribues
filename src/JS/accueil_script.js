@@ -78,6 +78,37 @@ function updateUsesOfModule(elemStatModule, nbOfUses){
         elemStatModule.childNodes[1].innerHTML = "utilisations"
 }
 
+function goToModulePage(e){
+    console.log(e)
+    //on récupère l'id du button qui a été cliqué
+    let buttonId = e.target.id
+
+    console.log(buttonId)
+    console.log(window.location)
+
+    //on récupère l'url de la page courante
+    let urlSource = window.location.href
+    let urlDest = ""
+
+    //on enlève le nom de la page courante dans l'url qu'on va remplacer avec le nom de la page d'un module
+    let urlSourceSplit = urlSource.split("/")
+
+    //on redirige le user vers la page de module associée au bouton cliqué
+    if (buttonId === "button-module1"){
+        urlSourceSplit[urlSourceSplit.length-1] = "page_module1.php"
+    }
+    else if (buttonId === "button-module2"){
+        urlSourceSplit[urlSourceSplit.length-1] = "page_accueil_user.php"
+    }
+    else if (buttonId === "button-module3"){
+        urlSourceSplit[urlSourceSplit.length-1] = "page_accueil_user.php"
+    }
+
+    urlDest = urlSourceSplit.join("/")
+    console.log(urlDest)
+    document.location.assign(urlDest)
+}
+
 function showProfil() {
     //console.log("click");
     if (!showed) {

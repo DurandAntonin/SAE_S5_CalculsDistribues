@@ -14,8 +14,8 @@ require_once "verif_identite_page_user.php";
 
 $user = unserialize($_SESSION["user"]);
 
-
-//echo $user->str();
+//on charge les variables d'environnement
+$VARIABLES_GLOBALES = import_config();
 ?>
 
 <!DOCTYPE html>
@@ -197,13 +197,7 @@ $user = unserialize($_SESSION["user"]);
                 0
                 <span class="text-sm text-gray-600">utilisation</span>
               </div>
-              <div class="">
-                <form method="post" action="page_module1.php">
-                          <div class="">
-                              <input type="submit" name="submit_connexion_visiteur" value="Utiliser" class="w-64 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer">
-                          </div>
-                      </form> 
-              </div>
+                <button id="button-module1" class="w-64 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer" onclick="goToModulePage(event)">Utiliser </button>
             </div>
           </div>
       </div>
@@ -224,13 +218,7 @@ $user = unserialize($_SESSION["user"]);
                   0
                   <span class="text-sm text-gray-600">utilisation</span>
                 </div>
-                <div class="">
-                  <form method="post" action="PHP/module2.php">
-                            <div class="">
-                                <input type="submit" name="submit_connexion_visiteur" value="Utiliser" class="w-64 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer">
-                            </div>
-                        </form> 
-                </div>
+                  <button id="button-module2" class="w-64 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer" onclick="goToModulePage(event)">Utiliser </button>
               </div>
           </div>
       </div>
@@ -250,13 +238,7 @@ $user = unserialize($_SESSION["user"]);
                   0
                   <span class="text-sm text-gray-600">utilisation</span>
                 </div>
-                <div class="">
-                  <form method="post" action="PHP/module2.php">
-                            <div class="">
-                                <input type="submit" name="submit_connexion_visiteur" value="Utiliser" class="w-64 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer">
-                            </div>
-                  </form> 
-                </div>
+                  <button id="button-module3" class="w-64 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer" onclick="goToModulePage(event)">Utiliser </button>
                 </div>
             </div>
         </div>
