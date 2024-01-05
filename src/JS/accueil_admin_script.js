@@ -89,8 +89,8 @@ function init(){
     //console.log(listStatsClusterHat)
 
     //on load les stats du cluster hat toutes les n secondes
-    requestSetStatsClusterHat()
-    //let timerRequestGetStatsClusterHat = setInterval(requestSetStatsClusterHat, intertalTimeGetStatsClusterHat)
+    //requestSetStatsClusterHat()
+    let timerRequestGetStatsClusterHat = setInterval(requestSetStatsClusterHat, intertalTimeGetStatsClusterHat)
 }
 
 function changeStatsBasedTimeFilter(){
@@ -104,7 +104,7 @@ function changeStatsBasedTimeFilter(){
 
 function deleteUser(){
     let userIdToDelete = this.id
-    console.log(userIdToDelete)
+    //console.log(userIdToDelete)
 
     //on crée et exécute une requête js vers un script php pour supprimer l'utilisateur
     let requestGetStatsSite = new XMLHttpRequest()
@@ -254,7 +254,7 @@ function resultRequestGetStatsSite(){
 async function resultRequestSetStatsClusterHatInFile() {
     if (this.readyState === 4 && this.status === 200) {
         let resultScript = this.response
-        console.log(resultScript)
+        //console.log(resultScript)
 
         let resultScriptParsed = JSON.parse(resultScript)
 
@@ -281,13 +281,13 @@ function requestGetStatsClusterHatInFile(){
     //on envoie le mode d'exécution du script voulu
     requestGetStatsSiteInFile.send(JSON.stringify({"execMode" : 1, "fileName" : fileNameStatsClusterHat}))
 
-    requestGetStatsSiteInFile.onreadystatechange = resultRequestGetStatsClusterHatInFIle
+    requestGetStatsSiteInFile.onreadystatechange = resultRequestGetStatsClusterHatInFile
 }
 
-function resultRequestGetStatsClusterHatInFIle(){
+function resultRequestGetStatsClusterHatInFile(){
     if (this.readyState === 4 && this.status === 200) {
         let resultScript = this.response
-        console.log(resultScript)
+        //console.log(resultScript)
 
         let resultScriptParsed = JSON.parse(resultScript)
         //console.log(resultScriptParsed)
@@ -295,24 +295,30 @@ function resultRequestGetStatsClusterHatInFIle(){
         let objectStatsClusterHat = resultScriptParsed.result
         //console.log(listStatsClusterHat)
 
-        //pour chaque rpi du cluster hat, on met à jour les statistiques
-        for (let i=0;i<objectStatsClusterHat.length;i++){
-            let statsRpi = objectStatsClusterHat[i]
-            let statCpuPourcent = (statsRpi.cpuUsage)
-            let statCpuFrequency = statsRpi.cpuFrequency
-            let statMemUsedPourcent = ((parseInt(statsRpi.memUsed) / parseInt(statsRpi.memTotal)) * 100).toPrecision(4)
-            let statMemUsed = (parseInt(statsRpi.memUsed) * Math.pow(10,-3)).toPrecision(4)
-            let statUptime = statsRpi.uptime
+        //on vérifie qu'il n'y a pas eu d'erreur
+        if (resultScriptParsed.error === 0){
+            //pour chaque rpi du cluster hat, on met à jour les statistiques
+            for (let i=0;i<objectStatsClusterHat.length;i++){
+                let statsRpi = objectStatsClusterHat[i]
+                let statCpuPourcent = (statsRpi.cpuUsage)
+                let statCpuFrequency = statsRpi.cpuFrequency
+                let statMemUsedPourcent = ((parseInt(statsRpi.memUsed) / parseInt(statsRpi.memTotal)) * 100).toPrecision(4)
+                let statMemUsed = (parseInt(statsRpi.memUsed) * Math.pow(10,-3)).toPrecision(4)
+                let statUptime = statsRpi.uptime
 
-            //on met à jour les stats du rpi dans le tableau
-            let trStatsRpi = listStatsClusterHat[i].children
-            //console.log(trStatsRpi[3].children)
+                //on met à jour les stats du rpi dans le tableau
+                let trStatsRpi = listStatsClusterHat[i].children
+                //console.log(trStatsRpi[3].children)
 
-            trStatsRpi[1].children[0].innerHTML = `${statCpuPourcent} %`
-            trStatsRpi[1].children[1].innerHTML = `${statCpuFrequency} GHz`
-            trStatsRpi[2].children[0].innerHTML = `${statMemUsedPourcent} %`
-            trStatsRpi[2].children[1].innerHTML = `${statMemUsed} Go`
-            trStatsRpi[3].innerHTML = statUptime
+                trStatsRpi[1].children[0].innerHTML = `${statCpuPourcent} %`
+                trStatsRpi[1].children[1].innerHTML = `${statCpuFrequency} GHz`
+                trStatsRpi[2].children[0].innerHTML = `${statMemUsedPourcent} %`
+                trStatsRpi[2].children[1].innerHTML = `${statMemUsed} Go`
+                trStatsRpi[3].innerHTML = statUptime
+            }
+        }
+        else{
+            console.log("Erreur GetStatsClusterHatInFile")
         }
     }
     else{
@@ -483,7 +489,7 @@ function createHtmlElementForSerialisedUsers(divListUsers, userSerialised){
     //on ajoute les différents éléments div dans l'élément div
     divUser.append(subDivLogin, subDivId, subDivMail, subDivFirstNameLastName, subDivRegistrationDate)
 
-    console.log(iconeDeleteUser)
+    //console.log(iconeDeleteUser)
     //on ajoute l'icone pour delete le user si elle a été définie
     if (iconeDeleteUser !== undefined)
         divUser.append(iconeDeleteUser)
