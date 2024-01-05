@@ -193,9 +193,9 @@ $user = unserialize($_SESSION["user"]);
 
               <h4 class="mt-1 truncate text-xl font-semibold uppercase leading-tight">Calculs Des Nombres premiers</h4>
 
-              <div class="mt-1">
-                145
-                <span class="text-sm text-gray-600">utilisations</span>
+              <div id="div-nb-ut-m1" class="mt-1">
+                0
+                <span class="text-sm text-gray-600">utilisation</span>
               </div>
               <div class="">
                 <form method="post" action="page_module1.php">
@@ -220,9 +220,9 @@ $user = unserialize($_SESSION["user"]);
 
                 <h4 class="mt-1 truncate text-xl font-semibold uppercase leading-tight">Approximation de Pi avec Monte-Carlo </h4>
 
-                <div class="mt-1">
-                  32
-                  <span class="text-sm text-gray-600">utilisations</span>
+                <div id="div-nb-ut-m2" class="mt-1">
+                  0
+                  <span class="text-sm text-gray-600">utilisation</span>
                 </div>
                 <div class="">
                   <form method="post" action="PHP/module2.php">
@@ -246,9 +246,9 @@ $user = unserialize($_SESSION["user"]);
 
                 <h4 class="mt-1 truncate text-xl font-semibold uppercase leading-tight">Car@Net</h4>
 
-                <div class="mt-1">
-                  673
-                  <span class="text-sm text-gray-600">utilisations</span>
+                <div id="div-nb-ut-m3" class="mt-1">
+                  0
+                  <span class="text-sm text-gray-600">utilisation</span>
                 </div>
                 <div class="">
                   <form method="post" action="PHP/module2.php">
