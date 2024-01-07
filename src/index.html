@@ -12,18 +12,18 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="PICTURES/blitzcalc-favicon-color.png"/>
 </head>
 <body class= "bg-lightblue h-screen" style="font-family: 'Poppins', sans-serif;">
-    <header class="top-0 w-full shadow-md bg-lightblue">
-        <nav class="flex justify-between items-center w-auto  mx-auto">
-            <div class="container mx-auto flex items-center justify-between">
-              <div>
+<header class="top-0 w-full shadow-md bg-lightblue">
+    <nav class="flex justify-between items-center w-auto  mx-auto">
+        <div class="container mx-auto flex items-center justify-between">
+            <div>
                 <img src="PICTURES/blitzcalc-high-resolution-logo-transparent.png" alt="Logo" class="h-20 mr-2">
-              </div>
-          
-              <div class="nav-links duration-500 bg-lightblue md:static absolute md:min-h-fit min-h-[15vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
+            </div>
+
+            <div class="nav-links duration-500 bg-lightblue md:static absolute md:min-h-fit min-h-[15vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
                 <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
                     <li>
                         <a href="PHP/page_inscription.php" class="text-deepblue mr-4 text-3xl relative w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center">S'inscrire</a>
@@ -32,145 +32,145 @@
                         <a href="PHP/page_connexion.php" class="text-deepblue text-3xl relative w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center">Se connecter</a>
                     </li>
                 </ul>
-              </div>
             </div>
-            <div class="flex items-center gap-6">
-                <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
-            </div>
-        </nav>
-    </header>
-        <section class="w-full h-screen inline-flex flex-col justify-center items-center">
-                <h1 class="text-6xl text-deepblue mb-3">Bienvenue sur BlitzCalc.fr</h1>
-                <p class="text-3xl text-deepblue text-center mx-24">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget egestas odio, sed commodo diam. Praesent a leo in ante consequat finibus. Ut et consectetur lacus. Proin efficitur nisi eget tristique varius. In at enim erat. Sed nec rutrum elit, eget pharetra sapien. </p>
-            <div class="inline-flex flex-row justify-center items-center w-screen">
-                <form action="PHP/page_inscription.php">
-                    <div class="text-center">
-                        <input type="submit" name="go_inscription" value="S'inscrire" class="w-64 mr-6 mt-6 py-2 rounded-xl bg-white text-deepblue focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer">
-                    </div>
-                </form>
-                <form method="post" action="PHP/traitement_connexion.php">
-                    <div class="text-center">
-                        <input type="submit" name="submit_connexion_visiteur" value="Essayer sans inscription" class="w-64 mt-6 ml-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
-                    </div>
-                </form>        
-            </div>
-        </section>
-        <section class="w-full h-screen bg-lyellow flex justify-center items-center">
-            <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0 inline-flex flex-row justify-center items-center md:flex p-20" data-taos-offset="300">
-                      <img src="https://i.pinimg.com/564x/b1/6a/44/b16a443978512bffecd043e7ac687ed4.jpg" alt="dummy" class="md:w-1/3 rounded-xl md:rounded-l-xl md:rounded-t-xl mx-20" />
-                      <div class="p-6 max-w-prose">
-                        <h2 class="font-bold text-xl md:text-3xl mb-2 text-deepblue text-left">Module 1 : Calculs Des Nombres premiers</h2>
-                        <p class="text-deepblue text-xl text-left">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget egestas odio, sed commodo diam. Praesent a leo in ante consequat finibus. Ut et consectetur lacus. Proin efficitur nisi eget tristique varius. In at enim erat. Sed nec rutrum elit, eget pharetra sapien.
-                        </p>
-                      </div>          
-            </div>
-        </section>
-        <section class="w-full h-screen bg-deepblue flex justify-center items-center" id="sectionBlue">
-            <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0 inline-flex flex-row justify-center items-center md:flex p-20" data-taos-offset="300">
-                <div class="p-6 max-w-prose">
-                  <h2 class="font-bold text-xl md:text-3xl mb-2 text-white text-left">Module 2 : Approximation de Pi avec Monte-Carlo</h2>
-                  <p class="text-white text-xl text-left">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget egestas odio, sed commodo diam. Praesent a leo in ante consequat finibus. Ut et consectetur lacus. Proin efficitur nisi eget tristique varius. In at enim erat. Sed nec rutrum elit, eget pharetra sapien.
-                  </p>
-                </div>  
-                <img src="https://i.pinimg.com/564x/fb/5a/3f/fb5a3f88bc2e396ef073cc89e4a12a50.jpg" alt="dummy" class="md:w-1/3 max-w-1/2 rounded-xl md:rounded-l-xl md:rounded-t-xl mx-20" />        
         </div>
-        </section>
-        <section class="w-full h-screen bg-lightblue flex justify-center items-center">
-            <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0" data-taos-offset="300">
-                <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0 inline-flex flex-row justify-center items-center md:flex p-20" data-taos-offset="300">
-                    <img src="https://i.pinimg.com/564x/a2/5d/55/a25d55ca8aaec95c732607d9b2c7eeed.jpg" alt="dummy" class="md:w-1/3 rounded-xl md:rounded-l-xl md:rounded-t-xl mx-20" />
-                    <div class="p-6 max-w-prose">
-                      <h2 class="font-bold text-xl md:text-3xl mb-2 text-deepblue text-left">Module 3 : Car@Net</h2>
-                      <p class="text-deepblue text-xl text-left">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget egestas odio, sed commodo diam. Praesent a leo in ante consequat finibus. Ut et consectetur lacus. Proin efficitur nisi eget tristique varius. In at enim erat. Sed nec rutrum elit, eget pharetra sapien.
-                      </p>
-                    </div>          
-          </div>
+        <div class="flex items-center gap-6">
+            <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
+        </div>
+    </nav>
+</header>
+<section class="w-full h-screen inline-flex flex-col justify-center items-center">
+    <h1 class="text-6xl text-deepblue mb-3">Bienvenue sur BlitzCalc.fr</h1>
+    <p class="text-3xl text-deepblue text-center mx-24">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget egestas odio, sed commodo diam. Praesent a leo in ante consequat finibus. Ut et consectetur lacus. Proin efficitur nisi eget tristique varius. In at enim erat. Sed nec rutrum elit, eget pharetra sapien. </p>
+    <div class="inline-flex flex-row justify-center items-center w-screen">
+        <form action="PHP/page_inscription.php">
+            <div class="text-center">
+                <input type="submit" name="go_inscription" value="S'inscrire" class="w-64 mr-6 mt-6 py-2 rounded-xl bg-white text-deepblue focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer">
             </div>
-        </section>
-        <section class="w-full h-screen bg-lyellow inline-flex flex-col justify-center items-center" id="sectionLast">
-            <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0" data-taos-offset="300">
-                <div class="p-6 max-w-prose inline-flex flex-col justify-center items-center">
-                    <div class="flex justify-center items-center">
-                        <img src="PICTURES/blitzcalc-high-resolution-logo-white-transparent.png" alt="Logo" class="h-full w-full mb-4">
-                    </div>
-                    <h1 class="font-bold text-xl md:text-3xl mb-2 text-center text-deepblue">Une masterclass de projet</h1>
-                    <p class="text-deepblue text-xl text-center mb-2">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget egestas odio, sed commodo diam. Praesent a leo in ante consequat finibus. Ut et consectetur lacus. Proin efficitur nisi eget tristique varius. In at enim erat. Sed nec rutrum elit, eget pharetra sapien.
-                    </p>
-                </div>
-                <form action="PHP/page_inscription.php">
-                    <div class="text-center">
-                        <button type="submit" name="go_inscription" value="S'inscrire" class="w-64 mr-6 mt-6 py-2 rounded-xl bg-white text-deepblue focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer"><ion-icon name="flash" class="text-center animate-rotate-y animate-infinite animate-duration-[2000ms] animate-ease-in-out"></ion-icon>S'inscrire</button>
-                    </div>
-                </form>
+        </form>
+        <form method="post" action="PHP/traitement_connexion.php">
+            <div class="text-center">
+                <input type="submit" name="submit_connexion_visiteur" value="Essayer sans inscription" class="w-64 mt-6 ml-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
             </div>
-        </section>
-
-    <button id="to-top-button" onclick="goToTop()" title="Go To Top"
-        class="hidden fixed z-90 bottom-8 right-8 border-0 w-16 h-16 rounded-full drop-shadow-md bg-indigo-500 text-white text-3xl font-bold animate-bounce">&uarr;</button>
-    <div class="flex justify-center items-center">
-        <ion-icon name="chevron-down" class="text-3xl text-deepblue fixed z-90 bottom-8 mx-auto border-0 w-16 h-16 animate-bounce" id="arrowDown"></ion-icon>
+        </form>
     </div>
-
-    <footer class="relative bg-deepblue pt-8 pb-6">
-        <div class="container mx-auto px-4">
-          <div class="flex flex-wrap text-left lg:text-left">
-            <div class="w-full lg:w-6/12 px-4">
-              <h4 class="text-3xl fonat-semibold text-white">En savoir plus sur le projet !</h4>
-              <h5 class="text-lg mt-0 mb-2 text-white">
-                Trouvez nous sur les plateformes ci-dessous.
-              </h5>
-              <div class="mt-6 lg:mb-0 mb-6">
-                <a href="https://discord.com"><button class="bg-white text-blue-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                    <ion-icon name="logo-discord" class="text-2xl my-2"></ion-icon></button></a>
-                <a href="https://github.com/DurandAntonin/SAE_S5_CalculsDistribues/"><button class="bg-white text-black shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                    <ion-icon name="logo-github" class="text-2xl my-2"></ion-icon></button></a>
-                <a href="https://hub.docker.com/u/wzehren"><button class="bg-white text-blue-700 font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                    <ion-icon name="logo-docker" class="text-2xl my-2"></ion-icon></button></a>
-                <a href="https://youtu.be/1-kKTOr5mcU?si=IaO0BMT9EiPGCDlr"><button class="bg-white text-red-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                    <ion-icon name="logo-youtube" class="text-2xl my-2"></ion-icon>
-                </button></a>
-              </div>
-            </div>
-            <div class="w-full lg:w-6/12 px-4">
-              <div class="flex flex-wrap items-top mb-6">
-                <div class="w-full h-full  lg:w-6/12 px-4 ml-auto my-10">
-                  <a href="https://www.uvsq.fr"><img src="PICTURES/IUT_logo.png" class="h-full"></a>
-                </div>
-                <div class="w-full lg:w-4/12 px-4">
-                  <span class="block uppercase text-white text-sm font-semibold mb-2">Ressources</span>
-                  <ul class="list-unstyled">
-                    <li>
-                      <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="../doc/Sujet/SujetSaeS5.pdf">Sujet de SAE</a>
-                    </li>
-                    <li>
-                      <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="https://loldle.net/">LoLdle</a>
-                    </li>
-                    <li>
-                      <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="">Confidentialités</a>
-                    </li>
-                    <li>
-                      <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="">Contactez nous</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <hr class="my-6 border-blueGray-300">
-          <div class="flex flex-wrap items-center md:justify-between justify-center">
-            <div class="w-full md:w-4/12 px-4 mx-auto text-center">
-              <div class="text-sm text-white font-semibold py-1">
-                Copyright © <span id="get-current-year">2023</span><a href="" class="text-white hover:text-lyellow" target="_blank"> BlitzCalc by
-                <a href="" class="text-blueGray-500 hover:text-lyellow">Madianou Corp</a>.
-              </div>
-            </div>
-          </div>
+</section>
+<section class="w-full h-screen bg-lyellow flex justify-center items-center">
+    <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0 inline-flex flex-row justify-center items-center md:flex p-20" data-taos-offset="300">
+        <img src="https://i.pinimg.com/564x/b1/6a/44/b16a443978512bffecd043e7ac687ed4.jpg" alt="dummy" class="md:w-1/3 rounded-xl md:rounded-l-xl md:rounded-t-xl mx-20" />
+        <div class="p-6 max-w-prose">
+            <h2 class="font-bold text-xl md:text-3xl mb-2 text-deepblue text-left">Module 1 : Calculs Des Nombres premiers</h2>
+            <p class="text-deepblue text-xl text-left">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget egestas odio, sed commodo diam. Praesent a leo in ante consequat finibus. Ut et consectetur lacus. Proin efficitur nisi eget tristique varius. In at enim erat. Sed nec rutrum elit, eget pharetra sapien.
+            </p>
         </div>
-      </footer>
-    <script src="https://unpkg.com/taos@1.0.5/dist/taos.js"></script>
+    </div>
+</section>
+<section class="w-full h-screen bg-deepblue flex justify-center items-center" id="sectionBlue">
+    <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0 inline-flex flex-row justify-center items-center md:flex p-20" data-taos-offset="300">
+        <div class="p-6 max-w-prose">
+            <h2 class="font-bold text-xl md:text-3xl mb-2 text-white text-left">Module 2 : Approximation de Pi avec Monte-Carlo</h2>
+            <p class="text-white text-xl text-left">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget egestas odio, sed commodo diam. Praesent a leo in ante consequat finibus. Ut et consectetur lacus. Proin efficitur nisi eget tristique varius. In at enim erat. Sed nec rutrum elit, eget pharetra sapien.
+            </p>
+        </div>
+        <img src="https://i.pinimg.com/564x/fb/5a/3f/fb5a3f88bc2e396ef073cc89e4a12a50.jpg" alt="dummy" class="md:w-1/3 max-w-1/2 rounded-xl md:rounded-l-xl md:rounded-t-xl mx-20" />
+    </div>
+</section>
+<section class="w-full h-screen bg-lightblue flex justify-center items-center">
+    <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0" data-taos-offset="300">
+        <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0 inline-flex flex-row justify-center items-center md:flex p-20" data-taos-offset="300">
+            <img src="https://i.pinimg.com/564x/a2/5d/55/a25d55ca8aaec95c732607d9b2c7eeed.jpg" alt="dummy" class="md:w-1/3 rounded-xl md:rounded-l-xl md:rounded-t-xl mx-20" />
+            <div class="p-6 max-w-prose">
+                <h2 class="font-bold text-xl md:text-3xl mb-2 text-deepblue text-left">Module 3 : Car@Net</h2>
+                <p class="text-deepblue text-xl text-left">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget egestas odio, sed commodo diam. Praesent a leo in ante consequat finibus. Ut et consectetur lacus. Proin efficitur nisi eget tristique varius. In at enim erat. Sed nec rutrum elit, eget pharetra sapien.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w-full h-screen bg-lyellow inline-flex flex-col justify-center items-center" id="sectionLast">
+    <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0" data-taos-offset="300">
+        <div class="p-6 max-w-prose inline-flex flex-col justify-center items-center">
+            <div class="flex justify-center items-center">
+                <img src="PICTURES/blitzcalc-high-resolution-logo-white-transparent.png" alt="Logo" class="h-full w-full mb-4">
+            </div>
+            <h1 class="font-bold text-xl md:text-3xl mb-2 text-center text-deepblue">Une masterclass de projet</h1>
+            <p class="text-deepblue text-xl text-center mb-2">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget egestas odio, sed commodo diam. Praesent a leo in ante consequat finibus. Ut et consectetur lacus. Proin efficitur nisi eget tristique varius. In at enim erat. Sed nec rutrum elit, eget pharetra sapien.
+            </p>
+        </div>
+        <form action="PHP/page_inscription.php">
+            <div class="text-center">
+                <button type="submit" name="go_inscription" value="S'inscrire" class="w-64 mr-6 mt-6 py-2 rounded-xl bg-white text-deepblue focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer"><ion-icon name="flash" class="text-center animate-rotate-y animate-infinite animate-duration-[2000ms] animate-ease-in-out"></ion-icon>S'inscrire</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<button id="to-top-button" onclick="goToTop()" title="Go To Top"
+        class="hidden fixed z-90 bottom-8 right-8 border-0 w-16 h-16 rounded-full drop-shadow-md bg-indigo-500 text-white text-3xl font-bold animate-bounce">&uarr;</button>
+<div class="flex justify-center items-center">
+    <ion-icon name="chevron-down" class="text-3xl text-deepblue fixed z-90 bottom-8 mx-auto border-0 w-16 h-16 animate-bounce" id="arrowDown"></ion-icon>
+</div>
+
+<footer class="relative bg-deepblue pt-8 pb-6">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-wrap text-left lg:text-left">
+            <div class="w-full lg:w-6/12 px-4">
+                <h4 class="text-3xl fonat-semibold text-white">En savoir plus sur le projet !</h4>
+                <h5 class="text-lg mt-0 mb-2 text-white">
+                    Trouvez nous sur les plateformes ci-dessous.
+                </h5>
+                <div class="mt-6 lg:mb-0 mb-6">
+                    <a href="https://discord.com"><button class="bg-white text-blue-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
+                        <ion-icon name="logo-discord" class="text-2xl my-2"></ion-icon></button></a>
+                    <a href="https://github.com/DurandAntonin/SAE_S5_CalculsDistribues/"><button class="bg-white text-black shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
+                        <ion-icon name="logo-github" class="text-2xl my-2"></ion-icon></button></a>
+                    <a href="https://hub.docker.com/u/wzehren"><button class="bg-white text-blue-700 font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
+                        <ion-icon name="logo-docker" class="text-2xl my-2"></ion-icon></button></a>
+                    <a href="https://youtu.be/1-kKTOr5mcU?si=IaO0BMT9EiPGCDlr"><button class="bg-white text-red-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
+                        <ion-icon name="logo-youtube" class="text-2xl my-2"></ion-icon>
+                    </button></a>
+                </div>
+            </div>
+            <div class="w-full lg:w-6/12 px-4">
+                <div class="flex flex-wrap items-top mb-6">
+                    <div class="w-full h-full  lg:w-6/12 px-4 ml-auto my-10">
+                        <a href="https://www.uvsq.fr"><img src="PICTURES/IUT_logo.png" class="h-full"></a>
+                    </div>
+                    <div class="w-full lg:w-4/12 px-4">
+                        <span class="block uppercase text-white text-sm font-semibold mb-2">Ressources</span>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="../doc/Sujet/SujetSaeS5.pdf">Sujet de SAE</a>
+                            </li>
+                            <li>
+                                <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="https://loldle.net/">LoLdle</a>
+                            </li>
+                            <li>
+                                <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="">Confidentialités</a>
+                            </li>
+                            <li>
+                                <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="">Contactez nous</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="my-6 border-blueGray-300">
+        <div class="flex flex-wrap items-center md:justify-between justify-center">
+            <div class="w-full md:w-4/12 px-4 mx-auto text-center">
+                <div class="text-sm text-white font-semibold py-1">
+                    Copyright © <span id="get-current-year">2023</span><a href="" class="text-white hover:text-lyellow" target="_blank"> BlitzCalc by
+                    <a href="" class="text-blueGray-500 hover:text-lyellow">Madianou Corp</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="https://unpkg.com/taos@1.0.5/dist/taos.js"></script>
 </body>
 </html>
