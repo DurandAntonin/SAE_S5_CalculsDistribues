@@ -14,8 +14,8 @@ require_once "verif_identite_page_user.php";
 
 $user = unserialize($_SESSION["user"]);
 
-
-//echo $user->str();
+//on charge les variables d'environnement
+$VARIABLES_GLOBALES = import_config();
 ?>
 
 <!DOCTYPE html>
@@ -251,7 +251,7 @@ echo"<hr class='dark:border-gray-700'>
                                         <div class="dot absolute left-1 top-1 bg-lightblue w-6 h-6 rounded-full transition"></div>
                                     </div>
                                     <div class="ml-3 text-white font-medium">
-                                        CALCUL DISTRIBUE <b class="text-red-700" id="textCalcul"> INACTIF</b>
+                                        CALCUL DISTRIBUE <b class="text-red-700" id="textCalcul">INACTIF</b>
                                     </div>
                                 </label>
 
@@ -272,19 +272,15 @@ echo"<hr class='dark:border-gray-700'>
             <div class="my-12 flex items-center justify-center px-6">
                 <div class="flex flex-col text-center">
                     <h1 class="mb-6 text-3xl text-white"><ion-icon name="warning"></ion-icon> ATTENTION <ion-icon name="warning"></ion-icon></h1>
-                    <h1 class="mb-6 text-3xl text-white">Inscrivez vous dès maintenant !</h1>
+                    <h1 class="mb-6 text-3xl text-white">Inscrivez-vous dès maintenant !</h1>
                     <h1 class="text-xl text-white mb-6">Et profitez de meilleures performances grâce au calcul distribué !</h1>
                     <div class="inline-flex w-screen flex-row items-center justify-center ">
-                        <form method="post" action="page_connexion.php">
-                            <div class="text-center mr-10">
-                                <input type="submit" name="submit_connexion_visiteur" value="Se connecter" class="bg-lgrey hover:bg-lyellow hover:text-deepblue ml-6 mt-6 w-64 cursor-pointer rounded-xl py-2 text-white focus:outline-none focus:ring-4 focus:ring-gray-300" />
-                            </div>
-                        </form>
-                        <form action="page_inscription.php">
-                            <div class="text-center">
-                                <input type="submit" name="go_inscription" value="S'inscrire" class="text-deepblue hover:bg-deepblue mr-6 mt-6 w-64 cursor-pointer rounded-xl bg-white py-2 hover:text-white focus:outline-none focus:ring-4 focus:ring-gray-300" />
-                            </div>
-                        </form>
+                        <div class="text-center mr-10">
+                            <button id="button-connection" class="bg-lgrey hover:bg-lyellow hover:text-deepblue ml-6 mt-6 w-64 cursor-pointer rounded-xl py-2 text-white focus:outline-none focus:ring-4 focus:ring-gray-300" onclick="goToModulePage(event)">Se connecter</button>
+                        </div>
+                        <div class="text-center">
+                            <button id="button-registration" class="text-deepblue hover:bg-deepblue mr-6 mt-6 w-64 cursor-pointer rounded-xl bg-white py-2 hover:text-white focus:outline-none focus:ring-4 focus:ring-gray-300" onclick="goToModulePage(event)">S'inscrire</button>
+                        </div>
                     </div>
                 </div>
             </div>
