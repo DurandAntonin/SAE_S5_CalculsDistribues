@@ -187,30 +187,30 @@ echo"<hr class='dark:border-gray-700'>
 
                 <div class="w-full md:w-2/3 bg-deepblue rounded-3xl items-center">
                     <h2 class="text-3xl text-center text-white my-8">Calcul des nombres premiers</h2>
-                    <form class="mb-4 rounded  px-8 pb-8 pt-6" method="post" action="traitement_module1.php">
+                    <form class="mb-4 rounded  px-8 pb-8 pt-6">
                         <div class="mb-4 md:flex md:justify-center md:items-center">
                             <div class="w-3/4 flex flex-row justify-around">
                                 <div class="mb-4 md:mb-0 md:mr-2">
                                     <label class="mb-2 block text-sm font-bold text-white" for="debut"> Borne début </label>
-                                    <input class="focus:shadow-outline w-1/2 appearance-none rounded-xl border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="debut" name="debut" type="number" placeholder="1, 2, 3 , ..." minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
+                                    <input class="focus:shadow-outline w-1/2 appearance-none rounded-xl border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="debut" name="debut" type="number" placeholder="1, 2, 3 , ..." value="0" min="0" max="100000"/>
                                 </div>
                                 <div class="md:ml-0">
                                     <div class="text-right">
                                         <label class="mb-2 block text-sm font-bold text-white text-center ml-16" for="fin"> Borne fin </label>
-                                        <input class="focus:shadow-outline w-1/2 appearance-none rounded-xl border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="fin" name="fin" type="number" placeholder="100, 200, 1000, ..." minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
+                                        <input class="focus:shadow-outline w-1/2 appearance-none rounded-xl border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="fin" name="fin" type="number" placeholder="100, 200, 1000, ..." value="1" min="0" max="100000"/>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mb-4 md:mb-0 md:mr-2 flex justify-center items-center">
-                            <p class="border-2 border-white h-80 w-3/4 rounded-xl"></p>
+                            <p id="result" class="border-2 border-white h-80 w-3/4 rounded-xl"></p>
                         </div>
                         <div class="md:mb-0 md:mr-2 flex justify-center items-center">
-                            <p class="inline-block align-baseline text-sm text-opacity-200 text-white" href="page_connexion.php"> Temps d'exécution : 243.12s </p>
+                            <p id="p-execution-time" class="hidden inline-block align-baseline text-sm text-opacity-200 text-white"> Temps d'exécution : 243.12s </p>
                         </div>
                         <div class="mb-6 text-center">
-                            <input type="submit" name="submit_inscription" value="Calculer" class="w-1/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
+                            <input type="button" id="compute" value="Calculer" class="w-1/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
                         </div>
                         <div class="flex justify-center mb-6 ">
                             <p id="erreur_message">
@@ -276,10 +276,10 @@ echo"<hr class='dark:border-gray-700'>
                     <h1 class="text-xl text-white mb-6">Et profitez de meilleures performances grâce au calcul distribué !</h1>
                     <div class="inline-flex w-screen flex-row items-center justify-center ">
                         <div class="text-center mr-10">
-                            <button id="button-connection" class="bg-lgrey hover:bg-lyellow hover:text-deepblue ml-6 mt-6 w-64 cursor-pointer rounded-xl py-2 text-white focus:outline-none focus:ring-4 focus:ring-gray-300" onclick="goToModulePage(event)">Se connecter</button>
+                            <button id="button-connection" class="bg-lgrey hover:bg-lyellow hover:text-deepblue ml-6 mt-6 w-64 cursor-pointer rounded-xl py-2 text-white focus:outline-none focus:ring-4 focus:ring-gray-300" onclick="goToPage(event)">Se connecter</button>
                         </div>
                         <div class="text-center">
-                            <button id="button-registration" class="text-deepblue hover:bg-deepblue mr-6 mt-6 w-64 cursor-pointer rounded-xl bg-white py-2 hover:text-white focus:outline-none focus:ring-4 focus:ring-gray-300" onclick="goToModulePage(event)">S'inscrire</button>
+                            <button id="button-registration" class="text-deepblue hover:bg-deepblue mr-6 mt-6 w-64 cursor-pointer rounded-xl bg-white py-2 hover:text-white focus:outline-none focus:ring-4 focus:ring-gray-300" onclick="goToPage(event)">S'inscrire</button>
                         </div>
                     </div>
                 </div>
