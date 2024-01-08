@@ -23,6 +23,7 @@
   "notif_erreur_mail_existant" : "L'adresse mail est déjà prise",
   "notif_erreur_attribut_incorrect" : "Attribut de recherche incorrect",
   "chemin_script_get_stats_cluster_hat" : "/home/pi/pipeDockerSwarm/scriptsBash/scriptGetStatsClusterHat.sh",
+  "chemin_script_get_hostname" : "/home/pi/pipeDockerSwarm/scriptsBash/scriptGetHostname.sh",
   "chemin_pipe_stats_cluster_hat_dans_conteneur" : "/hostpipe/pipe_stats_cluster_hat",
   "chemin_pipe_module_nb_premiers_dans_conteneur" : "/hostpipe/pipe_module_nb_premiers",
   "repertoire_resultat" : "/hostpipe/outputsStats/",

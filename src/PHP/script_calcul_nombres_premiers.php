@@ -23,6 +23,10 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
     //on récupère le logger file pour enregistrer des événements
     $logger = unserialize($_SESSION["logger"]);
     $loggerFile = $logger->getLoggerInstance("loggerFile");
+    $loggerBd = $logger->getLoggerInstance("loggerDb");
+
+    //on se reconnecte à la bd
+    $loggerBd->getMySqlConnector()->reconnect_to_bd();
 
     $user = unserialize($_SESSION["user"]);
     $userId = $user->getId();
@@ -43,32 +47,66 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
         $outputFileName = guidv4() . ".json"; //fichier qui stocke le résultat du script python
         $indicatorFileName = guidv4() . ".txt"; //fichier indiquant si le script s'est terminé ou non
 
-        //on crée le fichier indicator et on met false dans ce dernier pour indiquer que l'exécution n'est pas terminée
+        //fichier qui va indiquer si le calcul est terminé
         $indicatorFile = $VARIABLES_GLOBALES["repertoire_resultat"] . $indicatorFileName;
-        $fp = fopen( $indicatorFile, "w");
-        fputs($fp, "0");
-        fclose($fp);
+        //$fp = fopen( $indicatorFile, "w");
+        //fputs($fp, false);
+        //fclose($fp);
 
         $output = null;
         $resultCode = null;
 
+        //on exécute une commande pour récupérer le hostname courant
+        $fileNameForHostname = guidv4() . ".txt";
+        $commandGetHostName = "echo \"{$VARIABLES_GLOBALES["chemin_script_get_hostname"]} {$fileNameForHostname}\" > {$VARIABLES_GLOBALES["chemin_pipe_module_nb_premiers_dans_conteneur"]}";
+        exec($commandGetHostName, $output, $resultCode);
+
+        //on attend 1s
+        sleep(1);
+
+        $fp = fopen($VARIABLES_GLOBALES["repertoire_resultat"] . $fileNameForHostname, "r");
+        $hostname = fread($fp, 1024);
+        //echo $hostname;
+        fclose($fp);
+
         //la commande change en fonction du role du user et du mode d'exécution (distribué ou non du programme)
         $command = null;
-        if ($userRole == Enum_role_user::USER && $execMode)
-            $command = "echo \"mpiexec -n 3 --host pi2, pi3, pi4 python prime.py {$borneMin} {$borneMax} --mca btl_tcp_if_include 172.19.181.0/24\" > {$VARIABLES_GLOBALES["chemin_pipe_module_nb_premiers_dans_conteneur"]}";
+        $outputFile = "/home/pi/pipeDockerSwarm/outputsStats/".$outputFileName;
+        $indicatorFile = "/home/pi/pipeDockerSwarm/outputsStats/".$indicatorFileName;
+        if ($userRole == Enum_role_user::USER && $execMode){
+            //on stocke dans une chaine de caratères la liste des hostname de chaque pi
+            $listHostnames = array();
+            if ($hostname == "pi1")
+                $listHostnames = [$hostname, "pi2", "pi3", "pi4"];
+            elseif ($hostname == "pi2")
+                $listHostnames = [$hostname, "pi3", "pi4"];
+            elseif ($hostname == "pi3")
+                $listHostnames = [$hostname, "pi2", "pi4"];
+            else
+                $listHostnames = [$hostname, "pi2", "pi3"];
+
+            $hostnames = implode(",", $listHostnames);
+
+            $command = "echo \"mpiexec -n 3 --host $hostnames python /home/pi/prime.py {$borneMin} {$borneMax} {$outputFile} {$indicatorFile}  --mca btl_tcp_if_include 172.19.181.0/24\" > {$VARIABLES_GLOBALES["chemin_pipe_module_nb_premiers_dans_conteneur"]}";
+        }
         elseif (!$execMode && ($userRole == Enum_role_user::USER || $userRole == Enum_role_user::VISITEUR))
-            $command = "echo \"mpiexec -n 1 --host pi2 python prime.py {$borneMin} {$borneMax} --mca btl_tcp_if_include 172.19.181.0/24\" > {$VARIABLES_GLOBALES["chemin_pipe_module_nb_premiers_dans_conteneur"]}";
+            $command = "echo \"mpiexec -n 1 --host $hostname python /home/pi/prime.py {$borneMin} {$borneMax} {$outputFile} {$indicatorFile} --mca btl_tcp_if_include 172.19.181.0/24\" > {$VARIABLES_GLOBALES["chemin_pipe_module_nb_premiers_dans_conteneur"]}";
+
         else
             $command = "";
+
 
         //on regarde s'il y a un problème
         if ($command == ""){
             //le user n'est pas connecté et essaie d'exécuter le programme de manière distribué, on enregistre l'erreur
             //on enregistre a l'aide du logger le warning
-            $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "le user n'est pas connecté et essaie d'exécuter le programme de manière distribué");
+            $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Le user n'est pas connecté et essaie d'exécuter le programme de manière distribué");
             $listeResultParams["error"] = 1;
         }
         else{
+            //on enregistre à l'aide d'un logger l'utilisation du module par le user
+            $loggerBd->info($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Module1 utilisé");
+
             //on exécute la commande
             exec($command,$output,$resultCode);
             //$resultat_calcul = $resultCode[0];
@@ -86,15 +124,10 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
 
         //on vérifie qu'il existe
         if (file_exists($indicatorFile)){
-            $fp = fopen($indicatorFile, "r");
-            $indicatorFileContent = fread($fp, 1024);
-            fclose($fp);
-
-            $listeResultParams["result"] = $indicatorFileContent;
+            $listeResultParams["result"] = true;
         }
         else{
-            $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Fichier {$indicatorFile} non présent");
-            $listeResultParams["error"] = 1;
+            $listeResultParams["result"] = false;
         }
     }
 

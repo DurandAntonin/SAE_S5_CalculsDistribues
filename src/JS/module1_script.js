@@ -83,6 +83,8 @@ function requestComputePrimeNumbers(){
         executionTime.classList.replace("flex", "hidden")
     }
 
+    console.log("Requete ajax pour lancer le calcul des nombres premiers")
+
     //on lance une requete ajax vers un script php qui s'occupe d'exécuter le programme de calcul des nombres premiers
     let requestGetStatsSite = new XMLHttpRequest()
     requestGetStatsSite.open("POST","script_calcul_nombres_premiers.php");
@@ -96,7 +98,7 @@ function resultRequestComputePrimeNumbers(){
     if (this.readyState === 4 && this.status === 200) {
         //on récupère le résultat du script
         let resultScript = this.response
-        //console.log(resultScript)
+        console.log(resultScript)
 
         let resultScriptParsed = JSON.parse(resultScript)
         //console.log(resultScriptParsed)
@@ -108,7 +110,7 @@ function resultRequestComputePrimeNumbers(){
             indicatorFile = resultScriptParsed.result[1]
 
             //on lance une requete ajax toutes les n secondes pour vérifier si l'exécution du programme est terminée
-            intervalCheckComputeFinished = setTimeout(requestCheckComputeFinished, timeoutCheckComputeFinished)
+            intervalCheckComputeFinished = setInterval(requestCheckComputeFinished, timeoutCheckComputeFinished)
         }
         else{
             console.log("Erreur : " + resultScriptParsed.errorMessage)
@@ -117,6 +119,7 @@ function resultRequestComputePrimeNumbers(){
 }
 
 function requestCheckComputeFinished(){
+    console.log("On check si le calcule est terminé")
     //on lance une requete ajax vers un script php qui s'occupe de vérifier si le programme de calcul des nombres premiers est terminé
     let requestGetStatsSite = new XMLHttpRequest()
     requestGetStatsSite.open("POST","script_calcul_nombres_premiers.php");
@@ -139,9 +142,10 @@ function resultRequestCheckComputeFinished(){
         if (resultScriptParsed.error === 0){
             computeFinished = resultScriptParsed.result
 
-            //on arrete le timeout si le resultat vaut true
+            console.log("Check calcul terminé : " + computeFinished)
+            //on arrete le timeout si le resultat vaut 1
             if (computeFinished){
-                clearTimeout(intervalCheckComputeFinished)
+                clearInterval(intervalCheckComputeFinished)
 
                 //on exécute une requete ajax pour récupérer le résultat de l'exécution du programme de calcul des nombres premiers
                 requestGetResult()
@@ -154,6 +158,7 @@ function resultRequestCheckComputeFinished(){
 }
 
 function requestGetResult(){
+    console.log("Calcul terminé, on récupère le résultat")
     //on lance une requete ajax vers un script php qui s'occupe de vérifier si le programme de calcul des nombres premiers est terminé
     let requestGetStatsSite = new XMLHttpRequest()
     requestGetStatsSite.open("POST","script_calcul_nombres_premiers.php");
@@ -170,7 +175,7 @@ function resultRequestGetResult(){
         //console.log(resultScript)
 
         let resultScriptParsed = JSON.parse(resultScript)
-        //console.log(resultScriptParsed)
+        console.log(resultScriptParsed)
 
         //on regarde si une erreur a été renvoyée
         if (resultScriptParsed.error === 0){
