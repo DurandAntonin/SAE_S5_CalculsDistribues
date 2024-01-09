@@ -112,6 +112,17 @@ function resultRequestComputePrimeNumbers(){
             //on récupère le nom du fichier contenant les résultats du programme
             resultFile = resultScriptParsed.result
 
+            //on adapte l'intervalle de temps pour vérifier si le programme est terminé en fonction de la borne max
+            if (maxBoundaryValue < 1000){
+                timeoutCheckComputeFinished = 500
+            }
+            else if (maxBoundary < 10000){
+                timeoutCheckComputeFinished = 3000
+            }
+            else{
+                timeoutCheckComputeFinished = 10000
+            }
+
             //on lance une requete ajax toutes les n secondes pour vérifier si l'exécution du programme est terminée
             intervalCheckComputeFinished = setInterval(requestCheckComputeFinished, timeoutCheckComputeFinished)
         }
@@ -182,9 +193,14 @@ function resultRequestGetResult(){
 
         //on regarde si une erreur a été renvoyée
         if (resultScriptParsed.error === 0){
-            //on affiche la liste des nombres premiers
+            //on affiche la liste des nombres premiers compris entre les 2 bornes
             let stringListPrimeNumbers = ""
-            resultScriptParsed.result.primeNumbersList.forEach((primeNumber) => stringListPrimeNumbers += primeNumber + " ")
+            resultScriptParsed.result.primeNumbersList.forEach(
+                (primeNumber) => {
+                    if (primeNumber >= minBoundaryValue)
+                        stringListPrimeNumbers += primeNumber + " "
+                }
+            )
             stringListPrimeNumbers = stringListPrimeNumbers.slice(0, stringListPrimeNumbers.length - 1);
 
             result.appendChild(document.createTextNode(stringListPrimeNumbers))
