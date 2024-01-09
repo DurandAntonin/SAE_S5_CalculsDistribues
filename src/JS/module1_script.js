@@ -32,6 +32,9 @@ let toggleB
 //valeur maximale de la borne max
 let maxValueForBoundary = 100000
 
+let minBoundaryValue
+let maxBoundaryValue
+
 let resultFile //fichier stockant les résultats du programme de calcul des nombres premiers
 
 let timeoutCheckComputeFinished = 1000
@@ -56,41 +59,43 @@ function init(){
 
 function requestComputePrimeNumbers(){
     //on récupère les bornes de calcul
-    let borneMin = minBoundary.value
-    let borneMax = maxBoundary.value
+    minBoundaryValue = minBoundary.value
+    maxBoundaryValue = maxBoundary.value
     let execMode = toggleB.checked
 
-    console.log(borneMin)
-    console.log(borneMax)
+    console.log(minBoundaryValue)
+    console.log(maxBoundaryValue)
 
     //on vérifie que les valeurs sont cohérentes
-    if (borneMin < 0 || borneMax <= borneMin){
+    if (minBoundaryValue < 0 || maxBoundaryValue <= minBoundaryValue){
         console.log("Valeurs des bornes non cohérantes !!!")
     }
 
     //on vérifie que la valeur des bornes et inférieure ou égale à la valeur max autorisée
-    if (borneMax > maxValueForBoundary){
+    if (maxBoundaryValue > maxValueForBoundary){
         console.log("Borne max doit être inférieure ou égale à" + maxValueForBoundary)
     }
 
-    //on clear l'élément contenant la liste des nombres premiers
-    result.innerHTML = ""
+    else{
+        //on clear l'élément contenant la liste des nombres premiers
+        result.innerHTML = ""
 
-    //on clear et cache l'élément contenant le temps d'exécution du calcul
-    executionTime.innerHTML = ""
-    if (executionTime.classList.contains("flex")){
-        executionTime.classList.replace("flex", "hidden")
+        //on clear et cache l'élément contenant le temps d'exécution du calcul
+        executionTime.innerHTML = ""
+        if (executionTime.classList.contains("flex")){
+            executionTime.classList.replace("flex", "hidden")
+        }
+
+        console.log("Requete ajax pour lancer le calcul des nombres premiers")
+
+        //on lance une requete ajax vers un script php qui s'occupe d'exécuter le programme de calcul des nombres premiers
+        let requestGetStatsSite = new XMLHttpRequest()
+        requestGetStatsSite.open("POST","script_calcul_nombres_premiers.php");
+        requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
+        requestGetStatsSite.send(JSON.stringify({"bornes": [minBoundaryValue, maxBoundaryValue], "execMode" : execMode, "mode" : 0}))
+
+        requestGetStatsSite.onreadystatechange = resultRequestComputePrimeNumbers
     }
-
-    console.log("Requete ajax pour lancer le calcul des nombres premiers")
-
-    //on lance une requete ajax vers un script php qui s'occupe d'exécuter le programme de calcul des nombres premiers
-    let requestGetStatsSite = new XMLHttpRequest()
-    requestGetStatsSite.open("POST","script_calcul_nombres_premiers.php");
-    requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
-    requestGetStatsSite.send(JSON.stringify({"bornes": [borneMin, borneMax], "execMode" : execMode, "mode" : 0}))
-
-    requestGetStatsSite.onreadystatechange = resultRequestComputePrimeNumbers
 }
 
 function resultRequestComputePrimeNumbers(){
