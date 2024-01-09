@@ -105,7 +105,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
         }
         else{
             //on enregistre à l'aide d'un logger l'utilisation du module par le user
-            $loggerBd->info($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Module1 utilisé");
+            $loggerBd->info($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Utilisation module1");
 
             //on exécute la commande
             exec($command,$output,$resultCode);
