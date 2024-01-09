@@ -33,7 +33,6 @@ let toggleB
 let maxValueForBoundary = 100000
 
 let resultFile //fichier stockant les résultats du programme de calcul des nombres premiers
-let indicatorFile //fichier indiquant si le programme s'est terminé
 
 let timeoutCheckComputeFinished = 1000
 let intervalCheckComputeFinished //intervalle de temps pour vérifier si le programme de calcul des nombres premiers s'est terminé
@@ -105,9 +104,8 @@ function resultRequestComputePrimeNumbers(){
 
         //on regarde si une erreur a été renvoyée
         if (resultScriptParsed.error === 0){
-            //on récupère le nom de chaque fichier retourné
-            resultFile = resultScriptParsed.result[0]
-            indicatorFile = resultScriptParsed.result[1]
+            //on récupère le nom du fichier contenant les résultats du programme
+            resultFile = resultScriptParsed.result
 
             //on lance une requete ajax toutes les n secondes pour vérifier si l'exécution du programme est terminée
             intervalCheckComputeFinished = setInterval(requestCheckComputeFinished, timeoutCheckComputeFinished)
@@ -124,7 +122,7 @@ function requestCheckComputeFinished(){
     let requestGetStatsSite = new XMLHttpRequest()
     requestGetStatsSite.open("POST","script_calcul_nombres_premiers.php");
     requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
-    requestGetStatsSite.send(JSON.stringify({"indicatorFileName" : indicatorFile,"mode" : 1}))
+    requestGetStatsSite.send(JSON.stringify({"outputFileName" : resultFile,"mode" : 1}))
 
     requestGetStatsSite.onreadystatechange = resultRequestCheckComputeFinished
 }
@@ -143,7 +141,7 @@ function resultRequestCheckComputeFinished(){
             computeFinished = resultScriptParsed.result
 
             console.log("Check calcul terminé : " + computeFinished)
-            //on arrete le timeout si le resultat vaut 1
+            //on arrete l'interval si le resultat vaut true
             if (computeFinished){
                 clearInterval(intervalCheckComputeFinished)
 

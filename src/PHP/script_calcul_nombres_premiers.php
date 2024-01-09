@@ -45,13 +45,6 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
         $execMode = $paramExecRequete["execMode"]; // mode d'exécution du script distribué ou non
 
         $outputFileName = guidv4() . ".json"; //fichier qui stocke le résultat du script python
-        $indicatorFileName = guidv4() . ".txt"; //fichier indiquant si le script s'est terminé ou non
-
-        //fichier qui va indiquer si le calcul est terminé
-        $indicatorFile = $VARIABLES_GLOBALES["repertoire_resultat"] . $indicatorFileName;
-        //$fp = fopen( $indicatorFile, "w");
-        //fputs($fp, false);
-        //fclose($fp);
 
         $output = null;
         $resultCode = null;
@@ -71,8 +64,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
 
         //la commande change en fonction du role du user et du mode d'exécution (distribué ou non du programme)
         $command = null;
-        $outputFile = "/home/pi/pipeDockerSwarm/outputsStats/".$outputFileName;
-        $indicatorFile = "/home/pi/pipeDockerSwarm/outputsStats/".$indicatorFileName;
+        $outputFile = $VARIABLES_GLOBALES["chemin_result_dans_pi"] . $outputFileName;
         if ($userRole == Enum_role_user::USER && $execMode){
             //on stocke dans une chaine de caratères la liste des hostname de chaque pi
             $listHostnames = array();
@@ -87,10 +79,10 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
 
             $hostnames = implode(",", $listHostnames);
 
-            $command = "echo \"mpiexec -n 3 --host $hostnames python /home/pi/prime.py {$borneMin} {$borneMax} {$outputFile} {$indicatorFile}  --mca btl_tcp_if_include 172.19.181.0/24\" > {$VARIABLES_GLOBALES["chemin_pipe_module_nb_premiers_dans_conteneur"]}";
+            $command = "echo \"mpiexec -n 3 --host $hostnames python /home/pi/prime.py {$borneMin} {$borneMax} {$outputFile} --mca btl_tcp_if_include 172.19.181.0/24\" > {$VARIABLES_GLOBALES["chemin_pipe_module_nb_premiers_dans_conteneur"]}";
         }
         elseif (!$execMode && ($userRole == Enum_role_user::USER || $userRole == Enum_role_user::VISITEUR))
-            $command = "echo \"mpiexec -n 1 --host $hostname python /home/pi/prime.py {$borneMin} {$borneMax} {$outputFile} {$indicatorFile} --mca btl_tcp_if_include 172.19.181.0/24\" > {$VARIABLES_GLOBALES["chemin_pipe_module_nb_premiers_dans_conteneur"]}";
+            $command = "echo \"mpiexec -n 1 --host $hostname python /home/pi/prime.py {$borneMin} {$borneMax} {$outputFile} --mca btl_tcp_if_include 172.19.181.0/24\" > {$VARIABLES_GLOBALES["chemin_pipe_module_nb_premiers_dans_conteneur"]}";
 
         else
             $command = "";
@@ -109,21 +101,20 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
 
             //on exécute la commande
             exec($command,$output,$resultCode);
-            //$resultat_calcul = $resultCode[0];
 
             //on renvoie au script le nom du fichier contenant le résultat du programme
             //ainsi que le nom du fichier indiquant l'exécution du programme terminée ou non
-            $listeResultParams["result"] = [$outputFileName, $indicatorFileName];
+            $listeResultParams["result"] = $outputFileName;
         }
     }
     elseif ($mode == 1){
-        $indicatorFileName = $paramExecRequete["indicatorFileName"];
+        $outputFileName = $paramExecRequete["outputFileName"];
 
         //on ouvre le fichier et on récupère le résultat
-        $indicatorFile = $VARIABLES_GLOBALES["repertoire_resultat"] . $indicatorFileName;
+        $outputFile = $VARIABLES_GLOBALES["repertoire_resultat"] . $outputFileName;
 
         //on vérifie qu'il existe
-        if (file_exists($indicatorFile)){
+        if (file_exists($outputFile)){
             $listeResultParams["result"] = true;
         }
         else{
