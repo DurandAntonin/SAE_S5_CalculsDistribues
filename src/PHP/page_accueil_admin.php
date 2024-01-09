@@ -214,7 +214,7 @@ echo"<hr class='dark:border-gray-700'>
 
                                     <td
                                             class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                        up 5 days, 7 hours, 50 minutes</td>
+                                        null</td>
                                 </tr>
                                 <tr>
                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -245,7 +245,7 @@ echo"<hr class='dark:border-gray-700'>
 
                                     <td
                                             class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                        up 4 days, 21 hours, 25 minutes</td>
+                                        null</td>
                                 </tr>
                                 <tr>
                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -276,7 +276,7 @@ echo"<hr class='dark:border-gray-700'>
 
                                     <td
                                             class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                        up 4 days, 21 hours, 25 minutes</td>
+                                        null</td>
                                 </tr>
                                 <tr>
                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -307,7 +307,7 @@ echo"<hr class='dark:border-gray-700'>
 
                                     <td
                                             class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                        up 4 days, 21 hours, 25 minutes</td>
+                                        null</td>
                                 </tr>
                                 <tr>
                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -338,7 +338,7 @@ echo"<hr class='dark:border-gray-700'>
 
                                     <td
                                             class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                        up 4 days, 21 hours, 25 minutes</td>
+                                        null</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -380,7 +380,7 @@ echo"<hr class='dark:border-gray-700'>
             </form>
             <div id="div-liste-users" class="w-full overflow-y-auto h-4/5 rounded-xl bg-deepblue p-1 shadow-xl border border-white">
                 <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-                    <div class="grid grid-flow-col grid-rows-2 ">
+                    <!--<div class="grid grid-flow-col grid-rows-2 ">
                         <div class="mr-20 text-lg font-bold text-white">Login : Tom</div>
                         <div class="text-xs text-white">
                             <span class="mr-2">ID : 007886</span>
@@ -392,7 +392,8 @@ echo"<hr class='dark:border-gray-700'>
                         </div>
                         <div class="text-lg font-bold text-white">Inscription : 2023-12-19</div>
 
-                        <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon>      </div>
+                        <ion-icon name="trash" class="text-3xl absolute right-2 text-red-700 cursor-pointer"></ion-icon>
+                    </div>-->
                 </div>
             </div>
         </div>
@@ -422,7 +423,7 @@ echo"<hr class='dark:border-gray-700'>
             </form>
             <div id="div-list-logging" class="w-full overflow-y-auto h-4/5 rounded-xl bg-deepblue p-1 shadow-xl border border-white">
                 <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
-                    <div class="grid grid-flow-col grid-rows-2 ">
+                    <!--<div class="grid grid-flow-col grid-rows-2 ">
                         <div class="mr-20 text-lg font-bold text-white">LogLevel : INFO</div>
                         <div class="text-xs text-white">
                             <span class="mr-2">LogID : 007886-009975-90876-09865</span>
@@ -434,7 +435,7 @@ echo"<hr class='dark:border-gray-700'>
                         </div>
 
                         <div class=" text-lg font-bold text-white absolute right-2">Date : 2023-12-19 13:55:12 </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>
