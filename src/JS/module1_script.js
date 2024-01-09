@@ -43,7 +43,6 @@ let intervalCheckComputeFinished //intervalle de temps pour vérifier si le prog
 //variable pour indiquer que le programme de calcul des nombres premiers s'est terminé
 let computeFinished = false
 
-
 function init(){
     //on récupère les différents éléments html
     minBoundary = document.getElementById("debut")
@@ -63,8 +62,8 @@ function requestComputePrimeNumbers(){
     maxBoundaryValue = maxBoundary.value
     let execMode = toggleB.checked
 
-    console.log(minBoundaryValue)
-    console.log(maxBoundaryValue)
+    //console.log(minBoundaryValue)
+    //console.log(maxBoundaryValue)
 
     //on vérifie que les valeurs sont cohérentes
     if (minBoundaryValue < 0 || maxBoundaryValue <= minBoundaryValue){
@@ -72,8 +71,8 @@ function requestComputePrimeNumbers(){
     }
 
     //on vérifie que la valeur des bornes et inférieure ou égale à la valeur max autorisée
-    if (maxBoundaryValue > maxValueForBoundary){
-        console.log("Borne max doit être inférieure ou égale à" + maxValueForBoundary)
+    else if (minBoundaryValue > maxValueForBoundary){
+        console.log("Borne max doit être supérieure ou égale à" + maxValueForBoundary)
     }
 
     else{
@@ -86,7 +85,9 @@ function requestComputePrimeNumbers(){
             executionTime.classList.replace("flex", "hidden")
         }
 
-        console.log("Requete ajax pour lancer le calcul des nombres premiers")
+        //on indique au user que le calcul est en cours
+        initialiseButtonForWaitingResult()
+        //console.log("Requete ajax pour lancer le calcul des nombres premiers")
 
         //on lance une requete ajax vers un script php qui s'occupe d'exécuter le programme de calcul des nombres premiers
         let requestGetStatsSite = new XMLHttpRequest()
@@ -102,7 +103,7 @@ function resultRequestComputePrimeNumbers(){
     if (this.readyState === 4 && this.status === 200) {
         //on récupère le résultat du script
         let resultScript = this.response
-        console.log(resultScript)
+        //console.log(resultScript)
 
         let resultScriptParsed = JSON.parse(resultScript)
         //console.log(resultScriptParsed)
@@ -113,10 +114,10 @@ function resultRequestComputePrimeNumbers(){
             resultFile = resultScriptParsed.result
 
             //on adapte l'intervalle de temps pour vérifier si le programme est terminé en fonction de la borne max
-            if (maxBoundaryValue < 1000){
+            if (maxBoundaryValue <= 1000){
                 timeoutCheckComputeFinished = 500
             }
-            else if (maxBoundary < 10000){
+            else if (maxBoundary <= 10000){
                 timeoutCheckComputeFinished = 3000
             }
             else{
@@ -133,7 +134,7 @@ function resultRequestComputePrimeNumbers(){
 }
 
 function requestCheckComputeFinished(){
-    console.log("On check si le calcule est terminé")
+    //console.log("On check si le calcule est terminé")
     //on lance une requete ajax vers un script php qui s'occupe de vérifier si le programme de calcul des nombres premiers est terminé
     let requestGetStatsSite = new XMLHttpRequest()
     requestGetStatsSite.open("POST","script_calcul_nombres_premiers.php");
@@ -156,7 +157,7 @@ function resultRequestCheckComputeFinished(){
         if (resultScriptParsed.error === 0){
             computeFinished = resultScriptParsed.result
 
-            console.log("Check calcul terminé : " + computeFinished)
+            //console.log("Check calcul terminé : " + computeFinished)
             //on arrete l'interval si le resultat vaut true
             if (computeFinished){
                 clearInterval(intervalCheckComputeFinished)
@@ -172,7 +173,7 @@ function resultRequestCheckComputeFinished(){
 }
 
 function requestGetResult(){
-    console.log("Calcul terminé, on récupère le résultat")
+    //console.log("Calcul terminé, on récupère le résultat")
     //on lance une requete ajax vers un script php qui s'occupe de vérifier si le programme de calcul des nombres premiers est terminé
     let requestGetStatsSite = new XMLHttpRequest()
     requestGetStatsSite.open("POST","script_calcul_nombres_premiers.php");
@@ -189,10 +190,14 @@ function resultRequestGetResult(){
         //console.log(resultScript)
 
         let resultScriptParsed = JSON.parse(resultScript)
-        console.log(resultScriptParsed)
+        //console.log(resultScriptParsed)
 
         //on regarde si une erreur a été renvoyée
         if (resultScriptParsed.error === 0){
+            //on met à jour le bouton pour indiquer au user que le calcul est terminé
+            deleteChildNodes(buttonCompute)
+            buttonCompute.appendChild(document.createTextNode("Calculer"))
+
             //on affiche la liste des nombres premiers compris entre les 2 bornes
             let stringListPrimeNumbers = ""
             resultScriptParsed.result.primeNumbersList.forEach(
@@ -212,6 +217,51 @@ function resultRequestGetResult(){
         else{
             console.log("Erreur : " + resultScriptParsed.errorMessage)
         }
+    }
+}
+
+function initialiseButtonForWaitingResult(){
+    //on supprime les enfants du boutton
+    deleteChildNodes(buttonCompute)
+
+    //on ajoute un spinner dans le bouton
+    let spinner = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    let path1 = document.createElementNS(
+        'http://www.w3.org/2000/svg',
+        'path'
+    );
+    let path2 = document.createElementNS(
+        'http://www.w3.org/2000/svg',
+        'path'
+    );
+
+    spinner.setAttribute("id", "spinner")
+    spinner.setAttribute("aria-hidden", "true");
+    spinner.setAttribute("role", "status");
+    spinner.setAttribute("fill", "none");
+    spinner.setAttribute("viewBox", "0 0 100 101");
+    spinner.classList.add("inline", "w-6", "h-6", "me-3", "text-white", "animate-spin", "fill-blue-600");
+
+    path1.setAttribute(
+        "d",
+        "M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+    );
+    path1.setAttribute("fill", "currentColor");
+    path2.setAttribute(
+        "d",
+        "M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+    );
+    path2.setAttribute("fill", 'currentFill');
+
+    spinner.append(path1, path2)
+    //console.log(spinner)
+
+    buttonCompute.append(spinner, document.createTextNode("Calcul en cours ..."))
+}
+
+function deleteChildNodes(fatherNode){
+    while (fatherNode.hasChildNodes()){
+        fatherNode.removeChild(fatherNode.firstChild)
     }
 }
 
@@ -311,7 +361,7 @@ function toggleCheck() {
         if(document.getElementById("infoToggle").innerHTML === "user"){
             textCalcul.innerHTML = "ACTIF";
             textCalcul.classList.replace("text-red-700", "text-green-700")
-            console.log(textCalcul)
+            //console.log(textCalcul)
         }
         else{
             popUpPasCo.classList.remove("hidden");

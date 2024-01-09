@@ -210,7 +210,9 @@ echo"<hr class='dark:border-gray-700'>
                             <p id="p-execution-time" class="hidden inline-block align-baseline text-sm text-opacity-200 text-white"></p>
                         </div>
                         <div class="mb-6 text-center">
-                            <input type="button" id="compute" value="Calculer" class="w-1/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
+                            <button type="button" id="compute" value="Calculer" class="w-1/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
+                                Calculer
+                            </button>
                         </div>
                         <div class="flex justify-center mb-6 ">
                             <p id="erreur_message">
