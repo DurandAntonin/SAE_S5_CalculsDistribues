@@ -204,10 +204,10 @@ echo"<hr class='dark:border-gray-700'>
                         </div>
 
                         <div class="mb-4 md:mb-0 md:mr-2 flex justify-center items-center">
-                            <p id="result" class="border-2 border-white h-80 w-3/4 rounded-xl"></p>
+                            <p id="result" class="border-2 text-white p-3 overflow-auto border-white h-80 w-3/4 rounded-xl"></p>
                         </div>
                         <div class="md:mb-0 md:mr-2 flex justify-center items-center">
-                            <p id="p-execution-time" class="hidden inline-block align-baseline text-sm text-opacity-200 text-white"> Temps d'exécution : 243.12s </p>
+                            <p id="p-execution-time" class="hidden inline-block align-baseline text-sm text-opacity-200 text-white"></p>
                         </div>
                         <div class="mb-6 text-center">
                             <input type="button" id="compute" value="Calculer" class="w-1/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">

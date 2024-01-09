@@ -178,11 +178,15 @@ function resultRequestGetResult(){
         //on regarde si une erreur a été renvoyée
         if (resultScriptParsed.error === 0){
             //on affiche la liste des nombres premiers
-            result.innerHTML = resultScriptParsed.result.primeNumbersList
+            let stringListPrimeNumbers = ""
+            resultScriptParsed.result.primeNumbersList.forEach((primeNumber) => stringListPrimeNumbers += primeNumber + " ")
+            stringListPrimeNumbers = stringListPrimeNumbers.slice(0, stringListPrimeNumbers.length - 1);
+
+            result.appendChild(document.createTextNode(stringListPrimeNumbers))
 
             //on affiche le temps d'exécution du calcul
-            executionTime.classList
-            executionTime.innerHTML = "Temps d'exécution : " + executionTime
+            executionTime.classList.replace("hidden", "flex")
+            executionTime.innerHTML = "Temps d'exécution : " + resultScriptParsed.result.executionTime + "s"
         }
         else{
             console.log("Erreur : " + resultScriptParsed.errorMessage)
@@ -281,9 +285,12 @@ function handleClickOutsideF(event) {
 }
 
 function toggleCheck() {
+    let textCalcul = document.getElementById("textCalcul")
     if(document.getElementById("toggleB").checked === true){
-        if(document.getElementById("infoToggle").innerHTML == "user"){
-            document.getElementById("textCalcul").innerHTML = "ACTIF";
+        if(document.getElementById("infoToggle").innerHTML === "user"){
+            textCalcul.innerHTML = "ACTIF";
+            textCalcul.classList.replace("text-red-700", "text-green-700")
+            console.log(textCalcul)
         }
         else{
             popUpPasCo.classList.remove("hidden");
@@ -292,7 +299,8 @@ function toggleCheck() {
     } else {
         popUpPasCo.classList.remove("flex");
         popUpPasCo.classList.add("hidden");
-        document.getElementById("textCalcul").innerHTML = "INACTIF";
+        textCalcul.innerHTML = "INACTIF";
+        textCalcul.classList.replace("text-green-700", "text-red-700")
     }
 }
 
