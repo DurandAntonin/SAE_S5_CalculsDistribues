@@ -58,7 +58,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
         sleep(1);
 
         $fp = fopen($VARIABLES_GLOBALES["repertoire_resultat"] . $fileNameForHostname, "r");
-        $hostname = fread($fp, 1024);
+        $hostname = trim(fread($fp, 10));
         //echo $hostname;
         fclose($fp);
 
@@ -78,11 +78,12 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
                 $listHostnames = [$hostname, "pi2", "pi3"];
 
             $hostnames = implode(",", $listHostnames);
+            $numberOfNodes = count($listHostnames);
 
-            $command = "echo \"mpiexec -n 3 --host $hostnames python /home/pi/prime.py {$borneMin} {$borneMax} {$outputFile} --mca btl_tcp_if_include 172.19.181.0/24\" > {$VARIABLES_GLOBALES["chemin_pipe_module_nb_premiers_dans_conteneur"]}";
+            $command = "echo \"ssh cnat mpiexec -n {$numberOfNodes} --host $hostnames python /home/pi/prime.py {$borneMin} {$borneMax} {$outputFile} --mca btl_tcp_if_include 172.19.181.0/24\" > {$VARIABLES_GLOBALES["chemin_pipe_module_nb_premiers_dans_conteneur"]}";
         }
         elseif (!$execMode && ($userRole == Enum_role_user::USER || $userRole == Enum_role_user::VISITEUR))
-            $command = "echo \"mpiexec -n 1 --host $hostname python /home/pi/prime.py {$borneMin} {$borneMax} {$outputFile} --mca btl_tcp_if_include 172.19.181.0/24\" > {$VARIABLES_GLOBALES["chemin_pipe_module_nb_premiers_dans_conteneur"]}";
+            $command = "echo \"ssh cnat mpiexec -n 1 --host $hostname python /home/pi/prime.py {$borneMin} {$borneMax} {$outputFile} --mca btl_tcp_if_include 172.19.181.0/24\" > {$VARIABLES_GLOBALES["chemin_pipe_module_nb_premiers_dans_conteneur"]}";
 
         else
             $command = "";
