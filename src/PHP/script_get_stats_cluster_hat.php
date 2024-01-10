@@ -77,7 +77,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
             fclose($fp);
 
             //on supprime le fichier
-            unlink($outputFile);
+            //unlink($outputFile);
 
             //on ajoute la liste des stats du cluster hat dans la liste de renvoi
             $listeResultParams["result"] = $listStatsClusterHat;

@@ -66,19 +66,19 @@ $VARIABLES_GLOBALES = import_config();
     </nav>
 </header>
 <?php
-    echo "<div class='hidden absolute top-20 right-0 w-60 px-5 py-3 mr-2 dark:bg-gray-800 bg-deepblue rounded-lg shadow border dark:border-transparent animate-fade-down animate-duration-[400ms] animate-ease-in-out' id='popUpProfil'>
+echo "<div class='hidden absolute top-20 right-0 w-60 px-5 py-3 mr-2 dark:bg-gray-800 bg-deepblue rounded-lg shadow border dark:border-transparent animate-fade-down animate-duration-[400ms] animate-ease-in-out' id='popUpProfil'>
             <ul class='space-y-3 text-white'>
               <li class='font-medium'>
                 <a href='#' class='flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700'>
                   <div class='mr-3'>
                     <svg class='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'></path></svg>
                   </div>";
-    echo $user->getLogin();
-    echo "</a>
+echo $user->getLogin();
+echo "</a>
              </li>";
-    //on affiche les settings si le user est inscrit
-    if ($user->getRole() == Enum_role_user::USER){
-        echo "<li class='font-medium'>
+//on affiche les settings si le user est inscrit
+if ($user->getRole() == Enum_role_user::USER){
+    echo "<li class='font-medium'>
                 <a href='#' class='flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700' onclick='showFormProfile()' id='linkShowProfil'>
                   <div class='mr-3'>
                     <svg class='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z'></path><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'></path></svg>
@@ -86,8 +86,8 @@ $VARIABLES_GLOBALES = import_config();
                   Setting
                 </a>
               </li>";
-    }
-    echo"<hr class='dark:border-gray-700'>
+}
+echo"<hr class='dark:border-gray-700'>
               <li class='font-medium'>
                 <a href='page_deconnexion.php' class='flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-red-600'>
                   <div class='mr-3 text-red-600'>
@@ -125,279 +125,279 @@ $VARIABLES_GLOBALES = import_config();
 
 
 <section class="w-full h-screen ">
-<div class="h-screen items-center justify-center hidden" id="popUpFormProfil">
-    <div class="container mx-auto">
-        <div class="my-12 flex items-center justify-center px-6">
-            <!-- Row -->
+    <div class="h-screen items-center justify-center hidden" id="popUpFormProfil">
+        <div class="container mx-auto">
+            <div class="my-12 flex items-center justify-center px-6">
+                <!-- Row -->
 
-            <div class="w-full md:w-1/3 bg-deepblue rounded-3xl items-center relative">
-                <h2 class="text-3xl text-center text-white my-8">Mon profil </h2>
-                <ion-icon name="close" class="text-white right-0 my-9 mr-6 top-0 absolute text-3xl cursor-pointer" onclick="showFormProfile()"></ion-icon>
-                <form class="rounded  px-8 pb-8 pt-6" method="post" action="traitement_profil.php" id="formProfil">
-                <input type="hidden" id="submit_supprimer_compte" name="submit_supprimer_compte" value="">
-                    <div class="mb-4">
-                        <label class="mb-2 block text-sm font-bold text-white" for="login"> Identifiant </label>
-                        <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="login" name="login" placeholder="Identifiant" value="<?php echo $user->getLogin(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
-                    </div>
-                    <div class="mb-4 md:flex md:justify-between">
+                <div class="w-full md:w-1/3 bg-deepblue rounded-3xl items-center relative">
+                    <h2 class="text-3xl text-center text-white my-8">Mon profil </h2>
+                    <ion-icon name="close" class="text-white right-0 my-9 mr-6 top-0 absolute text-3xl cursor-pointer" onclick="showFormProfile()"></ion-icon>
+                    <form class="rounded  px-8 pb-8 pt-6" method="post" action="traitement_profil.php" id="formProfil">
+                        <input type="hidden" id="submit_supprimer_compte" name="submit_supprimer_compte" value="">
+                        <div class="mb-4">
+                            <label class="mb-2 block text-sm font-bold text-white" for="login"> Identifiant </label>
+                            <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="login" name="login" placeholder="Identifiant" value="<?php echo $user->getLogin(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
+                        </div>
+                        <div class="mb-4 md:flex md:justify-between">
 
-                        <div class="mb-4 md:mb-0 md:mr-2">
-                            <label class="mb-2 block text-sm font-bold text-white" for="first_name"> Prénom </label>
-                            <input class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="first_name" name="first_name" type="text" placeholder="Prénom" value="<?php echo $user->getFirstName(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
+                            <div class="mb-4 md:mb-0 md:mr-2">
+                                <label class="mb-2 block text-sm font-bold text-white" for="first_name"> Prénom </label>
+                                <input class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="first_name" name="first_name" type="text" placeholder="Prénom" value="<?php echo $user->getFirstName(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
+                            </div>
+                            <div class="md:ml-2">
+                                <label class="mb-2 block text-sm font-bold text-white" for="last_name"> Nom </label>
+                                <input class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="last_name" name="last_name" type="text" placeholder="Nom" value="<?php echo $user->getLastName(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
+                            </div>
                         </div>
-                        <div class="md:ml-2">
-                            <label class="mb-2 block text-sm font-bold text-white" for="last_name"> Nom </label>
-                            <input class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="last_name" name="last_name" type="text" placeholder="Nom" value="<?php echo $user->getLastName(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
+                        <div class="mb-4">
+                            <label class="mb-2 block text-sm font-bold text-white" for="email"> Email </label>
+                            <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="email" type="email" name="email" placeholder="Email" value="<?php echo $user->getMail(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mail"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mail"][1];?>" required/>
                         </div>
-                    </div>
-                    <div class="mb-4">
-                        <label class="mb-2 block text-sm font-bold text-white" for="email"> Email </label>
-                        <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="email" type="email" name="email" placeholder="Email" value="<?php echo $user->getMail(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mail"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mail"][1];?>" required/>
-                    </div>
-                    <div class="mb-4 md:flex md:justify-between">
-                        <div class="mb-4 md:mb-0 md:mr-2">
-                            <label class="mb-2 block text-sm font-bold text-white" for="password"> Mot de passe </label>
-                            <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border border-red-500 px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="password" name="password" type="password" placeholder="******************" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][1];?>"/>
-                            <p class="text-xs italic text-red-500">Choisissez un mot de passe</p>
-                            <p class="text-xs italic text-red-500">différent du précédent.</p>
+                        <div class="mb-4 md:flex md:justify-between">
+                            <div class="mb-4 md:mb-0 md:mr-2">
+                                <label class="mb-2 block text-sm font-bold text-white" for="password"> Mot de passe </label>
+                                <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border border-red-500 px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="password" name="password" type="password" placeholder="******************" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][1];?>"/>
+                                <p class="text-xs italic text-red-500">Choisissez un mot de passe</p>
+                                <p class="text-xs italic text-red-500">différent du précédent.</p>
+                            </div>
+                            <div class="md:ml-2">
+                                <label class="mb-2 block text-sm font-bold text-white" for="password_confirm"> Confirmez le mot de passe</label>
+                                <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="password_confirm" name="password_confirm" type="password" placeholder="******************" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][1];?>"/>
+                            </div>
                         </div>
-                        <div class="md:ml-2">
-                            <label class="mb-2 block text-sm font-bold text-white" for="password_confirm"> Confirmez le mot de passe</label>
-                            <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="password_confirm" name="password_confirm" type="password" placeholder="******************" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][1];?>"/>
+                        <div class="text-center">
+                            <input type="submit" name="submit_profil" value="Valider" class="w-3/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
                         </div>
+                    </form>
+                    <div class="mb-8 text-center">
+                        <button name="submit_suppression" value="Supprimer" class="w-2/4 mt-6 py-2 rounded-xl bg-red-500 text-white focus:outline-none hover:bg-white hover:text-red-500 focus:ring-4 focus:ring-gray-300 cursor-pointer" onclick="confirmDelete()"><ion-icon name="trash" class="text-center animate-rotate-y animate-infinite animate-duration-[2000ms] animate-ease-in-out"></ion-icon>Supprimer</button>
                     </div>
-                    <div class="text-center">
-                        <input type="submit" name="submit_profil" value="Valider" class="w-3/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
-                    </div>
-                </form>
-                <div class="mb-8 text-center">
-                    <button name="submit_suppression" value="Supprimer" class="w-2/4 mt-6 py-2 rounded-xl bg-red-500 text-white focus:outline-none hover:bg-white hover:text-red-500 focus:ring-4 focus:ring-gray-300 cursor-pointer" onclick="confirmDelete()"><ion-icon name="trash" class="text-center animate-rotate-y animate-infinite animate-duration-[2000ms] animate-ease-in-out"></ion-icon>Supprimer</button>
                 </div>
             </div>
         </div>
     </div>
-</div>   
-<p class="text-3xl text-deepblue pt-10 text-center">Bienvenue <b><?php echo $user->getLogin(); ?></b></p>   
-<div class="flex h-screen items-center justify-center" id="sectionModules">
-<div class="inline-flex flex-row justify-center items-center md:flex p-20">
-  <div class="w-full">
-      <div  class="wrapper text-gray-900 antialiased animate-fade-left animate-duration-[400ms] animate-ease-in-out"   id="0">
-        <img src="https://i.pinimg.com/564x/b1/6a/44/b16a443978512bffecd043e7ac687ed4.jpg" alt="" class="w-full rounded-xl object-cover object-center shadow-md" />
-          <div class="relative px-4 -mt-16">
-            <div class="rounded-lg bg-white p-6 shadow-lg">
-              <div class="flex items-baseline">
-                <span class="inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Maths </span>
-                <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Calculs distribués </span>
-                <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> MPI </span>
-              </div>
+    <p class="text-3xl text-deepblue pt-10 text-center">Bienvenue <b><?php echo $user->getLogin(); ?></b></p>
+    <div class="flex h-screen items-center justify-center" id="sectionModules">
+        <div class="inline-flex flex-row justify-center items-center md:flex p-20">
+            <div class="w-full">
+                <div  class="wrapper text-gray-900 antialiased animate-fade-left animate-duration-[400ms] animate-ease-in-out"   id="0">
+                    <img src="https://i.pinimg.com/564x/b1/6a/44/b16a443978512bffecd043e7ac687ed4.jpg" alt="" class="w-full rounded-xl object-cover object-center shadow-md" />
+                    <div class="relative px-4 -mt-16">
+                        <div class="rounded-lg bg-white p-6 shadow-lg">
+                            <div class="flex items-baseline">
+                                <span class="inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Maths </span>
+                                <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Calculs distribués </span>
+                                <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> MPI </span>
+                            </div>
 
-              <h4 class="mt-1 truncate text-xl font-semibold uppercase leading-tight">Calculs Des Nombres premiers</h4>
+                            <h4 class="mt-1 truncate text-xl font-semibold uppercase leading-tight">Calculs Des Nombres premiers</h4>
 
-              <div id="div-nb-ut-m1" class="mt-1">
-                0
-                <span class="text-sm text-gray-600">utilisation</span>
-              </div>
-                <button id="button-module1" class="w-64 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer" onclick="goToModulePage(event)">Utiliser </button>
-            </div>
-          </div>
-      </div>
-      <div  class="wrapper text-gray-900 antialiased hidden animate-fade-left animate-duration-[400ms] animate-ease-in-out" id="1">
-        <img src="https://i.pinimg.com/564x/fb/5a/3f/fb5a3f88bc2e396ef073cc89e4a12a50.jpg" alt="" class="w-full rounded-xl object-cover object-center shadow-md" />
-          <div class="relative px-4 -mt-16">
-              <div class="rounded-lg bg-white p-6 shadow-lg">
-                <div class="flex items-baseline">
-                  <span class="inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Maths </span>
-                  <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Probabilités </span>
-                  <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Calculs distribués </span>
-                  <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> MPI </span>
+                            <div id="div-nb-ut-m1" class="mt-1">
+                                0
+                                <span class="text-sm text-gray-600">utilisation</span>
+                            </div>
+                            <button id="button-module1" class="w-64 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer" onclick="goToModulePage(event)">Utiliser </button>
+                        </div>
+                    </div>
                 </div>
+                <div  class="wrapper text-gray-900 antialiased hidden animate-fade-left animate-duration-[400ms] animate-ease-in-out" id="1">
+                    <img src="https://i.pinimg.com/564x/fb/5a/3f/fb5a3f88bc2e396ef073cc89e4a12a50.jpg" alt="" class="w-full rounded-xl object-cover object-center shadow-md" />
+                    <div class="relative px-4 -mt-16">
+                        <div class="rounded-lg bg-white p-6 shadow-lg">
+                            <div class="flex items-baseline">
+                                <span class="inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Maths </span>
+                                <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Probabilités </span>
+                                <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Calculs distribués </span>
+                                <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> MPI </span>
+                            </div>
 
-                <h4 class="mt-1 truncate text-xl font-semibold uppercase leading-tight">Approximation de Pi avec Monte-Carlo </h4>
+                            <h4 class="mt-1 truncate text-xl font-semibold uppercase leading-tight">Approximation de Pi avec Monte-Carlo </h4>
 
-                <div id="div-nb-ut-m2" class="mt-1">
-                  0
-                  <span class="text-sm text-gray-600">utilisation</span>
+                            <div id="div-nb-ut-m2" class="mt-1">
+                                0
+                                <span class="text-sm text-gray-600">utilisation</span>
+                            </div>
+                            <button id="button-module2" class="w-64 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer" onclick="goToModulePage(event)">Utiliser </button>
+                        </div>
+                    </div>
                 </div>
-                  <button id="button-module2" class="w-64 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer" onclick="goToModulePage(event)">Utiliser </button>
-              </div>
-          </div>
-      </div>
-      <div  class="wrapper text-gray-900 antialiased hidden animate-fade-left animate-duration-[400ms] animate-ease-in-out" id="2">
-        <img src="https://i.pinimg.com/564x/a2/5d/55/a25d55ca8aaec95c732607d9b2c7eeed.jpg" alt="" class="w-full rounded-xl object-cover object-center shadow-md" />
-          <div class="relative px-4 -mt-16">
-              <div class="rounded-lg bg-white p-6 shadow-lg">
-                <div class="flex items-baseline">
-                  <span class="inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Maths </span>
-                  <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Intelligence Artificielle</span>
-                  <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Deep Learning </span>
-                </div>
+                <div  class="wrapper text-gray-900 antialiased hidden animate-fade-left animate-duration-[400ms] animate-ease-in-out" id="2">
+                    <img src="https://i.pinimg.com/564x/a2/5d/55/a25d55ca8aaec95c732607d9b2c7eeed.jpg" alt="" class="w-full rounded-xl object-cover object-center shadow-md" />
+                    <div class="relative px-4 -mt-16">
+                        <div class="rounded-lg bg-white p-6 shadow-lg">
+                            <div class="flex items-baseline">
+                                <span class="inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Maths </span>
+                                <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Intelligence Artificielle</span>
+                                <span class="ml-2 inline-block rounded-full bg-deepblue px-2 text-xs font-semibold uppercase tracking-wide text-white"> Deep Learning </span>
+                            </div>
 
-                <h4 class="mt-1 truncate text-xl font-semibold uppercase leading-tight">Car@Net</h4>
+                            <h4 class="mt-1 truncate text-xl font-semibold uppercase leading-tight">Car@Net</h4>
 
-                <div id="div-nb-ut-m3" class="mt-1">
-                  0
-                  <span class="text-sm text-gray-600">utilisation</span>
-                </div>
-                  <button id="button-module3" class="w-64 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer" onclick="goToModulePage(event)">Utiliser </button>
+                            <div id="div-nb-ut-m3" class="mt-1">
+                                0
+                                <span class="text-sm text-gray-600">utilisation</span>
+                            </div>
+                            <button id="button-module3" class="w-64 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer" onclick="goToModulePage(event)">Utiliser </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-      </div>
-  </div>
-  <div class="w-1/5">
-      <div class="flex flex-col justify-center h-screen -mt-10">
-          <div id="blockMod0"
-            class="relative flex flex-col cursor-pointer md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white my-5">
-            <div class="w-full md:w-1/3 bg-white grid place-items-center">
-              <img src="https://i.pinimg.com/564x/b1/6a/44/b16a443978512bffecd043e7ac687ed4.jpg" alt="tailwind logo" class="rounded-xl" />
-            </div>
-            <div class="w-full md:w-2/3 bg-white flex items-center justify-center p-3">
-              <h3 class="font-black text-gray-800 md:text-xl text-xl">Calculs Des Nombres premiers</h3>
-            </div>
-            <div 
-        class="absolute bottom-0 left-0"
-        x-data="{ width: '0' }"
-        x-init="$watch('width', value => { if (value > 100) { width = 100 } if (value == 0) { width = 10 } })"
-        >
-          <div 
-                class=" rounded h-1" 
-                role="progressbar" 
-                :aria-valuenow="width"
-                aria-valuemin="0"
-                aria-valuemax="100"
-                >
-                <div id="pgbar0"
-                    class="bg-deepblue rounded h-1 text-center" 
-                    :style="`width: ${width}%; transition: width 0.2s;`"
+        <div class="w-1/5">
+            <div class="flex flex-col justify-center h-screen -mt-10">
+                <div id="blockMod0"
+                     class="relative flex flex-col cursor-pointer md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white my-5">
+                    <div class="w-full md:w-1/3 bg-white grid place-items-center">
+                        <img src="https://i.pinimg.com/564x/b1/6a/44/b16a443978512bffecd043e7ac687ed4.jpg" alt="tailwind logo" class="rounded-xl" />
+                    </div>
+                    <div class="w-full md:w-2/3 bg-white flex items-center justify-center p-3">
+                        <h3 class="font-black text-gray-800 md:text-xl text-xl">Calculs Des Nombres premiers</h3>
+                    </div>
+                    <div
+                            class="absolute bottom-0 left-0"
+                            x-data="{ width: '0' }"
+                            x-init="$watch('width', value => { if (value > 100) { width = 100 } if (value == 0) { width = 10 } })"
                     >
+                        <div
+                                class=" rounded h-1"
+                                role="progressbar"
+                                :aria-valuenow="width"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                        >
+                            <div id="pgbar0"
+                                 class="bg-deepblue rounded h-1 text-center"
+                                 :style="`width: ${width}%; transition: width 0.2s;`"
+                            >
+                            </div>
+                        </div>
+                        <div class="mt-1 mx-40">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="mt-1 mx-40">
-        </div>
-    </div>
-          </div>
-          
 
-          <div id="blockMod1"
-            class="relative flex flex-col cursor-pointer md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white my-5">
-            <div class="w-full md:w-1/3 bg-white grid place-items-center">
-              <img src="https://i.pinimg.com/564x/fb/5a/3f/fb5a3f88bc2e396ef073cc89e4a12a50.jpg" alt="tailwind logo" class="rounded-xl" />
-            </div>
-            <div class="w-full md:w-2/3 bg-white flex items-center justify-center p-3">
-              <h3 class="font-black text-gray-800 md:text-xl text-xl">Approximation de Pi avec Monte-Carlo</h3>
-            </div>
-            <div 
-        class="absolute bottom-0 left-0"
-        x-data="{ width: '0' }"
-        x-init="$watch('width', value => { if (value > 100) { width = 100 } if (value == 0) { width = 10 } })"
-        >
-          <div 
-                class=" rounded h-1" 
-                role="progressbar" 
-                :aria-valuenow="width"
-                aria-valuemin="0"
-                aria-valuemax="100"
-                >
-                <div id="pgbar1"
-                    class="bg-deepblue rounded h-1 text-center" 
-                    :style="`width: ${width}%; transition: width 0.2s;`"
+
+                <div id="blockMod1"
+                     class="relative flex flex-col cursor-pointer md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white my-5">
+                    <div class="w-full md:w-1/3 bg-white grid place-items-center">
+                        <img src="https://i.pinimg.com/564x/fb/5a/3f/fb5a3f88bc2e396ef073cc89e4a12a50.jpg" alt="tailwind logo" class="rounded-xl" />
+                    </div>
+                    <div class="w-full md:w-2/3 bg-white flex items-center justify-center p-3">
+                        <h3 class="font-black text-gray-800 md:text-xl text-xl">Approximation de Pi avec Monte-Carlo</h3>
+                    </div>
+                    <div
+                            class="absolute bottom-0 left-0"
+                            x-data="{ width: '0' }"
+                            x-init="$watch('width', value => { if (value > 100) { width = 100 } if (value == 0) { width = 10 } })"
                     >
+                        <div
+                                class=" rounded h-1"
+                                role="progressbar"
+                                :aria-valuenow="width"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                        >
+                            <div id="pgbar1"
+                                 class="bg-deepblue rounded h-1 text-center"
+                                 :style="`width: ${width}%; transition: width 0.2s;`"
+                            >
+                            </div>
+                        </div>
+                        <div class="mt-1 mx-40">
+                        </div>
+                    </div>
+                </div>
+                <div id="blockMod2"
+                     class="relative flex flex-col cursor-pointer md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white my-5">
+                    <div class="w-full md:w-1/3 bg-white grid place-items-center">
+                        <img src="https://i.pinimg.com/564x/a2/5d/55/a25d55ca8aaec95c732607d9b2c7eeed.jpg" alt="tailwind logo" class="rounded-xl" />
+                    </div>
+                    <div class="w-full md:w-2/3 bg-white flex items-center justify-center p-3">
+                        <h3 class="font-black text-gray-800 md:text-xl text-xl">Car@Net</h3>
+                    </div>
+                    <div
+                            class="absolute bottom-0 left-0"
+                            x-data="{ width: '0' }"
+                            x-init="$watch('width', value => { if (value > 100) { width = 100 } if (value == 0) { width = 10 } })"
+                    >
+                        <div
+                                class=" rounded h-1"
+                                role="progressbar"
+                                :aria-valuenow="width"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                        >
+                            <div id="pgbar2"
+                                 class="bg-deepblue rounded h-1 text-center"
+                                 :style="`width: ${width}%; transition: width 0.2s;`"
+                            >
+                            </div>
+                        </div>
+                        <div class="mt-1 mx-40">
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="mt-1 mx-40">
-            </div>
-          </div>
-          </div>
-          <div id="blockMod2"
-            class="relative flex flex-col cursor-pointer md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white my-5">
-            <div class="w-full md:w-1/3 bg-white grid place-items-center">
-              <img src="https://i.pinimg.com/564x/a2/5d/55/a25d55ca8aaec95c732607d9b2c7eeed.jpg" alt="tailwind logo" class="rounded-xl" />
-            </div>
-            <div class="w-full md:w-2/3 bg-white flex items-center justify-center p-3">
-              <h3 class="font-black text-gray-800 md:text-xl text-xl">Car@Net</h3>
-            </div>
-            <div 
-        class="absolute bottom-0 left-0"
-        x-data="{ width: '0' }"
-        x-init="$watch('width', value => { if (value > 100) { width = 100 } if (value == 0) { width = 10 } })"
-        >
-          <div 
-                class=" rounded h-1" 
-                role="progressbar" 
-                :aria-valuenow="width"
-                aria-valuemin="0"
-                aria-valuemax="100"
-                >
-                <div id="pgbar2"
-                    class="bg-deepblue rounded h-1 text-center" 
-                    :style="`width: ${width}%; transition: width 0.2s;`"
-                    >
-                </div>
-            </div>
-            <div class="mt-1 mx-40">
         </div>
-          </div>
-        </div>     
-    </div>
-  </div>
 </section>
-    <footer class="relative bg-deepblue pt-8 pb-6">
-        <div class="container mx-auto px-4">
-          <div class="flex flex-wrap text-left lg:text-left">
+<footer class="relative bg-deepblue pt-8 pb-6">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-wrap text-left lg:text-left">
             <div class="w-full lg:w-6/12 px-4">
-              <h4 class="text-3xl fonat-semibold text-white">En savoir plus sur le projet !</h4>
-              <h5 class="text-lg mt-0 mb-2 text-white">
-                Trouvez nous sur les plateformes ci-dessous.
-              </h5>
-              <div class="mt-6 lg:mb-0 mb-6">
-                <a href="https://discord.com"><button class="bg-white text-blue-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                    <ion-icon name="logo-discord" class="text-2xl my-2"></ion-icon></button></a>
-                <a href="https://github.com/DurandAntonin/SAE_S5_CalculsDistribues/"><button class="bg-white text-black shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                    <ion-icon name="logo-github" class="text-2xl my-2"></ion-icon></button></a>
-                <a href="https://hub.docker.com/u/wzehren"><button class="bg-white text-blue-700 font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                    <ion-icon name="logo-docker" class="text-2xl my-2"></ion-icon></button></a>
-                <a href="https://youtu.be/1-kKTOr5mcU?si=IaO0BMT9EiPGCDlr"><button class="bg-white text-red-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                    <ion-icon name="logo-youtube" class="text-2xl my-2"></ion-icon>
-                </button></a>
-              </div>
+                <h4 class="text-3xl fonat-semibold text-white">En savoir plus sur le projet !</h4>
+                <h5 class="text-lg mt-0 mb-2 text-white">
+                    Trouvez nous sur les plateformes ci-dessous.
+                </h5>
+                <div class="mt-6 lg:mb-0 mb-6">
+                    <a href="https://discord.com"><button class="bg-white text-blue-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
+                            <ion-icon name="logo-discord" class="text-2xl my-2"></ion-icon></button></a>
+                    <a href="https://github.com/DurandAntonin/SAE_S5_CalculsDistribues/"><button class="bg-white text-black shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
+                            <ion-icon name="logo-github" class="text-2xl my-2"></ion-icon></button></a>
+                    <a href="https://hub.docker.com/u/wzehren"><button class="bg-white text-blue-700 font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
+                            <ion-icon name="logo-docker" class="text-2xl my-2"></ion-icon></button></a>
+                    <a href="https://youtu.be/1-kKTOr5mcU?si=IaO0BMT9EiPGCDlr"><button class="bg-white text-red-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
+                            <ion-icon name="logo-youtube" class="text-2xl my-2"></ion-icon>
+                        </button></a>
+                </div>
             </div>
             <div class="w-full lg:w-6/12 px-4">
-              <div class="flex flex-wrap items-top mb-6">
-                <div class="w-full h-full  lg:w-6/12 px-4 ml-auto my-10">
-                  <a href="https://www.uvsq.fr"><img src="../PICTURES/IUT_logo.png" class="h-full"></a>
+                <div class="flex flex-wrap items-top mb-6">
+                    <div class="w-full h-full  lg:w-6/12 px-4 ml-auto my-10">
+                        <a href="https://www.uvsq.fr"><img src="../PICTURES/IUT_logo.png" class="h-full"></a>
+                    </div>
+                    <div class="w-full lg:w-4/12 px-4">
+                        <span class="block uppercase text-white text-sm font-semibold mb-2">Ressources</span>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="../../doc/Sujet/SujetSaeS5.pdf">Sujet de SAE</a>
+                            </li>
+                            <li>
+                                <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="https://loldle.net/">LoLdle</a>
+                            </li>
+                            <li>
+                                <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="">Confidentialités</a>
+                            </li>
+                            <li>
+                                <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="">Contactez nous</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="w-full lg:w-4/12 px-4">
-                  <span class="block uppercase text-white text-sm font-semibold mb-2">Ressources</span>
-                  <ul class="list-unstyled">
-                    <li>
-                      <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="../../doc/Sujet/SujetSaeS5.pdf">Sujet de SAE</a>
-                    </li>
-                    <li>
-                      <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="https://loldle.net/">LoLdle</a>
-                    </li>
-                    <li>
-                      <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="">Confidentialités</a>
-                    </li>
-                    <li>
-                      <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="">Contactez nous</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
             </div>
-          </div>
-          <hr class="my-6 border-blueGray-300">
-          <div class="flex flex-wrap items-center md:justify-between justify-center">
-            <div class="w-full md:w-4/12 px-4 mx-auto text-center">
-              <div class="text-sm text-white font-semibold py-1">
-                Copyright © <span id="get-current-year">2023</span><a href="" class="text-white hover:text-lyellow" target="_blank"> BlitzCalc by
-                <a href="https://www.creative-tim.com?ref=njs-profile" class="text-blueGray-500 hover:text-lyellow">Madianou Corp</a>.
-              </div>
-            </div>
-          </div>
         </div>
-      </footer>
+        <hr class="my-6 border-blueGray-300">
+        <div class="flex flex-wrap items-center md:justify-between justify-center">
+            <div class="w-full md:w-4/12 px-4 mx-auto text-center">
+                <div class="text-sm text-white font-semibold py-1">
+                    Copyright © <span id="get-current-year">2023</span><a href="" class="text-white hover:text-lyellow" target="_blank"> BlitzCalc by
+                        <a href="https://www.creative-tim.com?ref=njs-profile" class="text-blueGray-500 hover:text-lyellow">Madianou Corp</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.min.js"></script>
 </body>
 </html>
