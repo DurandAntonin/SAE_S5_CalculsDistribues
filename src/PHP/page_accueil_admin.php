@@ -38,7 +38,8 @@ $user = unserialize($_SESSION["user"]);
     </nav>
 </header>
 <?php
-echo "<div class='hidden top-0 float-right w-60 px-5 py-3 mr-2 dark:bg-gray-800 bg-deepblue rounded-lg shadow border dark:border-transparent animate-fade-down animate-duration-[400ms] animate-ease-in-out' id='popUpProfil'>
+
+echo "<div class='hidden absolute top-20 right-0 w-60 px-5 py-3 mr-2 dark:bg-gray-800 bg-deepblue rounded-lg shadow border dark:border-transparent animate-fade-down animate-duration-[400ms] animate-ease-in-out' id='popUpProfil'>
             <ul class='space-y-3 text-white'>
               <li class='font-medium'>
                 <a href='#' class='flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700'>
