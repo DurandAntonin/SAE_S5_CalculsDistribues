@@ -62,6 +62,11 @@ function requestComputePrimeNumbers(){
     maxBoundaryValue = maxBoundary.value
     let execMode = toggleB.checked
 
+    //on incrémente la borne min de 1 si la valeur est paire
+    if (minBoundaryValue % 2 === 0){
+        minBoundaryValue ++
+    }
+
     //console.log(minBoundaryValue)
     //console.log(maxBoundaryValue)
 
@@ -201,10 +206,7 @@ function resultRequestGetResult(){
             //on affiche la liste des nombres premiers compris entre les 2 bornes
             let stringListPrimeNumbers = ""
             resultScriptParsed.result.primeNumbersList.forEach(
-                (primeNumber) => {
-                    if (primeNumber >= minBoundaryValue)
-                        stringListPrimeNumbers += primeNumber + " "
-                }
+                (primeNumber) => stringListPrimeNumbers += primeNumber + " "
             )
             stringListPrimeNumbers = stringListPrimeNumbers.slice(0, stringListPrimeNumbers.length - 1);
 

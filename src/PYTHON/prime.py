@@ -7,8 +7,12 @@ import json
 comm = MPI.COMM_WORLD
 my_rank = comm.Get_rank()
 cluster_size = comm.Get_size()
+
+minBoundary = int(sys.argv[1])
+
 # Number to start on, based on the node’s rank
-start_number = (my_rank * 2) + 1
+start_number = (my_rank * 2) + minBoundary
+#print(start_number)
 
 # When to stop. Play around with this value!
 end_number = int(sys.argv[2])
@@ -24,7 +28,7 @@ primes = []
 # Loop through the numbers using rank number to divide the work
 for candidate_number in range(start_number,end_number, cluster_size * 2):
     # Log progress in steps
-    # print(candidate_number)
+    #print(candidate_number)
     # Assume this number is prime
     found_prime = True
     # Go through all previous numbers and see if any divide without remainder
