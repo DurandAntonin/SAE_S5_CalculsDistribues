@@ -102,29 +102,6 @@ echo"<hr class='dark:border-gray-700'>
           </div>";
 ?>
 
-<p id="erreur_message">
-    <?php
-    //on affiche ou non le message renvoye par la page traitement
-    $message = null;
-    $style = "'color: #EB3939'";
-
-    if (!empty($_SESSION["notif_page_user"])){
-        $message = $_SESSION["notif_page_user"];
-
-        //on regarde si le message est un message positif ou negatif
-        if (isset($_SESSION["message_positif"]) && $_SESSION["message_positif"]){
-            $style = "'color:#4FBB6B'";
-            unset($_SESSION["message_positif"]);
-        }
-
-        //on supprime la variable dans la session
-        unset($_SESSION["notif_page_user"]);
-    }
-    if ($message != null)
-        echo "<b style=$style>$message </b>";
-    ?>
-</p>
-
 <section class="w-full h-screen ">
     <div class="h-screen items-center justify-center hidden" id="popUpFormProfil">
         <div class="container mx-auto">
@@ -209,28 +186,14 @@ echo"<hr class='dark:border-gray-700'>
                         <div class="md:mb-0 md:mr-2 flex justify-center items-center">
                             <p id="p-execution-time" class="hidden inline-block align-baseline text-sm text-opacity-200 text-white"></p>
                         </div>
+                        <div class="mt-2 text-center">
+                            <p id="erreur_message" class="text-red-700">
+                            </p>
+                        </div>
                         <div class="mb-6 text-center">
                             <button type="button" id="compute" value="Calculer" class="w-1/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
                                 Calculer
                             </button>
-                        </div>
-                        <div class="flex justify-center mb-6 ">
-                            <p id="erreur_message">
-                                <?php
-                                //on affiche ou non le message renvoye par la page traitement
-                                $message = null;
-                                $style = "'color: #EB3939'";
-
-                                if (!empty($_SESSION["erreur_traitement_inscription"])){
-                                    $message = $_SESSION["erreur_traitement_inscription"];
-
-                                    //on supprime la variable dans la session
-                                    unset($_SESSION["erreur_traitement_inscription"]);
-                                }
-                                if ($message != null)
-                                    echo "<b style=$style>$message </b>";
-                                ?>
-                            </p>
                         </div>
 
                         <hr class="mb-6 border-t" />

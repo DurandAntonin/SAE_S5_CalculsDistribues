@@ -94,7 +94,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
             //le user n'est pas connecté et essaie d'exécuter le programme de manière distribué, on enregistre l'erreur
             //on enregistre a l'aide du logger le warning
             $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Le user n'est pas connecté et essaie d'exécuter le programme de manière distribué");
-            $listeResultParams["error"] = 1;
+            $listeResultParams["error"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
         }
         else{
             //on enregistre à l'aide d'un logger l'utilisation du module par le user
@@ -139,14 +139,14 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
         else{
             //on enregistre a l'aide du logger le warning
             $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Fichier {$outputFile} non présent");
-            $listeResultParams["error"] = 1;
+            $listeResultParams["error"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
         }
     }
 
     else{
         //on enregistre a l'aide du logger le warning
         $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Mode {$mode} dans script_get_stats_cluster_hat inconnu");
-        $listeResultParams["error"] = 1;
+        $listeResultParams["error"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
     }
 
     //en renvoie le résultat des requetes au script js sous format json

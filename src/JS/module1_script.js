@@ -29,6 +29,11 @@ let result
 let buttonCompute
 let toggleB
 
+//élément html qui contient les erreurs à afficher à l'utilisateur
+let errorMessage
+//temps d'affichage du message
+let durationTimeOfMessage = 5000
+
 //valeur maximale de la borne max
 let maxValueForBoundary = 100000
 
@@ -51,6 +56,7 @@ function init(){
     result = document.getElementById("result")
     buttonCompute = document.getElementById("compute")
     toggleB = document.getElementById("toggleB")
+    errorMessage = document.getElementById("erreur_message")
 
     //on associe un événement onclick au boutton pour lancer le programme de calcul des nombres premiers
     buttonCompute.onclick = requestComputePrimeNumbers
@@ -71,13 +77,20 @@ function requestComputePrimeNumbers(){
     //console.log(maxBoundaryValue)
 
     //on vérifie que les valeurs sont cohérentes
-    if (minBoundaryValue < 0 || maxBoundaryValue <= minBoundaryValue){
-        console.log("Valeurs des bornes non cohérantes !!!")
+    if (minBoundaryValue < 0){
+        //console.log("Valeurs des bornes non cohérantes !!!")
+        displayMessage(errorMessage, "Borne début doit être supérieure ou égale à 0")
+        resetButtonCalculate()
     }
-
-    //on vérifie que la valeur des bornes et inférieure ou égale à la valeur max autorisée
-    else if (minBoundaryValue > maxValueForBoundary){
-        console.log("Borne max doit être supérieure ou égale à" + maxValueForBoundary)
+    else if (maxBoundaryValue < minBoundaryValue){
+        //console.log("Borne max doit être supérieure ou égale à" + maxValueForBoundary)
+        displayMessage(errorMessage, "Borne début doit être strictement inférieure à la borne de fin")
+        resetButtonCalculate()
+    }
+    else if (maxBoundaryValue > maxValueForBoundary){
+        //console.log("Borne max doit être supérieure ou égale à" + maxValueForBoundary)
+        displayMessage(errorMessage, "Borne fin ne doit pas dépasser " + maxValueForBoundary)
+        resetButtonCalculate()
     }
 
     else{
@@ -133,7 +146,10 @@ function resultRequestComputePrimeNumbers(){
             intervalCheckComputeFinished = setInterval(requestCheckComputeFinished, timeoutCheckComputeFinished)
         }
         else{
-            console.log("Erreur : " + resultScriptParsed.errorMessage)
+            resetButtonCalculate()
+
+            //console.log("Erreur : " + resultScriptParsed.errorMessage)
+            displayMessage(errorMessage, resultScriptParsed.errorMessage)
         }
     }
 }
@@ -172,7 +188,10 @@ function resultRequestCheckComputeFinished(){
             }
         }
         else{
-            console.log("Erreur : " + resultScriptParsed.errorMessage)
+            resetButtonCalculate()
+
+            //console.log("Erreur : " + resultScriptParsed.errorMessage)
+            displayMessage(errorMessage, resultScriptParsed.errorMessage)
         }
     }
 }
@@ -200,8 +219,7 @@ function resultRequestGetResult(){
         //on regarde si une erreur a été renvoyée
         if (resultScriptParsed.error === 0){
             //on met à jour le bouton pour indiquer au user que le calcul est terminé
-            deleteChildNodes(buttonCompute)
-            buttonCompute.appendChild(document.createTextNode("Calculer"))
+            resetButtonCalculate()
 
             //on affiche la liste des nombres premiers compris entre les 2 bornes
             let stringListPrimeNumbers = ""
@@ -217,7 +235,10 @@ function resultRequestGetResult(){
             executionTime.innerHTML = "Temps d'exécution : " + resultScriptParsed.result.executionTime + "s"
         }
         else{
-            console.log("Erreur : " + resultScriptParsed.errorMessage)
+            resetButtonCalculate()
+
+            //console.log("Erreur : " + resultScriptParsed.errorMessage)
+            displayMessage(errorMessage, resultScriptParsed.errorMessage)
         }
     }
 }
@@ -259,6 +280,25 @@ function initialiseButtonForWaitingResult(){
     //console.log(spinner)
 
     buttonCompute.append(spinner, document.createTextNode("Calcul en cours ..."))
+}
+
+function displayMessage(elementToStockMessage, message){
+    //on clear l'élément html
+    deleteChildNodes(elementToStockMessage)
+
+    //on ajoute le message dans l'élément
+    elementToStockMessage.appendChild(document.createTextNode(message))
+
+    //on efface le message dans n secondes
+    setTimeout(function () {
+        deleteChildNodes(elementToStockMessage)
+    }, durationTimeOfMessage)
+}
+
+function resetButtonCalculate(){
+    //on remet le boutton à l'état initial
+    deleteChildNodes(buttonCompute)
+    buttonCompute.appendChild(document.createTextNode("Calculer"))
 }
 
 function deleteChildNodes(fatherNode){
