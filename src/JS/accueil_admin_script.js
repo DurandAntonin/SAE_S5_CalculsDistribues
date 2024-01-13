@@ -439,7 +439,9 @@ function createHtmlElementForSerialisedUsers(divListUsers, userSerialised){
 
     //div contenant le login du user
     let subDivLogin = document.createElement("div")
-    subDivLogin.setAttribute("class", "mr-20 text-lg font-bold text-white")
+    let spanDivLogin = document.createElement("span")
+    subDivLogin.setAttribute("class", "mr-20 text-lg font-bold text-white w-30 inline-block whitespace-nowrap overflow-hidden span-overflow")
+    subDivLogin.appendChild(spanDivLogin)
 
     //div contenant l'ID du user
     let subDivId = document.createElement("div")
@@ -451,7 +453,9 @@ function createHtmlElementForSerialisedUsers(divListUsers, userSerialised){
 
     //div contenant le mail du user
     let subDivMail = document.createElement("div")
-    subDivMail.setAttribute("class", "text-lg font-bold text-white mr-20")
+    let spanDivMail = document.createElement("span")
+    subDivMail.setAttribute("class", "text-lg font-bold text-white mr-20 w-2/4 inline-block whitespace-nowrap overflow-hidden span-overflow")
+    subDivMail.appendChild(spanDivMail)
 
     //div contenant le nom et prénom du user
     let subDivFirstNameLastName = document.createElement("div")
@@ -479,9 +483,9 @@ function createHtmlElementForSerialisedUsers(divListUsers, userSerialised){
     }
 
     //on ajoute une chaine de caractère pour chaque span et div
-    subDivLogin.innerHTML = "Login : " + userSerialised.login
+    spanDivLogin.innerHTML = "Login : " + userSerialised.login
     spanDivId.innerHTML = "ID : " + userSerialised.userId.substring(0,8)
-    subDivMail.innerHTML = "Adresse mail : " + userSerialised.userMail
+    spanDivMail.innerHTML = "Adresse mail : " + userSerialised.userMail
     spanLastName.innerHTML = "Nom : " + userSerialised.lastName
     spanFirstName.innerHTML = "Prénom : " + userSerialised.firstName
     subDivRegistrationDate.innerHTML = "Inscription : " + userSerialised.registrationDate
@@ -512,31 +516,34 @@ function createHtmlElementForSerialisedLogging(divListLogging, loggingSerialised
     //div pour l'id du logging
     let subDivLogId = document.createElement("div")
     let spanLogId = document.createElement("span")
-    subDivLogId.setAttribute("class", "text-xs text-white")
+    subDivLogId.setAttribute("class", "text-xs text-white w-7/12 overflow-hidden")
     spanLogId.setAttribute("class", "mr-2")
     subDivLogId.appendChild(spanLogId)
 
     //div pour la description du logging
     let subDivDescription = document.createElement("div")
-    subDivDescription.setAttribute("class", "text-lg font-bold text-white mr-20")
+    let spanDivDescription = document.createElement("span")
+    subDivDescription.setAttribute("class", "w-2/4 text-lg font-bold text-white mr-20 inline-block whitespace-nowrap overflow-hidden span-overflow")
+    spanDivDescription.setAttribute("class", "w-full")
+    subDivDescription.appendChild(spanDivDescription)
 
     //div pour le user id et l'ip du logging
     let subDivUserIdIp = document.createElement("div")
     let spanUserId = document.createElement("span")
     let spanIp = document.createElement("span")
-    subDivUserIdIp.setAttribute("class", "text-xs text-white")
+    subDivUserIdIp.setAttribute("class", "text-xs text-white w-7/12 overflow-hidden")
     spanUserId.setAttribute("class", "mr-2")
     spanIp.setAttribute("class", "mr-2")
     subDivUserIdIp.append(spanUserId, spanIp)
 
     //div pour la date du logging
     let subDivDate = document.createElement("div")
-    subDivDate.setAttribute("class", "text-lg font-bold text-white absolute right-2")
+    subDivDate.setAttribute("class", "text-white text-end text-lg font-bold w-6/12 absolute right-2 overflow-hidden")
 
     //on ajoute une chaine de caractère pour chaque span et div
     subDivLogLevel.innerHTML = "LogLevel : " + loggingSerialised.logLevel
     spanLogId.innerHTML = "LogId : " + loggingSerialised.logId.substring(0,8)
-    subDivDescription.innerHTML = "Description : " + loggingSerialised.description
+    spanDivDescription.innerHTML = "Description : " + loggingSerialised.description
     spanUserId.innerHTML = "UserId : " + loggingSerialised.userId.substring(0,8)
     spanIp.innerHTML = "IP : " + loggingSerialised.ip
     subDivDate.innerHTML = "Date : " + loggingSerialised.date
