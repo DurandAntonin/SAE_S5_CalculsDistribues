@@ -49,7 +49,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
         else{
             //on enregistre la suppression du user
             $listeResultParams["result"] = $userIdToDelete;
-            $loggerBd->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Suppression de l'utilisateur avec userId : {$userIdToDelete}");
+            $loggerBd->info($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Suppression de l'utilisateur avec userId : {$userIdToDelete}");
         }
     }
     else{

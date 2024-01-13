@@ -133,7 +133,7 @@ if (isset($_POST)){
                                                 $errorDuringChange = true;
 
                                                 //on enregistre l'erreur à l'aide du logger
-                                                $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Changement user login|Erreur:{$resultChangeUserLogin["errorMessage"]}");
+                                                $loggerBd->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Changement user login|Erreur:{$resultChangeUserLogin["errorMessage"]}");
                                             }
                                             break;
                                         case "Mail":
@@ -161,7 +161,7 @@ if (isset($_POST)){
                                                 $errorDuringChange = true;
 
                                                 //on enregistre l'erreur à l'aide du logger
-                                                $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Changement user mail|Erreur:{$resultChangeUserMail["errorMessage"]}");
+                                                $loggerBd->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Changement user mail|Erreur:{$resultChangeUserMail["errorMessage"]}");
                                             }
                                             break;
                                         case "LastName":
@@ -180,7 +180,7 @@ if (isset($_POST)){
                                                 $errorDuringChange = true;
 
                                                 //on enregistre l'erreur à l'aide du logger
-                                                $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Changement user last name|Erreur:{$resultChangeUserLastName["errorMessage"]}");
+                                                $loggerBd->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Changement user last name|Erreur:{$resultChangeUserLastName["errorMessage"]}");
                                             }
                                             break;
                                         case "FirstName":
@@ -199,7 +199,7 @@ if (isset($_POST)){
                                                 $errorDuringChange = true;
 
                                                 //on enregistre l'erreur à l'aide du logger
-                                                $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Changement user first name|Erreur:{$resultChangeUserFirstName["errorMessage"]}");
+                                                $loggerBd->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Changement user first name|Erreur:{$resultChangeUserFirstName["errorMessage"]}");
                                             }
                                             break;
                                         case "Password":
@@ -229,7 +229,7 @@ if (isset($_POST)){
                                                 $errorDuringChange = true;
 
                                                 //on enregistre l'erreur à l'aide du logger
-                                                $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Changement user password|Erreur:{$resultChangeUserPassword["errorMessage"]}");
+                                                $loggerBd->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Changement user password|Erreur:{$resultChangeUserPassword["errorMessage"]}");
                                             }
                                             break;
                                     }
@@ -248,7 +248,7 @@ if (isset($_POST)){
                                     $messageForUser = $_SESSION["notif_erreur_interne"];
 
                                 //on enregistre l'erreur
-                                $loggerFile->info($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Changements profil user annulés|Message:{$messageForUser}");
+                                $loggerBd->info($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Changements profil user annulés|Message:{$messageForUser}");
                             }
                             else{
                                 $messageForUser = $VARIABLES_GLOBALES["notif_changements_reussis"];
@@ -260,7 +260,7 @@ if (isset($_POST)){
                             header("Location:page_accueil_user.php");
                         }
                         else{
-                            $loggerFile->info($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Changements profil user annulés|Message:{$messageForUser}");
+                            $loggerBd->info($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Changements profil user annulés|Message:{$messageForUser}");
 
                             $_SESSION["notif_page_user"] = $messageForUser;
                             header("Location:page_accueil_user.php");
@@ -268,14 +268,14 @@ if (isset($_POST)){
                     }
                     else{
                         //on affiche une erreur à l'utilisateur
-                        $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Erreur:{$sqlData->getConnectionErreurMessage()}");
+                        $loggerBd->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Erreur:{$sqlData->getConnectionErreurMessage()}");
                         $_SESSION["notif_page_user"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
                         header("Location:page_accueil_user.php");
                     }
                 }
                 else{
                     //on enregistre cette info
-                    $loggerFile->info($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Changements profil user annulés, mauvaise longueur de certains champs|Login:{$login}|Mail:{$mail}|Lastname:{$lastName}|Firstname{$firstName}");
+                    $loggerBd->info($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Changements profil user annulés, mauvaise longueur de certains champs|Login:{$login}|Mail:{$mail}|Lastname:{$lastName}|Firstname{$firstName}");
 
                     $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_champs_incorrects"];
                     header("Location:page_inscription.php");
@@ -326,7 +326,7 @@ if (isset($_POST)){
             }
             else{
                 //on affiche une erreur à l'utilisateur
-                $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Suppression compte|Erreur:{$resultDeleteUserAccount["errorMessage"]}");
+                $loggerBd->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Suppression compte|Erreur:{$resultDeleteUserAccount["errorMessage"]}");
                 $_SESSION["notif_page_user"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
                 header("Location:page_accueil_user.php");
             }

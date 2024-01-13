@@ -81,7 +81,7 @@ if (isset($_POST)) {
                                             default :
                                                 //role inconnu, on le redirige vers la page de connexion
                                                 //echo "Role inconnu";
-                                                $loggerFile->warning($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Role inconnu lors d'une tentative de connexion|User:{$user}");
+                                                $loggerBd->warning($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Role inconnu lors d'une tentative de connexion|User:{$user}");
                                                 header("Location:page_connexion.php");
                                         }
                                     } else {
