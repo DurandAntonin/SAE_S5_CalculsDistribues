@@ -772,7 +772,7 @@ select {
     transform: translateX(0%);
   }
   90% {
-    transform: translateX(-100%);
+    transform: translateX(-250%);
   }
   95% {
     transform: translateX(0%);
@@ -792,7 +792,7 @@ select {
     :is(span) {
       display: inline-block;
       animation-name: scroll-text;
-      animation-duration: 7s;
+      animation-duration: 10s;
       animation-timing-function: linear;
       animation-delay: 0s;
       animation-iteration-count: infinite;
