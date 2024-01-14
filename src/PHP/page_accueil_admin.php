@@ -124,7 +124,7 @@ echo"<hr class='dark:border-gray-700'>
 
                             <div class="mx-5">
                                 <h4 id="nb-users" class="text-2xl font-semibold text-gray-700">0</h4>
-                                <div class="text-deepblue ">Nombres d'utilisateurs</div>
+                                <div class="text-deepblue ">Nouveaux utilisateurs</div>
                             </div>
                         </div>
                     </div>
