@@ -32,8 +32,11 @@ let currentTimeFilterValue = 1 //0=jour 1=semaine 2=mois 3=tout
 
 //intervalle de temps en ms pour rafraichir les stats du cluster hat
 let intertalTimeGetStatsClusterHat = 60000
+//intervalle de temps en ms pour actualiser les stats du site
+let intertalTimeGetStatsSite = 10000
 //temps en ms avant d'exécuter une requete ajax pour récupérer les données du cluster hat dans un fichier
 let timeToWaitToGetStatsClusterHat = 40000
+
 //nom du dernier fichier contenant les stats du cluster hat
 let fileNameStatsClusterHat
 
@@ -48,6 +51,10 @@ let researchBarLogging
 let attributeSelectedLoggingResearch
 let buttonSubmitResearchLogging
 let listLogging
+
+//timers pour récupérer les stats
+let timerRequestGetStatsClusterHat = null
+let timerRequestSetStatsSite = null
 
 function init(){
     btnShowUsers.addEventListener('click', function(event) {
@@ -88,9 +95,8 @@ function init(){
     requestSetStatsSite()
     //console.log(listStatsClusterHat)
 
-    //on load les stats du cluster hat toutes les n secondes
-    //requestSetStatsClusterHat()
-    let timerRequestGetStatsClusterHat = setInterval(requestSetStatsClusterHat, intertalTimeGetStatsClusterHat)
+    //on load les stats du cluster hat
+    requestSetStatsClusterHat()
 }
 
 function changeStatsBasedTimeFilter(){
@@ -240,14 +246,26 @@ function resultRequestGetStatsSite(){
         elemNbVisits.innerHTML = newStatNbVisits
         elemNbModuleUsers.innerHTML = newStatNbModuleUses
 
-        //enfin, on met a jour le camembert de la repartition des connexions
         //console.log(chartBar)
-        if (chartBar != null)
-            chartBar.destroy()
+        let nbUsers = resultRequestGetNbVisits.result["USER"]
+        let nbVisiteurs = resultRequestGetNbVisits.result["VISITEUR"]
 
-        let configPie = configChartBarCanva(resultRequestGetNbVisits.result["USER"], resultRequestGetNbVisits.result["VISITEUR"])
-        chartBar = new Chart(document.getElementById("chartPie"), configPie);
-        chartBar.render()
+        //on change le camembert s'il y a eu de nouvelles connexions
+        if (chartBar == null || chartBar.config._config.data.datasets[0].data[0] !== nbUsers || chartBar.config._config.data.datasets[0].data[1] !== nbVisiteurs){
+            //on détruit le camembert pour le recréer ensuite s'il existe
+            if (chartBar != null)
+                chartBar.destroy()
+
+            let configPie = configChartBarCanva(nbUsers, nbVisiteurs)
+            chartBar = new Chart(document.getElementById("chartPie"), configPie);
+            chartBar.render()
+
+
+        }
+        //on lance le timer pour récupérer les stats du site s'il n'est pas déjà lancé
+        if (timerRequestSetStatsSite === null){
+            timerRequestSetStatsSite = setInterval(requestSetStatsSite, intertalTimeGetStatsSite)
+        }
     }
 }
 
@@ -319,6 +337,11 @@ function resultRequestGetStatsClusterHatInFile(){
         }
         else{
             console.log("Erreur GetStatsClusterHatInFile")
+        }
+
+        //on lance le timer pour récupérer les stats du cluster hat s'il n'est pas déjà lancé
+        if (timerRequestGetStatsClusterHat === null){
+            timerRequestGetStatsClusterHat = setInterval(requestSetStatsClusterHat, intertalTimeGetStatsClusterHat)
         }
     }
     else{
