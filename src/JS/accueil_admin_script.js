@@ -56,6 +56,9 @@ let listLogging
 let timerRequestGetStatsClusterHat = null
 let timerRequestSetStatsSite = null
 
+//temps d'affichage du message
+let durationTimeOfMessage = 5000
+
 function init(){
     btnShowUsers.addEventListener('click', function(event) {
         event.stopPropagation();
@@ -215,31 +218,43 @@ function resultRequestGetStatsSite(){
         let newStatNbVisits
         let newStatNbModuleUses
 
+        //on va stocker dans une variable le message d'erreur s'il y en a
+        let errorMessage = ""
+
         //s'il y a eu une erreur lors de la connexion à la bd, on affiche nul pour chaque stat
         if (connBd.error == 1){
             newStatNbUsers = 'null'
             newStatNbVisits = 'null'
             newStatNbModuleUses = 'null'
+            errorMessage = "Erreur interne lors de la récupération des statistiques"
         }
         else{
             //pour chaque requete de statistiques, on regarde s'il y a une erreur
-            if (resultRequestGetNbUsers.error == 0)
+            if (resultRequestGetNbUsers.error === 0)
                 newStatNbUsers = resultRequestGetNbUsers.result
             else
+                errorMessage = "Erreur interne lors de la récupération du nombre de nouveaux utilisateurs"
                 newStatNbUsers = 'null'
 
-            if (resultRequestGetNbVisits.error == 0)
+            if (resultRequestGetNbVisits.error === 0)
                 newStatNbVisits = resultRequestGetNbVisits.result["USER"] + resultRequestGetNbVisits.result["VISITEUR"]
             else
+                errorMessage = "Erreur interne lors de la récupération du nombre de visites"
                 newStatNbVisits = 'null'
 
-            if (resultRequestGetNbModuleUses.error == 0)
+            if (resultRequestGetNbModuleUses.error === 0)
                 newStatNbModuleUses = resultRequestGetNbModuleUses.result
             else
+                errorMessage = "Erreur interne lors de la récupération du nombre d'utilisations de modules"
                 newStatNbModuleUses = 'null'
         }
         //console.log(newStatNbUsers + " " + newStatNbVisits + " " + newStatNbModuleUses)
         //console.log(resultRequestGetNbVisits.result)
+
+        //on affiche un message d'erreur à l'utilisateur
+        if (errorMessage !== ""){
+            displayMessage(document.getElementById("p-message"), errorMessage)
+        }
 
         //on met à jour chaque element stat du site
         elemNbUsers.innerHTML = newStatNbUsers
@@ -285,7 +300,8 @@ async function resultRequestSetStatsClusterHatInFile() {
             //puis on exécute une deuxième requete pour lire dans le fichier
             await new Promise(r => setTimeout(requestGetStatsClusterHatInFile, timeToWaitToGetStatsClusterHat))
         } else {
-            console.log("Erreur : " + resultScriptParsed.errorMessage)
+            displayMessage(document.getElementById("p-message"), resultScriptParsed.errorMessage)
+            //console.log("Erreur : " + resultScriptParsed.errorMessage)
         }
 
     }
@@ -336,7 +352,8 @@ function resultRequestGetStatsClusterHatInFile(){
             }
         }
         else{
-            console.log("Erreur GetStatsClusterHatInFile")
+            displayMessage(document.getElementById("p-message"), "Erreur interne lors de la récupération des statistiques du ClusterHat")
+            //console.log("Erreur GetStatsClusterHatInFile")
         }
 
         //on lance le timer pour récupérer les stats du cluster hat s'il n'est pas déjà lancé
@@ -345,7 +362,7 @@ function resultRequestGetStatsClusterHatInFile(){
         }
     }
     else{
-        console.log("Reponse en cours")
+        //console.log("Reponse en cours")
     }
 
 }
@@ -359,12 +376,13 @@ function resultRequestResearchUsersOrLogging(){
         let resultScriptParsed = JSON.parse(resultScript)
         //console.log(resultScriptParsed)
 
+        let listResults = resultScriptParsed.result
+
+        //on récupère la classe de recherche qui sera l'identifiant de l'élément html qui va stocker cette liste d'objets serialisés
+        let htmlElemclassResearched = listResults.classResearched
+
         //on regarde si une erreur a été renvoyée
         if (resultScriptParsed.error === 0){
-            let listResults = resultScriptParsed.result
-
-            //on récupère la classe de recherche qui sera l'identifiant de l'élément html qui va stocker cette liste d'objets serialisés
-            let htmlElemclassResearched = listResults.classResearched
 
             //et on récupère la liste des objets de cette classe sérialisé qu'on transforme en objet js
             let listObjectSerialised = JSON.parse(listResults.listObjectSerialised)
@@ -388,7 +406,15 @@ function resultRequestResearchUsersOrLogging(){
             }
         }
         else{
-            console.log("Erreur : " + resultScriptParsed.errorMessage)
+            //on regarde où afficher le message en fonction de l'objet de la recherche (user ou log)
+            let elementToStoreMessage
+            if (htmlElemclassResearched === "User")
+                elementToStoreMessage = "p-message-erreur-recherche-users"
+            else
+                elementToStoreMessage = "p-message-erreur-recherche-logs"
+
+            displayMessage(document.getElementById(elementToStoreMessage), "Erreur interne lors de la recherche des objets")
+            //console.log("Erreur : " + resultScriptParsed.errorMessage)
         }
     }
 }
@@ -417,7 +443,8 @@ function resultRequestDeleteUser() {
 
         }
         else{
-            console.log("Erreur : " + resultScriptParsed.errorMessage)
+            displayMessage(document.getElementById("p-message-erreur-recherche-users"), "Erreur interne lors de la tentative de suppression d'un utilisateur")
+            //console.log("Erreur : " + resultScriptParsed.errorMessage)
         }
     }
 
@@ -575,6 +602,19 @@ function createHtmlElementForSerialisedLogging(divListLogging, loggingSerialised
     divLogging.append(subDivLogLevel, subDivLogId, subDivDescription, subDivUserIdIp, subDivDate)
     divLoggingGlob.append(divLogging)
     divListLogging.append(divLoggingGlob)
+}
+
+function displayMessage(elementToStockMessage, message){
+    //on clear l'élément html
+    deleteChildNodes(elementToStockMessage)
+
+    //on ajoute le message dans l'élément
+    elementToStockMessage.appendChild(document.createTextNode(message))
+
+    //on efface le message dans n secondes
+    setTimeout(function () {
+        deleteChildNodes(elementToStockMessage)
+    }, durationTimeOfMessage)
 }
 
 function showLogs() {
