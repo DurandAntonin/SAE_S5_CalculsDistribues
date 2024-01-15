@@ -32,8 +32,11 @@ let currentTimeFilterValue = 1 //0=jour 1=semaine 2=mois 3=tout
 
 //intervalle de temps en ms pour rafraichir les stats du cluster hat
 let intertalTimeGetStatsClusterHat = 60000
+//intervalle de temps en ms pour actualiser les stats du site
+let intertalTimeGetStatsSite = 10000
 //temps en ms avant d'exécuter une requete ajax pour récupérer les données du cluster hat dans un fichier
 let timeToWaitToGetStatsClusterHat = 40000
+
 //nom du dernier fichier contenant les stats du cluster hat
 let fileNameStatsClusterHat
 
@@ -48,6 +51,13 @@ let researchBarLogging
 let attributeSelectedLoggingResearch
 let buttonSubmitResearchLogging
 let listLogging
+
+//timers pour récupérer les stats
+let timerRequestGetStatsClusterHat = null
+let timerRequestSetStatsSite = null
+
+//temps d'affichage du message
+let durationTimeOfMessage = 5000
 
 function init(){
     btnShowUsers.addEventListener('click', function(event) {
@@ -88,9 +98,8 @@ function init(){
     requestSetStatsSite()
     //console.log(listStatsClusterHat)
 
-    //on load les stats du cluster hat toutes les n secondes
-    //requestSetStatsClusterHat()
-    let timerRequestGetStatsClusterHat = setInterval(requestSetStatsClusterHat, intertalTimeGetStatsClusterHat)
+    //on load les stats du cluster hat
+    requestSetStatsClusterHat()
 }
 
 function changeStatsBasedTimeFilter(){
@@ -209,45 +218,77 @@ function resultRequestGetStatsSite(){
         let newStatNbVisits
         let newStatNbModuleUses
 
+        //on va stocker dans une variable le message d'erreur s'il y en a
+        let errorMessage = ""
+
         //s'il y a eu une erreur lors de la connexion à la bd, on affiche nul pour chaque stat
-        if (connBd.error == 1){
+        if (connBd.error === 1){
             newStatNbUsers = 'null'
             newStatNbVisits = 'null'
             newStatNbModuleUses = 'null'
+            errorMessage = "Erreur interne lors de la récupération des statistiques"
         }
         else{
             //pour chaque requete de statistiques, on regarde s'il y a une erreur
-            if (resultRequestGetNbUsers.error == 0)
+            if (resultRequestGetNbUsers.error === 0){
                 newStatNbUsers = resultRequestGetNbUsers.result
-            else
+            }
+            else{
+                errorMessage = "Erreur interne lors de la récupération du nombre de nouveaux utilisateurs"
                 newStatNbUsers = 'null'
+            }
 
-            if (resultRequestGetNbVisits.error == 0)
+
+            if (resultRequestGetNbVisits.error === 0){
                 newStatNbVisits = resultRequestGetNbVisits.result["USER"] + resultRequestGetNbVisits.result["VISITEUR"]
-            else
+            }
+            else{
+                errorMessage = "Erreur interne lors de la récupération du nombre de visites"
                 newStatNbVisits = 'null'
+            }
 
-            if (resultRequestGetNbModuleUses.error == 0)
+
+            if (resultRequestGetNbModuleUses.error === 0){
                 newStatNbModuleUses = resultRequestGetNbModuleUses.result
-            else
+            }
+            else{
+                errorMessage = "Erreur interne lors de la récupération du nombre d'utilisations de modules"
                 newStatNbModuleUses = 'null'
+            }
         }
         //console.log(newStatNbUsers + " " + newStatNbVisits + " " + newStatNbModuleUses)
         //console.log(resultRequestGetNbVisits.result)
+
+        //on affiche un message d'erreur à l'utilisateur
+        if (errorMessage !== ""){
+            displayMessage(document.getElementById("p-message"), errorMessage)
+        }
 
         //on met à jour chaque element stat du site
         elemNbUsers.innerHTML = newStatNbUsers
         elemNbVisits.innerHTML = newStatNbVisits
         elemNbModuleUsers.innerHTML = newStatNbModuleUses
 
-        //enfin, on met a jour le camembert de la repartition des connexions
         //console.log(chartBar)
-        if (chartBar != null)
-            chartBar.destroy()
+        let nbUsers = resultRequestGetNbVisits.result["USER"]
+        let nbVisiteurs = resultRequestGetNbVisits.result["VISITEUR"]
 
-        let configPie = configChartBarCanva(resultRequestGetNbVisits.result["USER"], resultRequestGetNbVisits.result["VISITEUR"])
-        chartBar = new Chart(document.getElementById("chartPie"), configPie);
-        chartBar.render()
+        //on change le camembert s'il y a eu de nouvelles connexions
+        if (chartBar == null || chartBar.config._config.data.datasets[0].data[0] !== nbUsers || chartBar.config._config.data.datasets[0].data[1] !== nbVisiteurs){
+            //on détruit le camembert pour le recréer ensuite s'il existe
+            if (chartBar != null)
+                chartBar.destroy()
+
+            let configPie = configChartBarCanva(nbUsers, nbVisiteurs)
+            chartBar = new Chart(document.getElementById("chartPie"), configPie);
+            chartBar.render()
+
+
+        }
+        //on lance le timer pour récupérer les stats du site s'il n'est pas déjà lancé
+        if (timerRequestSetStatsSite === null){
+            timerRequestSetStatsSite = setInterval(requestSetStatsSite, intertalTimeGetStatsSite)
+        }
     }
 }
 
@@ -267,7 +308,8 @@ async function resultRequestSetStatsClusterHatInFile() {
             //puis on exécute une deuxième requete pour lire dans le fichier
             await new Promise(r => setTimeout(requestGetStatsClusterHatInFile, timeToWaitToGetStatsClusterHat))
         } else {
-            console.log("Erreur : " + resultScriptParsed.errorMessage)
+            displayMessage(document.getElementById("p-message"), resultScriptParsed.errorMessage)
+            //console.log("Erreur : " + resultScriptParsed.errorMessage)
         }
 
     }
@@ -318,11 +360,17 @@ function resultRequestGetStatsClusterHatInFile(){
             }
         }
         else{
-            console.log("Erreur GetStatsClusterHatInFile")
+            displayMessage(document.getElementById("p-message"), "Erreur interne lors de la récupération des statistiques du ClusterHat")
+            //console.log("Erreur GetStatsClusterHatInFile")
+        }
+
+        //on lance le timer pour récupérer les stats du cluster hat s'il n'est pas déjà lancé
+        if (timerRequestGetStatsClusterHat === null){
+            timerRequestGetStatsClusterHat = setInterval(requestSetStatsClusterHat, intertalTimeGetStatsClusterHat)
         }
     }
     else{
-        console.log("Reponse en cours")
+        //console.log("Reponse en cours")
     }
 
 }
@@ -336,12 +384,13 @@ function resultRequestResearchUsersOrLogging(){
         let resultScriptParsed = JSON.parse(resultScript)
         //console.log(resultScriptParsed)
 
+        let listResults = resultScriptParsed.result
+
+        //on récupère la classe de recherche qui sera l'identifiant de l'élément html qui va stocker cette liste d'objets serialisés
+        let htmlElemclassResearched = listResults.classResearched
+
         //on regarde si une erreur a été renvoyée
         if (resultScriptParsed.error === 0){
-            let listResults = resultScriptParsed.result
-
-            //on récupère la classe de recherche qui sera l'identifiant de l'élément html qui va stocker cette liste d'objets serialisés
-            let htmlElemclassResearched = listResults.classResearched
 
             //et on récupère la liste des objets de cette classe sérialisé qu'on transforme en objet js
             let listObjectSerialised = JSON.parse(listResults.listObjectSerialised)
@@ -365,7 +414,15 @@ function resultRequestResearchUsersOrLogging(){
             }
         }
         else{
-            console.log("Erreur : " + resultScriptParsed.errorMessage)
+            //on regarde où afficher le message en fonction de l'objet de la recherche (user ou log)
+            let elementToStoreMessage
+            if (htmlElemclassResearched === "User")
+                elementToStoreMessage = "p-message-erreur-recherche-users"
+            else
+                elementToStoreMessage = "p-message-erreur-recherche-logs"
+
+            displayMessage(document.getElementById(elementToStoreMessage), "Erreur interne lors de la recherche des objets")
+            //console.log("Erreur : " + resultScriptParsed.errorMessage)
         }
     }
 }
@@ -394,7 +451,8 @@ function resultRequestDeleteUser() {
 
         }
         else{
-            console.log("Erreur : " + resultScriptParsed.errorMessage)
+            displayMessage(document.getElementById("p-message-erreur-recherche-users"), "Erreur interne lors de la tentative de suppression d'un utilisateur")
+            //console.log("Erreur : " + resultScriptParsed.errorMessage)
         }
     }
 
@@ -552,6 +610,19 @@ function createHtmlElementForSerialisedLogging(divListLogging, loggingSerialised
     divLogging.append(subDivLogLevel, subDivLogId, subDivDescription, subDivUserIdIp, subDivDate)
     divLoggingGlob.append(divLogging)
     divListLogging.append(divLoggingGlob)
+}
+
+function displayMessage(elementToStockMessage, message){
+    //on clear l'élément html
+    deleteChildNodes(elementToStockMessage)
+
+    //on ajoute le message dans l'élément
+    elementToStockMessage.appendChild(document.createTextNode(message))
+
+    //on efface le message dans n secondes
+    setTimeout(function () {
+        deleteChildNodes(elementToStockMessage)
+    }, durationTimeOfMessage)
 }
 
 function showLogs() {

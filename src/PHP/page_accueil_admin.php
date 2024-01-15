@@ -11,7 +11,7 @@ $user = unserialize($_SESSION["user"]);
 <head>
     <meta charset="UTF-8">
     <title>BlitzCalc</title>
-    <script defer src = "../JS/accueil_script.js"> </script>
+    <script defer src = "../JS/profil_script.js"> </script>
     <script defer src = "../JS/accueil_admin_script.js"> </script>
     <link href="../dist/output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -113,7 +113,12 @@ echo"<hr class='dark:border-gray-700'>
         </div>
     </div>
     <main class="flex-1 overflow-x-hidden overflow-y-auto">
+
         <div class="container px-6 py-8 mx-auto">
+            <div class="mt-2">
+                <p id="p-message" style="color:#EB3939"></p>
+            </div>
+
             <div class="mt-4">
                 <div class="flex flex-wrap -mx-6">
                     <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
@@ -124,7 +129,7 @@ echo"<hr class='dark:border-gray-700'>
 
                             <div class="mx-5">
                                 <h4 id="nb-users" class="text-2xl font-semibold text-gray-700">0</h4>
-                                <div class="text-deepblue ">Nombres d'utilisateurs</div>
+                                <div class="text-deepblue ">Nouveaux utilisateurs</div>
                             </div>
                         </div>
                     </div>
@@ -158,7 +163,6 @@ echo"<hr class='dark:border-gray-700'>
             </div>
 
             <div class="mt-8">
-
             </div>
 
             <div class="flex justify-between items-center w-auto  mx-auto my-20">
@@ -379,6 +383,9 @@ echo"<hr class='dark:border-gray-700'>
                 </select>
                 <input type="button" name="User" value="Rechercher" id="button-submit-research-users" class="ml-2 inline-flex items-center rounded-lg border border-white bg-deepblue px-3 py-2.5 text-sm font-medium text-white hover:bg-deepblue focus:outline-none focus:ring-4 focus:ring-lightblue">
             </form>
+            <div class="my-5">
+                <p id="p-message-erreur-recherche-users" style="color:#EB3939"></p>
+            </div>
             <div id="div-liste-users" class="w-full overflow-y-auto h-4/5 rounded-xl bg-deepblue p-1 shadow-xl border border-white">
                 <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
                     <!--<div class="grid grid-flow-col grid-rows-2 ">
@@ -422,6 +429,9 @@ echo"<hr class='dark:border-gray-700'>
                 </select>
                 <input type="button" name="Logging" value="Rechercher" id="button-submit-research-logging" class="ml-2 inline-flex items-center rounded-lg border border-white bg-deepblue px-3 py-2.5 text-sm font-medium text-white hover:bg-deepblue focus:outline-none focus:ring-4 focus:ring-lightblue">
             </form>
+            <div class="my-5">
+                <p id="p-message-erreur-recherche-logs" style="color:#EB3939"></p>
+            </div>
             <div id="div-list-logging" class="w-full overflow-y-auto h-4/5 rounded-xl bg-deepblue p-1 shadow-xl border border-white">
                 <div class="flex w-full items-center rounded-lg p-3 pl-4 hover:bg-lightblue relative">
                     <!--<div class="grid grid-flow-col grid-rows-2 ">
