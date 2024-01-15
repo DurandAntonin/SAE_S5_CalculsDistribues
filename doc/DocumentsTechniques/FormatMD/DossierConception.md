@@ -21,19 +21,24 @@ _Zehren William_
         <li> <a href="#concepArchi2"> Conception architecturale </a> </li>
         <li> <a href="#concepDeta2"> Conception détaillée </a> </li>
     </ol>
+    <li> <a href="#livr3"> Conception Livrable 3 </a> </li>
+    <ol>
+        <li> <a href="#concepArchi3"> Conception architecturale </a> </li>
+        <li> <a href="#concepDeta3"> Conception détaillée </a> </li>
+    </ol>
 </ol>
 
 
 
-<h2 style="color:#5d79e7; id=introduction ; page-break-before: always"> Introduction </h2>
+<h2 style="color:#5d79e7; page-break-before: always" id=introduction> Introduction </h2>
 
 Ce document est un dossier de conception divisé en plusieurs parties. Il sera constitué de la conception architecturale et détaillée de chaque livrable. Il aura pour but de donner de renseigner toutes les informations sur la conception du site ainsi que des diagrammes permettant de la représenter graphiquement. 
 
 Le premier livrable consiste en la réalisation des bases du site web, à savoir les pages principales. Il consiste également en la configuration du kit cluster hat, et en l'installation du site web sur ce dernier. 
 
-<h2 style="color:#5d79e7; id=livr1 ; page-break-before: always"> Conception Livrable 1 </h2>
+<h2 style="color:#5d79e7; page-break-before: always" id=livr1> Conception Livrable 1 </h2>
 
-<h3 style="color:#5d79e7; id=concepArchi"> Conception architecturale </h3>
+<h3 style="color:#5d79e7;" id=concepArchi> Conception architecturale </h3>
 
 Le domaine du problème est le site web BlitzCalc, on décompose donc ce système en sous-systèmes. 
 
@@ -149,7 +154,7 @@ Enfin, les 2 machines sont reliées par une connexion internet, représentée pa
 <p> Diagramme de deploiement du livrable 1 </p>
 </div>
 
-<h3 style="color:#5d79e7; id=concepDeta ; page-break-before: always"> Conception détaillée </h3> 
+<h3 style="color:#5d79e7; page-break-before: always" id=concepDeta> Conception détaillée </h3> 
 
 En ayant défini les dépendances et les associations entre tous les objets, on obtient alors une structure telle que : 
 
@@ -190,9 +195,9 @@ La table Logging comporte 6 colonnes, à savoir logId de type varchar, logLevel 
 
 La table Weak_passwords comporte une seule colonne password de type varchar avec des contraintes d'intégrité telles que : le nombre de caractères contenus dans cette colonne doit être de 256 au maximum et elle ne peut pas être nulle. 
 
-<h2 style="color:#5d79e7; id=livr2 ; page-break-before: always"> Conception Livrable 2 </h2>
+<h2 style="color:#5d79e7;  page-break-before: always" id=livr2> Conception Livrable 2 </h2>
 
-<h3 style="color:#5d79e7; id=concepArchi2"> Conception architecturale </h3>
+<h3 style="color:#5d79e7;" id=concepArchi2> Conception architecturale </h3>
 
 Le domaine du problème est le site web BlitzCalc, on décompose donc ce système en sous-systèmes.
 
@@ -243,12 +248,12 @@ On va utiliser la vue composants-connecteurs pour modéliser le système.
 
 Les composants "Serveur" et "Navigateur" sont de stéréotype "executable", le composant "DB" est de stéréotype "database", les composants "Logging", "Users" et "Weak_passwords" qui sont de stéréotype "table" et enfin tous les autres composants sont de stéréotype "file".  
 
-On a la même interface nommée "IRequeteWeb" entre "Navigateur" et "Serveur". On a des relations de dépendance entre "Serveur" et les composants de stéréotype "file". De même entre le "Navigateur" et les composants d'extension "html", "js" et "css".  
+On a la même interface nommée "IRequeteWeb" entre "Navigateur" et "Serveur". On a des relations de dépendance entre "Serveur" et les composants de stéréotype "file". De même entre le "Navigateur" et les composants d'extension "html", "json","js" et "css".  
 
-Le composant "Serveur" interprète les composants en ".php" et envoie les fichiers html correspondants au "Navigateur".  
+Le composant "Serveur" interprète les composants en ".php", ".json", ".sh" et envoie les fichiers html correspondants au "Navigateur".  
 
 On a une interface entre les composants "Navigateur" et "Serveur" que l’on va nommer 
-"IRequeteWeb". On a des relations de dépendances entre "Serveur" et les composants de stéréotype "file", de même entre le "Navigateur" et les composants d'extension "html" "css" et "js".  
+"IRequeteWeb". On a des relations de dépendances entre "Serveur" et les composants de stéréotype "file", de même entre le "Navigateur" et les composants d'extension "html" "json" "css" et "js".  
 
 On modélise cette vue à l’aide d’un diagramme de composants ci-dessous :
 
@@ -270,7 +275,7 @@ On représente donc ces noeuds de la même manière que dans le livrable précé
 <p> Diagramme de déploiement du livrable 2 </p>
 </div>
 
-<h3 style="color:#5d79e7; id=concepDeta2 ; page-break-before: always"> Conception détaillée </h3>
+<h3 style="color:#5d79e7; page-break-before: always" id=concepDeta2> Conception détaillée </h3>
 
 En ayant défini les dépendances et les associations entre tous les objets, on obtient alors une structure telle que : 
 
@@ -303,9 +308,75 @@ La page "page_accueil_admin.php" contient un ```<section>``` qui englobe toute l
 La page "page_module_nombres_premiers.php" contient un ```<div>```, qui contient lui meme un ```<h2>``` qui permet d'afficher le nom de la page. Il contient ensuite un ```<form>``` qui contient deux ```<input>```  de  type texte possèdant chacun un ```<label>```. Ces derniers permettent de donner une borne min et max au calcul. On retrouve alors dans le ```<div>``` principal, un autre ```<div>```, contenant un ```<p>``` permettant d'afficher le resultat des calculs ainsi qu'un ```<p>``` permettant d'afficher le temps d'exécution du calcul. Ensuite, dans un autre ```<div>```, on retrouve un ```<input>``` de type bouton permettant de lancer le calcul. De nouveau dans un autre ```<div>```, on peut retrouver un ```<input>``` de type checkbox, avec un ```<b>```. Ce bouton permet de selectionner ou non le calcul distribué. Si le bouton est actionné pour la premiere fois, lorsque l'utilisateur n'est pas connecté, une pop-up contenue dans un ```<div>``` apparait. Cette pop-up contient deux ```<div>```. Le premier contient trois ```<h1>``` signifiant au visiteur qu'il doit se connecter. Le deuxième contient deux ```<form>```, qui contiennent chacun un ```<input>``` permettant au visiteur de se connecter ou de s'inscrire.
 
 
+<h2 style="color:#5d79e7; page-break-before: always" id=livr3> Conception Livrable 3 </h2>
 
+<h3 style="color:#5d79e7;" id=concepArchi3> Conception architecturale </h3>
 
+Le domaine du problème est le site web BlitzCalc, on décompose donc ce système en sous-systèmes.
 
+L'architecture reste la même que dans le livrable 2 cependant on doit rajouter des composants et en modifier certains. 
+
+Les composants qui sont ajoutés au système sont les suivants :
+
+| Objet                                      | Etat                                                        | Comportement                           |
+|--------------------------------------------|-------------------------------------------------------------|----------------------------------------|
+| page_module_pi_monte_carlo.php             |                                                             |                                        |
+| CommandBuilder.php                         |                                                             |                                        |
+| pi_monte_carlo_script.js                   |                                                             |                                        |
+| pi_monte_carlo.py                          |                                                             |                                        |
+            
+A partir de ce tableau, on peut définir les composants suivants : "page_module_pi_monte_carlo.php", "CommandBuilder.php", "pi_monte_carlo_script.js" et "pi_monte_carlo.py ". 
+
+Ces derniers sont des abstractions respectives des objets : "page_module_pi_monte_carlo.php", "CommandBuilder.php", "pi_monte_carlo_script.js" et "pi_monte_carlo.py ".
+
+On modifie le nom de l'objet "script_calcul_nombre_premiers.php" en "script_calcul_module.php".
+
+La base de données ainsi que les packages restent inchangés par rapport au livrable 2.
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L3_diagBD.PNG" width="700px">
+<p> Diagramme BD du livrable 3 </p>
+</div>
+
+On représente les relations entre les packages dans le diagramme de packages ci-dessous.
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L3_diagPackages .PNG" width="700px">
+<p> Diagramme de packages du livrable 3 </p>
+</div>
+
+On va utiliser la vue composants-connecteurs pour modéliser le système. 
+
+Les composants "Serveur" et "Navigateur" sont de stéréotype "executable", le composant "DB" est de stéréotype "database", les composants "Logging", "Users" et "Weak_passwords" qui sont de stéréotype "table" et enfin tous les autres composants sont de stéréotype "file".  
+
+On a la même interface nommée "IRequeteWeb" entre "Navigateur" et "Serveur". On a des relations de dépendance entre "Serveur" et les composants de stéréotype "file". De même entre le "Navigateur" et les composants d'extension "html", "json", "js" et "css".  
+
+Le composant "Serveur" interprète les composants en ".php", ".json", ".sh", ".py" et envoie les fichiers html correspondants au "Navigateur".  
+
+On a une interface entre les composants "Navigateur" et "Serveur" que l’on va nommer 
+"IRequeteWeb". On a des relations de dépendances entre "Serveur" et les composants de stéréotype "file", de même entre le "Navigateur" et les composants d'extension "html" "css" "json" et "js".  
+
+On modélise cette vue à l’aide d’un diagramme de composants ci-dessous :
+
+On a une interface que l’on va nommer "MySqli" reliant le composant "MySQLDataManagement.php" avec le composant "Base de données". 
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L2_diagComposants.PNG" width="700px">
+<p> Diagramme de composants du livrable 3 </p>
+</div>
+
+Le système qui héberge le site reste exactement le même que lors du livrable 1, à savoir trois noeuds principaux : le Navigateur, le RPI Host et Les quatre RPI Zero. 
+
+**Remarque : Seulement un RPI Zero sur les quatres sera modélisé pour faciliter la compréhension du diagramme, mais ces derniers sont tous structurés de la même manière**
+
+On représente donc ces noeuds de la même manière que dans le livrable précédent, grâce à un diagramme de déploiement. 
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L2_diagDeploiement.PNG" width="700px">
+<p> Diagramme de déploiement du livrable 3 </p>
+</div>
+
+<h3 style="color:#5d79e7;" id=concepDeta3> Conception détaillée </h3>
 
 
 
