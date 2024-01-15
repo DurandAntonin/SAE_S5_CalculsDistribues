@@ -11,7 +11,7 @@ $user = unserialize($_SESSION["user"]);
 <head>
     <meta charset="UTF-8">
     <title>BlitzCalc</title>
-    <script defer src = "../JS/accueil_script.js"> </script>
+    <script defer src = "../JS/profil_script.js"> </script>
     <script defer src = "../JS/accueil_admin_script.js"> </script>
     <link href="../dist/output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
