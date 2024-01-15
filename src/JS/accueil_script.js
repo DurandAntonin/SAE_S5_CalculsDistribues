@@ -85,7 +85,7 @@ function goToModulePage(e){
         urlSourceSplit[urlSourceSplit.length-1] = "page_module1.php"
     }
     else if (buttonId === "button-module2"){
-        urlSourceSplit[urlSourceSplit.length-1] = "page_accueil_user.php"
+        urlSourceSplit[urlSourceSplit.length-1] = "page_module2.php"
     }
     else if (buttonId === "button-module3"){
         urlSourceSplit[urlSourceSplit.length-1] = "page_accueil_user.php"

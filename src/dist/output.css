@@ -767,41 +767,6 @@ select {
   }
 }
 
-@keyframes scroll-text {
-  0% {
-    transform: translateX(0%);
-  }
-  90% {
-    transform: translateX(-250%);
-  }
-  95% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-.span-overflow{
-
-  &:not(:hover) {
-    text-overflow: ellipsis;
-  }
-  &:hover,
-  &:focus {
-    :is(span) {
-      display: inline-block;
-      animation-name: scroll-text;
-      animation-duration: 10s;
-      animation-timing-function: linear;
-      animation-delay: 0s;
-      animation-iteration-count: infinite;
-      animation-direction: normal;
-      color: black;
-    }
-  }
-}
-
 input:checked ~ .dot {
   transform: translateX(265%);
   background-color: #FFDC00;
@@ -906,6 +871,14 @@ input:checked ~ .dot {
 
 .float-left {
   float: left;
+}
+
+.m-3 {
+  margin: 0.75rem;
+}
+
+.m-6 {
+  margin: 1.5rem;
 }
 
 .-mx-6 {
@@ -1188,6 +1161,22 @@ input:checked ~ .dot {
   height: 100vh;
 }
 
+.h-1\/2 {
+  height: 50%;
+}
+
+.h-2\/4 {
+  height: 50%;
+}
+
+.h-60 {
+  height: 15rem;
+}
+
+.h-48 {
+  height: 12rem;
+}
+
 .min-h-\[15vh\] {
   min-height: 15vh;
 }
@@ -1424,6 +1413,10 @@ input:checked ~ .dot {
 
 .place-items-center {
   place-items: center;
+}
+
+.items-start {
+  align-items: flex-start;
 }
 
 .items-center {
