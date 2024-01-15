@@ -32,6 +32,8 @@ _Zehren William_
         <li><a href="#cu12"> CU#12 </a></li>
         <li><a href="#cu13"> CU#13 </a></li>
         <li><a href="#cu14"> CU#14 </a></li>
+        <li><a href="#cu14"> CU#14 </a></li>
+        <li><a href="#cu15"> CU#15 </a></li>
         </ul>
     </ol>
 </ol>
@@ -80,6 +82,12 @@ Une fois les nombres premiers calculés, le temps d'exécution du calcul ainsi q
 Un bouton en dessous du résultat permet de passer du mode calcul non distribué au mode de calcul distribué. <br>
 Si l'utilisateur qui clique sur le bouton est un visiteur, une pop-up s'affiche invitant l'utilisateur à se connecter ou à s'inscrire pour profiter de la puissance du calcul distribué, sinon il n'y a pas de pop-up, et le calcul passe en mode distribué.
 
+L'utilisateur accède au module d'approximation de $\pi$ depuis la page principale de l'application en cliquant sur le bouton associé au module.
+Une page web s'affiche, et l'utilisateur peut saisir dans un champ input le nombre de lancers. <br>
+Il peut activer le calcul distribué en cliquant sur l'input checkbox en bas de page, ce qui va lancer le calcul en parallèle sur plusieurs rpi. Il peut aussi désactiver le calcul distrubé en cliquant une autre fois sur l'input checkbox.
+Il appuie ensuite sur le bouton Calculer, ce qui va lancer un script qui calcul $\pi$. <br>
+Une fois le calcul terminé, le site afffiche le temps d'exécution du script, l'erreur de l'approximation, $\pi$ approximé ainsi qu'un graphique qui représente l'utilisation de l'algorithmde de Monte Carlo pour approximer $\pi$.
+
 Ci-dessous les différents niveaux des cas d'utilisation:
 **Niveau stratégique**:
 - L'utilisateur utilise des modules
@@ -90,6 +98,8 @@ Ci-dessous les différents niveaux des cas d'utilisation:
 - Supprimer son compte
 - Utilisation du module de calcul des nombres premiers par un utilisateur visiteur
 - Utilisation du module de calcul des nombres premiers par un utilisateur inscrit
+- Utilisation du module de calcul de $\pi$ par un utilisateur visiteur
+- Utilisation du module de calcul de $\pi$ par un utilisateur inscrit
 - Rechercher des utilisateurs
 - Rechercher des logs
 - Supprimer un compte utilisateur
@@ -827,5 +837,102 @@ Scénario alternatif 3.1:
 - Une erreur est survenue lors de l'exécution du script
 - La suppression est annulée
 - Un message d'erreur est affiché à l'administrateur
+
+**Informations connexes** : /
+
+<h4 id="cu15"> CU#15 : Utilisation du module de calcul de $\pi$ par un utilisateur visiteur</h4> 
+
+**Nom** : L'utilisateur inscrit utilise le module de calcul de $\pi$\
+**Contexte d’utilisation** : Utilisation normale du site\
+**Portée** : site web, base de données\
+**Niveau** : utilisateur\
+**Acteur principal** : utilisateur\
+**Précondition** : /\
+**Garantie minimale** : pas de garantie\
+**Garantie de succès** : L'utilisateur visualise $\pi$ approximé \
+**Déclencheur** : L'utilisateur clique sur le module \
+**Scénario nominal** :
+
+1. L'utilisateur se connecte et clique sur le module depuis la page principale
+
+2. Le site affiche la page du module
+
+3. L'utilisateur remplit 1 champ pour le nombre de lancers
+
+4. L'utilisateur choisit le mode de calcul non distribué
+
+5. L'utilisateur clique sur le bouton calculer
+        
+6. Le site exécute un script qui effectue le calcul de $\pi$ de manière distribué sur le rpi zero
+
+7. Le site affiche le temps d'exécution du calcul, l'erreur de l'approximation, la valeur de $\pi$ obtenue ainsi qu'un graphe représentant l'algorithme de Monte Carlo utilisé pour calculer $\pi$
+
+**Extension** : /\
+**Liste des variantes** : \
+
+Scénario alternatif 4.1:
+- L'utilisateur choisit le mode de calcul distribué
+- Le mode n'est pas activé
+- Une pop-up s'affiche invitant l'utilisateur à s'inscrire, se connecter
+- L'utilisateur se connecte, s'inscrit ou ferme la pop-up
+
+Scénario alternatif 5.1:
+- L'utilisateur a entré un nombre de lancers négatif ou supérieure à une borne n
+- Le script de calcul n'est pas exécuté
+- Le site affiche un message d'erreur à l'utilisateur
+
+Scénario alternatif 6.1:
+- Les rpi zeros ne sont pas accessibles en mode connexion ssh
+- Le script s'arrête prématurément et renvoie une erreur
+- Le site affiche une erreur à l'utilisateur 
+
+**Informations connexes** : /
+
+<h4 id="cu16"> CU#16 : Utilisation du module de calcul de pi par un utilisateur connecté</h4> 
+
+**Nom** : L'utilisateur inscrit utilise le module de calcul de $\pi$\
+**Contexte d’utilisation** : Utilisation normale du site\
+**Portée** : site web, base de données\
+**Niveau** : utilisateur\
+**Acteur principal** : utilisateur\
+**Précondition** : <u>Être inscrit sur le site et s’être connecté</u> **(CU#2)**\
+**Garantie minimale** : pas de garantie\
+**Garantie de succès** : L'utilisateur visualise $\pi$ approximé \
+**Déclencheur** : L'utilisateur clique sur le module \
+**Scénario nominal** :
+
+1. L'utilisateur appuie sur le bouton "essayer sans inscription" depuis la page d'accueil
+
+2. Le site affiche la page d'accueil avec les modules
+
+3. L'utilisateur clique sur le module de calcul de $\pi$
+
+4. Le site affiche la page du module
+
+5. L'utilisateur remplit 1 champ pour le nombre de lancers
+
+6. L'utilisateur choisit le mode de calcul distribué
+
+7. L'utilisateur clique sur le bouton calculer
+        
+8. Le site exécute un script qui effectue le calcul de $\pi$ de manière distribué sur les 4 rpi zero
+
+9. Le site affiche le temps d'exécution du calcul, l'erreur de l'approximation, la valeur de $\pi$ obtenue ainsi qu'un graphe représentant l'algorithme de Monte Carlo utilisé pour calculer $\pi$
+
+**Extension** : /\
+**Liste des variantes** : \
+
+Scénario alternatif 5.1:
+- L'utilisateur a entré un nombre de lancers négatif ou supérieure à une borne n
+- Le script de calcul n'est pas exécuté
+- Le site affiche un message d'erreur à l'utilisateur
+
+Scénario alternatif 8.1:
+- Les rpi zeros ne sont pas accessibles en mode connexion ssh
+- Le script s'arrête prématurément et renvoie une erreur
+- Le site affiche une erreur à l'utilisateur 
+
+Scénario alternatif 8.2:
+- Le mode de calcul est sur non distribué, le calcul ne s'effectue que sur un seul rpi
 
 **Informations connexes** : /

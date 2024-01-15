@@ -58,16 +58,13 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
                     $resultRequestGetUsers = $sqlData->get_users("Users");
 
                     //on regarde si une erreur est survenue au cours du script
-                    if ($resultRequestGetUsers["error"] == 0){
-                        //on stocke le nom de la classe des objets
-                        $listeResultParams["result"]["classResearched"] = $classResearched;
-                    }
-                    else{
+                    if ($resultRequestGetUsers["error"] == 1){
                         $errorMessage = $resultRequestGetUsers["errorMessage"];
                         $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur script_get_users_logging_with_attribute|Erreur:{$errorMessage}}");
                         $listeResultParams["error"] = 1;
                         $listeResultParams["errorMessage"] = $errorMessage;
                     }
+
                 }
                 else{
                     if (in_array($fieldSearch, $listFieldNamesUser)){
@@ -75,11 +72,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
                         $resultRequestGetUsers = $sqlData->get_users_with_attribute("Users", $fieldSearch, $stringToSearch);
 
                         //on regarde si une erreur est survenue au cours du script
-                        if ($resultRequestGetUsers["error"] == 0){
-                            //on stocke le nom de la classe des objets
-                            $listeResultParams["result"]["classResearched"] = $classResearched;
-                        }
-                        else{
+                        if ($resultRequestGetUsers["error"] == 1){
                             $errorMessage = $resultRequestGetUsers["errorMessage"];
                             $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur script_get_users_logging_with_attribute|Erreur:{$errorMessage}}");
                             $listeResultParams["error"] = 1;
@@ -95,14 +88,19 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
                     }
                 }
 
-                //on stocke la liste des objets serialisés dans un autre champ
-                $listUserSerialised = array();
-                foreach ($resultRequestGetUsers["result"] as $user){
-                    $userSerialised = $user->serialise();
-                    $listUserSerialised[] = $userSerialised;
-                }
+                //on stocke le nom de la classe des objets
+                $listeResultParams["result"]["classResearched"] = $classResearched;
 
-                $listeResultParams["result"]["listObjectSerialised"] = json_encode($listUserSerialised);
+                //on stocke la liste des objets serialisés dans un autre champ
+                if ($resultRequestGetUsers["error"] == 0){
+                    $listUserSerialised = array();
+                    foreach ($resultRequestGetUsers["result"] as $user){
+                        $userSerialised = $user->serialise();
+                        $listUserSerialised[] = $userSerialised;
+                    }
+
+                    $listeResultParams["result"]["listObjectSerialised"] = json_encode($listUserSerialised);
+                }
                 break;
 
             case Logging::getClassName():
@@ -117,11 +115,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
                     $resultRequestGetLogging = $sqlData->get_logs("Logging");
 
                     //on regarde si une erreur est survenue au cours du script
-                    if ($resultRequestGetLogging["error"] == 0){
-                        //on stocke le nom de la classe des objets
-                        $listeResultParams["result"]["classResearched"] = $classResearched;
-                    }
-                    else{
+                    if ($resultRequestGetLogging["error"] == 1){
                         $errorMessage = $resultRequestGetLogging["errorMessage"];
                         $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur script_get_users_logging_with_attribute|Erreur:{$errorMessage}}");
                         $listeResultParams["error"] = 1;
@@ -133,12 +127,9 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
                         //on va exécuter une requete sql pour sélectionner les users en fonction du filtre de recherche
                         $resultRequestGetLogging = $sqlData->get_logs_with_attribute("Logging", $fieldSearch, $stringToSearch);
                         //print_r($resultRequestGetLogging);
+
                         //on regarde si une erreur est survenue au cours du script
-                        if ($resultRequestGetLogging["error"] == 0){
-                            //on stocke le nom de la classe des objets
-                            $listeResultParams["result"]["classResearched"] = $classResearched;
-                        }
-                        else{
+                        if ($resultRequestGetLogging["error"] == 1){
                             $errorMessage = $resultRequestGetLogging["errorMessage"];
                             $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "script_get_users_logging_with_attribute|Erreur:{$errorMessage}}");
                             $listeResultParams["error"] = 1;
@@ -154,14 +145,19 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
                     }
                 }
 
-                //on stocke aussi la liste des objets serialisés dans un autre champ
-                $listLoggingSerialised = array();
-                foreach ($resultRequestGetLogging["result"] as $logging){
-                    $loggingSerialised = $logging->serialise();
-                    $listLoggingSerialised[] = $loggingSerialised;
-                }
+                //on stocke le nom de la classe des objets
+                $listeResultParams["result"]["classResearched"] = $classResearched;
 
-                $listeResultParams["result"]["listObjectSerialised"] = json_encode($listLoggingSerialised);
+                //on stocke aussi la liste des objets serialisés dans un autre champ
+                if ($resultRequestGetLogging["error"] == 0){
+                    $listLoggingSerialised = array();
+                    foreach ($resultRequestGetLogging["result"] as $logging){
+                        $loggingSerialised = $logging->serialise();
+                        $listLoggingSerialised[] = $loggingSerialised;
+                    }
+
+                    $listeResultParams["result"]["listObjectSerialised"] = json_encode($listLoggingSerialised);
+                }
                 break;
 
             default :

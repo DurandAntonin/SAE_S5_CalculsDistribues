@@ -3,6 +3,7 @@
   "taille_champ_texte" : [3, 25],
   "taille_champ_mdp" : [6, 25],
   "taille_message_prive" : [1,255],
+  "list-hostnames-valides" : ["pi1", "pi2", "pi3", "pi4"],
   "listSpecialCharactersMail" : [" ", "!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", "/", ":", "\\", "<", ">", "=","{", "}", "°", "^", "|", "~"],
   "listSpecialCharactersText" : ["!", "\"", "#", "$", "%", "&", "(", ")", "*", "+", ",", "-", "/", ":", "\\", "<", ">", "=","{", "}", "°", "^", "|", "~"],
   "bd_hostname" : "172.19.181.254",
@@ -24,9 +25,12 @@
   "notif_erreur_attribut_incorrect" : "Attribut de recherche incorrect",
   "chemin_script_get_stats_cluster_hat" : "/home/pi/pipeDockerSwarm/scriptsBash/scriptGetStatsClusterHat.sh",
   "chemin_script_get_hostname" : "/home/pi/pipeDockerSwarm/scriptsBash/scriptGetHostname.sh",
+  "chemin_script_calcul_nombres_premiers" : "/home/pi/prime.py",
+  "chemin_script_calcul_pi" : "/home/pi/pi_monte_carlo.py",
   "chemin_result_dans_pi" : "/home/pi/pipeDockerSwarm/outputsStats/",
   "chemin_pipe_stats_cluster_hat_dans_conteneur" : "/hostpipe/pipe_stats_cluster_hat",
   "chemin_pipe_module_nb_premiers_dans_conteneur" : "/hostpipe/pipe_module_nb_premiers",
+  "chemin_pipe_module_calcul_pi_dans_conteneur" : "/hostpipe/pipe_module_calcul_pi",
   "repertoire_resultat" : "/hostpipe/outputsStats/",
 
   "loggerConf" : {

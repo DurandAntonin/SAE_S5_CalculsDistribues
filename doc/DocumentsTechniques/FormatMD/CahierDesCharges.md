@@ -15,6 +15,7 @@ _Zehren William_
     <ol>
         <li> <a href="#livrable_1"> Livrable 1 - Squelette du site </a> </li>
         <li> <a href="#livrable_2"> Livrable 2 - 1er module et fonctionnalités utilisateur admin </li>
+        <li> <a href="#livrable_3"> Livrable 3 - 2ème module </a> </li>
     </ol>
     <li> <a href="#prerequis"> Prérequis  </a>  </li>
     <ol>
@@ -89,6 +90,12 @@ L'administrateur pourra aussi rechercher des utilisateurs inscrits en fonction d
 <br>
 Enfin, il peut visualiser les statistiques du cluster hat, à savoir le pourcentage d'utilisation du processeur, de la mémoire ainsi que le uptime de chaque rpi du kit Cluster Hat, à savoir le rpi host et les 4 rpi zeros.
 
+<h3 id="livrable_3"> Livrable 3 - 2ème module </h3>
+
+Le deuxième livrable a pour objectif de développer le deuxième module de l'application qui consiste à approximer $\pi$ avec l'algorithme de Monte Carlo. <br>
+Comme le premier module, ce dernier est accessible depuis la page d'accueil par un utilisateur connecté ou par un visiteur. <br>
+L'utilisateur peut sélectionner le nombre de lancers et activer ou non le calcul distribué, fonctionnalité qui a les mêmes règles que celui dans le module 1.
+
 <h2 style="color:#5d79e7; page-break-before: always" id="prerequis"> Prérequis </h2>
 
 <h3 id="connaissances_competences"> Connaissances et compétences requises </h3>
@@ -105,7 +112,7 @@ Il est aussi important de connaître les fondamentaux des base de données relat
 
 Une connaissance en __Linux__ et en __bash__ est nécessaire pour gérer, mettre à jour le kit Cluster Hat et l'application hébergée sur ce dernier ainsi que pour créer différents scripts utilisés dans le site.
 
-Une connaissance de __Python__ et de la librairie __MPI__ est nécessaire pour exécuter et maintenir le programme du 1er module de calcul des nombres premiers.
+Une connaissance de __Python__ et de la librairie __MPI__ est nécessaire pour exécuter et maintenir le programme du module de calcul des nombres premiers ainsi que le module d'approximation de $\pi$ avec Monte Carlo.
 
 Enfin, il est requis d'avoir des bases en programmation distribuée, pour pouvoir réaliser les programmes de calculs de l'application en utilisant le calcul distribué.
 

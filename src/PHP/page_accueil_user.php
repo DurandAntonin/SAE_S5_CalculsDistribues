@@ -2,7 +2,6 @@
 
 namespace PHP;
 
-
 include_once "Logger.php";
 include_once "LoggerInstance.php";
 include_once "MySQLDataManagement.php";
@@ -23,6 +22,7 @@ $VARIABLES_GLOBALES = import_config();
 <head>
     <meta charset="UTF-8">
     <title>BlitzCalc</title>
+    <script defer src = "../JS/profil_script.js"> </script>
     <script defer src = "../JS/accueil_script.js"> </script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <link href="../dist/output.css" rel="stylesheet">

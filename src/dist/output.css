@@ -1224,20 +1224,12 @@ input:checked ~ .dot {
   width: 6rem;
 }
 
-.w-3\/12 {
-  width: 25%;
-}
-
 .w-3\/4 {
   width: 75%;
 }
 
 .w-3\/6 {
   width: 50%;
-}
-
-.w-4\/12 {
-  width: 33.333333%;
 }
 
 .w-5 {
@@ -1617,11 +1609,6 @@ input:checked ~ .dot {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.bg-amber-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(217 119 6 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-50 {
