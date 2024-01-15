@@ -91,9 +91,9 @@ function requestComputePrimeNumbers(){
 
         //on lance une requete ajax vers un script php qui s'occupe d'exécuter le programme de calcul des nombres premiers
         let requestGetStatsSite = new XMLHttpRequest()
-        requestGetStatsSite.open("POST","script_calcul_nombres_premiers.php");
+        requestGetStatsSite.open("POST","script_calcul_module.php");
         requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
-        requestGetStatsSite.send(JSON.stringify({"bornes": [minBoundaryValue, maxBoundaryValue], "execMode" : execMode, "mode" : 0}))
+        requestGetStatsSite.send(JSON.stringify({"bornes": [minBoundaryValue, maxBoundaryValue], "numModule" : 1,  "execMode" : execMode, "mode" : 0}))
 
         requestGetStatsSite.onreadystatechange = resultRequestComputePrimeNumbers
     }
@@ -103,7 +103,7 @@ function resultRequestComputePrimeNumbers(){
     if (this.readyState === 4 && this.status === 200) {
         //on récupère le résultat du script
         let resultScript = this.response
-        //console.log(resultScript)
+        console.log(resultScript)
 
         let resultScriptParsed = JSON.parse(resultScript)
         //console.log(resultScriptParsed)
@@ -140,7 +140,7 @@ function requestCheckComputeFinished(){
     //console.log("On check si le calcule est terminé")
     //on lance une requete ajax vers un script php qui s'occupe de vérifier si le programme de calcul des nombres premiers est terminé
     let requestGetStatsSite = new XMLHttpRequest()
-    requestGetStatsSite.open("POST","script_calcul_nombres_premiers.php");
+    requestGetStatsSite.open("POST","script_calcul_module.php");
     requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
     requestGetStatsSite.send(JSON.stringify({"outputFileName" : resultFile,"mode" : 1}))
 
@@ -182,7 +182,7 @@ function requestGetResult(){
     //console.log("Calcul terminé, on récupère le résultat")
     //on lance une requete ajax vers un script php qui s'occupe de vérifier si le programme de calcul des nombres premiers est terminé
     let requestGetStatsSite = new XMLHttpRequest()
-    requestGetStatsSite.open("POST","script_calcul_nombres_premiers.php");
+    requestGetStatsSite.open("POST","script_calcul_module.php");
     requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
     requestGetStatsSite.send(JSON.stringify({"fileName" : resultFile, "mode" : 2}))
 
