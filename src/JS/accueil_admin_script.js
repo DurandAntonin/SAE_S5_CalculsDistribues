@@ -222,7 +222,7 @@ function resultRequestGetStatsSite(){
         let errorMessage = ""
 
         //s'il y a eu une erreur lors de la connexion à la bd, on affiche nul pour chaque stat
-        if (connBd.error == 1){
+        if (connBd.error === 1){
             newStatNbUsers = 'null'
             newStatNbVisits = 'null'
             newStatNbModuleUses = 'null'
@@ -230,23 +230,31 @@ function resultRequestGetStatsSite(){
         }
         else{
             //pour chaque requete de statistiques, on regarde s'il y a une erreur
-            if (resultRequestGetNbUsers.error === 0)
+            if (resultRequestGetNbUsers.error === 0){
                 newStatNbUsers = resultRequestGetNbUsers.result
-            else
+            }
+            else{
                 errorMessage = "Erreur interne lors de la récupération du nombre de nouveaux utilisateurs"
                 newStatNbUsers = 'null'
+            }
 
-            if (resultRequestGetNbVisits.error === 0)
+
+            if (resultRequestGetNbVisits.error === 0){
                 newStatNbVisits = resultRequestGetNbVisits.result["USER"] + resultRequestGetNbVisits.result["VISITEUR"]
-            else
+            }
+            else{
                 errorMessage = "Erreur interne lors de la récupération du nombre de visites"
                 newStatNbVisits = 'null'
+            }
 
-            if (resultRequestGetNbModuleUses.error === 0)
+
+            if (resultRequestGetNbModuleUses.error === 0){
                 newStatNbModuleUses = resultRequestGetNbModuleUses.result
-            else
+            }
+            else{
                 errorMessage = "Erreur interne lors de la récupération du nombre d'utilisations de modules"
                 newStatNbModuleUses = 'null'
+            }
         }
         //console.log(newStatNbUsers + " " + newStatNbVisits + " " + newStatNbModuleUses)
         //console.log(resultRequestGetNbVisits.result)
