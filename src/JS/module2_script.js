@@ -87,22 +87,34 @@ function resultRequestComputePi(){
         let resultScript = this.response
         //console.log(resultScript)
 
-        let resultScriptParsed = JSON.parse(resultScript)
-        //console.log(resultScriptParsed)
-
-        //on regarde si une erreur a été renvoyée
-        if (resultScriptParsed.error === 0){
-            //on récupère le nom du fichier contenant les résultats du programme
-            resultFile = resultScriptParsed.result
-
-            //on lance une requete ajax toutes les n secondes pour vérifier si l'exécution du programme est terminée
-            intervalCheckComputeFinished = setInterval(requestCheckComputeFinished, timeoutCheckComputeFinished)
+        //on essaie de parser le résultat en format JSON
+        let resultScriptParsed
+        try {
+            resultScriptParsed = JSON.parse(resultScript)
+            //console.log(resultScriptParsed)
         }
-        else{
+        catch (e){
             resetButtonCalculate()
 
-            //console.log("Erreur : " + resultScriptParsed.errorMessage)
-            displayMessage(errorMessage, resultScriptParsed.errorMessage)
+            //on affiche un message d'erreur
+            displayMessage(errorMessage, "Erreur lors de la tentative de récupération de la réponse du serveur")
+        }
+
+        if (resultScriptParsed != null){
+            //on regarde si une erreur a été renvoyée
+            if (resultScriptParsed.error === 0){
+                //on récupère le nom du fichier contenant les résultats du programme
+                resultFile = resultScriptParsed.result
+
+                //on lance une requete ajax toutes les n secondes pour vérifier si l'exécution du programme est terminée
+                intervalCheckComputeFinished = setInterval(requestCheckComputeFinished, timeoutCheckComputeFinished)
+            }
+            else{
+                resetButtonCalculate()
+
+                //console.log("Erreur : " + resultScriptParsed.errorMessage)
+                displayMessage(errorMessage, resultScriptParsed.errorMessage)
+            }
         }
     }
 }
@@ -124,27 +136,45 @@ function resultRequestCheckComputeFinished(){
         let resultScript = this.response
         //console.log(resultScript)
 
-        let resultScriptParsed = JSON.parse(resultScript)
-        //console.log(resultScriptParsed)
-
-        //on regarde si une erreur a été renvoyée
-        if (resultScriptParsed.error === 0){
-            computeFinished = resultScriptParsed.result
-
-            //console.log("Check calcul terminé : " + computeFinished)
-            //on arrete l'interval si le resultat vaut true
-            if (computeFinished){
-                clearInterval(intervalCheckComputeFinished)
-
-                //on exécute une requete ajax pour récupérer le résultat de l'exécution du programme de calcul de pi
-                requestGetResult()
-            }
+        //on essaie de parser le résultat en format JSON
+        let resultScriptParsed
+        try {
+            resultScriptParsed = JSON.parse(resultScript)
+            //console.log(resultScriptParsed)
         }
-        else{
+        catch (e){
+            //on reset le bouton calculer
             resetButtonCalculate()
 
-            //console.log("Erreur : " + resultScriptParsed.errorMessage)
-            displayMessage(errorMessage, resultScriptParsed.errorMessage)
+            //on affiche un message d'erreur
+            displayMessage(errorMessage, "Erreur lors de la tentative de récupération de la réponse du serveur")
+        }
+
+        if (resultScriptParsed != null){
+
+            //on regarde si une erreur a été renvoyée
+            if (resultScriptParsed.error === 0){
+                computeFinished = resultScriptParsed.result
+
+                //console.log("Check calcul terminé : " + computeFinished)
+                //on arrete l'interval si le resultat vaut true
+                if (computeFinished){
+                    clearInterval(intervalCheckComputeFinished)
+
+                    //on reset le bouton calculer
+                    resetButtonCalculate()
+
+                    //on exécute une requete ajax pour récupérer le résultat de l'exécution du programme de calcul de pi
+                    requestGetResult()
+                }
+            }
+            else{
+                //on reset le bouton calculer
+                resetButtonCalculate()
+
+                //console.log("Erreur : " + resultScriptParsed.errorMessage)
+                displayMessage(errorMessage, resultScriptParsed.errorMessage)
+            }
         }
     }
 }
@@ -166,23 +196,30 @@ function resultRequestGetResult(){
         let resultScript = this.response
         //console.log(resultScript)
 
-        let resultScriptParsed = JSON.parse(resultScript)
-        //console.log(resultScriptParsed)
-
-        resetButtonCalculate()
-
-        //on regarde si une erreur a été renvoyée
-        if (resultScriptParsed.error === 0){
-            //on met à jour le bouton pour indiquer au user que le calcul est terminé
-
-            //on insère dans les bons éléments, l'approximation de pi, l'erreur et le temps d'exécution du calcul
-            result.innerHTML = "Approximation de Pi : " + resultScriptParsed.result.pi
-            error.innerHTML = "Erreur : " + resultScriptParsed.result.error
-            executionTime.innerHTML = "Temps d'exécution : " + resultScriptParsed.result.executionTime + "s"
+        let resultScriptParsed
+        try {
+            resultScriptParsed = JSON.parse(resultScript)
+            //console.log(resultScriptParsed)
         }
-        else{
-            //console.log("Erreur : " + resultScriptParsed.errorMessage)
-            displayMessage(errorMessage, resultScriptParsed.errorMessage)
+        catch (e){
+            //on affiche un message d'erreur
+            displayMessage(errorMessage, "Erreur lors de la tentative de récupération de la réponse du serveur")
+        }
+
+        if (resultScriptParsed != null){
+            //on regarde si une erreur a été renvoyée
+            if (resultScriptParsed.error === 0){
+                //on met à jour le bouton pour indiquer au user que le calcul est terminé
+
+                //on insère dans les bons éléments, l'approximation de pi, l'erreur et le temps d'exécution du calcul
+                result.innerHTML = "Approximation de Pi : " + resultScriptParsed.result.pi
+                error.innerHTML = "Erreur : " + resultScriptParsed.result.error
+                executionTime.innerHTML = "Temps d'exécution : " + resultScriptParsed.result.executionTime + "s"
+            }
+            else{
+                //console.log("Erreur : " + resultScriptParsed.errorMessage)
+                displayMessage(errorMessage, resultScriptParsed.errorMessage)
+            }
         }
     }
 }
