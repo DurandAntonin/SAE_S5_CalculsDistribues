@@ -324,12 +324,16 @@ Les composants qui sont ajoutés au système sont les suivants :
 | CommandBuilder.php                         |                                                             |                                        |
 | pi_monte_carlo_script.js                   |                                                             |                                        |
 | pi_monte_carlo.py                          |                                                             |                                        |
+| accueil_script.js                          |                                                             |                                        |
+| index_script.js                            |                                                             |                                        |
+| profil_script.js                           |                                                             |                                        |
+| traitement_profil.php                      |                                                             |                                        |
+| script_insertion_faux_users.php            |                                                             |                                        |
+| prime.py                                   |                                                             |                                        |
             
-A partir de ce tableau, on peut définir les composants suivants : "page_module_pi_monte_carlo.php", "CommandBuilder.php", "pi_monte_carlo_script.js" et "pi_monte_carlo.py ". 
+A partir de ce tableau, on peut définir les composants suivants : "page_module_pi_monte_carlo.php", "CommandBuilder.php", "pi_monte_carlo_script.js" et "pi_monte_carlo.py ","accueil_script.js","index_script.js","profil_script.js","traitement_profil.php","script_insertion_faux_users.php","prime.py". 
 
-Ces derniers sont des abstractions respectives des objets : "page_module_pi_monte_carlo.php", "CommandBuilder.php", "pi_monte_carlo_script.js" et "pi_monte_carlo.py ".
-
-On modifie le nom de l'objet "script_calcul_nombre_premiers.php" en "script_calcul_module.php".
+Ces derniers sont des abstractions respectives des objets : "page_module_pi_monte_carlo.php", "CommandBuilder.php", "pi_monte_carlo_script.js" et "pi_monte_carlo.py ","accueil_script.js","index_script.js","profil_script.js","traitement_profil.php","script_insertion_faux_users.php","prime.py". 
 
 La base de données ainsi que les packages restent inchangés par rapport au livrable 2.
 
@@ -350,8 +354,8 @@ On va utiliser la vue composants-connecteurs pour modéliser le système.
 Les composants "Serveur" et "Navigateur" sont de stéréotype "executable", le composant "DB" est de stéréotype "database", les composants "Logging", "Users" et "Weak_passwords" qui sont de stéréotype "table" et enfin tous les autres composants sont de stéréotype "file".  
 
 On a la même interface nommée "IRequeteWeb" entre "Navigateur" et "Serveur". On a des relations de dépendance entre "Serveur" et les composants de stéréotype "file". De même entre le "Navigateur" et les composants d'extension "html", "json", "js" et "css".  
-
-Le composant "Serveur" interprète les composants en ".php", ".json", ".sh", ".py" et envoie les fichiers html correspondants au "Navigateur".  
+ 
+Le composant "Serveur" interprète les composants de type page et verification en ".php" et envoie les fichiers html correspondants au "Navigateur".  *
 
 On a une interface entre les composants "Navigateur" et "Serveur" que l’on va nommer 
 "IRequeteWeb". On a des relations de dépendances entre "Serveur" et les composants de stéréotype "file", de même entre le "Navigateur" et les composants d'extension "html" "css" "json" et "js".  
