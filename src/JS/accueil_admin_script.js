@@ -40,6 +40,9 @@ let timeToWaitToGetStatsClusterHat = 40000
 //nom du dernier fichier contenant les stats du cluster hat
 let fileNameStatsClusterHat
 
+//nom de la dernière classe recherchée
+let lastClassSearched
+
 //éléments pour la recherche et l'affichage des utilisateurs selon un attribut
 let researchBarUsers
 let attributeSelectedUserResearch
@@ -189,6 +192,9 @@ function requestResearchUsersOrLogging(){
         classResearched = buttonSubmitResearchLogging.name
     }
 
+    lastClassSearched = classResearched
+
+
     //on crée et exécute une requête js vers un script php pour rechercher des users ou logging en fonction d'un attribut sélectionné
     let requestGetStatsSite = new XMLHttpRequest()
     requestGetStatsSite.open("POST","script_get_users_or_logs_with_attribute.php");
@@ -297,21 +303,31 @@ async function resultRequestSetStatsClusterHatInFile() {
         let resultScript = this.response
         //console.log(resultScript)
 
-        let resultScriptParsed = JSON.parse(resultScript)
-
-        //on vérifie qu'il n'y a pas d'erreur
-        if (resultScriptParsed.error === 0) {
-            //on récupère le nom du fichier contenant les stats du kit cluster hat
-            fileNameStatsClusterHat = resultScriptParsed.result
-
-            //on attend n secondes le temps que les stats soient écrites dans le fichier
-            //puis on exécute une deuxième requete pour lire dans le fichier
-            await new Promise(r => setTimeout(requestGetStatsClusterHatInFile, timeToWaitToGetStatsClusterHat))
-        } else {
-            displayMessage(document.getElementById("p-message"), resultScriptParsed.errorMessage)
-            //console.log("Erreur : " + resultScriptParsed.errorMessage)
+        //on essaie de parser le résultat en format JSON
+        let resultScriptParsed
+        try {
+            resultScriptParsed = JSON.parse(resultScript)
+            //console.log(resultScriptParsed)
+        }
+        catch (e){
+            //on affiche un message d'erreur
+            displayMessage(document.getElementById("p-message"), "Erreur lors de la tentative de récupération de la réponse du serveur")
         }
 
+        if (resultScriptParsed != null){
+            //on vérifie qu'il n'y a pas d'erreur
+            if (resultScriptParsed.error === 0) {
+                //on récupère le nom du fichier contenant les stats du kit cluster hat
+                fileNameStatsClusterHat = resultScriptParsed.result
+
+                //on attend n secondes le temps que les stats soient écrites dans le fichier
+                //puis on exécute une deuxième requete pour lire dans le fichier
+                await new Promise(r => setTimeout(requestGetStatsClusterHatInFile, timeToWaitToGetStatsClusterHat))
+            } else {
+                displayMessage(document.getElementById("p-message"), resultScriptParsed.errorMessage)
+                //console.log("Erreur : " + resultScriptParsed.errorMessage)
+            }
+        }
     }
 }
 
@@ -331,37 +347,47 @@ function resultRequestGetStatsClusterHatInFile(){
         let resultScript = this.response
         //console.log(resultScript)
 
-        let resultScriptParsed = JSON.parse(resultScript)
-        //console.log(resultScriptParsed)
-
-        let objectStatsClusterHat = resultScriptParsed.result
-        //console.log(listStatsClusterHat)
-
-        //on vérifie qu'il n'y a pas eu d'erreur
-        if (resultScriptParsed.error === 0){
-            //pour chaque rpi du cluster hat, on met à jour les statistiques
-            for (let i=0;i<objectStatsClusterHat.length;i++){
-                let statsRpi = objectStatsClusterHat[i]
-                let statCpuPourcent = (statsRpi.cpuUsage)
-                let statCpuFrequency = statsRpi.cpuFrequency
-                let statMemUsedPourcent = ((parseInt(statsRpi.memUsed) / parseInt(statsRpi.memTotal)) * 100).toPrecision(4)
-                let statMemUsed = (parseInt(statsRpi.memUsed) * Math.pow(10,-3)).toPrecision(4)
-                let statUptime = statsRpi.uptime
-
-                //on met à jour les stats du rpi dans le tableau
-                let trStatsRpi = listStatsClusterHat[i].children
-                //console.log(trStatsRpi[3].children)
-
-                trStatsRpi[1].children[0].innerHTML = `${statCpuPourcent} %`
-                trStatsRpi[1].children[1].innerHTML = `${statCpuFrequency} GHz`
-                trStatsRpi[2].children[0].innerHTML = `${statMemUsedPourcent} %`
-                trStatsRpi[2].children[1].innerHTML = `${statMemUsed} Go`
-                trStatsRpi[3].innerHTML = statUptime
-            }
+        //on essaie de parser le résultat en format JSON
+        let resultScriptParsed
+        try {
+            resultScriptParsed = JSON.parse(resultScript)
+            //console.log(resultScriptParsed)
         }
-        else{
-            displayMessage(document.getElementById("p-message"), "Erreur interne lors de la récupération des statistiques du ClusterHat")
-            //console.log("Erreur GetStatsClusterHatInFile")
+        catch (e){
+            //on affiche un message d'erreur
+            displayMessage(document.getElementById("p-message"), "Erreur lors de la tentative de récupération de la réponse du serveur")
+        }
+
+        if (resultScriptParsed != null){
+            let objectStatsClusterHat = resultScriptParsed.result
+            //console.log(listStatsClusterHat)
+
+            //on vérifie qu'il n'y a pas eu d'erreur
+            if (resultScriptParsed.error === 0){
+                //pour chaque rpi du cluster hat, on met à jour les statistiques
+                for (let i=0;i<objectStatsClusterHat.length;i++){
+                    let statsRpi = objectStatsClusterHat[i]
+                    let statCpuPourcent = (statsRpi.cpuUsage)
+                    let statCpuFrequency = statsRpi.cpuFrequency
+                    let statMemUsedPourcent = ((parseInt(statsRpi.memUsed) / parseInt(statsRpi.memTotal)) * 100).toPrecision(4)
+                    let statMemUsed = (parseInt(statsRpi.memUsed) * Math.pow(10,-3)).toPrecision(4)
+                    let statUptime = statsRpi.uptime
+
+                    //on met à jour les stats du rpi dans le tableau
+                    let trStatsRpi = listStatsClusterHat[i].children
+                    //console.log(trStatsRpi[3].children)
+
+                    trStatsRpi[1].children[0].innerHTML = `${statCpuPourcent} %`
+                    trStatsRpi[1].children[1].innerHTML = `${statCpuFrequency} GHz`
+                    trStatsRpi[2].children[0].innerHTML = `${statMemUsedPourcent} %`
+                    trStatsRpi[2].children[1].innerHTML = `${statMemUsed} Go`
+                    trStatsRpi[3].innerHTML = statUptime
+                }
+            }
+            else{
+                displayMessage(document.getElementById("p-message"), "Erreur interne lors de la récupération des statistiques du ClusterHat")
+                //console.log("Erreur GetStatsClusterHatInFile")
+            }
         }
 
         //on lance le timer pour récupérer les stats du cluster hat s'il n'est pas déjà lancé
@@ -381,48 +407,77 @@ function resultRequestResearchUsersOrLogging(){
         let resultScript = this.response
         //console.log(resultScript)
 
-        let resultScriptParsed = JSON.parse(resultScript)
-        //console.log(resultScriptParsed)
-
-        let listResults = resultScriptParsed.result
-
-        //on récupère la classe de recherche qui sera l'identifiant de l'élément html qui va stocker cette liste d'objets serialisés
-        let htmlElemclassResearched = listResults.classResearched
-
-        //on regarde si une erreur a été renvoyée
-        if (resultScriptParsed.error === 0){
-
-            //et on récupère la liste des objets de cette classe sérialisé qu'on transforme en objet js
-            let listObjectSerialised = JSON.parse(listResults.listObjectSerialised)
-
-            //on enlève les anciens résultats
-            deleteChildNodes(listUsers)
-            deleteChildNodes(listLogging)
-
-            //on ajoute chaque objet serialisé dans l'objet html en fonction de sa classe
-            for (let i=0;i<listObjectSerialised.length;i++){
-                //on déserialise l'objet
-                let objectUnserialised = JSON.parse(listObjectSerialised[i])
-                //console.log(objectUnserialised)
-
-                if (htmlElemclassResearched === "User"){
-                    createHtmlElementForSerialisedUsers(listUsers, objectUnserialised)
-                }
-                else{
-                    createHtmlElementForSerialisedLogging(listLogging, objectUnserialised)
-                }
-            }
+        //on essaie de parser le résultat en format JSON
+        let resultScriptParsed
+        try {
+            resultScriptParsed = JSON.parse(resultScript)
+            //console.log(resultScriptParsed)
         }
-        else{
+        catch (e){
+            //on affiche un message d'erreur
+            let elementToStoreMessage
+            if (lastClassSearched === "User")
+                elementToStoreMessage = "p-message-erreur-recherche-users"
+            else
+                elementToStoreMessage = "p-message-erreur-recherche-logs"
+            displayMessage(document.getElementById(elementToStoreMessage), "Erreur lors de la tentative de récupération de la réponse du serveur")
+        }
+
+        if (resultScriptParsed != null){
+            let listResults = resultScriptParsed.result
+
+            //on récupère la classe de recherche qui sera l'identifiant de l'élément html qui va stocker cette liste d'objets serialisés
+            let htmlElemClassResearched = listResults.classResearched
+
             //on regarde où afficher le message en fonction de l'objet de la recherche (user ou log)
             let elementToStoreMessage
-            if (htmlElemclassResearched === "User")
+            if (htmlElemClassResearched === "User")
                 elementToStoreMessage = "p-message-erreur-recherche-users"
             else
                 elementToStoreMessage = "p-message-erreur-recherche-logs"
 
-            displayMessage(document.getElementById(elementToStoreMessage), "Erreur interne lors de la recherche des objets")
-            //console.log("Erreur : " + resultScriptParsed.errorMessage)
+            //on regarde si une erreur a été renvoyée
+            if (resultScriptParsed.error === 0){
+
+                //et on récupère la liste des objets de cette classe sérialisé qu'on transforme en objet js
+                let listObjectSerialised = JSON.parse(listResults.listObjectSerialised)
+
+                //on enlève les anciens résultats
+                deleteChildNodes(listUsers)
+                deleteChildNodes(listLogging)
+
+                //nombre d'objets impossibles à désérialiser
+                let nbObjectNonUnserialised = 0
+
+                //on ajoute chaque objet serialisé dans l'objet html en fonction de sa classe
+                for (let i=0;i<listObjectSerialised.length;i++){
+                    //on déserialise l'objet
+                    let objectUnserialised
+
+                    try{
+                        objectUnserialised = JSON.parse(listObjectSerialised[i])
+
+                        if (htmlElemClassResearched === "User"){
+                            createHtmlElementForSerialisedUsers(listUsers, objectUnserialised)
+                        }
+                        else{
+                            createHtmlElementForSerialisedLogging(listLogging, objectUnserialised)
+                        }
+                    }
+                    catch (e){
+                        nbObjectNonUnserialised ++
+                    }
+                    //console.log(objectUnserialised)
+                    //on affiche le nombre d'objets ne pouvant pas être désérialisés
+                    if (nbObjectNonUnserialised > 0){
+                        displayMessage(document.getElementById(elementToStoreMessage), "Nombre d'objets ne pouvant être récupérés : " + nbObjectNonUnserialised)
+                    }
+                }
+            }
+            else{
+                displayMessage(document.getElementById(elementToStoreMessage), "Erreur interne lors de la recherche des objets")
+                //console.log("Erreur : " + resultScriptParsed.errorMessage)
+            }
         }
     }
 }
@@ -432,27 +487,37 @@ function resultRequestDeleteUser() {
         let resultScript = this.response
         //console.log(resultScript)
 
-        let resultScriptParsed = JSON.parse(resultScript)
-        //console.log(resultScriptParsed)
-
-        //on regarde si le script a retourné une erreur
-        if (resultScriptParsed.error === 0){
-
-            //on parcourt la liste des users retournées par la requete pour le supprimer graphiquement
-            for (let i=0;i<listUsers.children.length; i++){
-                let userNode = listUsers.children[i]
-
-                //on supprime si l'id du user == id du user supprimé
-                if (userNode.children[0].children[1].id === resultScriptParsed["result"]){
-                    userNode.remove()
-                    break
-                }
-            }
-
+        //on essaie de parser le résultat en format JSON
+        let resultScriptParsed
+        try {
+            resultScriptParsed = JSON.parse(resultScript)
+            //console.log(resultScriptParsed)
         }
-        else{
-            displayMessage(document.getElementById("p-message-erreur-recherche-users"), "Erreur interne lors de la tentative de suppression d'un utilisateur")
-            //console.log("Erreur : " + resultScriptParsed.errorMessage)
+        catch (e){
+            //on affiche un message d'erreur
+            displayMessage(document.getElementById("p-message-erreur-recherche-users"), "Erreur lors de la tentative de récupération de la réponse du serveur")
+        }
+
+        if (resultScriptParsed != null){
+            //on regarde si le script a retourné une erreur
+            if (resultScriptParsed.error === 0){
+
+                //on parcourt la liste des users retournées par la requete pour le supprimer graphiquement
+                for (let i=0;i<listUsers.children.length; i++){
+                    let userNode = listUsers.children[i]
+
+                    //on supprime si l'id du user == id du user supprimé
+                    if (userNode.children[0].children[1].id === resultScriptParsed["result"]){
+                        userNode.remove()
+                        break
+                    }
+                }
+
+            }
+            else{
+                displayMessage(document.getElementById("p-message-erreur-recherche-users"), "Erreur interne lors de la tentative de suppression d'un utilisateur")
+                //console.log("Erreur : " + resultScriptParsed.errorMessage)
+            }
         }
     }
 
