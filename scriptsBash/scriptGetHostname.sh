@@ -23,8 +23,7 @@ if (( $#==$nbArgumentsScript )); then
       hostName=$(hostname)
       hostName="pi$(expr substr $hostName 2 1)"
 
-      echo outputFile
-      echo hostName > outputFile
-
+      #echo outputFile
+      echo $hostName > $outputFile
     fi
 fi
