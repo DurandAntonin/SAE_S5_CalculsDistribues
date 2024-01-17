@@ -153,27 +153,38 @@ function resultRequestCheckComputeFinished(){
         let resultScript = this.response
         //console.log(resultScript)
 
-        let resultScriptParsed = JSON.parse(resultScript)
-        //console.log(resultScriptParsed)
-
-        //on regarde si une erreur a été renvoyée
-        if (resultScriptParsed.error === 0){
-            computeFinished = resultScriptParsed.result
-
-            //console.log("Check calcul terminé : " + computeFinished)
-            //on arrete l'interval si le resultat vaut true
-            if (computeFinished){
-                clearInterval(intervalCheckComputeFinished)
-
-                //on exécute une requete ajax pour récupérer le résultat de l'exécution du programme de calcul des nombres premiers
-                requestGetResult()
-            }
+        //on essaie de parser le résultat en format JSON
+        let resultScriptParsed
+        try {
+            resultScriptParsed = JSON.parse(resultScript)
+            //console.log(resultScriptParsed)
         }
-        else{
-            resetButtonCalculate()
+        catch (e){
+            //on affiche un message d'erreur
+            displayMessage(errorMessage, "Erreur lors de la tentative de récupération de la réponse du serveur")
+        }
 
-            //console.log("Erreur : " + resultScriptParsed.errorMessage)
-            displayMessage(errorMessage, resultScriptParsed.errorMessage)
+        //on reset le bouton calculer
+        resetButtonCalculate()
+
+        if (resultScriptParsed != null){
+            //on regarde si une erreur a été renvoyée
+            if (resultScriptParsed.error === 0){
+                computeFinished = resultScriptParsed.result
+
+                //console.log("Check calcul terminé : " + computeFinished)
+                //on arrete l'interval si le resultat vaut true
+                if (computeFinished){
+                    clearInterval(intervalCheckComputeFinished)
+
+                    //on exécute une requete ajax pour récupérer le résultat de l'exécution du programme de calcul des nombres premiers
+                    requestGetResult()
+                }
+            }
+            else{
+                //console.log("Erreur : " + resultScriptParsed.errorMessage)
+                displayMessage(errorMessage, resultScriptParsed.errorMessage)
+            }
         }
     }
 }
@@ -195,32 +206,45 @@ function resultRequestGetResult(){
         let resultScript = this.response
         //console.log(resultScript)
 
-        let resultScriptParsed = JSON.parse(resultScript)
-        //console.log(resultScriptParsed)
-
-        //on regarde si une erreur a été renvoyée
-        if (resultScriptParsed.error === 0){
-            //on met à jour le bouton pour indiquer au user que le calcul est terminé
-            resetButtonCalculate()
-
-            //on affiche la liste des nombres premiers compris entre les 2 bornes
-            let stringListPrimeNumbers = ""
-            resultScriptParsed.result.primeNumbersList.forEach(
-                (primeNumber) => stringListPrimeNumbers += primeNumber + " "
-            )
-            stringListPrimeNumbers = stringListPrimeNumbers.slice(0, stringListPrimeNumbers.length - 1);
-
-            result.appendChild(document.createTextNode(stringListPrimeNumbers))
-
-            //on affiche le temps d'exécution du calcul
-            executionTime.classList.replace("hidden", "flex")
-            executionTime.innerHTML = "Temps d'exécution : " + resultScriptParsed.result.executionTime + "s"
+        //on essaie de parser le résultat en format JSON
+        let resultScriptParsed
+        try {
+            resultScriptParsed = JSON.parse(resultScript)
+            //console.log(resultScriptParsed)
         }
-        else{
-            resetButtonCalculate()
+        catch (e){
+            //on affiche un message d'erreur
+            displayMessage(errorMessage, "Erreur lors de la tentative de récupération de la réponse du serveur")
+        }
 
-            //console.log("Erreur : " + resultScriptParsed.errorMessage)
-            displayMessage(errorMessage, resultScriptParsed.errorMessage)
+        //on reset le bouton calculer
+        resetButtonCalculate()
+
+        if (resultScriptParsed != null){
+            //on regarde si une erreur a été renvoyée
+            if (resultScriptParsed.error === 0){
+                //on met à jour le bouton pour indiquer au user que le calcul est terminé
+                resetButtonCalculate()
+
+                //on affiche la liste des nombres premiers compris entre les 2 bornes
+                let stringListPrimeNumbers = ""
+                resultScriptParsed.result.primeNumbersList.forEach(
+                    (primeNumber) => stringListPrimeNumbers += primeNumber + " "
+                )
+                stringListPrimeNumbers = stringListPrimeNumbers.slice(0, stringListPrimeNumbers.length - 1);
+
+                result.appendChild(document.createTextNode(stringListPrimeNumbers))
+
+                //on affiche le temps d'exécution du calcul
+                executionTime.classList.replace("hidden", "flex")
+                executionTime.innerHTML = "Temps d'exécution : " + resultScriptParsed.result.executionTime + "s"
+            }
+            else{
+                resetButtonCalculate()
+
+                //console.log("Erreur : " + resultScriptParsed.errorMessage)
+                displayMessage(errorMessage, resultScriptParsed.errorMessage)
+            }
         }
     }
 }

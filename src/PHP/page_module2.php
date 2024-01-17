@@ -169,28 +169,28 @@ echo"<hr class='dark:border-gray-700'>
                         <div class="mb-4 md:flex md:justify-center md:items-center">
                             <div class="w-3/4 flex justify-center">
                                 <div class="mb-4 md:mb-0 text-center">
-                                    <label class="mb-2 block text-sm font-bold text-white" for="debut"> Nombre de lancers </label>
-                                    <input class="focus:shadow-outline w-1/2 appearance-none rounded-xl border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="debut" name="debut" type="number" placeholder="1, 2, 3 , ..." value="0" min="0" max="100000"/>
+                                    <label class="mb-2 block text-sm font-bold text-white" for="nb-lancers"> Nombre de lancers </label>
+                                    <input class="focus:shadow-outline w-1/2 appearance-none rounded-xl border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="nb-lancers" name="nb-lancers" type="number" placeholder="1, 2, 3 , ..." value="1" min="1" max="5000000"/>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mb-4 md:mb-0 md:mr-2 flex justify-between items-center">
-                            <?php 
-                        //<img src="../PICTURES/cercle.png" class="w-2/4 h-2/4 m-6 rounded-xl">
+                            <?php
+                            //<img src="../PICTURES/cercle.png" class="w-2/4 h-2/4 m-6 rounded-xl">
 
-                        echo "<iframe width='100%' height='450' src='https://chart-studio.plotly.com/~Madianou/2.embed' frameborder='0' class='rounded-xl mr-6'></iframe>";
-                        ?>
-                            <div id="result" class="border-2 text-white p-3  border-white h-80 w-2/4 rounded-xl "> 
+                            echo "<iframe width='100%' height='450' src='https://chart-studio.plotly.com/~Madianou/2.embed' frameborder='0' class='rounded-xl mr-6'></iframe>";
+                            ?>
+                            <div id="result" class="border-2 text-white p-3  border-white h-80 w-2/4 rounded-xl ">
                                 <h2 class="text-3xl text-center text-white mb-6">Résultats</h2>
                                 <div class="md:mb-0 md:mr-2 flex flex-col justify-around items-start h-48">
+                                    <p id="p-result" class=" inline-block align-baseline text-xl text-opacity-200 text-white mb-4">Approximation de Pi :</p>
                                     <p id="p-execution-time" class="inline-block align-baseline text-xl text-opacity-200 text-white mb-4">Temps d’exécution :</p>
-                                    <p id="p-erreur" class=" inline-block align-baseline text-xl text-opacity-200 text-white mb-4">Erreur :</p>
-                                    <p id="p-result" class=" inline-block align-baseline text-xl text-opacity-200 text-white">Approximation de Pi :</p>
+                                    <p id="p-error" class=" inline-block align-baseline text-xl text-opacity-200 text-white">Erreur :</p>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="mt-2 text-center">
                             <p id="erreur_message" class="text-red-700">
                             </p>
