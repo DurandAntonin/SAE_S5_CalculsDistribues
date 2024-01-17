@@ -20,11 +20,17 @@ _Zehren William_
 </ul>
 <li><a href="#II_installationApplication">III- Installation de l'application </a></li>
 <ul>
-    <li><a href="#III_introduction">A) Introduction </a></li>
-    <li><a href="#III_creationImageWeb">B) Création de l'image pour le serveur web </a></li>
-    <li><a href="#III_creationImageBaseDonnees">C) Création de l'image pour la base de données </a></li>
-    <li><a href="#III_creationDockerSwarm">D) Création du docker swarm </a></li>
-    <li><a href="#III_creationStackAppli">E) Création du stack de l'application </a></li>
+    <li><a href="#III_introduction"> A) Introduction </a></li>
+    <li><a href="#III_creationImageWeb"> B) Création de l'image pour le serveur web </a></li>
+    <li><a href="#III_creationImageBaseDonnees"> C) Création de l'image pour la base de données </a></li>
+    <li><a href="#III_creationDockerSwarm"> D) Création du docker swarm </a></li>
+    <li><a href="#III_creationStackAppli"> E) Création du stack de l'application </a></li>
+    <li><a href="#IV_repertoire_partage_named_pipe"> F) Lancement de commandes sur le rpi host depuis un conteneur </a></li>
+    <ul>
+      <li><a href="#IV_1"> 1. Création d'un tube nommé </a></li>
+      <li><a href="#IV_2"> 2. Envoi de commandes dans le tube nommé </a></li>
+      <li><a href="#IV_3"> 3. Exécution de commandes dans le rpi depuis un conteneur  </a></li>
+    </ul>
 </ul>
 </ul>
 
@@ -241,21 +247,25 @@ En premier lieu, on se retrouve donc avec un dockerfile nommé dockerfilePHP tel
 
 FROM php:8.2-apache
 
+VOLUME /hostpipe
+
+RUN apt update -y \
+    && apt upgrade -y \
+    && apt clean -y
+
 COPY ./src/ /var/www/html/
-
 COPY ./dockerConfig/php.ini-development /usr/local/etc/php/
-
 COPY ./dockerConfig/php.ini-production /usr/local/etc/php/
 
-RUN chown -R www-data:www-data /var/www/html/
-
-RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+RUN chown -R www-data:www-data /var/www/html/ \
+    && docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 ```
 
-Ce dockerfile va donc créer une image personnalisée à partir de l'image existante **php:8.2-apache**, puis va copier l'intégralité des pages du site dans le répertoire _/var/www/html/_ du conteneur utilisant cette image, car c'est le répertoire par défaut dans lequel apache va chercher les fichiers web. 
-Ensuite, on copie les différents fichiers de configuration pour les pages en PHP, qui vont par exemple nous permettre d'afficher les erreurs et de charger les extensions PHP, dans notre cas, l'extension MySQLI pour se connecter à un serveur MySQL depuis un script PHP. 
-Puis, on attribue le répertoire de l'application, on donne les droits à l'utilisateur _www-data_ qui execute le serveur apache au répertoire de l'application. 
-Enfin, on installe puis on active l'extension PHP de MySQLi.
+Ce dockerfile va donc créer une image personnalisée à partir de l'image existante **php:8.2-apache**, créé un volume, ou répertoire partagé _/hostpipe/_ à la racine du conteneur et permet notamment le transfert de fichiers, répertoires entre le rpi et le conteneur. <br>
+Il va ensuite mettre à jour l'image, puis va copier l'intégralité des pages du site dans le répertoire _/var/www/html/_ du conteneur utilisant cette image, car c'est le répertoire par défaut dans lequel apache va chercher les fichiers web. <br>
+Ensuite, on copie les différents fichiers de configuration pour les pages en PHP, qui vont par exemple nous permettre d'afficher les erreurs et de charger les extensions PHP, dans notre cas, l'extension MySQLI pour se connecter à un serveur MySQL depuis un script PHP. <br>
+Puis, on attribue le répertoire de l'application, on donne les droits à l'utilisateur _www-data_ qui execute le serveur apache au répertoire de l'application. <br>
+Enfin, on installe puis on active l'extension de PHP MySQLi pour pouvoir ouvrir des connexions avec un serveur de base de données MySQL depuis un script PHP.
 
 Après avoir écrit ce dockerfile, on va donc tester son bon fonctionnement sur le RPI Host. 
 
@@ -451,7 +461,7 @@ Pour l'image sqlimage
 docker pull wzehren/mysqlsae
 ```
 
-Ensuite, on créé un fichier de configuration .yml pour le stack qui va permettre de créer automatiquement les deux services, en spécifiant le nombre de réplicas, leurs redirections de ports ainsi que les contraintes de placement de ces derniers sur les noeuds : 
+Ensuite, on créé un fichier de configuration .yml pour le stack qui va permettre de créer automatiquement les deux services, en spécifiant le nombre de réplicas, leurs redirections de port, leurs volumes ainsi que les contraintes de placement de ces derniers sur les noeuds : 
 
 ```yml
 version: "3.0"
@@ -465,6 +475,8 @@ services:
       placement:
         constraints: [node.labels.service == web ]
       replicas: 4
+    volumes:
+      - "/home/pi/pipeDockerSwarm:/hostpipe"
 
   servicebd:
     image: wzehren/mysqlsae
@@ -474,7 +486,13 @@ services:
       placement:
         constraints: [node.labels.service == sql ]
       replicas: 1
+    volumes:
+      - "/var/lib/mysql_volume_app:/var/lib/mysql"
 ```
+
+Le volume du service _servicebd_ permet d'assurer la persistance des données du service, à savoir les données contenues dans le serveur de base de données MySQL, comme les bases de données et utilisateurs par exemple. <br>
+En d'autre terme, cela évite la suppression des données de l'application contenues dans le service lorsque le stack est recréé, car ces dernières sont stockées sur le rpi host et non dans le réplica du service.
+Le volume du service _serviceweb_ permet de créer comme le volume du service ci-dessus, un répertoire partagé qui va nous être utile pour l'exécution de certaines commandes dans l'application.
 
 Ensuite, pour déployer le stack sur le swarm, on utilise la commande : 
 
@@ -507,3 +525,142 @@ Pour visualiser les différents services de manière plus claire, on créé un c
 On peut également accèder au visualizer depuis l'adresse ip suivante : http://85.170.243.176:5000/ 
 
 (Cette adresse n'est accessible qu'a des fins de test et ne sera plus accessible lors du deploiement du site web)
+
+<h3 style="color:#5d79e7" id="IV_repertoire_partage_named_pipe"> F) Lancement de commandes sur le rpi host depuis un conteneur </h3>
+
+Une fois l'application lancée et disponible sur naviguateur depuis n'importe quel réseau internet, en entrant l'adresse ip http://85.170.243.176/, il reste une dernière étape pour que le suite soit totalement fonctionnel. <br>
+En effet, à partir du livrable 2, nous avons besoin d'exécuter plusieurs commandes sur le rpi, comme une commande pour exécuter un programme mpi de calcul des nombres premiers dans le module 1, ou encore une autre qui récupère les statistiques cpu, mémoire, ... de chaque rpi du Cluster Hat. <br>
+Cependant, il est à ce stade impossible d'exécuter ces commandes sur un rpi car l'application est dans un conteneur docker, ainsi ces commandes seront exécutées sur le conteneur et non sur le rpi. <br>
+
+_Tous les tests ont été effectués sur le rpi zero pi3_.
+
+<h4 style="color:#859bed" id="IV_1"> 1. Création d'un tube nommé </h4>
+
+Pour ce faire, nous allons en premier lieu créer un _tube nommé_ ou _named pipe_ avec la commande suivante, qui est un tube unidirectionnel (FIFO) permettant d'envoyer des données. Ce tube est un fichier particulier.
+
+```bash 
+pi@p3:~ $ mkfifo pipe_test
+```
+
+On vérifie ensuite si le tube a bien été créé
+```bash 
+pi@p3:~ $ ls -lh pipe_test
+prw-r--r-- 1 pi pi 0 Jan 17 12:50 pipe_test
+```
+
+On vérifie son bon fonctionnement sur le rpi. <br>
+Pour ce faire, on ouvre une première fenêtre dans lequel on exécute la commande suivante pour écouter le tube.
+
+```bash
+pi@p3:~ $ tail -f pipe_test #fenetre 1
+```
+
+Puis on ouvre une deuxième fenêtre dans lequel on envoie un message dans le tube grâce à la commande suivante, message qu'on doit avoir affiché dans la première fenêtre.
+
+```bash
+pi@p3:~ $ echo "test pipe" > pipe_test #fenetre 2
+```
+
+On revient dans la première fenêtre et on constate bien que le message a été envoyé.
+
+```bash
+pi@p3:~ $ tail -f pipe_test #fenetre 1
+test pipe
+```
+
+<h4 style="color:#859bed" id="IV_2"> 2. Envoi de commandes dans le tube nommé </h4>
+
+La prochaine étape consiste à pouvoir envoyer des commandes dans le pipe, pour qu'elles soient ensuite exécutées. En effet, pour l'instant, si on exécute la commande suivante, cela nous renvoie cette chaine de caractères dans la première fenêtre.
+
+```bash
+pi@p3:~ $ echo uptime > pipe_test #fenetre 2
+```
+
+```bash
+pi@p3:~ $ tail -f pipe_test  #fenetre 1
+test pipe
+uptime
+```
+
+Pour résoudre ce problème, nous allons mette fin à l'écoute du tube nommé dans la fenêtre 1 avec la combinaison de touches *CTRL+C*, puis nous allons lancer cette commande : 
+
+```bash
+pi@p3:~ $ while true; do eval "$(cat pipe_test)"; done #fentre 1
+```
+
+Et cette fois, si on renvoi une commande dans le pipe, elle est bien exécutée
+
+```bash
+pi@p3:~ $ echo uptime > pipe_test #fenetre 2
+```
+```bash
+pi@p3:~ $ eval "$(cat pipe_test)"
+ 13:10:28 up 13 days, 20:31,  2 users,  load average: 0.00, 0.10, 0.22
+```
+On obtient bien le résultat de la commande
+
+<h4 style="color:#859bed" id="IV_3"> 3. Exécution de commandes dans le rpi depuis un conteneur </h4>
+
+Si on revient à notre problématique de départ, l'objectif est d'exécuter des commandes dans le rpi depuis un conteneur docker, cela est maintenant possible grâce au tube nommé. <br>
+Pour ce faire, nous allons reprendre les répertoires parcréer depuis le rpi un tube nommé dans le répertoire _/home/pi/pipeDockerSwarm/_ partagé entre le rpi et le conteneur avec la commande suivante : 
+
+```bash 
+pi@p3:~ $ mkfifo /home/pi/pipeDockerSwarm/pipe_conteneur #fentre 1
+```
+
+On modifie les droits d'écriture du tube pour que tout le monde puisse y envoyer des données, et le met à l'écoute avec la commande : 
+```bash 
+pi@p3:~ $ chmod a+w /home/pi/pipeDockerSwarm/pipe_conteneur #fentre 1
+pi@p3:~ $ while true; do eval "$(cat /home/pi/pipeDockerSwarm/pipe_conteneur)"; done #fentre 1
+```
+
+Après, on vérifie qu'il est présent dans le répertoire _hostpipe_, et qu'on peut y envoyer des commandes depuis le conteneur de l'application.
+On le met à l'écoute avec la commande : 
+```bash 
+pi@p3:~ $ docker exec -it e3f5c734a64a sh #fentre 2
+$ cd /hostpipe
+$ ls -lh pipe_conteneur
+prw-rw-rw- 1 1000 1000 0 Jan 17 12:20 pipe_conteneur
+```
+
+On lance la commande suivante depuis la fenêtre 2, qui est utilisée dans le module 1 de notre application, et qui permet de calculer les nombres premiers compris entre _1_ et _100_, et enregistre le résultat dans le fichier _result_calcul_nb_premiers.json_ situé dans le répertoire partagé _/home/pi/pipeDockerSwarm/outputsStats/_.
+```bash 
+$ echo "ssh cnat mpiexec -n 3 --host pi3,pi2,pi4 python /home/pi/prime.py 1 100 /home/pi/pipeDockerSwarm/outputsStats/result_calcul_nb_premiers.json --mca btl_tcp_if_include 172.19.181.0/24" > /hostpipe/pipe_conteneur
+```
+
+On attend quelques secondes le temps que la commande soit exécutée, puis on visualise le contenu du fichier _result_calcul_nb_premiers.json_ depuis le rpi, et on obtient le résultat suivante :
+```bash 
+pi@p3:~ $ cat result_calcul_nb_premiers.json
+{
+   "executionTime": 0.02,
+   "primeNumbersList": [
+      1,
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29,
+      31,
+      37,
+      41,
+      43,
+      47,
+      53,
+      59,
+      61,
+      67,
+      71,
+      73,
+      79,
+      83,
+      89,
+      97
+   ]
+}
+```
+Pour conclure sur cette partie, il est maintenant possible d'exécuter des commandes sur rpi depuis l'application sur internet, contenue dans un conteneur docker grâce à un tube nommé. <br>
+Nous allons répété ces mêmes pour chaque module de l'application et pour la page administrateur du site où les statistiques de chaque rpi du Cluster Hat doivent être récupérées et affichées.
