@@ -209,8 +209,6 @@ function resultRequestGetResult(){
         if (resultScriptParsed != null){
             //on regarde si une erreur a été renvoyée
             if (resultScriptParsed.error === 0){
-                //on met à jour le bouton pour indiquer au user que le calcul est terminé
-
                 //on insère dans les bons éléments, l'approximation de pi, l'erreur et le temps d'exécution du calcul
                 result.innerHTML = "Approximation de Pi : " + resultScriptParsed.result.pi
                 error.innerHTML = "Erreur : " + resultScriptParsed.result.error

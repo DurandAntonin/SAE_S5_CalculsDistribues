@@ -160,12 +160,12 @@ function resultRequestCheckComputeFinished(){
             //console.log(resultScriptParsed)
         }
         catch (e){
+            //on reset le bouton calculer
+            resetButtonCalculate()
+
             //on affiche un message d'erreur
             displayMessage(errorMessage, "Erreur lors de la tentative de récupération de la réponse du serveur")
         }
-
-        //on reset le bouton calculer
-        resetButtonCalculate()
 
         if (resultScriptParsed != null){
             //on regarde si une erreur a été renvoyée
@@ -177,6 +177,9 @@ function resultRequestCheckComputeFinished(){
                 if (computeFinished){
                     clearInterval(intervalCheckComputeFinished)
 
+                    //on met à jour le bouton pour indiquer au user que le calcul est terminé
+                    resetButtonCalculate()
+                    
                     //on exécute une requete ajax pour récupérer le résultat de l'exécution du programme de calcul des nombres premiers
                     requestGetResult()
                 }
@@ -217,15 +220,9 @@ function resultRequestGetResult(){
             displayMessage(errorMessage, "Erreur lors de la tentative de récupération de la réponse du serveur")
         }
 
-        //on reset le bouton calculer
-        resetButtonCalculate()
-
         if (resultScriptParsed != null){
             //on regarde si une erreur a été renvoyée
             if (resultScriptParsed.error === 0){
-                //on met à jour le bouton pour indiquer au user que le calcul est terminé
-                resetButtonCalculate()
-
                 //on affiche la liste des nombres premiers compris entre les 2 bornes
                 let stringListPrimeNumbers = ""
                 resultScriptParsed.result.primeNumbersList.forEach(
@@ -240,8 +237,6 @@ function resultRequestGetResult(){
                 executionTime.innerHTML = "Temps d'exécution : " + resultScriptParsed.result.executionTime + "s"
             }
             else{
-                resetButtonCalculate()
-
                 //console.log("Erreur : " + resultScriptParsed.errorMessage)
                 displayMessage(errorMessage, resultScriptParsed.errorMessage)
             }
