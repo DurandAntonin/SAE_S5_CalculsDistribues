@@ -341,63 +341,9 @@ echo"<hr class='dark:border-gray-700'>
             </div>
         </div>
 </section>
-<footer class="relative bg-deepblue pt-8 pb-6">
-    <div class="container mx-auto px-4">
-        <div class="flex flex-wrap text-left lg:text-left">
-            <div class="w-full lg:w-6/12 px-4">
-                <h4 class="text-3xl fonat-semibold text-white">En savoir plus sur le projet !</h4>
-                <h5 class="text-lg mt-0 mb-2 text-white">
-                    Trouvez nous sur les plateformes ci-dessous.
-                </h5>
-                <div class="mt-6 lg:mb-0 mb-6">
-                    <a href="https://discord.com"><button class="bg-white text-blue-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                            <ion-icon name="logo-discord" class="text-2xl my-2"></ion-icon></button></a>
-                    <a href="https://github.com/DurandAntonin/SAE_S5_CalculsDistribues/"><button class="bg-white text-black shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                            <ion-icon name="logo-github" class="text-2xl my-2"></ion-icon></button></a>
-                    <a href="https://hub.docker.com/u/wzehren"><button class="bg-white text-blue-700 font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                            <ion-icon name="logo-docker" class="text-2xl my-2"></ion-icon></button></a>
-                    <a href="https://youtu.be/1-kKTOr5mcU?si=IaO0BMT9EiPGCDlr"><button class="bg-white text-red-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                            <ion-icon name="logo-youtube" class="text-2xl my-2"></ion-icon>
-                        </button></a>
-                </div>
-            </div>
-            <div class="w-full lg:w-6/12 px-4">
-                <div class="flex flex-wrap items-top mb-6">
-                    <div class="w-full h-full  lg:w-6/12 px-4 ml-auto my-10">
-                        <a href="https://www.uvsq.fr"><img src="../PICTURES/IUT_logo.png" class="h-full"></a>
-                    </div>
-                    <div class="w-full lg:w-4/12 px-4">
-                        <span class="block uppercase text-white text-sm font-semibold mb-2">Ressources</span>
-                        <ul class="list-unstyled">
-                            <li>
-                                <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="../../doc/Sujet/SujetSaeS5.pdf">Sujet de SAE</a>
-                            </li>
-                            <li>
-                                <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="https://loldle.net/">LoLdle</a>
-                            </li>
-                            <li>
-                                <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="">Confidentialités</a>
-                            </li>
-                            <li>
-                                <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="">Contactez nous</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr class="my-6 border-blueGray-300">
-        <div class="flex flex-wrap items-center md:justify-between justify-center">
-            <div class="w-full md:w-4/12 px-4 mx-auto text-center">
-                <div class="text-sm text-white font-semibold py-1">
-                    Copyright © <span id="get-current-year">2023</span><a href="" class="text-white hover:text-lyellow" target="_blank"> BlitzCalc by
-                        <a href="https://www.creative-tim.com?ref=njs-profile" class="text-blueGray-500 hover:text-lyellow">Madianou Corp</a>.
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.min.js"></script>
+<?php
+require_once "../HTMl/footer.html";
+?>
 </body>
 </html>

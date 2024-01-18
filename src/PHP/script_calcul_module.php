@@ -58,12 +58,23 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
         sleep(1);
 
         $hostname = "";
-        if (file_exists($VARIABLES_GLOBALES["repertoire_resultat"] . $fileNameForHostname)){
-            $fp = fopen($VARIABLES_GLOBALES["repertoire_resultat"] . $fileNameForHostname, "r");
+        $hostnameFile = $VARIABLES_GLOBALES["repertoire_resultat"] . $fileNameForHostname;
+        if (file_exists($hostnameFile)){
+            $fp = fopen($hostnameFile, "r");
             $hostname = trim(fread($fp, 10));
             //echo $hostname;
             fclose($fp);
         }
+        else{
+            $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Fichier {$hostnameFile} hostname non présent");
+        }
+
+        //on supprime le fichier contenant le hostname
+        $result = deleteFileOnHostFromContainer($VARIABLES_GLOBALES["repertoire_resultat"], $fileNameForHostname);
+
+        //on enregistre dans un log s'il y a eu une erreur
+        if ($result[0] == 0)
+            $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], $result[1]);
 
         //fichier qui va contenir le résultat de la commande
         $outputFile = $VARIABLES_GLOBALES["chemin_result_dans_pi"] . $outputFileName;
@@ -126,7 +137,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
             //le module est inconnu, on enregistre l'erreur
             //on enregistre a l'aide du logger le warning
             $commandStr = $commandBuilder->__toString();
-            $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur lors du build de la Commande : {$commandStr}");
+            $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur lors du build de la Commande : {$commandStr}");
             $listeResultParams["error"] = 1;
             $listeResultParams["errorMessage"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
         }
@@ -169,6 +180,14 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
 
             //on ajoute la liste des stats du cluster hat dans la liste de renvoi
             $listeResultParams["result"] = json_decode($outputFileContent, true);
+
+            //on supprime le fichier contenant le résultat du programme
+            $result = deleteFileOnHostFromContainer($VARIABLES_GLOBALES["repertoire_resultat"], $outputFileName);
+
+            //on enregistre dans un log s'il y a eu une erreur
+            if ($result[0] == 0)
+                $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], $result[1]);
+
         }
         else{
             //on enregistre a l'aide du logger le warning

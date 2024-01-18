@@ -364,17 +364,17 @@ echo"<hr class='dark:border-gray-700'>
         <div class="relative z-50 mx-auto mt-36 w-3/6 p-10 bg-deepblue rounded-xl h-3/4" id="contentUsers">
             <ion-icon name="close" class="text-white right-0 my-9 mr-6 top-0 absolute text-3xl cursor-pointer" onclick="showUsers()"></ion-icon>
             <p class="text-white text-2xl text-center">Rechercher des utilisateurs</p>
-            <form class="flex items-center my-5">
+            <form class="flex items-center my-5" onsubmit="return false">
                 <label for="voice-search" class="sr-only">Search</label>
                 <div class="relative w-full">
                     <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                         <svg class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                     </div>
-                    <input type="text" id="research-bar-user" class="block w-full rounded-lg border border-white bg-deepblue p-2.5 pl-10 text-sm text-white focus:border-lightblue focus:ring-lightblue" placeholder="Rechercher un utilisateur" required />
+                    <input type="text" id="research-bar-user" class="block w-full rounded-lg border border-white bg-deepblue p-2.5 pl-10 text-sm text-white focus:border-lightblue focus:ring-lightblue" placeholder="Rechercher un utilisateur"/>
                 </div>
                 <select id="select-user-attribute" class="ml-2 inline-flex items-center rounded-lg border border-white bg-deepblue px-3 py-2.5 text-sm font-medium text-white hover:bg-deepblue focus:outline-none focus:ring-4 focus:ring-lightblue">
                     <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    <option value="">--Trier par--</option>
+                    <option value="">--Rechercher par--</option>
                     <option value="userId">ID</option>
                     <option value="login">Login</option>
                     <option value="userMail">Mail</option>
@@ -410,17 +410,17 @@ echo"<hr class='dark:border-gray-700'>
         <div class="relative z-50 mx-auto mt-36 w-3/6 p-10 bg-deepblue rounded-xl h-3/4" id="contentLogs">
             <ion-icon name="close" class="text-white right-0 my-9 mr-6 top-0 absolute text-3xl cursor-pointer" onclick="showLogs()"></ion-icon>
             <p class="text-white text-2xl text-center">Rechercher des logs</p>
-            <form class="flex items-center my-5">
+            <form class="flex items-center my-5" onsubmit="return false">
                 <label for="voice-search" class="sr-only">Search</label>
                 <div class="relative w-full">
                     <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                         <svg class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                     </div>
-                    <input type="text" id="research-bar-logging" class="block w-full rounded-lg border border-white bg-deepblue p-2.5 pl-10 text-sm text-white focus:border-lightblue focus:ring-lightblue" placeholder="Rechercher un logs" required />
+                    <input type="text" id="research-bar-logging" class="block w-full rounded-lg border border-white bg-deepblue p-2.5 pl-10 text-sm text-white focus:border-lightblue focus:ring-lightblue" placeholder="Rechercher des logs"/>
                 </div>
                 <select id="select-logging-attribute" class="ml-2 inline-flex items-center rounded-lg border border-white bg-deepblue px-3 py-2.5 text-sm font-medium text-white hover:bg-deepblue focus:outline-none focus:ring-4 focus:ring-lightblue">
                     <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    <option value="">--Trier par--</option>
+                    <option value="">--Rechercher par--</option>
                     <option value="logId">ID</option>
                     <option value="logLevel">Level</option>
                     <option value="userId">UserID</option>
@@ -451,64 +451,10 @@ echo"<hr class='dark:border-gray-700'>
             </div>
         </div>
 </section>
-<footer class="relative bg-deepblue pt-8 pb-6">
-    <div class="container mx-auto px-4">
-        <div class="flex flex-wrap text-left lg:text-left">
-            <div class="w-full lg:w-6/12 px-4">
-                <h4 class="text-3xl fonat-semibold text-white">En savoir plus sur le projet !</h4>
-                <h5 class="text-lg mt-0 mb-2 text-white">
-                    Trouvez nous sur les plateformes ci-dessous.
-                </h5>
-                <div class="mt-6 lg:mb-0 mb-6">
-                    <a href="https://discord.com"><button class="bg-white text-blue-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                            <ion-icon name="logo-discord" class="text-2xl my-2"></ion-icon></button></a>
-                    <a href="https://github.com/DurandAntonin/SAE_S5_CalculsDistribues/"><button class="bg-white text-black shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                            <ion-icon name="logo-github" class="text-2xl my-2"></ion-icon></button></a>
-                    <a href="https://hub.docker.com/u/wzehren"><button class="bg-white text-blue-700 font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                            <ion-icon name="logo-docker" class="text-2xl my-2"></ion-icon></button></a>
-                    <a href="https://youtu.be/1-kKTOr5mcU?si=IaO0BMT9EiPGCDlr"><button class="bg-white text-red-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
-                            <ion-icon name="logo-youtube" class="text-2xl my-2"></ion-icon>
-                        </button></a>
-                </div>
-            </div>
-            <div class="w-full lg:w-6/12 px-4">
-                <div class="flex flex-wrap items-top mb-6">
-                    <div class="w-full h-full  lg:w-6/12 px-4 ml-auto my-10">
-                        <a href="https://www.uvsq.fr"><img src="../PICTURES/IUT_logo.png" class="h-full"></a>
-                    </div>
-                    <div class="w-full lg:w-4/12 px-4">
-                        <span class="block uppercase text-white text-sm font-semibold mb-2">Ressources</span>
-                        <ul class="list-unstyled">
-                            <li>
-                                <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="../../doc/Sujet/SujetSaeS5.pdf">Sujet de SAE</a>
-                            </li>
-                            <li>
-                                <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="https://loldle.net/">LoLdle</a>
-                            </li>
-                            <li>
-                                <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="">Confidentialités</a>
-                            </li>
-                            <li>
-                                <a class="text-white hover:text-lyellow font-semibold block pb-2 text-sm" href="">Contactez nous</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr class="my-6 border-blueGray-300">
-        <div class="flex flex-wrap items-center md:justify-between justify-center">
-            <div class="w-full md:w-4/12 px-4 mx-auto text-center">
-                <div class="text-sm text-white font-semibold py-1">
-                    Copyright © <span id="get-current-year">2023</span><a href="" class="text-white hover:text-lyellow" target="_blank"> BlitzCalc by
-                        <a href="https://www.creative-tim.com?ref=njs-profile" class="text-blueGray-500 hover:text-lyellow">Madianou Corp</a>.
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.min.js"></script>
+<?php
+require_once "../HTMl/footer.html";
+?>
 
 </body>
 </html>
