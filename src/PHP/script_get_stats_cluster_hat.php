@@ -77,7 +77,11 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
             fclose($fp);
 
             //on supprime le fichier
-            //unlink($outputFile);
+            $result = deleteFileOnHostFromContainer($VARIABLES_GLOBALES["repertoire_resultat"], $fileName);
+
+            //on enregistre dans un log s'il y a eu une erreur
+            if ($result[0] == 0)
+                $loggerFile->warning($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], $result[1]);
 
             //on ajoute la liste des stats du cluster hat dans la liste de renvoi
             $listeResultParams["result"] = $listStatsClusterHat;

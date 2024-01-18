@@ -10,7 +10,7 @@ services:
         constraints: [node.labels.service == web ]
       replicas: 4
     volumes:
-      - "/home/pi/pipeDockerSwarm:/hostpipe"
+      - "/home/pi/webVolume:/hostpipe"
 
   servicebd:
     image: wzehren/mysqlsae

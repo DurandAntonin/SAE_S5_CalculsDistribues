@@ -105,6 +105,33 @@ function guidv4($data = null): string
 }
 
 /**
+ * Supprime un fichier du host depuis un conteneur docker
+ *
+ * @param $pathToFile string Chemin vers le fichier
+ * @param $fileName string Fichier à supprimer
+ * @return array Liste contenant l'indice d'erreur (1) ou non, avec le message d'erreur associé s'il y en a
+ *
+ * @version 1.0
+ */
+function deleteFileOnHostFromContainer(string $pathToFile, string $fileName): array
+{
+    $file = $pathToFile . $fileName;
+    $commandDeleteFile = "rm {$file}";
+
+    $output = null;
+    $resultCommand = null;
+
+    try{
+        exec($commandDeleteFile, $output, $resultCommand);
+    }
+    catch (\ValueError|\Exception $e){
+        return [0, $e];
+    }
+
+    return [1, ""];
+}
+
+/**
  * Enlève une liste de caractères spéciaux dans une chaîne de caractères. <br>
  * Ex : te't ==> tet, si le ' est indiqué comme caractère spécial à enlever
  *

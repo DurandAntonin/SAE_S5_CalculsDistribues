@@ -3,8 +3,43 @@
 @tailwind utilities;
 
 @layer components{
-input:checked ~ .dot {
-    transform: translateX(265%);
-    background-color: #FFDC00;
-  }
+    input:checked ~ .dot {
+        transform: translateX(265%);
+        background-color: #FFDC00;
+    }
+
+    @keyframes scroll-text {
+        0% {
+            transform: translateX(0%);
+        }
+        90% {
+            transform: translateX(-250%);
+        }
+        95% {
+            transform: translateX(0%);
+        }
+        100% {
+            transform: translateX(0%);
+        }
+    }
+
+    .span-overflow{
+
+        &:not(:hover) {
+            text-overflow: ellipsis;
+        }
+        &:hover,
+        &:focus {
+            :is(span) {
+                display: inline-block;
+                animation-name: scroll-text;
+                animation-duration: 10s;
+                animation-timing-function: linear;
+                animation-delay: 0s;
+                animation-iteration-count: infinite;
+                animation-direction: normal;
+                color: black;
+            }
+        }
+    }
 }
