@@ -21,19 +21,24 @@ _Zehren William_
         <li> <a href="#concepArchi2"> Conception architecturale </a> </li>
         <li> <a href="#concepDeta2"> Conception détaillée </a> </li>
     </ol>
+    <li> <a href="#livr3"> Conception Livrable 3 </a> </li>
+    <ol>
+        <li> <a href="#concepArchi3"> Conception architecturale </a> </li>
+        <li> <a href="#concepDeta3"> Conception détaillée </a> </li>
+    </ol>
 </ol>
 
 
 
-<h2 style="color:#5d79e7; id=introduction ; page-break-before: always"> Introduction </h2>
+<h2 style="color:#5d79e7; page-break-before: always" id=introduction> Introduction </h2>
 
 Ce document est un dossier de conception divisé en plusieurs parties. Il sera constitué de la conception architecturale et détaillée de chaque livrable. Il aura pour but de donner de renseigner toutes les informations sur la conception du site ainsi que des diagrammes permettant de la représenter graphiquement. 
 
 Le premier livrable consiste en la réalisation des bases du site web, à savoir les pages principales. Il consiste également en la configuration du kit cluster hat, et en l'installation du site web sur ce dernier. 
 
-<h2 style="color:#5d79e7; id=livr1 ; page-break-before: always"> Conception Livrable 1 </h2>
+<h2 style="color:#5d79e7; page-break-before: always" id=livr1> Conception Livrable 1 </h2>
 
-<h3 style="color:#5d79e7; id=concepArchi"> Conception architecturale </h3>
+<h3 style="color:#5d79e7;" id=concepArchi> Conception architecturale </h3>
 
 Le domaine du problème est le site web BlitzCalc, on décompose donc ce système en sous-systèmes. 
 
@@ -96,6 +101,8 @@ On représente les relations entre "BD" et
 <p> Diagramme BD du livrable 1 </p>
 </div>
 
+<h2 style ="page-break-before: always"></h2>
+
 Ensuite, représente les relations entre les packages dans le diagramme de packages ci-dessous.
 
 <div style="text-align:center">
@@ -149,7 +156,7 @@ Enfin, les 2 machines sont reliées par une connexion internet, représentée pa
 <p> Diagramme de deploiement du livrable 1 </p>
 </div>
 
-<h3 style="color:#5d79e7; id=concepDeta ; page-break-before: always"> Conception détaillée </h3> 
+<h3 style="color:#5d79e7; page-break-before: always" id=concepDeta> Conception détaillée </h3> 
 
 En ayant défini les dépendances et les associations entre tous les objets, on obtient alors une structure telle que : 
 
@@ -190,9 +197,9 @@ La table Logging comporte 6 colonnes, à savoir logId de type varchar, logLevel 
 
 La table Weak_passwords comporte une seule colonne password de type varchar avec des contraintes d'intégrité telles que : le nombre de caractères contenus dans cette colonne doit être de 256 au maximum et elle ne peut pas être nulle. 
 
-<h2 style="color:#5d79e7; id=livr2 ; page-break-before: always"> Conception Livrable 2 </h2>
+<h2 style="color:#5d79e7;  page-break-before: always" id=livr2> Conception Livrable 2 </h2>
 
-<h3 style="color:#5d79e7; id=concepArchi2"> Conception architecturale </h3>
+<h3 style="color:#5d79e7;" id=concepArchi2> Conception architecturale </h3>
 
 Le domaine du problème est le site web BlitzCalc, on décompose donc ce système en sous-systèmes.
 
@@ -232,6 +239,8 @@ La base de données quant à elle ne change pas d'un point de vue architectural.
 <p> Diagramme BD du livrable 2 </p>
 </div>
 
+<h2 style ="page-break-before: always"></h2>
+
 On représente les relations entre les packages dans le diagramme de packages ci-dessous.
 
 <div style="text-align:center">
@@ -243,12 +252,12 @@ On va utiliser la vue composants-connecteurs pour modéliser le système.
 
 Les composants "Serveur" et "Navigateur" sont de stéréotype "executable", le composant "DB" est de stéréotype "database", les composants "Logging", "Users" et "Weak_passwords" qui sont de stéréotype "table" et enfin tous les autres composants sont de stéréotype "file".  
 
-On a la même interface nommée "IRequeteWeb" entre "Navigateur" et "Serveur". On a des relations de dépendance entre "Serveur" et les composants de stéréotype "file". De même entre le "Navigateur" et les composants d'extension "html", "js" et "css".  
+On a la même interface nommée "IRequeteWeb" entre "Navigateur" et "Serveur". On a des relations de dépendance entre "Serveur" et les composants de stéréotype "file". De même entre le "Navigateur" et les composants d'extension "html", "json","js" et "css".  
 
-Le composant "Serveur" interprète les composants en ".php" et envoie les fichiers html correspondants au "Navigateur".  
+Le composant "Serveur" interprète les composants en ".php", ".json", ".sh" et envoie les fichiers html correspondants au "Navigateur".  
 
 On a une interface entre les composants "Navigateur" et "Serveur" que l’on va nommer 
-"IRequeteWeb". On a des relations de dépendances entre "Serveur" et les composants de stéréotype "file", de même entre le "Navigateur" et les composants d'extension "html" "css" et "js".  
+"IRequeteWeb". On a des relations de dépendances entre "Serveur" et les composants de stéréotype "file", de même entre le "Navigateur" et les composants d'extension "html" "json" "css" et "js".  
 
 On modélise cette vue à l’aide d’un diagramme de composants ci-dessous :
 
@@ -270,7 +279,7 @@ On représente donc ces noeuds de la même manière que dans le livrable précé
 <p> Diagramme de déploiement du livrable 2 </p>
 </div>
 
-<h3 style="color:#5d79e7; id=concepDeta2 ; page-break-before: always"> Conception détaillée </h3>
+<h3 style="color:#5d79e7; page-break-before: always" id=concepDeta2> Conception détaillée </h3>
 
 En ayant défini les dépendances et les associations entre tous les objets, on obtient alors une structure telle que : 
 
@@ -290,7 +299,7 @@ Pour faciliter l'analyse de ces dernieres, on réalise un diagramme de classe ne
 <p> Diagramme de classes du livrable 2 (2)</p>
 </div>
 
-On analyse maintenant comment sont constitués les objets en .php suivants : "page_module_nombres_premiers.php" et "page_accueil_admin.php". Les autres objets n'ayant pas été changés, il ne seront pas analysés de nouveau ici. 
+On analyse maintenant comment sont constitués les objets en .php suivants : "page_module_nombres_premiers.php" et "page_accueil_admin.php". Les autres objets n'ayant pas été changés, ils ne seront pas analysés de nouveau ici. 
 
 Chaque page contient désormais un header et un footer, excepté les pages "page_inscription", "page_connexion" et "page_deconnexion".  
 
@@ -303,13 +312,114 @@ La page "page_accueil_admin.php" contient un ```<section>``` qui englobe toute l
 La page "page_module_nombres_premiers.php" contient un ```<div>```, qui contient lui meme un ```<h2>``` qui permet d'afficher le nom de la page. Il contient ensuite un ```<form>``` qui contient deux ```<input>```  de  type texte possèdant chacun un ```<label>```. Ces derniers permettent de donner une borne min et max au calcul. On retrouve alors dans le ```<div>``` principal, un autre ```<div>```, contenant un ```<p>``` permettant d'afficher le resultat des calculs ainsi qu'un ```<p>``` permettant d'afficher le temps d'exécution du calcul. Ensuite, dans un autre ```<div>```, on retrouve un ```<input>``` de type bouton permettant de lancer le calcul. De nouveau dans un autre ```<div>```, on peut retrouver un ```<input>``` de type checkbox, avec un ```<b>```. Ce bouton permet de selectionner ou non le calcul distribué. Si le bouton est actionné pour la premiere fois, lorsque l'utilisateur n'est pas connecté, une pop-up contenue dans un ```<div>``` apparait. Cette pop-up contient deux ```<div>```. Le premier contient trois ```<h1>``` signifiant au visiteur qu'il doit se connecter. Le deuxième contient deux ```<form>```, qui contiennent chacun un ```<input>``` permettant au visiteur de se connecter ou de s'inscrire.
 
 
+<h2 style="color:#5d79e7; page-break-before: always" id=livr3> Conception Livrable 3 </h2>
 
+<h3 style="color:#5d79e7;" id=concepArchi3> Conception architecturale </h3>
 
+Le domaine du problème est le site web BlitzCalc, on décompose donc ce système en sous-systèmes.
 
+L'architecture reste la même que dans le livrable 2 cependant on doit rajouter des composants et en modifier certains. 
 
+Les composants qui sont ajoutés au système sont les suivants :
 
+| Objet                                      | Etat                                                        | Comportement                           |
+|--------------------------------------------|-------------------------------------------------------------|----------------------------------------|
+| page_module_pi_monte_carlo.php             |                                                             |                                        |
+| CommandBuilder.php                         |                                                             |                                        |
+| pi_monte_carlo_script.js                   |                                                             |                                        |
+| pi_monte_carlo.py                          |                                                             |                                        |
+| accueil_script.js                          |                                                             |                                        |
+| index_script.js                            |                                                             |                                        |
+| profil_script.js                           |                                                             |                                        |
+| traitement_profil.php                      |                                                             |                                        |
+| script_insertion_faux_users.php            |                                                             |                                        |
+| prime.py                                   |                                                             |                                        |
+| *.png                                      |                                                             |                                        |
+| footer.html                                |                                                             |                                        |
+            
+A partir de ce tableau, on peut définir les composants suivants : "page_module_pi_monte_carlo.php", "CommandBuilder.php", "pi_monte_carlo_script.js" et "pi_monte_carlo.py ","accueil_script.js","index_script.js","profil_script.js","traitement_profil.php","script_insertion_faux_users.php","prime.py","*.png" et "footer.html". 
 
+Ces derniers sont des abstractions respectives des objets : "page_module_pi_monte_carlo.php", "CommandBuilder.php", "pi_monte_carlo_script.js" et "pi_monte_carlo.py ","accueil_script.js","index_script.js","profil_script.js","traitement_profil.php","script_insertion_faux_users.php","prime.py","*.png" et "footer.html". 
 
+Le composant *.png représente l'ensemble des objets en .png.
+
+La base de données ainsi que les packages restent inchangés par rapport au livrable 2.
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L3_diagBD.PNG" width="700px">
+<p> Diagramme BD du livrable 3 </p>
+</div>
+
+<h2 style="page-break-before: always" ></h2>
+
+On représente les relations entre les packages dans le diagramme de packages ci-dessous.
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L3_diagPackages .PNG" width="700px">
+<p> Diagramme de packages du livrable 3 </p>
+</div>
+
+On va utiliser la vue composants-connecteurs pour modéliser le système. 
+
+Les composants "Serveur" et "Navigateur" sont de stéréotype "executable", le composant "DB" est de stéréotype "database", les composants "Logging", "Users" et "Weak_passwords" qui sont de stéréotype "table" et enfin tous les autres composants sont de stéréotype "file".  
+
+On a des relations de dépendance entre "Serveur" et les composants d'extension ".php", ".sh", ".py" et ".json". De même entre le "Navigateur" et les composants d'extension "html", "js" et "css".  
+ 
+Le composant "Serveur" interprète les composants de type page et verification en ".php" et envoie les fichiers html correspondants au "Navigateur". 
+
+On a une interface entre les composants "Navigateur" et "Serveur" que l’on va nommer "IRequeteWeb".
+
+On a également une interface que l’on va nommer "MySqli" reliant le composant "MySQLDataManagement.php" avec le composant "Base de données".
+
+On modélise cette vue à l’aide d’un diagramme de composants ci-dessous :
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L3_diagComposants.PNG" width="700px">
+<p> Diagramme de composants du livrable 3 </p>
+</div>
+
+<h2 style="page-break-before: always" ></h2>
+
+Le système qui héberge le site reste exactement le même que lors du livrable 1, à savoir trois noeuds principaux : le Navigateur, le RPI Host et Les quatre RPI Zero. 
+
+**Remarque : Seul un RPI Zero sur les quatres sera modélisé pour faciliter la compréhension du diagramme, mais ces derniers sont tous structurés de la même manière**
+
+On représente donc ces noeuds de la même manière que dans le livrable précédent, grâce à un diagramme de déploiement. Cependant, les composants de type classe seront regroupés en un composant nommé "Classes.php" pour eviter la surcharge du diagramme. 
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L3_diagDeploiement.PNG" width="700px">
+<p> Diagramme de déploiement du livrable 3 </p>
+</div>
+
+<h3 style="color:#5d79e7; page-break-before: always" id=concepDeta3> Conception détaillée </h3>
+
+Les objets pages, vérifications, traitements et scripts font toutes appel aux classes Logger.php, LoggerInstance.php, MySQLDataManagement, Enum_niveau_logger.php et Enume_role_user.php. Les liens entre eux ne seront donc pas représentés pour éviter une surcharge du diagramme. 
+
+En ayant défini les dépendances et les associations entre tous les objets, on obtient alors une structure telle que : 
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L3_diagClasses.PNG" width="700px">
+<p> Diagramme de classes du livrable 3 (1)</p>
+</div>
+
+On commence par analyser les différentes classes .php, à savoir "Logger.php", "LoggerInstance.php", "Logging.php", "MySQLDataManagement.php", "User.php" et "CommandBuilder.php".
+
+On analyse aussi les énumérations "Enum_niveau_logger.php" et "Enum_role_user.php".
+
+Pour faciliter l'analyse de ces dernieres, on réalise un diagramme de classe ne contenant que ces classes, leurs paramètres et leurs méthodes et ces énumérations. Il servira a modéliser les dépendances et les associations entre ces dernières. 
+
+La classe "Utility.php" ne sera pas analysée car elle n'est qu'un regroupement de fonctions et pas une classe à proprement parler. 
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L3_diagClasses_2.PNG" width="700px">
+<p> Diagramme de classes du livrable 3 (2)</p>
+</div>
+
+On analyse maintenant la constitution de l'objet en .php "page_module_pi_monte_carlo.php". Les autres objets n'ayant pas été changés, ils ne seront pas analysés de nouveau ici. 
+
+La page "page_module_pi_monte_carlo.php" contient un ```<section>```, dans lequel se trouve toute la page. On trouve ensuite un ```<div>```, qui contient un autre ```<div>```. Ce dernier contient un ```<h2>``` qui affiche le nom de la page, ainsi qu'un ```<form>```. Ce dernier contient quatre ```<div>```, qui ont chacun une utilité bien définie : le premier d'entre eux contient un ```<label>``` ainsi qu'un ```<input>``` de type texte qui servent à définir un nombre de lancers pour le module. Le deuxième ```<div>``` contient une balise customisée ```<iframe>``` permettant d'afficher un graphique ainsi qu'un ```<div>```, qui contient un ```<h2>``` et trois ```<p>``` permettant d'afficher les résultats de l'approximation de Pi. On retrouve le troisième ```<div>``` qui contient un ```<input>``` de type bouton qui sert à lancer le calcul. Enfin, comme pour l'autre page module, on retrouve le quatrième ```<div>``` qui contient lui-même un ```<div>```, ce dernier contient un ```<input>``` de type checkbox qui permet de passer en mode calcul distribué ou non.
+
+La page contient également un footer et un header qui ont été définis et analysés précédemment. 
 
 
 
