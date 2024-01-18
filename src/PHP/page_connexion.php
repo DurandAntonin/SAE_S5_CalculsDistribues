@@ -18,6 +18,7 @@ $VARIABLES_GLOBALES = import_config();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <link rel="shortcut icon" type="image/png" href="../PICTURES/blitzcalc-favicon-color.png"/>
 </head>
 <body class="bg-lightblue" style="font-family: 'Poppins', sans-serif;">
@@ -79,6 +80,10 @@ $VARIABLES_GLOBALES = import_config();
     </div>
 </div>
 </div>
+
+<?php
+require_once "..\HTMl\\footer.html";
+?>
 
 </body>
 </html>
