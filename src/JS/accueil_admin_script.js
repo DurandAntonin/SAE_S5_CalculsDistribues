@@ -97,12 +97,37 @@ function init(){
     buttonSubmitResearchUsers.onclick = requestResearchUsersOrLogging
     buttonSubmitResearchLogging.onclick = requestResearchUsersOrLogging
 
+    //on lance aussi la recherche quand on appuie sur une touche
+    researchBarUsers.addEventListener("keydown", (launchResearchWhenKeyPressed))
+    researchBarLogging.addEventListener("keydown", (launchResearchWhenKeyPressed))
+
     //on load les stats du site au chargement de la page
     requestSetStatsSite()
     //console.log(listStatsClusterHat)
 
     //on load les stats du cluster hat
     requestSetStatsClusterHat()
+}
+
+function launchResearchWhenKeyPressed(event){
+    //on lance l'action si la touche est "enter"
+    if (event.keyCode === 13){
+        let target = event.target
+
+        //on clique sur un bouton en fonction de l'id du target
+        switch (target.id) {
+            case researchBarUsers.id:
+                buttonSubmitResearchUsers.click()
+                break
+            case researchBarLogging.id:
+                buttonSubmitResearchLogging.click()
+                break
+            default:
+                //on affiche un message d'erreur
+                displayMessage(document.getElementById("p-message"), "Bouton de recherche inconnu")
+                break
+        }
+    }
 }
 
 function changeStatsBasedTimeFilter(){
@@ -179,29 +204,57 @@ function requestResearchUsersOrLogging(){
     let fieldToSearch
     let stringToSearch
     let classResearched
+    let error = false
+    let elemToStoreErrorMessage
+    let errorMessage
 
     //on regarde quel bouton a été appuyé
     if (this.id === buttonSubmitResearchUsers.id){
         fieldToSearch = attributeSelectedUserResearch.value
         stringToSearch = researchBarUsers.value
         classResearched = buttonSubmitResearchUsers.name
+
+        //on affiche un message d'erreur si le string a recherche est != null et l'attribut de recherche est nul
+        if (stringToSearch.length > 0 && (fieldToSearch == null || fieldToSearch.length === 0)){
+            error = true
+            elemToStoreErrorMessage = document.getElementById("p-message-erreur-recherche-users")
+            errorMessage = "Attribut de recherche requis"
+        }
     }
-    else{
+    else if (this.id === buttonSubmitResearchLogging.id){
         fieldToSearch = attributeSelectedLoggingResearch.value
         stringToSearch = researchBarLogging.value
         classResearched = buttonSubmitResearchLogging.name
+
+        //on affiche un message d'erreur si le string a recherche est != null et l'attribut de recherche est nul
+        if (stringToSearch.length > 0 && (fieldToSearch == null || fieldToSearch.length === 0)){
+            error = true
+            elemToStoreErrorMessage = document.getElementById("p-message-erreur-recherche-logs")
+            errorMessage = "Attribut de recherche requis"
+        }
+    }
+    else{
+        //boutton inconnu, on affiche un message d'erreur
+        error = true
+        elemToStoreErrorMessage = document.getElementById("p-message")
+        errorMessage = "Bouton de recherche inconnu"
     }
 
-    lastClassSearched = classResearched
+    if (!error){
+        lastClassSearched = classResearched
 
+        //on crée et exécute une requête js vers un script php pour rechercher des users ou logging en fonction d'un attribut sélectionné
+        let requestGetStatsSite = new XMLHttpRequest()
+        requestGetStatsSite.open("POST","script_get_users_or_logs_with_attribute.php");
+        requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
+        requestGetStatsSite.send(JSON.stringify({"fieldToSearch": fieldToSearch, "stringSearch" : stringToSearch, "classResearched" : classResearched}))
 
-    //on crée et exécute une requête js vers un script php pour rechercher des users ou logging en fonction d'un attribut sélectionné
-    let requestGetStatsSite = new XMLHttpRequest()
-    requestGetStatsSite.open("POST","script_get_users_or_logs_with_attribute.php");
-    requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
-    requestGetStatsSite.send(JSON.stringify({"fieldToSearch": fieldToSearch, "stringSearch" : stringToSearch, "classResearched" : classResearched}))
+        requestGetStatsSite.onreadystatechange = resultRequestResearchUsersOrLogging
+    }
+    else{
+        displayMessage(elemToStoreErrorMessage, errorMessage)
+    }
 
-    requestGetStatsSite.onreadystatechange = resultRequestResearchUsersOrLogging
 }
 
 function resultRequestGetStatsSite(){
