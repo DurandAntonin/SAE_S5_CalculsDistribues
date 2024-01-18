@@ -343,7 +343,7 @@ echo"<hr class='dark:border-gray-700'>
 </section>
 
 <?php
-require_once "..\HTMl\\footer.html";
+require_once "../HTMl/footer.html";
 ?>
 </body>
 </html>
