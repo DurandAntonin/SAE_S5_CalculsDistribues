@@ -12,6 +12,10 @@ module.exports = {
         'lightblue' : '#BDD4E7',
         'lyellow' : '#FFDC00',
         'lgrey' : '#8693AB'
+      },
+      backgroundImage: {
+        'staticMC': "url('staticMonteCarlo.gif')",
+        'gifMC': "url('animMonteCarlo.gif')",
       }
     },
   },

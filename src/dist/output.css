@@ -1117,10 +1117,6 @@ input:checked ~ .dot {
   height: 4rem;
 }
 
-.h-2\/4 {
-  height: 50%;
-}
-
 .h-20 {
   height: 5rem;
 }
@@ -1594,6 +1590,14 @@ input:checked ~ .dot {
 
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
+}
+
+.bg-staticMC {
+  background-image: url('staticMonteCarlo.gif');
+}
+
+.bg-cover {
+  background-size: cover;
 }
 
 .fill-blue-600 {
@@ -2113,6 +2117,10 @@ input:checked ~ .dot {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-gifMC:hover {
+  background-image: url('animMonteCarlo.gif');
+}
+
 .hover\:text-deepblue:hover {
   --tw-text-opacity: 1;
   color: rgb(0 35 70 / var(--tw-text-opacity));
@@ -2135,6 +2143,10 @@ input:checked ~ .dot {
 
 .hover\:underline:hover {
   text-decoration-line: underline;
+}
+
+.hover\:opacity-0:hover {
+  opacity: 0;
 }
 
 .after\:hover\:scale-x-100:hover::after {

@@ -177,9 +177,10 @@ echo"<hr class='dark:border-gray-700'>
 
                         <div class="mb-4 md:mb-0 md:mr-2 flex justify-between items-center">
                             <?php
-                            //<img src="../PICTURES/cercle.png" class="w-2/4 h-2/4 m-6 rounded-xl">
+                            echo "<div class='w-2/4 h-80 m-6 rounded-xl bg-staticMC bg-cover cursor-pointer hover:bg-gifMC' >
+                            </div>";
 
-                            echo "<iframe width='100%' height='450' src='https://chart-studio.plotly.com/~Madianou/2.embed' frameborder='0' class='rounded-xl mr-6'></iframe>";
+                            //echo "<iframe width='100%' height='450' src='https://chart-studio.plotly.com/~Madianou/2.embed' frameborder='0' class='rounded-xl mr-6'></iframe>";
                             ?>
                             <div id="result" class="border-2 text-white p-3  border-white h-80 w-2/4 rounded-xl ">
                                 <h2 class="text-3xl text-center text-white mb-6">Résultats</h2>
