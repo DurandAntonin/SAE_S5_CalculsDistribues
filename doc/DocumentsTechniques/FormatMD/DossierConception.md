@@ -295,7 +295,7 @@ Pour faciliter l'analyse de ces dernieres, on réalise un diagramme de classe ne
 <p> Diagramme de classes du livrable 2 (2)</p>
 </div>
 
-On analyse maintenant comment sont constitués les objets en .php suivants : "page_module_nombres_premiers.php" et "page_accueil_admin.php". Les autres objets n'ayant pas été changés, il ne seront pas analysés de nouveau ici. 
+On analyse maintenant comment sont constitués les objets en .php suivants : "page_module_nombres_premiers.php" et "page_accueil_admin.php". Les autres objets n'ayant pas été changés, ils ne seront pas analysés de nouveau ici. 
 
 Chaque page contient désormais un header et un footer, excepté les pages "page_inscription", "page_connexion" et "page_deconnexion".  
 
@@ -385,9 +385,33 @@ On représente donc ces noeuds de la même manière que dans le livrable précé
 
 <h3 style="color:#5d79e7;" id=concepDeta3> Conception détaillée </h3>
 
+Les objets pages, vérifications, traitements et scripts font toutes appel aux classes Logger.php, LoggerInstance.php, MySQLDataManagement, Enum_niveau_logger.php et Enume_role_user.php. Les liens entre eux ne seront donc pas représentés pour éviter une surcharge du diagramme. 
 
+En ayant défini les dépendances et les associations entre tous les objets, on obtient alors une structure telle que : 
 
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L3_diagClasses.PNG" width="700px">
+<p> Diagramme de classes du livrable 3 (1)</p>
+</div>
 
+On commence par analyser les différentes classes .php, à savoir "Logger.php", "LoggerInstance.php", "Logging.php", "MySQLDataManagement.php", "User.php" et "CommandBuilder.php".
+
+On analyse aussi les énumérations "Enum_niveau_logger.php" et "Enum_role_user.php".
+
+Pour faciliter l'analyse de ces dernieres, on réalise un diagramme de classe ne contenant que ces classes, leurs paramètres et leurs méthodes et ces énumérations. Il servira a modéliser les dépendances et les associations entre ces dernières. 
+
+La classe "Utility.php" ne sera pas analysée car elle n'est qu'un regroupement de fonctions et pas une classe à proprement parler. 
+
+<div style="text-align:center">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L3_diagClasses_2.PNG" width="700px">
+<p> Diagramme de classes du livrable 3 (2)</p>
+</div>
+
+On analyse maintenant la constitution de l'objet en .php "page_module_pi_monte_carlo.php". Les autres objets n'ayant pas été changés, ils ne seront pas analysés de nouveau ici. 
+
+La page "page_module_pi_monte_carlo.php" contient un ```<section>```, dans lequel se trouve toute la page. On trouve ensuite un ```<div>```, qui contient un autre ```<div>```. Ce dernier contient un ```<h2>``` qui affiche le nom de la page, ainsi qu'un ```<form>```. Ce dernier contient quatre ```<div>```, qui ont chacun une utilité bien définie : le premier d'entre eux contient un ```<label>``` ainsi qu'un ```<input>``` de type texte qui servent à définir un nombre de lancers pour le module. Le deuxième ```<div>``` contient une balise customisée ```<iframe>``` permettant d'afficher un graphique ainsi qu'un ```<div>```, qui contient un ```<h2>``` et trois ```<p>``` permettant d'afficher les résultats de l'approximation de Pi. On retrouve le troisième ```<div>``` qui contient un ```<input>``` de type bouton qui sert à lancer le calcul. Enfin, comme pour l'autre page module, on retrouve le quatrième ```<div>``` qui contient lui-même un ```<div>```, ce dernier contient un ```<input>``` de type checkbox qui permet de passer en mode calcul distribué ou non.
+
+La page contient également un footer et un header qui ont été définis et analysés précédemment. 
 
 
 
