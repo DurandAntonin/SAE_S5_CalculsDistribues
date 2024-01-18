@@ -873,10 +873,6 @@ input:checked ~ .dot {
   float: left;
 }
 
-.m-3 {
-  margin: 0.75rem;
-}
-
 .m-6 {
   margin: 1.5rem;
 }
@@ -1121,6 +1117,10 @@ input:checked ~ .dot {
   height: 4rem;
 }
 
+.h-2\/4 {
+  height: 50%;
+}
+
 .h-20 {
   height: 5rem;
 }
@@ -1131,6 +1131,10 @@ input:checked ~ .dot {
 
 .h-4\/5 {
   height: 80%;
+}
+
+.h-48 {
+  height: 12rem;
 }
 
 .h-5 {
@@ -1159,22 +1163,6 @@ input:checked ~ .dot {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-1\/2 {
-  height: 50%;
-}
-
-.h-2\/4 {
-  height: 50%;
-}
-
-.h-60 {
-  height: 15rem;
-}
-
-.h-48 {
-  height: 12rem;
 }
 
 .min-h-\[15vh\] {

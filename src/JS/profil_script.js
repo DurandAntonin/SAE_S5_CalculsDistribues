@@ -1,3 +1,4 @@
+const sectionModules = document.querySelector('#sectionModules');
 const profil = document.querySelector('#popUpProfil');
 const showProfile = document.querySelector('#showProfil');
 const formProfil = document.querySelector('#popUpFormProfil');
@@ -36,8 +37,8 @@ function showFormProfile() {
     if (!showedF) {
         formProfil.classList.remove("hidden");
         formProfil.classList.add("flex");
-        //sectionModules.classList.remove("flex");
-        //sectionModules.classList.add("hidden");
+        sectionModules.classList.remove("flex");
+        sectionModules.classList.add("hidden");
         showedF = true;
         showProfil();
         document.addEventListener('click', handleClickOutsideF);
@@ -45,8 +46,8 @@ function showFormProfile() {
     } else {
         formProfil.classList.add("hidden");
         formProfil.classList.remove("flex");
-        //sectionModules.classList.add("flex");
-        //sectionModules.classList.remove("hidden");
+        sectionModules.classList.add("flex");
+        sectionModules.classList.remove("hidden");
         showedF = false;
         document.removeEventListener('click', handleClickOutsideF);
 
@@ -67,6 +68,9 @@ function handleClickOutsideF(event) {
 
     if (!formProfil.contains(event.target)) {
         formProfil.classList.add("hidden");
+        formProfil.classList.remove("flex");
+        sectionModules.classList.add("flex");
+        sectionModules.classList.remove("hidden");
         showedF = false;
 
         document.removeEventListener('click', handleClickOutsideF);

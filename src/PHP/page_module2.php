@@ -159,7 +159,7 @@ echo"<hr class='dark:border-gray-700'>
     </div>
 
 
-    <div class="h-screen flex items-center justify-center">
+    <div class="h-screen flex items-center justify-center" id="sectionModules">
         <div class="container mx-auto">
             <div class="my-12 flex items-center justify-center px-6">
 

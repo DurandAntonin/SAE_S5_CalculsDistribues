@@ -1,6 +1,5 @@
 window.onload = init
 
-const sectionModules = document.querySelector('#sectionModules');
 
 var changes = 0;
 var intervalId = setInterval(changeModule,5000);
