@@ -41,7 +41,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
         $resultCode = null;
 
         //on exécute une commande bash qui s'occupe d'écrire dans un fichier les statistiques du cluster hat
-        $command = "echo \"{$VARIABLES_GLOBALES["chemin_script_get_stats_cluster_hat"]} {$outputFileName}\" > {$VARIABLES_GLOBALES["chemin_pipe_stats_cluster_hat_dans_conteneur"]}";
+        $command = "echo \"{$VARIABLES_GLOBALES["chemin_script_get_stats_cluster_hat"]} {$VARIABLES_GLOBALES["chemin_result_dans_pi"]} {$outputFileName}\" > {$VARIABLES_GLOBALES["chemin_pipe_stats_cluster_hat_dans_conteneur"]}";
         //echo $command;
 
         //on exécute la commande

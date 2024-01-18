@@ -51,7 +51,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
 
         //on exécute une commande pour récupérer le hostname courant
         $fileNameForHostname = guidv4() . ".txt";
-        $commandGetHostName = "echo \"{$VARIABLES_GLOBALES["chemin_script_get_hostname"]} {$fileNameForHostname}\" > {$VARIABLES_GLOBALES["chemin_pipe_module_nb_premiers_dans_conteneur"]}";
+        $commandGetHostName = "echo \"{$VARIABLES_GLOBALES["chemin_script_get_hostname"]} {$VARIABLES_GLOBALES["chemin_result_dans_pi"]} {$fileNameForHostname}\" > {$VARIABLES_GLOBALES["chemin_pipe_module_nb_premiers_dans_conteneur"]}";
         exec($commandGetHostName, $output, $resultCode);
 
         //on attend 1s

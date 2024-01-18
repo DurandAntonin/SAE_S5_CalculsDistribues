@@ -82,7 +82,7 @@ $VARIABLES_GLOBALES = import_config();
 </div>
 
 <?php
-require_once "../HTMl/footer.html";
+require_once "../HTML/footer.html";
 ?>
 
 </body>

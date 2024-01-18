@@ -1,8 +1,8 @@
 #!/bin/bash
 
-nbArgumentsScript=1
+nbArgumentsScript=2
 hostName=
-repoOutputFile=/home/pi/pipeDockerSwarm/outputsStats/
+repoOutputFile=
 outputFileName=
 outputFile=
 enteteFile="piName;cpuUsage;cpuFrequency;memTotal;memUsed;uptime"
@@ -18,7 +18,8 @@ rpiNameList[4]="pi4"
 
 #on vérifie qu'on a passé le nom du fichier en paramètre
 if (( $#==$nbArgumentsScript )); then
-  outputFileName="$1"
+  repoOutputFile="$1"
+  outputFileName="$2"
 
   #on récupère le hostname courant dans le réseau
   hostName=$(hostname)
