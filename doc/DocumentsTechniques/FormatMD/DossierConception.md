@@ -330,10 +330,14 @@ Les composants qui sont ajoutés au système sont les suivants :
 | traitement_profil.php                      |                                                             |                                        |
 | script_insertion_faux_users.php            |                                                             |                                        |
 | prime.py                                   |                                                             |                                        |
+| *.png                                      |                                                             |                                        |
+| footer.html                                |                                                             |                                        |
             
-A partir de ce tableau, on peut définir les composants suivants : "page_module_pi_monte_carlo.php", "CommandBuilder.php", "pi_monte_carlo_script.js" et "pi_monte_carlo.py ","accueil_script.js","index_script.js","profil_script.js","traitement_profil.php","script_insertion_faux_users.php","prime.py". 
+A partir de ce tableau, on peut définir les composants suivants : "page_module_pi_monte_carlo.php", "CommandBuilder.php", "pi_monte_carlo_script.js" et "pi_monte_carlo.py ","accueil_script.js","index_script.js","profil_script.js","traitement_profil.php","script_insertion_faux_users.php","prime.py","*.png" et "footer.html". 
 
-Ces derniers sont des abstractions respectives des objets : "page_module_pi_monte_carlo.php", "CommandBuilder.php", "pi_monte_carlo_script.js" et "pi_monte_carlo.py ","accueil_script.js","index_script.js","profil_script.js","traitement_profil.php","script_insertion_faux_users.php","prime.py". 
+Ces derniers sont des abstractions respectives des objets : "page_module_pi_monte_carlo.php", "CommandBuilder.php", "pi_monte_carlo_script.js" et "pi_monte_carlo.py ","accueil_script.js","index_script.js","profil_script.js","traitement_profil.php","script_insertion_faux_users.php","prime.py","*.png" et "footer.html". 
+
+Le composant *.png représente l'ensemble des objets en .png.
 
 La base de données ainsi que les packages restent inchangés par rapport au livrable 2.
 
@@ -353,30 +357,29 @@ On va utiliser la vue composants-connecteurs pour modéliser le système.
 
 Les composants "Serveur" et "Navigateur" sont de stéréotype "executable", le composant "DB" est de stéréotype "database", les composants "Logging", "Users" et "Weak_passwords" qui sont de stéréotype "table" et enfin tous les autres composants sont de stéréotype "file".  
 
-On a la même interface nommée "IRequeteWeb" entre "Navigateur" et "Serveur". On a des relations de dépendance entre "Serveur" et les composants de stéréotype "file". De même entre le "Navigateur" et les composants d'extension "html", "json", "js" et "css".  
+On a des relations de dépendance entre "Serveur" et les composants d'extension ".php", ".sh", ".py" et ".json". De même entre le "Navigateur" et les composants d'extension "html", "js" et "css".  
  
-Le composant "Serveur" interprète les composants de type page et verification en ".php" et envoie les fichiers html correspondants au "Navigateur".  *
+Le composant "Serveur" interprète les composants de type page et verification en ".php" et envoie les fichiers html correspondants au "Navigateur". 
 
-On a une interface entre les composants "Navigateur" et "Serveur" que l’on va nommer 
-"IRequeteWeb". On a des relations de dépendances entre "Serveur" et les composants de stéréotype "file", de même entre le "Navigateur" et les composants d'extension "html" "css" "json" et "js".  
+On a une interface entre les composants "Navigateur" et "Serveur" que l’on va nommer "IRequeteWeb".
+
+On a également une interface que l’on va nommer "MySqli" reliant le composant "MySQLDataManagement.php" avec le composant "Base de données".
 
 On modélise cette vue à l’aide d’un diagramme de composants ci-dessous :
 
-On a une interface que l’on va nommer "MySqli" reliant le composant "MySQLDataManagement.php" avec le composant "Base de données". 
-
 <div style="text-align:center">
-<img src="../DiagrammesUML/PNG_DiagrammesUML/L2_diagComposants.PNG" width="700px">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L3_diagComposants.PNG" width="700px">
 <p> Diagramme de composants du livrable 3 </p>
 </div>
 
 Le système qui héberge le site reste exactement le même que lors du livrable 1, à savoir trois noeuds principaux : le Navigateur, le RPI Host et Les quatre RPI Zero. 
 
-**Remarque : Seulement un RPI Zero sur les quatres sera modélisé pour faciliter la compréhension du diagramme, mais ces derniers sont tous structurés de la même manière**
+**Remarque : Seul un RPI Zero sur les quatres sera modélisé pour faciliter la compréhension du diagramme, mais ces derniers sont tous structurés de la même manière**
 
-On représente donc ces noeuds de la même manière que dans le livrable précédent, grâce à un diagramme de déploiement. 
+On représente donc ces noeuds de la même manière que dans le livrable précédent, grâce à un diagramme de déploiement. Cependant, les composants de type classe seront regroupés en un composant nommé "Classes.php" pour eviter la surcharge du diagramme. 
 
 <div style="text-align:center">
-<img src="../DiagrammesUML/PNG_DiagrammesUML/L2_diagDeploiement.PNG" width="700px">
+<img src="../DiagrammesUML/PNG_DiagrammesUML/L3_diagDeploiement.PNG" width="700px">
 <p> Diagramme de déploiement du livrable 3 </p>
 </div>
 
