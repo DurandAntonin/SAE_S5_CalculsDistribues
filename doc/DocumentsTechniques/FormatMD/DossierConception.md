@@ -101,6 +101,8 @@ On représente les relations entre "BD" et
 <p> Diagramme BD du livrable 1 </p>
 </div>
 
+<h2 style ="page-break-before: always"></h2>
+
 Ensuite, représente les relations entre les packages dans le diagramme de packages ci-dessous.
 
 <div style="text-align:center">
@@ -237,6 +239,8 @@ La base de données quant à elle ne change pas d'un point de vue architectural.
 <p> Diagramme BD du livrable 2 </p>
 </div>
 
+<h2 style ="page-break-before: always"></h2>
+
 On représente les relations entre les packages dans le diagramme de packages ci-dessous.
 
 <div style="text-align:center">
@@ -346,6 +350,8 @@ La base de données ainsi que les packages restent inchangés par rapport au liv
 <p> Diagramme BD du livrable 3 </p>
 </div>
 
+<h2 style="page-break-before: always" ></h2>
+
 On représente les relations entre les packages dans le diagramme de packages ci-dessous.
 
 <div style="text-align:center">
@@ -372,6 +378,8 @@ On modélise cette vue à l’aide d’un diagramme de composants ci-dessous :
 <p> Diagramme de composants du livrable 3 </p>
 </div>
 
+<h2 style="page-break-before: always" ></h2>
+
 Le système qui héberge le site reste exactement le même que lors du livrable 1, à savoir trois noeuds principaux : le Navigateur, le RPI Host et Les quatre RPI Zero. 
 
 **Remarque : Seul un RPI Zero sur les quatres sera modélisé pour faciliter la compréhension du diagramme, mais ces derniers sont tous structurés de la même manière**
@@ -383,7 +391,7 @@ On représente donc ces noeuds de la même manière que dans le livrable précé
 <p> Diagramme de déploiement du livrable 3 </p>
 </div>
 
-<h3 style="color:#5d79e7;" id=concepDeta3> Conception détaillée </h3>
+<h3 style="color:#5d79e7; page-break-before: always" id=concepDeta3> Conception détaillée </h3>
 
 Les objets pages, vérifications, traitements et scripts font toutes appel aux classes Logger.php, LoggerInstance.php, MySQLDataManagement, Enum_niveau_logger.php et Enume_role_user.php. Les liens entre eux ne seront donc pas représentés pour éviter une surcharge du diagramme. 
 
