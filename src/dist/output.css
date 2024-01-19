@@ -1162,6 +1162,10 @@ input:checked ~ .dot {
   height: 75%;
 }
 
+.h-4 {
+  height: 1rem;
+}
+
 .h-4\/5 {
   height: 80%;
 }
@@ -1242,6 +1246,10 @@ input:checked ~ .dot {
   width: 50%;
 }
 
+.w-4 {
+  width: 1rem;
+}
+
 .w-5 {
   width: 1.25rem;
 }
@@ -1305,6 +1313,10 @@ input:checked ~ .dot {
 
 .flex-1 {
   flex: 1 1 0%;
+}
+
+.flex-auto {
+  flex: 1 1 auto;
 }
 
 .flex-shrink-0 {
@@ -1390,6 +1402,27 @@ input:checked ~ .dot {
 
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.animate-ping {
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 .cursor-pointer {
@@ -1595,6 +1628,16 @@ input:checked ~ .dot {
   background-color: rgb(99 102 241 / var(--tw-bg-opacity));
 }
 
+.bg-indigo-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 48 163 / var(--tw-bg-opacity));
+}
+
+.bg-indigo-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(49 46 129 / var(--tw-bg-opacity));
+}
+
 .bg-lgrey {
   --tw-bg-opacity: 1;
   background-color: rgb(134 147 171 / var(--tw-bg-opacity));
@@ -1639,6 +1682,10 @@ input:checked ~ .dot {
 
 .fill-blue-600 {
   fill: #2563eb;
+}
+
+.fill-current {
+  fill: currentColor;
 }
 
 .object-cover {
@@ -1879,6 +1926,10 @@ input:checked ~ .dot {
   line-height: 1.25rem;
 }
 
+.leading-none {
+  line-height: 1;
+}
+
 .leading-tight {
   line-height: 1.25;
 }
@@ -1941,6 +1992,11 @@ input:checked ~ .dot {
   color: rgb(21 128 61 / var(--tw-text-opacity));
 }
 
+.text-indigo-100 {
+  --tw-text-opacity: 1;
+  color: rgb(224 231 255 / var(--tw-text-opacity));
+}
+
 .text-red-500 {
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
@@ -1968,6 +2024,10 @@ input:checked ~ .dot {
 
 .opacity-0 {
   opacity: 0;
+}
+
+.opacity-75 {
+  opacity: 0.75;
 }
 
 .shadow {
@@ -2182,10 +2242,6 @@ input:checked ~ .dot {
   text-decoration-line: underline;
 }
 
-.hover\:opacity-0:hover {
-  opacity: 0;
-}
-
 .after\:hover\:scale-x-100:hover::after {
   content: var(--tw-content);
   --tw-scale-x: 1;
@@ -2216,6 +2272,14 @@ input:checked ~ .dot {
 .focus\:ring-lightblue:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(189 212 231 / var(--tw-ring-opacity));
+}
+
+.group:hover .group-hover\:bg-gifMC {
+  background-image: url('animMonteCarlo.gif');
+}
+
+.group:hover .group-hover\:opacity-0 {
+  opacity: 0;
 }
 
 .peer:checked ~ .peer-checked\:bg-white {
@@ -2389,12 +2453,25 @@ input:checked ~ .dot {
     margin-bottom: 0px;
   }
 
+  .lg\:inline-flex {
+    display: inline-flex;
+  }
+
   .lg\:w-4\/12 {
     width: 33.333333%;
   }
 
   .lg\:w-6\/12 {
     width: 50%;
+  }
+
+  .lg\:rounded-full {
+    border-radius: 9999px;
+  }
+
+  .lg\:px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .lg\:px-8 {
