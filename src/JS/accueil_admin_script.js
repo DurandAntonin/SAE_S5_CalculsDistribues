@@ -30,13 +30,15 @@ let listStatsClusterHat
 let listTimeFilters
 let currentTimeFilterValue = 1 //0=jour 1=semaine 2=mois 3=tout
 
-//intervalle de temps en ms pour rafraichir les stats du cluster hat
-let intertalTimeGetStatsClusterHat = 60000
 //intervalle de temps en ms pour actualiser les stats du site
 let intertalTimeGetStatsSite = 10000
-//temps en ms avant d'exécuter une requete ajax pour récupérer les données du cluster hat dans un fichier
-let timeToWaitToGetStatsClusterHat = 40000
 
+//intervalle de temps qui exécute une fonction pour checker les stats du cluster hat
+let intervalCheckGetStatsClusterHat
+//intervalle de temps en ms pour rafraichir les stats du cluster hat
+let intertalTimeGetStatsClusterHat = 60000
+//temps en ms pour checker si les stats du cluster hat sont dans un fichier
+let timeCheckGetStatsClusterHat = 1000
 //nom du dernier fichier contenant les stats du cluster hat
 let fileNameStatsClusterHat
 
@@ -351,10 +353,11 @@ function resultRequestGetStatsSite(){
     }
 }
 
-async function resultRequestSetStatsClusterHatInFile() {
+function resultRequestSetStatsClusterHatInFile() {
     if (this.readyState === 4 && this.status === 200) {
         let resultScript = this.response
         //console.log(resultScript)
+        console.log("Get cluster hat stats")
 
         //on essaie de parser le résultat en format JSON
         let resultScriptParsed
@@ -375,7 +378,7 @@ async function resultRequestSetStatsClusterHatInFile() {
 
                 //on attend n secondes le temps que les stats soient écrites dans le fichier
                 //puis on exécute une deuxième requete pour lire dans le fichier
-                await new Promise(r => setTimeout(requestGetStatsClusterHatInFile, timeToWaitToGetStatsClusterHat))
+                intervalCheckGetStatsClusterHat = setInterval(requestCheckGetStatsClusterHatInFile, timeCheckGetStatsClusterHat)
             } else {
                 displayMessage(document.getElementById("p-message"), resultScriptParsed.errorMessage)
                 //console.log("Erreur : " + resultScriptParsed.errorMessage)
@@ -384,7 +387,7 @@ async function resultRequestSetStatsClusterHatInFile() {
     }
 }
 
-function requestGetStatsClusterHatInFile(){
+function requestCheckGetStatsClusterHatInFile(){
     let requestGetStatsSiteInFile = new XMLHttpRequest()
     requestGetStatsSiteInFile.open("POST","script_get_stats_cluster_hat.php");
     requestGetStatsSiteInFile.setRequestHeader("Content-Type","application/json-charset=utf-8");
@@ -392,13 +395,14 @@ function requestGetStatsClusterHatInFile(){
     //on envoie le mode d'exécution du script voulu
     requestGetStatsSiteInFile.send(JSON.stringify({"execMode" : 1, "fileName" : fileNameStatsClusterHat}))
 
-    requestGetStatsSiteInFile.onreadystatechange = resultRequestGetStatsClusterHatInFile
+    requestGetStatsSiteInFile.onreadystatechange = resultRequestCheckGetStatsClusterHatInFile
 }
 
-function resultRequestGetStatsClusterHatInFile(){
+function resultRequestCheckGetStatsClusterHatInFile(){
     if (this.readyState === 4 && this.status === 200) {
         let resultScript = this.response
         //console.log(resultScript)
+        console.log("Check stats cluster hat up")
 
         //on essaie de parser le résultat en format JSON
         let resultScriptParsed
@@ -407,6 +411,66 @@ function resultRequestGetStatsClusterHatInFile(){
             //console.log(resultScriptParsed)
         }
         catch (e){
+            //on clear l'intervalle
+            clearInterval(intervalCheckComputeFinished)
+
+            //on affiche un message d'erreur
+            displayMessage(document.getElementById("p-message"), "Erreur lors de la tentative de récupération de la réponse du serveur")
+        }
+
+        if (resultScriptParsed != null){
+            //on vérifie qu'il n'y a pas eu d'erreur
+            if (resultScriptParsed.error === 0){
+                //on lance une requete pour récupérer les stats du cluster hat si le resultat vaut true
+                if (resultScriptParsed.result){
+                    //on clear l'intervalle
+                    clearInterval(intervalCheckComputeFinished)
+
+                    requestGetStatsClusterHat()
+                }
+            }
+            else{
+                //on clear l'intervalle
+                clearInterval(intervalCheckComputeFinished)
+
+                displayMessage(document.getElementById("p-message"), "Erreur interne lors de la récupération des statistiques du ClusterHat")
+                //console.log("Erreur GetStatsClusterHatInFile")
+            }
+        }
+    }
+    else{
+        //console.log("Reponse en cours")
+    }
+
+}
+
+function requestGetStatsClusterHat(){
+    let requestGetStatsSiteInFile = new XMLHttpRequest()
+    requestGetStatsSiteInFile.open("POST","script_get_stats_cluster_hat.php");
+    requestGetStatsSiteInFile.setRequestHeader("Content-Type","application/json-charset=utf-8");
+
+    //on envoie le mode d'exécution du script voulu
+    requestGetStatsSiteInFile.send(JSON.stringify({"execMode" : 2, "fileName" : fileNameStatsClusterHat}))
+
+    requestGetStatsSiteInFile.onreadystatechange = resultRrequestGetStatsClusterHat
+}
+
+function resultRrequestGetStatsClusterHat(){
+    if (this.readyState === 4 && this.status === 200) {
+        let resultScript = this.response
+        //console.log(resultScript)
+        console.log("Récupération stats réussie")
+
+        //on essaie de parser le résultat en format JSON
+        let resultScriptParsed
+        try {
+            resultScriptParsed = JSON.parse(resultScript)
+            //console.log(resultScriptParsed)
+        }
+        catch (e){
+            //on clear l'intervalle
+            clearInterval(intervalCheckComputeFinished)
+
             //on affiche un message d'erreur
             displayMessage(document.getElementById("p-message"), "Erreur lors de la tentative de récupération de la réponse du serveur")
         }
@@ -451,7 +515,6 @@ function resultRequestGetStatsClusterHatInFile(){
     else{
         //console.log("Reponse en cours")
     }
-
 }
 
 function resultRequestResearchUsersOrLogging(){
