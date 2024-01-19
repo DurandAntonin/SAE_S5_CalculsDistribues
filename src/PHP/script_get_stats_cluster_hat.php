@@ -32,7 +32,8 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
 
     //on regarde quel est le mode d'exécution du script
     //0 = exécute la commande pour écrire les stats du cluster dans un fichier
-    //1 = récupère les stats du fichier
+    //1 = regarde si le fichier existe
+    //2 = récupère les stats du fichier
     if ($execMode == 0){
         //on donne au fichier un nom précis
         $outputFileName = guidv4() . ".csv";
@@ -53,6 +54,19 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
     }
 
     elseif ($execMode == 1){
+        $fileName = $paramExecRequete["fileName"];
+        $outputFile = $VARIABLES_GLOBALES["repertoire_resultat"] . $fileName;
+
+        //on regarde si le fichier a été créé
+        if (file_exists($outputFile)){
+            $listeResultParams["result"] = true;
+        }
+        else{
+            $listeResultParams["result"] = false;
+        }
+    }
+
+    elseif ($execMode == 2){
         $fileName = $paramExecRequete["fileName"];
 
         //on regarde si le fichier a été créé

@@ -21,6 +21,9 @@ if (( $#==$nbArgumentsScript )); then
   repoOutputFile="$1"
   outputFileName="$2"
 
+  #fichier temporaire pour stocker les stats pendant l'execution du script
+  outputFileNameTemp="temp_${outputFileName}"
+
   #on récupère le hostname courant dans le réseau
   hostName=$(hostname)
   hostName="pi$(expr substr $hostName 2 1)"
@@ -28,13 +31,11 @@ if (( $#==$nbArgumentsScript )); then
   #on vérifie que le répertoire output existe bien
   if [[ -d "$repoOutputFile" ]]; then
     outputFile="${repoOutputFile}${outputFileName}"
+    outputFileTemp="${repoOutputFile}${outputFileNameTemp}"
     #echo $outputFile;
-    #on supprime le fichier output s'il existe déjà
-    if [[ -f "$outputFile" ]]; then
-      rm $outputFile;
-    fi
+
     #on met l'entete dans le fichier
-    echo $enteteFile > $outputFile
+    echo $enteteFile > $outputFileTemp
 
     #pour chaque rpi du cluster, on va récupérer lusage cpu, lusage memoire et le uptime
     for i in "${rpiNameList[@]}"; do
@@ -67,7 +68,10 @@ if (( $#==$nbArgumentsScript )); then
       piStats="${hostNameStat};${cpuUsageStat};${cpuFrequencyStat};${memTotal};${memUsed};${uptimeStat}"
       #echo $cpuUsageStat
       #on écrit ajoute cette ligne a la fin du fichier
-      echo $piStats >> $outputFile
+      echo $piStats >> $outputFileTemp
     done
+
+    #toutes les stats ont été récupérées, on rename le fichier avec le bon nom
+    mv $outputFileTemp $outputFile
   fi
 fi
