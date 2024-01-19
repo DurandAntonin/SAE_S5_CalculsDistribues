@@ -13,7 +13,7 @@ listWorkerHostname[3]="pi4"
 
 #tubes nommées
 pipeModule1="pipe_module_nb_premiers"
-pipeModule2="pipe_module_pi"
+pipeModule2="pipe_module_calcul_pi"
 pipeStatsClusterHat="pipe_stats_cluster_hat"
 
 #on verifie qu'on a le bon nombre d'arguments
@@ -27,8 +27,15 @@ if (( $#==$nbArgumentsScript )); then
 
   for i in "${listWorkerHostname[@]}"; do
     echo "Hostname : ${i}"
+
+    echo "Suppression de l'ancien répertoire volume ..."
+    #on se connecte en ssh a chaque worker et on supprime le repertoire volume s'il existe pour le recréer ensuite
+    ssh ${i} /bin/bash << EOF
+        	rm -rf ${volumePath}/
+EOF
+
     echo "Création de l'architecture du volume à l'hostname ..."
-    #on se connecte en ssh au worker et on créé le repertoire du volume, les tubes nommes, le repo pour les scripts et le repo pour les resultats
+    #on créé le repertoire du volume, les tubes nommes, le repo pour les scripts et le repo pour les resultats
     ssh ${i} /bin/bash << EOF
     	mkdir ${volumePath} && mkfifo ${volumePath}/${pipeModule1} && mkfifo ${volumePath}/${pipeModule2} && mkfifo ${volumePath}/${pipeStatsClusterHat}&& mkdir ${completePathToRepoBashScripts} && mkdir ${completePathToRepoOutputResults}
 EOF

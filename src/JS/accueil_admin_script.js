@@ -412,7 +412,7 @@ function resultRequestCheckGetStatsClusterHatInFile(){
         }
         catch (e){
             //on clear l'intervalle
-            clearInterval(intervalCheckComputeFinished)
+            clearInterval(intervalCheckGetStatsClusterHat)
 
             //on affiche un message d'erreur
             displayMessage(document.getElementById("p-message"), "Erreur lors de la tentative de récupération de la réponse du serveur")
@@ -424,14 +424,14 @@ function resultRequestCheckGetStatsClusterHatInFile(){
                 //on lance une requete pour récupérer les stats du cluster hat si le resultat vaut true
                 if (resultScriptParsed.result){
                     //on clear l'intervalle
-                    clearInterval(intervalCheckComputeFinished)
+                    clearInterval(intervalCheckGetStatsClusterHat)
 
                     requestGetStatsClusterHat()
                 }
             }
             else{
                 //on clear l'intervalle
-                clearInterval(intervalCheckComputeFinished)
+                clearInterval(intervalCheckGetStatsClusterHat)
 
                 displayMessage(document.getElementById("p-message"), "Erreur interne lors de la récupération des statistiques du ClusterHat")
                 //console.log("Erreur GetStatsClusterHatInFile")
@@ -469,7 +469,7 @@ function resultRrequestGetStatsClusterHat(){
         }
         catch (e){
             //on clear l'intervalle
-            clearInterval(intervalCheckComputeFinished)
+            clearInterval(intervalCheckGetStatsClusterHat)
 
             //on affiche un message d'erreur
             displayMessage(document.getElementById("p-message"), "Erreur lors de la tentative de récupération de la réponse du serveur")

@@ -176,12 +176,14 @@ echo"<hr class='dark:border-gray-700'>
                         </div>
 
                         <div class="mb-4 md:mb-0 md:mr-2 flex justify-between items-center">
-                            <?php
-                            echo "<div class='w-2/4 h-80 m-6 rounded-xl bg-staticMC bg-cover cursor-pointer hover:bg-gifMC' >
-                            </div>";
-
-                            //echo "<iframe width='100%' height='450' src='https://chart-studio.plotly.com/~Madianou/2.embed' frameborder='0' class='rounded-xl mr-6'></iframe>";
-                            ?>
+                                <div class='w-2/4 h-80 m-6 rounded-xl bg-staticMC bg-cover cursor-pointer hover:bg-gifMC group flex items-center justify-center' >
+                                <div class="text-center py-4 lg:px-4 group-hover:opacity-0 animate-bounce">
+  <div class="p-2 bg-deepblue items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+    <span class="flex rounded-full bg-lightblue uppercase px-2 py-1 text-xs font-bold mr-3"><ion-icon name="hand-left" class="text-black"></ion-icon></span>
+    <span class="font-semibold mr-2 text-left flex-auto">Survole pour observer une animation</span>
+  </div>
+</div>
+                            </div>
                             <div id="result" class="border-2 text-white p-3  border-white h-80 w-2/4 rounded-xl ">
                                 <h2 class="text-3xl text-center text-white mb-6">Résultats</h2>
                                 <div class="md:mb-0 md:mr-2 flex flex-col justify-around items-start h-48">
