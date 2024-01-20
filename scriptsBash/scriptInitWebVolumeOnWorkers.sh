@@ -24,7 +24,7 @@ if (( $#==$nbArgumentsScript )); then
 
   #chemin complet pour les scripts bash et les résultats
   completePathToRepoBashScripts="${volumePath}/repoBashScripts/"
-  completePathToRepoPythonScripts="${volumePath}/repoPythonScript/"
+  completePathToRepoPythonScripts="${volumePath}/repoPythonScripts/"
   completePathToRepoOutputResults="${volumePath}/repoOutputResults/"
 
   for i in "${listWorkerHostname[@]}"; do
