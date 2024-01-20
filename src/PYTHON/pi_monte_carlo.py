@@ -10,9 +10,6 @@ comm = MPI.COMM_WORLD
 my_rank = comm.Get_rank()
 cluster_size = comm.Get_size()
 
-# Number to start on, based on the node’s rank
-start_number = (my_rank * 2)
-
 # When to stop. Play around with this value!
 throws = int(sys.argv[1])
 
@@ -24,8 +21,7 @@ start = time.time()
 
 count = 0
 # Loop through the numbers using rank number to divide the work
-for candidate_number in range(start_number, throws, cluster_size * 2):
-    print(candidate_number)
+for candidate_number in range(round(throws/cluster_size)):
     x = random()
     y = random()
 
@@ -39,7 +35,7 @@ results = comm.gather(count, root=0)
 if my_rank == 0:
     # How long did it take?
     total = sum(results)
-    pi_calc = 4.0 * total / (throws*cluster_size)
+    pi_calc = 4.0 * total / throws
     end = round(time.time() - start, 2)
     error = abs((pi_calc - pi))/pi
 
