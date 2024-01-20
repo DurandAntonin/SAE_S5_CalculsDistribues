@@ -42,14 +42,20 @@ function init(){
 
 function requestComputePi(){
     //on récupère le nombre de throws
-    let nbThrows = nbLancers.value
+    let nbThrows = parseInt(nbLancers.value, 10)
     let execMode = toggleB.checked
 
     //console.log(nbThrows)
     //console.log(maxBoundaryValue)
 
+    //on vérifie que c'est bien un int
+    if (isNaN(nbThrows) || nbThrows !== nbLancers.value){
+        displayMessage(errorMessage, "Le nombre de lancers doit être un entier")
+        resetButtonCalculate()
+    }
+
     //on vérifie que les valeurs sont cohérentes
-    if (nbThrows <= 0){
+    else if (nbThrows <= 0){
         //console.log("Valeurs des bornes non cohérantes !!!")
         displayMessage(errorMessage, "Le nombre de lancers doit être supérieure à 0")
         resetButtonCalculate()

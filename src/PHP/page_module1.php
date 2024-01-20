@@ -176,7 +176,7 @@ echo"<hr class='dark:border-gray-700'>
                                 <div class="md:ml-0">
                                     <div class="text-right">
                                         <label class="mb-2 block text-sm font-bold text-white text-center ml-16" for="fin"> Borne fin </label>
-                                        <input class="focus:shadow-outline w-1/2 appearance-none rounded-xl border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="fin" name="fin" type="number" placeholder="100, 200, 1000, ..." value="1" min="0" max="100000"/>
+                                        <input class="focus:shadow-outline w-1/2 appearance-none rounded-xl border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="fin" name="fin" type="number" placeholder="100, 200, 1000, ..." value="2" min="0" max="100000"/>
                                     </div>
                                 </div>
                             </div>
