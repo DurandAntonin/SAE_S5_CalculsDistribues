@@ -51,7 +51,7 @@ function requestComputePrimeNumbers(){
     let execMode = toggleB.checked
 
     //on vérifie que les bornes sont des int
-    if (isNaN(minBoundaryValue) || isNaN(maxBoundaryValue) || minBoundaryValue !== minBoundary.value || maxBoundaryValue !== maxBoundary.value){
+    if (isNaN(minBoundaryValue) || isNaN(maxBoundaryValue) || minBoundaryValue != minBoundary.value || maxBoundaryValue != maxBoundary.value){
         displayMessage(errorMessage, "Le type des bornes doit être un entier")
         resetButtonCalculate()
     }
