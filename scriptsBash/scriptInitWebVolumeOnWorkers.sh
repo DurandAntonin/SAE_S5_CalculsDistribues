@@ -1,9 +1,9 @@
 #!/usr/bin/bash
 
-nbArgumentsScript=2 #nombre d'arguments du script
+nbArgumentsScript=3 #nombre d'arguments du script
 volumePath= #chemin et nom du volume
 repoBashScript= #repertoire contenant les scripts bash a mettre dans le volume
-numberOfWorkerNodes=4 #nombre de workers
+repoPythonScript= #repertoire contenant les scripts python a mettre dans le volume
 
 declare -a listWorkerHostname #liste contenant le hostname de chaque worker
 listWorkerHostname[1]="pi2"
@@ -20,9 +20,11 @@ pipeStatsClusterHat="pipe_stats_cluster_hat"
 if (( $#==$nbArgumentsScript )); then
   volumePath="$1"
   repoBashScript="$2"
+  repoPythonScript="$3"
 
   #chemin complet pour les scripts bash et les résultats
   completePathToRepoBashScripts="${volumePath}/repoBashScripts/"
+  completePathToRepoPythonScripts="${volumePath}/repoPythonScript/"
   completePathToRepoOutputResults="${volumePath}/repoOutputResults/"
 
   for i in "${listWorkerHostname[@]}"; do
@@ -35,14 +37,18 @@ if (( $#==$nbArgumentsScript )); then
 EOF
 
     echo "Création de l'architecture du volume à l'hostname ..."
-    #on créé le repertoire du volume, les tubes nommes, le repo pour les scripts et le repo pour les resultats
+    #on créé le repertoire du volume, les tubes nommes, les repo pour les scripts et le repo pour les resultats
     ssh ${i} /bin/bash << EOF
-    	mkdir ${volumePath} && mkfifo ${volumePath}/${pipeModule1} && mkfifo ${volumePath}/${pipeModule2} && mkfifo ${volumePath}/${pipeStatsClusterHat}&& mkdir ${completePathToRepoBashScripts} && mkdir ${completePathToRepoOutputResults}
+    	mkdir ${volumePath} && mkfifo ${volumePath}/${pipeModule1} && mkfifo ${volumePath}/${pipeModule2} && mkfifo ${volumePath}/${pipeStatsClusterHat} && mkdir ${completePathToRepoBashScripts} && mkdir ${completePathToRepoPythonScripts} && mkdir ${completePathToRepoOutputResults}
 EOF
 
     echo "Copie des scripts bash ..."
     #on copie ensuite les scripts bash dans le repertoire
     scp -r ${repoBashScript}/* ${i}:${completePathToRepoBashScripts}
+
+    echo "Copie des scripts python ..."
+    #on copie ensuite les scripts bash dans le repertoire
+    scp -r ${repoPythonScript}/* ${i}:${completePathToRepoPythonScripts}
 
     echo "Modifications des droits ..."
     printf "\n"
