@@ -24,7 +24,7 @@ $VARIABLES_GLOBALES = import_config();
     <meta charset="UTF-8">
     <title>BlitzCalc</title>
     <script defer src = "../JS/profil_script.js"> </script>
-    <script defer src = "../JS/module2_script.js"> </script>
+    <script defer src = "../JS/module1_script.js"> </script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <link href="../dist/output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -162,38 +162,32 @@ echo"<hr class='dark:border-gray-700'>
     <div class="h-screen flex items-center justify-center" id="sectionModules">
         <div class="container mx-auto">
             <div class="my-12 flex items-center justify-center px-6">
+                <!-- Row -->
 
                 <div class="w-full md:w-2/3 bg-deepblue rounded-3xl items-center">
-                    <h2 class="text-3xl text-center text-white my-8">Approximation de Pi avec Monte Carlo</h2>
-                    <form class="mb-4 rounded  px-8 pb-8 pt-6">
+                    <h2 class="text-3xl text-center text-white my-8">Calcul des nombres premiers</h2>
+                    <form class="mb-4 rounded  px-8 pb-8 pt-6" onsubmit="return false">
                         <div class="mb-4 md:flex md:justify-center md:items-center">
-                            <div class="w-3/4 flex justify-center">
-                                <div class="mb-4 md:mb-0 text-center">
-                                    <label class="mb-2 block text-sm font-bold text-white" for="nb-lancers"> Nombre de lancers </label>
-                                    <input class="focus:shadow-outline w-1/2 appearance-none rounded-xl border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="nb-lancers" name="nb-lancers" type="number" placeholder="1, 2, 3 , ..." value="1" min="1" max="5000000"/>
+                            <div class="w-3/4 flex flex-row justify-around">
+                                <div class="mb-4 md:mb-0 md:mr-2">
+                                    <label class="mb-2 block text-sm font-bold text-white" for="debut"> Borne début </label>
+                                    <input class="focus:shadow-outline w-1/2 appearance-none rounded-xl border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="debut" name="debut" type="number" placeholder="1, 2, 3 , ..." value="0" min="0" max="100000"/>
+                                </div>
+                                <div class="md:ml-0">
+                                    <div class="text-right">
+                                        <label class="mb-2 block text-sm font-bold text-white text-center ml-16" for="fin"> Borne fin </label>
+                                        <input class="focus:shadow-outline w-1/2 appearance-none rounded-xl border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="fin" name="fin" type="number" placeholder="100, 200, 1000, ..." value="2" min="0" max="100000"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="mb-4 md:mb-0 md:mr-2 flex justify-between items-center">
-                                <div class='w-2/4 h-80 m-6 rounded-xl bg-staticMC bg-cover cursor-pointer hover:bg-gifMC group flex items-center justify-center' >
-                                <div class="text-center py-4 lg:px-4 group-hover:opacity-0 animate-bounce">
-  <div class="p-2 bg-deepblue items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
-    <span class="flex rounded-full bg-lightblue uppercase px-2 py-1 text-xs font-bold mr-3"><ion-icon name="hand-left" class="text-black"></ion-icon></span>
-    <span class="font-semibold mr-2 text-left flex-auto">Survole pour observer une animation</span>
-  </div>
-</div>
-                            </div>
-                            <div id="result" class="border-2 text-white p-3  border-white h-80 w-2/4 rounded-xl ">
-                                <h2 class="text-3xl text-center text-white mb-6">Résultats</h2>
-                                <div class="md:mb-0 md:mr-2 flex flex-col justify-around items-start h-48">
-                                    <p id="p-result" class=" inline-block align-baseline text-xl text-opacity-200 text-white mb-4">Approximation de Pi :</p>
-                                    <p id="p-execution-time" class="inline-block align-baseline text-xl text-opacity-200 text-white mb-4">Temps d’exécution :</p>
-                                    <p id="p-error" class=" inline-block align-baseline text-xl text-opacity-200 text-white">Erreur :</p>
-                                </div>
-                            </div>
+                        <div class="mb-4 md:mb-0 md:mr-2 flex justify-center items-center">
+                            <p id="result" class="border-2 text-white p-3 overflow-auto border-white h-80 w-3/4 rounded-xl"></p>
                         </div>
-
+                        <div class="md:mb-0 md:mr-2 flex justify-center items-center">
+                            <p id="p-execution-time" class="hidden inline-block align-baseline text-sm text-opacity-200 text-white"></p>
+                        </div>
                         <div class="mt-2 text-center">
                             <p id="erreur_message" class="text-red-700">
                             </p>
@@ -259,7 +253,6 @@ echo"<hr class='dark:border-gray-700'>
             </div>
         </div>
     </div>
-
 </section>
 
 <?php

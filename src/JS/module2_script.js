@@ -38,18 +38,42 @@ function init(){
 
     //on associe un événement onclick au boutton pour lancer le programme de calcul des nombres premiers
     buttonCompute.onclick = requestComputePi
+
+    //on lance aussi le calcul quand on appuie sur une touche
+    nbLancers.addEventListener("keydown", (launchCalculWhenKeyPressed))
+}
+
+function launchCalculWhenKeyPressed(event){
+    //on lance l'action si la touche est "enter"
+    if (event.keyCode === 13){
+        let target = event.target
+
+        //on clique sur un bouton en fonction de l'id du target
+        if (target.id === nbLancers.id){
+            buttonCompute.click()
+        }
+        else{
+            //on affiche un message d'erreur
+            displayMessage(errorMessage, "Bouton inconnu")
+        }
+    }
 }
 
 function requestComputePi(){
     //on récupère le nombre de throws
-    let nbThrows = nbLancers.value
+    let nbThrows = parseInt(nbLancers.value, 10)
     let execMode = toggleB.checked
 
     //console.log(nbThrows)
-    //console.log(maxBoundaryValue)
+
+    //on vérifie que c'est bien un int
+    if (isNaN(nbThrows) || nbThrows != nbLancers.value){
+        displayMessage(errorMessage, "Le nombre de lancers doit être un entier")
+        resetButtonCalculate()
+    }
 
     //on vérifie que les valeurs sont cohérentes
-    if (nbThrows <= 0){
+    else if (nbThrows <= 0){
         //console.log("Valeurs des bornes non cohérantes !!!")
         displayMessage(errorMessage, "Le nombre de lancers doit être supérieure à 0")
         resetButtonCalculate()

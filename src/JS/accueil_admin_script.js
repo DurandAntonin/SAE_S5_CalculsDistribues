@@ -31,12 +31,12 @@ let listTimeFilters
 let currentTimeFilterValue = 1 //0=jour 1=semaine 2=mois 3=tout
 
 //intervalle de temps en ms pour actualiser les stats du site
-let intertalTimeGetStatsSite = 10000
+let intervalTimeGetStatsSite = 10000
 
 //intervalle de temps qui exécute une fonction pour checker les stats du cluster hat
 let intervalCheckGetStatsClusterHat
 //intervalle de temps en ms pour rafraichir les stats du cluster hat
-let intertalTimeGetStatsClusterHat = 60000
+let intervalTimeGetStatsClusterHat = 60000
 //temps en ms pour checker si les stats du cluster hat sont dans un fichier
 let timeCheckGetStatsClusterHat = 1000
 //nom du dernier fichier contenant les stats du cluster hat
@@ -265,90 +265,99 @@ function resultRequestGetStatsSite(){
         let resultScript = this.response
         //console.log(resultScript)
 
-        let resultScriptParsed = JSON.parse(resultScript)
-        //console.log(resultScriptParsed)
-
-        //variables contenant les resultats des requetes
-        let connBd = resultScriptParsed.connBd
-        let resultRequestGetNbUsers = resultScriptParsed.resultRequestGetNbUsers
-        let resultRequestGetNbVisits = resultScriptParsed.resultRequestGetNbVisits
-        let resultRequestGetNbModuleUses = resultScriptParsed.resultRequestGetNbModuleUses
-
-        //texte à afficher pour chaque stat
-        let newStatNbUsers
-        let newStatNbVisits
-        let newStatNbModuleUses
-
-        //on va stocker dans une variable le message d'erreur s'il y en a
-        let errorMessage = ""
-
-        //s'il y a eu une erreur lors de la connexion à la bd, on affiche nul pour chaque stat
-        if (connBd.error === 1){
-            newStatNbUsers = 'null'
-            newStatNbVisits = 'null'
-            newStatNbModuleUses = 'null'
-            errorMessage = "Erreur interne lors de la récupération des statistiques"
+        let resultScriptParsed
+        try {
+            resultScriptParsed = JSON.parse(resultScript)
+            //console.log(resultScriptParsed)
         }
-        else{
-            //pour chaque requete de statistiques, on regarde s'il y a une erreur
-            if (resultRequestGetNbUsers.error === 0){
-                newStatNbUsers = resultRequestGetNbUsers.result
-            }
-            else{
-                errorMessage = "Erreur interne lors de la récupération du nombre de nouveaux utilisateurs"
+        catch (e){
+            //on affiche un message d'erreur
+            displayMessage(document.getElementById("p-message"), "Erreur interne lors de la récupération des statistiques")
+        }
+
+        if (resultScriptParsed != null){
+            //variables contenant les resultats des requetes
+            let connBd = resultScriptParsed.connBd
+            let resultRequestGetNbUsers = resultScriptParsed.resultRequestGetNbUsers
+            let resultRequestGetNbVisits = resultScriptParsed.resultRequestGetNbVisits
+            let resultRequestGetNbModuleUses = resultScriptParsed.resultRequestGetNbModuleUses
+
+            //texte à afficher pour chaque stat
+            let newStatNbUsers
+            let newStatNbVisits
+            let newStatNbModuleUses
+
+            //on va stocker dans une variable le message d'erreur s'il y en a
+            let errorMessage = ""
+
+            //s'il y a eu une erreur lors de la connexion à la bd, on affiche nul pour chaque stat
+            if (connBd.error === 1){
                 newStatNbUsers = 'null'
-            }
-
-
-            if (resultRequestGetNbVisits.error === 0){
-                newStatNbVisits = resultRequestGetNbVisits.result["USER"] + resultRequestGetNbVisits.result["VISITEUR"]
-            }
-            else{
-                errorMessage = "Erreur interne lors de la récupération du nombre de visites"
                 newStatNbVisits = 'null'
-            }
-
-
-            if (resultRequestGetNbModuleUses.error === 0){
-                newStatNbModuleUses = resultRequestGetNbModuleUses.result
+                newStatNbModuleUses = 'null'
+                errorMessage = "Erreur interne lors de la récupération des statistiques"
             }
             else{
-                errorMessage = "Erreur interne lors de la récupération du nombre d'utilisations de modules"
-                newStatNbModuleUses = 'null'
+                //pour chaque requete de statistiques, on regarde s'il y a une erreur
+                if (resultRequestGetNbUsers.error === 0){
+                    newStatNbUsers = resultRequestGetNbUsers.result
+                }
+                else{
+                    errorMessage = "Erreur interne lors de la récupération du nombre de nouveaux utilisateurs"
+                    newStatNbUsers = 'null'
+                }
+
+
+                if (resultRequestGetNbVisits.error === 0){
+                    newStatNbVisits = resultRequestGetNbVisits.result["USER"] + resultRequestGetNbVisits.result["VISITEUR"]
+                }
+                else{
+                    errorMessage = "Erreur interne lors de la récupération du nombre de visites"
+                    newStatNbVisits = 'null'
+                }
+
+
+                if (resultRequestGetNbModuleUses.error === 0){
+                    newStatNbModuleUses = resultRequestGetNbModuleUses.result
+                }
+                else{
+                    errorMessage = "Erreur interne lors de la récupération du nombre d'utilisations de modules"
+                    newStatNbModuleUses = 'null'
+                }
             }
-        }
-        //console.log(newStatNbUsers + " " + newStatNbVisits + " " + newStatNbModuleUses)
-        //console.log(resultRequestGetNbVisits.result)
+            //console.log(newStatNbUsers + " " + newStatNbVisits + " " + newStatNbModuleUses)
+            //console.log(resultRequestGetNbVisits.result)
 
-        //on affiche un message d'erreur à l'utilisateur
-        if (errorMessage !== ""){
-            displayMessage(document.getElementById("p-message"), errorMessage)
-        }
+            //on affiche un message d'erreur à l'utilisateur
+            if (errorMessage !== ""){
+                displayMessage(document.getElementById("p-message"), errorMessage)
+            }
 
-        //on met à jour chaque element stat du site
-        elemNbUsers.innerHTML = newStatNbUsers
-        elemNbVisits.innerHTML = newStatNbVisits
-        elemNbModuleUsers.innerHTML = newStatNbModuleUses
+            //on met à jour chaque element stat du site
+            elemNbUsers.innerHTML = newStatNbUsers
+            elemNbVisits.innerHTML = newStatNbVisits
+            elemNbModuleUsers.innerHTML = newStatNbModuleUses
 
-        //console.log(chartBar)
-        let nbUsers = resultRequestGetNbVisits.result["USER"]
-        let nbVisiteurs = resultRequestGetNbVisits.result["VISITEUR"]
+            //console.log(chartBar)
+            let nbUsers = resultRequestGetNbVisits.result["USER"]
+            let nbVisiteurs = resultRequestGetNbVisits.result["VISITEUR"]
 
-        //on change le camembert s'il y a eu de nouvelles connexions
-        if (chartBar == null || chartBar.config._config.data.datasets[0].data[0] !== nbUsers || chartBar.config._config.data.datasets[0].data[1] !== nbVisiteurs){
-            //on détruit le camembert pour le recréer ensuite s'il existe
-            if (chartBar != null)
-                chartBar.destroy()
+            //on change le camembert s'il y a eu de nouvelles connexions
+            if (chartBar == null || chartBar.config._config.data.datasets[0].data[0] !== nbUsers || chartBar.config._config.data.datasets[0].data[1] !== nbVisiteurs){
+                //on détruit le camembert pour le recréer ensuite s'il existe
+                if (chartBar != null)
+                    chartBar.destroy()
 
-            let configPie = configChartBarCanva(nbUsers, nbVisiteurs)
-            chartBar = new Chart(document.getElementById("chartPie"), configPie);
-            chartBar.render()
+                let configPie = configChartBarCanva(nbUsers, nbVisiteurs)
+                chartBar = new Chart(document.getElementById("chartPie"), configPie);
+                chartBar.render()
 
 
-        }
-        //on lance le timer pour récupérer les stats du site s'il n'est pas déjà lancé
-        if (timerRequestSetStatsSite === null){
-            timerRequestSetStatsSite = setInterval(requestSetStatsSite, intertalTimeGetStatsSite)
+            }
+            //on lance le timer pour récupérer les stats du site s'il n'est pas déjà lancé
+            if (timerRequestSetStatsSite === null){
+                timerRequestSetStatsSite = setInterval(requestSetStatsSite, intervalTimeGetStatsSite)
+            }
         }
     }
 }
@@ -452,10 +461,10 @@ function requestGetStatsClusterHat(){
     //on envoie le mode d'exécution du script voulu
     requestGetStatsSiteInFile.send(JSON.stringify({"execMode" : 2, "fileName" : fileNameStatsClusterHat}))
 
-    requestGetStatsSiteInFile.onreadystatechange = resultRrequestGetStatsClusterHat
+    requestGetStatsSiteInFile.onreadystatechange = resultRequestGetStatsClusterHat
 }
 
-function resultRrequestGetStatsClusterHat(){
+function resultRequestGetStatsClusterHat(){
     if (this.readyState === 4 && this.status === 200) {
         let resultScript = this.response
         //console.log(resultScript)
@@ -509,7 +518,7 @@ function resultRrequestGetStatsClusterHat(){
 
         //on lance le timer pour récupérer les stats du cluster hat s'il n'est pas déjà lancé
         if (timerRequestGetStatsClusterHat === null){
-            timerRequestGetStatsClusterHat = setInterval(requestSetStatsClusterHat, intertalTimeGetStatsClusterHat)
+            timerRequestGetStatsClusterHat = setInterval(requestSetStatsClusterHat, intervalTimeGetStatsClusterHat)
         }
     }
     else{

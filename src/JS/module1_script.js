@@ -17,7 +17,7 @@ let errorMessage
 let durationTimeOfMessage = 5000
 
 //valeur maximale de la borne max
-let maxValueForBoundary = 100000
+let maxValueForBoundary = 50000
 
 let minBoundaryValue
 let maxBoundaryValue
@@ -42,60 +42,88 @@ function init(){
 
     //on associe un événement onclick au boutton pour lancer le programme de calcul des nombres premiers
     buttonCompute.onclick = requestComputePrimeNumbers
+
+    //on lance le calcul quand on appuie sur une touche dans l'un des deux input
+    minBoundary.addEventListener("keydown", (launchCalculWhenKeyPressed))
+    maxBoundary.addEventListener("keydown", (launchCalculWhenKeyPressed))
+}
+
+function launchCalculWhenKeyPressed(event){
+    //on lance l'action si la touche est "enter"
+    if (event.keyCode === 13){
+        let target = event.target
+
+        //on clique sur un bouton en fonction de l'id du target
+        if (target.id === minBoundary.id || target.id === maxBoundary.id){
+            buttonCompute.click()
+        }
+        else{
+            //on affiche un message d'erreur
+            displayMessage(errorMessage, "Bouton inconnu")
+        }
+    }
 }
 
 function requestComputePrimeNumbers(){
-    //on récupère les bornes de calcul
-    minBoundaryValue = minBoundary.value
-    maxBoundaryValue = maxBoundary.value
+    //on récupère les bornes de calcul et on les converti en entier
+    minBoundaryValue = parseInt(minBoundary.value,10)
+    maxBoundaryValue = parseInt(maxBoundary.value, 10)
     let execMode = toggleB.checked
 
-    //on incrémente la borne min de 1 si la valeur est paire
-    if (minBoundaryValue % 2 === 0){
-        minBoundaryValue ++
-    }
-
-    //console.log(minBoundaryValue)
-    //console.log(maxBoundaryValue)
-
-    //on vérifie que les valeurs sont cohérentes
-    if (minBoundaryValue < 0){
-        //console.log("Valeurs des bornes non cohérantes !!!")
-        displayMessage(errorMessage, "Borne début doit être supérieure ou égale à 0")
-        resetButtonCalculate()
-    }
-    else if (maxBoundaryValue < minBoundaryValue){
-        //console.log("Borne max doit être supérieure ou égale à" + maxValueForBoundary)
-        displayMessage(errorMessage, "Borne début doit être strictement inférieure à la borne de fin")
-        resetButtonCalculate()
-    }
-    else if (maxBoundaryValue > maxValueForBoundary){
-        //console.log("Borne max doit être supérieure ou égale à" + maxValueForBoundary)
-        displayMessage(errorMessage, "Borne fin ne doit pas dépasser " + maxValueForBoundary)
+    //on vérifie que les bornes sont des int
+    if (isNaN(minBoundaryValue) || isNaN(maxBoundaryValue) || minBoundaryValue != minBoundary.value || maxBoundaryValue != maxBoundary.value){
+        displayMessage(errorMessage, "Le type des bornes doit être un entier")
         resetButtonCalculate()
     }
 
     else{
-        //on clear l'élément contenant la liste des nombres premiers
-        result.innerHTML = ""
-
-        //on clear et cache l'élément contenant le temps d'exécution du calcul
-        executionTime.innerHTML = ""
-        if (executionTime.classList.contains("flex")){
-            executionTime.classList.replace("flex", "hidden")
+        //on incrémente la borne min de 1 si la valeur est paire
+        if (minBoundaryValue % 2 === 0){
+            minBoundaryValue ++
         }
 
-        //on indique au user que le calcul est en cours
-        initialiseButtonForWaitingResult()
-        //console.log("Requete ajax pour lancer le calcul des nombres premiers")
+        //console.log(minBoundaryValue)
+        //console.log(maxBoundaryValue)
 
-        //on lance une requete ajax vers un script php qui s'occupe d'exécuter le programme de calcul des nombres premiers
-        let requestGetStatsSite = new XMLHttpRequest()
-        requestGetStatsSite.open("POST","script_calcul_module.php");
-        requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
-        requestGetStatsSite.send(JSON.stringify({"bornes": [minBoundaryValue, maxBoundaryValue], "numModule" : 1,  "execMode" : execMode, "mode" : 0}))
+        //on vérifie que les valeurs sont cohérentes
+        if (minBoundaryValue < 0){
+            //console.log("Valeurs des bornes non cohérantes !!!")
+            displayMessage(errorMessage, "Borne début doit être supérieure ou égale à 0")
+            resetButtonCalculate()
+        }
+        else if (maxBoundaryValue < minBoundaryValue){
+            //console.log("Borne max doit être supérieure ou égale à" + maxValueForBoundary)
+            displayMessage(errorMessage, "Borne début doit être strictement inférieure à la borne de fin")
+            resetButtonCalculate()
+        }
+        else if (maxBoundaryValue > maxValueForBoundary){
+            //console.log("Borne max doit être supérieure ou égale à" + maxValueForBoundary)
+            displayMessage(errorMessage, "Borne fin ne doit pas dépasser " + maxValueForBoundary)
+            resetButtonCalculate()
+        }
 
-        requestGetStatsSite.onreadystatechange = resultRequestComputePrimeNumbers
+        else{
+            //on clear l'élément contenant la liste des nombres premiers
+            result.innerHTML = ""
+
+            //on clear et cache l'élément contenant le temps d'exécution du calcul
+            executionTime.innerHTML = ""
+            if (executionTime.classList.contains("flex")){
+                executionTime.classList.replace("flex", "hidden")
+            }
+
+            //on indique au user que le calcul est en cours
+            initialiseButtonForWaitingResult()
+            //console.log("Requete ajax pour lancer le calcul des nombres premiers")
+
+            //on lance une requete ajax vers un script php qui s'occupe d'exécuter le programme de calcul des nombres premiers
+            let requestGetStatsSite = new XMLHttpRequest()
+            requestGetStatsSite.open("POST","script_calcul_module.php");
+            requestGetStatsSite.setRequestHeader("Content-Type","application/json-charset=utf-8");
+            requestGetStatsSite.send(JSON.stringify({"bornes": [minBoundaryValue, maxBoundaryValue], "numModule" : 1,  "execMode" : execMode, "mode" : 0}))
+
+            requestGetStatsSite.onreadystatechange = resultRequestComputePrimeNumbers
+        }
     }
 }
 
