@@ -118,7 +118,7 @@ Le rpi principal possède quatre ports USB 2.0, un port ethernet, un port micro 
 Le contôleur quant à lui possède en plus du port pour la liaison au rpi principal, quatre autre ports micro usb pour connecter 4 rpi zero.
 Chaque rpi zero possède deux ports micro usb, un port micro sd, un mini port hdmi ainsi qu'un connecteur 40 pin compatible avec le cluster.
 
-Le rpi principal est un **Raspberry Pi 4 Model B**. Le processeur, d'architecture 32 bits, est composé de 4 coeurs chacun cadencé à 1.5Ghz. La taille de la mémoire ram est de 4Go.
+Le rpi principal est un **Raspberry Pi 4 Model B**. Le processeur, d'architecture _ARMv7_ 32 bits, est composé de 4 coeurs chacun cadencé à 1.5Ghz. La taille de la mémoire ram est de 4Go. <br>
 Pour ce qui est des 4 autre rpi, ce sont des **Raspberry Pi Zero W Rev 1.1**, le processeur utilise l'architecture _ARMv6-compatible processor rev7 (v61)_. L'architecture est donc de type 32 bits. Le processeur possède 1 coeur cadencé à 1Ghz. La taile de la mémoire ram est de 512Mo.
 
 <h3 style="color:#5d79e7;" id="exigences_interface_autre_systemes"> Avec quels systèmes ce système s'interfacera et avec quelles exigences ? </h3>
@@ -180,18 +180,18 @@ Il pourra visualiser les différents utilisateurs de cette dernière, les recher
 
 <h5 id="sprint3"> c) 2ème module  </h5>
 
-- Date de début du sprint : **25/12/2023**
-- Date de fin du sprint : **08/01/2024**
+- Date de début du sprint : **03/01/2024**
+- Date de fin du sprint : **22/01/2024**
 
-Dans ce sprint, sera développé un deuxième module pour l'utilisateur inscrit, utilisant le machine learning.
-Ce dernier pourra envoyer une image de voiture à l'application qui devra retourner le modèle de la voiture. Cette image sera passée à plusieurs modèles qui prédiront l'image de manière parallèle, pour une meilleure prédiction.
+L'objectif de ce troisième livrable est de développer un autre module pour l'application. L'utilisateur pourra, dans ce module, calculer une valeur approchée de PI en utilisant des techniques probabilistes. Ce calcul devra être effectué de manière distribuée sur les différents rpi zero du kit Cluster Hat.
 
 <h5 id="sprint4"> c) 3ème module  </h5>
 
-- Date de début du sprint : **08/01/2024**
-- Date de fin du sprint : **22/01/2024**
+- Date de début du sprint : **à définir**
+- Date de fin du sprint : **à définir**
 
-L'objectif de ce troisième livrable est de développer un autre module pour l'application. L'utilisateur pourra dans ce module calculer une valeur numérique approchée en utilisant des techniques probabilistes. Ce calcul devra être effectué de manière distribuée sur les différents rpi zero du kit Cluster Hat.
+Dans ce sprint, sera développé un troisième module pour l'utilisateur inscrit, utilisant le machine learning.
+Ce dernier pourra envoyer une image de voiture à l'application qui devra retourner le modèle de la voiture. Cette image sera passée à plusieurs modèles qui prédiront l'image de manière parallèle, pour une meilleure prédiction.
 
 <h4 style="color:#5d79e7;" id="concurrence"> Que peut-on acheter ? Que doit-on construire ? Qui sont nos concurrents ? </h4>
 
