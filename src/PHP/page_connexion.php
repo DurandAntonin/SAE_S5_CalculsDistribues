@@ -4,9 +4,29 @@ namespace PHP;
 session_start();
 
 include_once "Utility.php";
+include_once "User.php";
+include_once "Enum_role_user.php";
 
 //on charge les variables d'environnement
 $VARIABLES_GLOBALES = import_config();
+
+//on redirige le user vers la bonne page s'il est déjà connecté
+if (!empty($_SESSION["user"])){
+    $user = unserialize($_SESSION["user"]);
+    $userRole = $user->getRole();
+
+    switch ($userRole){
+        case Enum_role_user::ADMIN:
+            header("Location:page_accueil_admin.php");
+            break;
+        case Enum_role_user::USER:
+            header("Location:page_accueil_user.php");
+            break;
+        case Enum_role_user::VISITEUR:
+        default :
+            break;
+    }
+}
 ?>
 
 <!DOCTYPE html>
