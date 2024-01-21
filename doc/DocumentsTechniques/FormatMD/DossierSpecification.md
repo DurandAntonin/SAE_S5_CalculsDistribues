@@ -83,7 +83,7 @@ Un bouton en dessous du résultat permet de passer du mode calcul non distribué
 Si l'utilisateur qui clique sur le bouton est un visiteur, une pop-up s'affiche invitant l'utilisateur à se connecter ou à s'inscrire pour profiter de la puissance du calcul distribué, sinon il n'y a pas de pop-up, et le calcul passe en mode distribué.
 
 L'utilisateur accède au module d'approximation de $\pi$ depuis la page principale de l'application en cliquant sur le bouton associé au module.
-Une page web s'affiche, et l'utilisateur peut saisir dans un champ input le nombre de lancers. <br>
+Une page web s'affiche avec un gif présentant l'approximation de $\pi$ avec Monte Carlo. L'utilisateur peut saisir dans un champ input le nombre de lancers. <br>
 Il peut activer le calcul distribué en cliquant sur l'input checkbox en bas de page, ce qui va lancer le calcul en parallèle sur plusieurs rpi. Il peut aussi désactiver le calcul distrubé en cliquant une autre fois sur l'input checkbox.
 Il appuie ensuite sur le bouton Calculer, ce qui va lancer un script qui calcul $\pi$. <br>
 Une fois le calcul terminé, le site afffiche le temps d'exécution du script, l'erreur de l'approximation, $\pi$ approximé ainsi qu'un graphique qui représente l'utilisation de l'algorithmde de Monte Carlo pour approximer $\pi$.
@@ -865,7 +865,7 @@ Scénario alternatif 3.1:
         
 6. Le site exécute un script qui effectue le calcul de $\pi$ de manière distribué sur le rpi zero
 
-7. Le site affiche le temps d'exécution du calcul, l'erreur de l'approximation, la valeur de $\pi$ obtenue ainsi qu'un graphe représentant l'algorithme de Monte Carlo utilisé pour calculer $\pi$
+7. Le site affiche le temps d'exécution du calcul, l'erreur de l'approximation, la valeur de $\pi$ obtenue
 
 **Extension** : /\
 **Liste des variantes** : \
@@ -917,7 +917,7 @@ Scénario alternatif 6.1:
         
 8. Le site exécute un script qui effectue le calcul de $\pi$ de manière distribué sur les 4 rpi zero
 
-9. Le site affiche le temps d'exécution du calcul, l'erreur de l'approximation, la valeur de $\pi$ obtenue ainsi qu'un graphe représentant l'algorithme de Monte Carlo utilisé pour calculer $\pi$
+9. Le site affiche le temps d'exécution du calcul, l'erreur de l'approximation, la valeur de $\pi$ obtenue
 
 **Extension** : /\
 **Liste des variantes** : \
