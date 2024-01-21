@@ -81,10 +81,10 @@ function goToModulePage(e){
 
     //on redirige le user vers la page de module associée au bouton cliqué
     if (buttonId === "button-module1"){
-        urlSourceSplit[urlSourceSplit.length-1] = "page_module1.php"
+        urlSourceSplit[urlSourceSplit.length-1] = "page_module_nombres_premiers.php"
     }
     else if (buttonId === "button-module2"){
-        urlSourceSplit[urlSourceSplit.length-1] = "page_module2.php"
+        urlSourceSplit[urlSourceSplit.length-1] = "page_module_pi_monte_carlo.php"
     }
     else if (buttonId === "button-module3"){
         urlSourceSplit[urlSourceSplit.length-1] = "page_accueil_user.php"
