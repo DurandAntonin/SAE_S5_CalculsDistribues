@@ -344,6 +344,7 @@ if (isset($_POST)){
     }
 }
 else{
-    header("Location:page_accueil_user.php");
+    //acces au script non autorise, on redirige vers la page d'accueil
+    header("Location:../index.html");
 }
 ?>

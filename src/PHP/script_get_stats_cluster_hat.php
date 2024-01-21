@@ -117,5 +117,6 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
     echo json_encode($listeResultParams);
 }
 else{
-    $header("Location:page_accueil_admin.php");
+    //acces au script non autorise, on redirige vers la page d'accueil
+    header("Location:../index.html");
 }
