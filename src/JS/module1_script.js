@@ -42,6 +42,26 @@ function init(){
 
     //on associe un événement onclick au boutton pour lancer le programme de calcul des nombres premiers
     buttonCompute.onclick = requestComputePrimeNumbers
+
+    //on lance le calcul quand on appuie sur une touche dans l'un des deux input
+    minBoundary.addEventListener("keydown", (launchCalculWhenKeyPressed))
+    maxBoundary.addEventListener("keydown", (launchCalculWhenKeyPressed))
+}
+
+function launchCalculWhenKeyPressed(event){
+    //on lance l'action si la touche est "enter"
+    if (event.keyCode === 13){
+        let target = event.target
+
+        //on clique sur un bouton en fonction de l'id du target
+        if (target.id === minBoundary.id || target.id === maxBoundary.id){
+            buttonCompute.click()
+        }
+        else{
+            //on affiche un message d'erreur
+            displayMessage(errorMessage, "Bouton inconnu")
+        }
+    }
 }
 
 function requestComputePrimeNumbers(){

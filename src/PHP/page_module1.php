@@ -166,7 +166,7 @@ echo"<hr class='dark:border-gray-700'>
 
                 <div class="w-full md:w-2/3 bg-deepblue rounded-3xl items-center">
                     <h2 class="text-3xl text-center text-white my-8">Calcul des nombres premiers</h2>
-                    <form class="mb-4 rounded  px-8 pb-8 pt-6">
+                    <form class="mb-4 rounded  px-8 pb-8 pt-6" onsubmit="return false">
                         <div class="mb-4 md:flex md:justify-center md:items-center">
                             <div class="w-3/4 flex flex-row justify-around">
                                 <div class="mb-4 md:mb-0 md:mr-2">

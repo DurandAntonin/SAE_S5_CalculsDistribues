@@ -38,6 +38,25 @@ function init(){
 
     //on associe un événement onclick au boutton pour lancer le programme de calcul des nombres premiers
     buttonCompute.onclick = requestComputePi
+
+    //on lance aussi le calcul quand on appuie sur une touche
+    nbLancers.addEventListener("keydown", (launchCalculWhenKeyPressed))
+}
+
+function launchCalculWhenKeyPressed(event){
+    //on lance l'action si la touche est "enter"
+    if (event.keyCode === 13){
+        let target = event.target
+
+        //on clique sur un bouton en fonction de l'id du target
+        if (target.id === nbLancers.id){
+            buttonCompute.click()
+        }
+        else{
+            //on affiche un message d'erreur
+            displayMessage(errorMessage, "Bouton inconnu")
+        }
+    }
 }
 
 function requestComputePi(){
