@@ -17,7 +17,7 @@ let errorMessage
 let durationTimeOfMessage = 5000
 
 //valeur maximale de la borne max
-let maxValueForBoundary = 100000
+let maxValueForBoundary = 50000
 
 let minBoundaryValue
 let maxBoundaryValue
