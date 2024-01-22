@@ -476,7 +476,7 @@ services:
         constraints: [node.labels.service == web ]
       replicas: 4
     volumes:
-      - "/home/pi/pipeDockerSwarm:/hostpipe"
+      - "/home/pi/webVolume:/hostpipe"
 
   servicebd:
     image: wzehren/mysqlsae
@@ -602,16 +602,16 @@ On obtient bien le résultat de la commande
 <h4 style="color:#859bed" id="IV_3"> 3. Exécution de commandes dans le rpi depuis un conteneur </h4>
 
 Si on revient à notre problématique de départ, l'objectif est d'exécuter des commandes dans le rpi depuis un conteneur docker, cela est maintenant possible grâce au tube nommé. <br>
-Pour ce faire, nous allons reprendre les répertoires parcréer depuis le rpi un tube nommé dans le répertoire _/home/pi/pipeDockerSwarm/_ partagé entre le rpi et le conteneur avec la commande suivante : 
+Pour ce faire, nous allons reprendre les répertoires parcréer depuis le rpi un tube nommé dans le répertoire _/home/pi/webVolume/_ partagé entre le rpi et le conteneur avec la commande suivante : 
 
 ```bash 
-pi@p3:~ $ mkfifo /home/pi/pipeDockerSwarm/pipe_conteneur #fentre 1
+pi@p3:~ $ mkfifo /home/pi/webVolume/pipe_conteneur #fentre 1
 ```
 
 On modifie les droits d'écriture du tube pour que tout le monde puisse y envoyer des données, et le met à l'écoute avec la commande : 
 ```bash 
-pi@p3:~ $ chmod a+w /home/pi/pipeDockerSwarm/pipe_conteneur #fentre 1
-pi@p3:~ $ while true; do eval "$(cat /home/pi/pipeDockerSwarm/pipe_conteneur)"; done #fentre 1
+pi@p3:~ $ chmod a+w /home/pi/webVolume/pipe_conteneur #fentre 1
+pi@p3:~ $ while true; do eval "$(cat /home/pi/webVolume/pipe_conteneur)"; done #fentre 1
 ```
 
 Après, on vérifie qu'il est présent dans le répertoire _hostpipe_, et qu'on peut y envoyer des commandes depuis le conteneur de l'application.
@@ -623,14 +623,14 @@ $ ls -lh pipe_conteneur
 prw-rw-rw- 1 1000 1000 0 Jan 17 12:20 pipe_conteneur
 ```
 
-On lance la commande suivante depuis la fenêtre 2, qui est utilisée dans le module 1 de notre application, et qui permet de calculer les nombres premiers compris entre _1_ et _100_, et enregistre le résultat dans le fichier _result_calcul_nb_premiers.json_ situé dans le répertoire partagé _/home/pi/pipeDockerSwarm/outputsStats/_.
+On lance la commande suivante depuis la fenêtre 2, qui est utilisée dans le module 1 de notre application, et qui permet de calculer les nombres premiers compris entre _1_ et _100_, et enregistre le résultat dans le fichier _result_calcul_nb_premiers.json_ situé dans le répertoire partagé _/home/pi/webVolume/repoOutputResults/_.
 ```bash 
-$ echo "ssh cnat mpiexec -n 3 --host pi3,pi2,pi4 python /home/pi/prime.py 1 100 /home/pi/pipeDockerSwarm/outputsStats/result_calcul_nb_premiers.json --mca btl_tcp_if_include 172.19.181.0/24" > /hostpipe/pipe_conteneur
+$ echo "ssh cnat mpiexec -n 3 --host pi3,pi2,pi4 python /home/pi/webVolume/repoPythonScripts/prime.py 1 100 /home/pi/webVolume/repoOutputResults/result_calcul_nb_premiers.json --mca btl_tcp_if_include 172.19.181.0/24" > /hostpipe/pipe_conteneur
 ```
 
 On attend quelques secondes le temps que la commande soit exécutée, puis on visualise le contenu du fichier _result_calcul_nb_premiers.json_ depuis le rpi, et on obtient le résultat suivante :
 ```bash 
-pi@p3:~ $ cat result_calcul_nb_premiers.json
+pi@p3:~ $ cat /home/pi/webVolume/repoOutputResults/result_calcul_nb_premiers.json
 {
    "executionTime": 0.02,
    "primeNumbersList": [
@@ -663,4 +663,4 @@ pi@p3:~ $ cat result_calcul_nb_premiers.json
 }
 ```
 Pour conclure sur cette partie, il est maintenant possible d'exécuter des commandes sur rpi depuis l'application sur internet, contenue dans un conteneur docker grâce à un tube nommé. <br>
-Nous allons répété ces mêmes pour chaque module de l'application et pour la page administrateur du site où les statistiques de chaque rpi du Cluster Hat doivent être récupérées et affichées.
+Nous allons répéter ces mêmes pour chaque module de l'application et pour la page administrateur du site où les statistiques de chaque rpi du Cluster Hat doivent être récupérées et affichées.
