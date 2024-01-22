@@ -857,6 +857,8 @@ class MySQLDataManagement{
 
                                 $stmt -> execute();
                             }
+
+                            $listeResultParamsFunction["result"] = 1;
                         }
                         catch (\mysqli_sql_exception $e) {
                             //on enregistre dans la liste des param de result, le message d'erreur
@@ -872,6 +874,11 @@ class MySQLDataManagement{
                         return $listeResultParamsFunction;
                     }
 
+                }
+                else{
+                    //on enregistre dans la liste des param de result, le message d'erreur
+                    $listeResultParamsFunction["error"] = 1;
+                    $listeResultParamsFunction["errorMessage"] = $resultSoliditePassword["errorMessage"];
                 }
             }
             else{
