@@ -18,6 +18,8 @@ start_number = (my_rank * 2) + minBoundary
 end_number = int(sys.argv[2])
 #print(sys.argv)
 
+firstPrimeNumber = 2
+
 #fichier pour stocker le résultat du calcul
 fileResultCalcul = sys.argv[3]
 # Make a note of the start time
@@ -38,7 +40,7 @@ for candidate_number in range(start_number,end_number, cluster_size * 2):
             break
 
     # If we get here, nothing divided, so it’s a prime number
-    if found_prime:
+    if found_prime and candidate_number != 1:
         # Uncomment the next line to see the primes as they are found (slower)
         #print("Node" + str(my_rank) + "found" + str(candidate_number))
         primes.append(candidate_number)
@@ -53,8 +55,11 @@ if my_rank == 0:
     #print("Find all primes up to: " + str(end_number))
     #print("Nodes: " + str(cluster_size))
     #print("Time elasped: " + str(end) + " seconds")
+
     # Each process returned an array, so lets merge them
     merged_primes = [item for sublist in results for item in sublist]
+    if firstPrimeNumber >= minBoundary and firstPrimeNumber < end_number:
+            merged_primes.append(firstPrimeNumber)
     merged_primes.sort()
     #print("Primes discovered: " + str(len(merged_primes)))
     # Uncomment the next line to see all the prime numbers
