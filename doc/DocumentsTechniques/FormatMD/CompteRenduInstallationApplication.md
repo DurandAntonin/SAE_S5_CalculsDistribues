@@ -30,6 +30,7 @@ _Zehren William_
       <li><a href="#IV_1"> 1. Création d'un tube nommé </a></li>
       <li><a href="#IV_2"> 2. Envoi de commandes dans le tube nommé </a></li>
       <li><a href="#IV_3"> 3. Exécution de commandes dans le rpi depuis un conteneur  </a></li>
+      <li><a href="#IV_4"> 4. Automatisation de la mise en écoute des tubes nommés  </a></li>
     </ul>
 </ul>
 </ul>
@@ -662,5 +663,49 @@ pi@p3:~ $ cat /home/pi/webVolume/repoOutputResults/result_calcul_nb_premiers.jso
    ]
 }
 ```
-Pour conclure sur cette partie, il est maintenant possible d'exécuter des commandes sur rpi depuis l'application sur internet, contenue dans un conteneur docker grâce à un tube nommé. <br>
-Nous allons répéter ces mêmes pour chaque module de l'application et pour la page administrateur du site où les statistiques de chaque rpi du Cluster Hat doivent être récupérées et affichées.
+Il est maintenant possible d'exécuter des commandes sur rpi depuis l'application sur internet, contenue dans un conteneur docker grâce à un tube nommé. <br>
+Nous allons répéter ces mêmes étapes pour chaque module de l'application et pour la page administrateur du site où les statistiques de chaque rpi du Cluster Hat doivent être récupérées et affichées. <br>
+
+<h4 style="color:#859bed" id="IV_4"> 4. Automatisation de la mise en écoute des tubes nommés </h4>
+
+Enfin, pour éviter d'avoir à lancer une commande pour écouter le tube nommé, nous allons faire en sorte qu'il soit à l'écoute automatiquement au démarrage du rpi.
+Pour ce faire, nous allons pour chaque tube nommé, créer un script bash contenant l'exécution de ce dernier. 
+```bash 
+pi@p3:~ $ touch /home/pi/webVolume/repoBashScripts/start_pipe_module_calcul_pi.sh
+pi@p3:~ $ touch /home/pi/webVolume/repoBashScripts/start_pipe_module_nb_premiers.sh
+pi@p3:~ $ touch /home/pi/webVolume/repoBashScripts/start_pipe_stats_cluster_hat.sh
+```
+
+Puis nous allons planifier l'exécution de ces scripts pour qu'ils soit exécutés à chaque redémarrage du rpi. Cela est rendu possible grâce à l'outil **Crontab** qui permet de lancer des programmes, commandes à une heure spécifique ou selon une période de temps.
+
+```bash 
+pi@p3:~ $ crontab -e
+  GNU nano 5.4                                                                                                                                     /tmp/crontab.UIXpgN/crontab
+# Edit this file to introduce tasks to be run by cron.
+#
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+#
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').
+#
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+#
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+#
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+#
+# For more information see the manual pages of crontab(5) and cron(8)
+#
+# m h  dom mon dow   command
+
+@reboot /home/pi/webVolume/repoBashScripts/start_pipe_module_calcul_pi.sh
+@reboot /home/pi/webVolume/repoBashScripts/start_pipe_module_nb_premiers.sh
+@reboot /home/pi/webVolume/repoBashScripts/start_pipe_stats_cluster_hat.sh
+```
