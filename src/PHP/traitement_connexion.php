@@ -87,7 +87,7 @@ if (isset($_POST)) {
                                     } else {
                                         //le couple login/mpd entré par le user n'existe pas
                                         //echo "Mot de passe incorrect";
-                                        $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Couple (login,mdp) inconnu dans la base de données|Login:{$login};Mot de passe:{$password_form}");
+                                        $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Couple (login,mdp) inconnu dans la base de données|Login:{$login}");
 
                                         $sqlData->close_connexion_to_db();
                                         $_SESSION["erreur_traitement_connexion"] = $VARIABLES_GLOBALES["notif_erreur_compte_introuvable"];
@@ -105,7 +105,7 @@ if (isset($_POST)) {
                             } else {
                                 //le user n'existe pas, on le renvoie à la page de connexion
                                 //echo "Login introuvable";
-                                $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Login inconnu|Login:{$login};Mot de passe:{$password_form}");
+                                $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Login inconnu|Login:{$login}");
                                 $sqlData->close_connexion_to_db();
 
                                 $_SESSION["erreur_traitement_connexion"] = $VARIABLES_GLOBALES["notif_erreur_compte_introuvable"];

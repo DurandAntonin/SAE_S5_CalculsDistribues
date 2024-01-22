@@ -66,7 +66,7 @@ if (isset($_POST) && !empty($_POST["submit_inscription"])){
 
                             //on regarde si le login est déjà associé à un compte
                             if ($resultCheckMailLoginTaken["result"] == -1) {
-                                $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription annulée:login déjà pris|Login:{$login}");
+                                $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription annulée, login déjà pris|Login:{$login}");
                                 $sqlData->close_connexion_to_db();
                                 //echo "Compte existant";
                                 $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_login_existant"];
@@ -75,7 +75,7 @@ if (isset($_POST) && !empty($_POST["submit_inscription"])){
 
                             //on regarde si le mail est déjà associé à un compte
                             elseif ($resultCheckMailLoginTaken["result"] == -2){
-                                $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription annulée:mail déjà pris|Mail:{$mail}");
+                                $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription annulée, mail déjà pris|Mail:{$mail}");
                                 $sqlData->close_connexion_to_db();
                                 //echo "Compte existant";
                                 $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_mail_existant"];
@@ -130,7 +130,7 @@ if (isset($_POST) && !empty($_POST["submit_inscription"])){
                                         }
                                     }
                                     else{
-                                        $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription annulée:Mot de passe entré trop fragile|Mot de passe:{$password_form}");
+                                        $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription annulée, mot de passe entré trop fragile|Mot de passe:{$password_form}");
                                         $sqlData->close_connexion_to_db();
                                         //echo "Le mot de passe entré est trop facile à deviner";
                                         $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_champs_mdp_fragile"];

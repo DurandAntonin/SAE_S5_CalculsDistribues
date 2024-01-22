@@ -326,7 +326,7 @@ if (isset($_POST)){
             }
             else{
                 //on affiche une erreur à l'utilisateur
-                $loggerBd->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Suppression compte|Erreur:{$resultDeleteUserAccount["errorMessage"]}");
+                $loggerBd->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne lors de la suppression de son compte|Erreur:{$resultDeleteUserAccount["errorMessage"]}");
                 $_SESSION["notif_page_user"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
                 header("Location:page_accueil_user.php");
             }
