@@ -524,6 +524,8 @@ class MySQLDataManagement{
      * @see MySQLDataManagement::mappMySqliResultToUser()
      *
      * @version 1.0
+     *
+     * @deprecated
      */
     public function get_users_by_mail_appro(string $table, string $mailAppro, Pagination $pagination): array
     {
@@ -590,6 +592,8 @@ class MySQLDataManagement{
      * @see MySQLDataManagement::mappMySqliResultToUser()
      *
      * @version 1.0
+     *
+     * @deprecated 
      */
     public function get_number_users_by_mail(string $table, string $mailAppro): array
     {
@@ -1366,9 +1370,9 @@ class MySQLDataManagement{
      *
      * @version 1.0
      */
-    public function close_connexion_to_db(): void
+    public function close_connexion_to_db(): bool
     {
-        $this->connector -> close();
+        return $this->connector -> close();
     }
 
     /**

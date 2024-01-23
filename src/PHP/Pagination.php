@@ -5,6 +5,8 @@ namespace PHP;
  * Permet de contrôler l'importation des données retournées par un serveur MySQL par exemple.
  *
  * @version 1.0
+ *
+ * @deprecated
  */
 class Pagination{
 
