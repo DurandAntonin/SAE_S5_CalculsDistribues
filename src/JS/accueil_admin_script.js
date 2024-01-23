@@ -277,7 +277,6 @@ function resultRequestGetStatsSite(){
 
         if (resultScriptParsed != null){
             //variables contenant les resultats des requetes
-            let connBd = resultScriptParsed.connBd
             let resultRequestGetNbUsers = resultScriptParsed.resultRequestGetNbUsers
             let resultRequestGetNbVisits = resultScriptParsed.resultRequestGetNbVisits
             let resultRequestGetNbModuleUses = resultScriptParsed.resultRequestGetNbModuleUses
@@ -291,11 +290,11 @@ function resultRequestGetStatsSite(){
             let errorMessage = ""
 
             //s'il y a eu une erreur lors de la connexion à la bd, on affiche nul pour chaque stat
-            if (connBd.error === 1){
+            if (resultScriptParsed.error === 1){
                 newStatNbUsers = 'null'
                 newStatNbVisits = 'null'
                 newStatNbModuleUses = 'null'
-                errorMessage = "Erreur interne lors de la récupération des statistiques"
+                errorMessage = resultScriptParsed.errorMessage
             }
             else{
                 //pour chaque requete de statistiques, on regarde s'il y a une erreur
@@ -600,7 +599,7 @@ function resultRequestResearchUsersOrLogging(){
                 }
             }
             else{
-                displayMessage(document.getElementById(elementToStoreMessage), "Erreur interne lors de la recherche des objets")
+                displayMessage(document.getElementById(elementToStoreMessage), resultScriptParsed.errorMessage)
                 //console.log("Erreur : " + resultScriptParsed.errorMessage)
             }
         }
@@ -640,7 +639,7 @@ function resultRequestDeleteUser() {
 
             }
             else{
-                displayMessage(document.getElementById("p-message-erreur-recherche-users"), "Erreur interne lors de la tentative de suppression d'un utilisateur")
+                displayMessage(document.getElementById("p-message-erreur-recherche-users"), resultScriptParsed.errorMessage)
                 //console.log("Erreur : " + resultScriptParsed.errorMessage)
             }
         }

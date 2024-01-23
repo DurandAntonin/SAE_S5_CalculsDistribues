@@ -177,6 +177,10 @@ echo"<hr class='dark:border-gray-700'>
             </div>
         </div>
     </div>
+    <div class="my-5">
+        <p id="p-message-erreur" style="color:#EB3939"></p>
+    </div>
+
     <p class="text-3xl text-deepblue pt-10 text-center">Bienvenue <b><?php echo $user->getLogin(); ?></b></p>
     <div class="flex h-screen items-center justify-center" id="sectionModules">
         <div class="inline-flex flex-row justify-center items-center md:flex p-20">

@@ -29,34 +29,43 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
     //on se reconnecte à la bd
     $loggerBd->getMySqlConnector()->reconnect_to_bd();
 
-    $user = unserialize($_SESSION["user"]);
-    $userId = $user->getId();
-
-    //on se connecte à la bd
-    $sqlData = new MySQLDataManagement($VARIABLES_GLOBALES["bd_hostname"], $VARIABLES_GLOBALES["bd_username"], $VARIABLES_GLOBALES["bd_password"], $VARIABLES_GLOBALES["bd_database"]);
-    $listeResultParams = ["error"=>0, "errorMessage"=>"", "result"=>null];
-
-    //on vérifie qu'il n'y a aucune erreur
-    if ($sqlData->getConnectionErreur() == 0) {
-        //on exécute une commande sql pour supprimer l'utilisateur de la base de données
-        $listeResultParams = $sqlData->supprimer_user("Users", $userIdToDelete);
-
-        //on enregistre l'erreur s'il y en a
-        if ($listeResultParams["error"] == 1){
-            $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Erreur:{$listeResultParams["errorMessage"]}");
-
-        }
-        else{
-            //on enregistre la suppression du user
-            $listeResultParams["result"] = $userIdToDelete;
-            $loggerBd->info($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Suppression de l'utilisateur avec userId : {$userIdToDelete}");
-        }
+    //on vérifie que la connexion à la bd pour le logger est etablie
+    if ($loggerBd->getMySqlConnector()->getConnectionErreur() == 1){
+        //on enregistre l'erreur dans le loggerFile
+        $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur:{$loggerBd->getMySqlConnector()->getConnectionErreurMessage()}");
+        $listeResultParams["error"] = 1;
+        $listeResultParams["errorMessage"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
     }
     else{
-        //on renvoie une erreur
-        $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Erreur:{$sqlData->getConnectionErreurMessage()}");
-        $listeResultParams["error"] = 1;
-        $listeResultParams["errorMessage"] = $sqlData->getConnectionErreurMessage();
+        $user = unserialize($_SESSION["user"]);
+        $userId = $user->getId();
+
+        //on se connecte à la bd
+        $sqlData = new MySQLDataManagement($VARIABLES_GLOBALES["bd_hostname"], $VARIABLES_GLOBALES["bd_username"], $VARIABLES_GLOBALES["bd_password"], $VARIABLES_GLOBALES["bd_database"]);
+        $listeResultParams = ["error"=>0, "errorMessage"=>"", "result"=>null];
+
+        //on vérifie qu'il n'y a aucune erreur
+        if ($sqlData->getConnectionErreur() == 0) {
+            //on exécute une commande sql pour supprimer l'utilisateur de la base de données
+            $listeResultParams = $sqlData->supprimer_user("Users", $userIdToDelete);
+
+            //on enregistre l'erreur s'il y en a
+            if ($listeResultParams["error"] == 1){
+                $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Erreur:{$listeResultParams["errorMessage"]}");
+
+            }
+            else{
+                //on enregistre la suppression du user
+                $listeResultParams["result"] = $userIdToDelete;
+                $loggerBd->info($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Suppression de l'utilisateur avec userId : {$userIdToDelete}");
+            }
+        }
+        else{
+            //on renvoie une erreur
+            $loggerFile->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Erreur:{$sqlData->getConnectionErreurMessage()}");
+            $listeResultParams["error"] = 1;
+            $listeResultParams["errorMessage"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
+        }
     }
 
     //en renvoie le résultat des requetes au script js sous format json

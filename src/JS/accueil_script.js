@@ -48,8 +48,27 @@ function resultRequestGetNbOfUsesPerModule(){
             updateUsesOfModule(divNbUsersModule3, resultScriptParsed.result.module3)
         }
         else{
-            console.log("Erreur GetNbOfUsersPerModule")
+            displayMessage(document.getElementById("p-message-erreur"), resultScriptParsed.errorMessage)
         }
+    }
+}
+
+function displayMessage(elementToStockMessage, message){
+    //on clear l'élément html
+    deleteChildNodes(elementToStockMessage)
+
+    //on ajoute le message dans l'élément
+    elementToStockMessage.appendChild(document.createTextNode(message))
+
+    //on efface le message dans n secondes
+    setTimeout(function () {
+        deleteChildNodes(elementToStockMessage)
+    }, durationTimeOfMessage)
+}
+
+function deleteChildNodes(fatherNode){
+    while (fatherNode.hasChildNodes()){
+        fatherNode.removeChild(fatherNode.firstChild)
     }
 }
 
