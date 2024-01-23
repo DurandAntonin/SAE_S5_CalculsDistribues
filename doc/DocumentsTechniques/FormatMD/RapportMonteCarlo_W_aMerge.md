@@ -116,11 +116,9 @@ La scalabilité forte correspond au gain de vitesse d'exécution en fonction du 
 par exemple, que si on double le nombre de threads s'occupant d'une tache, cette tâche est censée s'exécuter
 deux fois plus vite.
 
-Dans l'idéal, l'objectif serait de retrouver ce gain de vitesse d'exécution linéaire lors de l'augmentation du
-nombre de threads. Cependant, ce gain ne se retrouve pas forcément dans la théorie, et encore moins dans la
-pratique.
+Dans l'idéal, l'objectif serait de retrouver ce gain de vitesse d'exécution linéaire lors de l'augmentation du nombre de threads. Cependant, ce gain ne se retrouve pas forcément dans la théorie, et encore moins dans la pratique.
 
-L'objectif sera par conséquent d'atteindre une efficacité supérieure à 75%
+L'objectif sera par conséquent d'atteindre un speed up linéaire ou presque linéaire. 
 
 <h5 style="color:#5d79e7;" id="scalabilite_faible"> 3.1.4.2) Scalabilité faible </h5>
 
@@ -129,10 +127,9 @@ nombre de threads ainsi que le nombre de lancers (experiences aléatoires) de ma
 signifie, par exemple, que si on double le nombre de threads et le nombre de lancers lors de l'exécution du
 programme, la vitesse d'exécution est censée etre la même qu'avant cette augmentation.
 
-Comme pour le cas de la scalabilité forte, l'objectif, dans l'idéal, serait de retrouver cette conservation de la
-vitesse d'exécution mais elle n'est pas toujours possible dans la théorie et encore moins dans la pratique.
+Comme pour le cas de la scalabilité forte, l'objectif, dans l'idéal, serait de retrouver cette conservation de la vitesse d'exécution mais elle n'est pas toujours possible dans la théorie et encore moins dans la pratique.
 
-L'objectif sera donc d'atteindre une efficacité supérieure à 75%.
+L'objectif sera par conséquent d'atteindre un speed up linéaire ou presque linéaire. 
 
 <h3 style="color:#5d79e7; page-break-before: always" id="effectiveness"> 3.2) Effectiveness </h3>
 
@@ -160,33 +157,107 @@ bien été atteint ou non, mais serait bien trop coûteux et long à trouver à 
 qualité s'en retrouveraient fortement impactés négativement.
 
 Ici, l'objectif à atteindre pour considèrer que le critère de l'Effectiveness est atteint ou non, sera une valeur
-approximée de Pi égale à 0.0001 près de la valeur réele de Pi et donc une erreur inférieure à $1×10^{−4}$.
+approximée de Pi égale à 0.001 près de la valeur réele de Pi et donc une erreur inférieure à $1\times10^{-3}$.
 
 
 <h2 style="color:#5d79e7; page-break-before: always" id="tests"> 4) Tests </h2>
 
-# A FAIRE (et changer l'envt de test si nécéssaire)
+L'architecture matérielle à notre disposition est donc la suivante : 
+
+Un RPI principal qui sert de **Manager** et qui est un Raspberry Pi 4 Model B. Le processeur, d'architecture 32 bits, est composé de 4 coeurs chacun cadencés à 1.5Ghz et de 4 threads. La taille de la mémoire ram est de 4Go.
+
+Pour ce qui est des 4 autres RPI, qui servent donc de **Workers**, ce sont des Raspberry Pi Zero W Rev 1.1, le processeur utilise l'architecture _ARMv6-compatible processor rev7 (v61)_. L'architecture est donc de type 32 bits. Le processeur possède 1 coeur cadencé à 1Ghz ainsi qu'1 thread. La taile de la mémoire ram est de 512Mo.
 
 Tous les tests à venir seront réalisés selon un environnement de test défini ici :
 
-- Les tests seront tous réalisés sur un seul Worker
-- Les tests se feront de manière générale avec un minimum de 5/6 valeurs pour observer différents cas
-de figure. Ils s'arrêteront si on ne constate aucune evolution plusieurs fois d'affilée.
+- Les tests seront tous réalisés sur 4 Workers (qui correspondent aux 4 RPI Zero du cluster). Ils se feront également avec un coeur et un thread par worker, étant donné que les workers n'en possèdent qu'un. 
+
 - Chaque test sera répété 5 fois puis les résultats de chaque instance d'un test seront divisés par 5 pour
 obtenir une moyenne. Les résultats obtenus seront alors inscrits dans leurs tableaux respectifs
 
 <h3 style="color:#5d79e7;" id=test_effi"> 4.1) Test de l'Efficiency </h3>
 
+Pour réaliser les tests de l'Efficiency, il faut choisir des valeurs en corrélation avec l'architecture matérielle du Cluster Kit Hat pour trouver le nombre de thread le plus optimisé, celui qui remplira au mieux le critère d'Efficiency. 
+
+Les tests se feront donc de deux manières différentes, avec un coeur et donc un thread (sans calcul distribué) et avec 4 coeurs et donc 4 threads (avec calcul distribué).
+
+On ne pourra pas réaliser de graphiques intéressants à analyser avec seulement deux tests, cette partie n'en contiendra donc pas. 
+
+Le nombre de lancers de base restera fixe et sera de 100 000 pour les tests du Speedup, de la scalabilité forte ainsi que pour la scalabilité faible. 
+
 <h4 style="color:#5d79e7;" id="test_Speedup"> 4.1.1) Test du Speedup </h4>
+
+On va ensuite augmenter progressivement le nombre de threads à chaque nouveau test pour observer l'augmentation ou non de performances. 
+
+On rappelle ici la formule du Speedup : 
+
+$$Speedup = \frac{Temps_1}{Temps_n}$$
+
+| Coeurs  | Temps d'exécution (en s)  | Speedup |
+| ------- | ------------------------- | ------- |
+| 1       |           6,6             | 1       |
+| 4       |           2,14            | 3,1     |
+
+On voit ici que le speedup est plutot proportionnel à l'augmentation de coeurs : multiplication x4 de la ressource matérielle et multiplication x3,1 de la performance. On a donc une évolution plutot linéaire.
+
+On va considérer que l'objectif en matière de speed up est rempli étant donné son évolution plutot linéaire et donc conforme à l'objectif fixé préalablement.
+
 
 <h4 style="color:#5d79e7; page-break-before: always" id="test_scalabilite"> 4.1.2) Test de la scalabilité </h4>
 
 <h5 style="color:#5d79e7;" id="test_scaforte"> 4.1.2.1) Test de la scalabilité forte </h5>
 
+On utilise le speed up précédemment défini pour calculer la performance de notre module. 
+
+| Coeurs  | Nombre de lancers par Thread | Temps d'exécution (en s)   | Speed Up       |
+| ------- | ---------------------------- | -------------------------- | -------------- |
+| 1       | 100 000                      |   5,98                     | 1              |
+| 4       | 25 000                       |   1,48                     | 4              |
+
+On voit ici que le speedup est proportionnel à l'augmentation de coeurs : multiplication x4 de la ressource matérielle et multiplication x4 de la performance. On a donc une évolution linéaire. 
+
+On va considérer que l'objectif en matière de scalabilité forte est rempli étant donné son évolution plutot linéaire et donc conforme à l'objectif fixé préalablement. On va donc considérer que pour 100 000 lancers, utiliser 4 coeurs est optimal et permet un gain de temps considérable. 
+
 <h5 style="color:#5d79e7;" id="test_scafaible"> 4.1.2.2) Test de la scalabilité faible </h5>
+
+On utilise le speed up précédemment défini pour calculer la performance de notre module.
+
+| Coeurs | Nombre de lancers | Temps d'exécution (en s) | Speed up |
+| ------ | ----------------- | ------------------------ | -------- |
+| 1      | 100 000           | 4,83                     | 1        |
+| 4      | 400 000           | 5,77                     | 0.8      |
+
+On voit ici que le speedup est n'est pas du tout proportionnel à l'augmentation de coeurs : multiplication x4 de la ressource matérielle et multiplication x0.8 de la performance. L'évolution n'est donc pas linéaire.
+
+On va considérer que l'objectif en matière de scalabilité faible n'est rempli étant donné son évolution non linéaire et donc non conforme à l'objectif fixé préalablement.
 
 <h3 style="color:#5d79e7;" id="test_effec"> 4.2) Test de l'Effectiveness </h3>
 
+Pour tester l'Effectiveness, on cherche à trouver un nombre de lancers optimal qui nous permettra de remplir notre objectif défini précédemment : une erreur inférieure à $1\times10^{-3}$. 
+
+Les tests se feront avec 4 coeurs et donc 4 threads (avec calcul distribué).
+
+On va également choisir un nombre de lancers de base égal à 100 000 puis faire augmenter cette valeur par deux plusieurs fois pour tester différents cas de figure et essayer d'en obtenir un remplissant notre objectif. 
+
+L'erreur se calcule avec la formule donnée précédemment, dans la présentation du critère d'Effectiveness : 
+
+$$Erreur = \frac{Pi_a - Pi_r}{Pi_r}$$ 
+
+| Nombre de lancers | Erreur                  | Temps d'exécution (en s)  |
+| ----------------- | ----------------------- | ------------------------- |
+| 100 000           | 1,3×10-3                |  2,26                     |       
+| 200 000           | 4,9×10-4                |  4,91                     |             
+| 300 000           | 6,7×10-4                |  5,66                     |     
+| 400 000           | 3,9×10-4                |  9,57                     |   
+| 500 000           | 9,1×10-4                |  12,07                    |       
+
+<div style="text-align:center">
+<img src="Images/ImagesRapports/EffectivenessGraphRapportQDEV.PNG" width="500px">
+<p>Figure 2 : Scalabilité faible en fonction du temps et du nombre de threads</p>
+</div>
+
+On voit ici qu'on obtient une erreur inférieure à la valeur fixée lors de la définition des objectifs. On va donc considèrer que le nombre de lancers optimal pour trouver une bonne valeur de pi sans prendre trop de temps de calcul est 300 000.
+
 <h2 style="color:#5d79e7; page-break-before: always" id="conclusion"> 5) Conclusion </h2>
 
-# A FAIRE
+Le critère de qualité de l'Effectiveness est donc bien respecté et rempli par notre application car on a atteint les objectifs fixés en début de rapport. Cependant le critère de l'Efficiency n'est que partiellement respecté et rempli car si le speed up et la scalabilité forte sont respectés, la scalabilité faible ne l'est pas et est même mauvaise. Ce programme reparti utilisant l'algorithme de Monte Carlo ne respecte donc pas entièrement les besoins en termes de qualité des utilisateurs. 
