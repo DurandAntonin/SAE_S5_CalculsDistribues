@@ -272,7 +272,7 @@ function resultRequestGetStatsSite(){
         }
         catch (e){
             //on affiche un message d'erreur
-            displayMessage(document.getElementById("p-message"), "Erreur interne lors de la récupération des statistiques")
+            displayMessage(document.getElementById("p-message"), "Erreur interne lors de la récupération des statistiques du site")
         }
 
         if (resultScriptParsed != null){

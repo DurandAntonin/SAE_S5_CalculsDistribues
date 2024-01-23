@@ -29,14 +29,15 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
     $loggerBd->getMySqlConnector()->reconnect_to_bd();
 
     //on va stocker dans une liste l'erreur et/ou le résultat de chaque requete
-    $listeResultParams = ["error"=>0, "errorMessage"=>"", "result"=>null];
+    $listeResultParams = array();
+    $listeResultParams["connBd"] = ["error"=>0, "errorMessage"=>"", "result"=>null];
 
     //on vérifie que la connexion à la bd pour le logger est etablie
     if ($loggerBd->getMySqlConnector()->getConnectionErreur() == 1){
         //on enregistre l'erreur dans le loggerFile
         $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur:{$loggerBd->getMySqlConnector()->getConnectionErreurMessage()}");
-        $listeResultParams["error"] = 1;
-        $listeResultParams["errorMessage"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
+        $listeResultParams["connBd"]["error"] = 1;
+        $listeResultParams["connBd"]["errorMessage"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
     }
     else{
         $user = unserialize($_SESSION["user"]);
@@ -67,15 +68,15 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
             foreach ($listeResultParams as $resultParamKey => $resultParamValue ){
                 if ($resultParamValue["error"] == 1){
                     //on enregistre l'erreur dans un fichier de log
-                    $loggerFile->error($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur internet|Erreur:{$resultParamValue["errorMessage"]}");
+                    $loggerFile->error($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur:{$resultParamValue["errorMessage"]}");
                 }
             }
         }
         else{
             //on renvoie une erreur
             $loggerBd->error($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur:{$sqlData->getConnectionErreurMessage()}");
-            $listeResultParams["error"] = 1;
-            $listeResultParams["errorMessage"] = $sqlData->getConnectionErreurMessage();
+            $listeResultParams["connBd"]["error"] = 1;
+            $listeResultParams["connBd"]["errorMessage"] = $sqlData->getConnectionErreurMessage();
         }
     }
 
