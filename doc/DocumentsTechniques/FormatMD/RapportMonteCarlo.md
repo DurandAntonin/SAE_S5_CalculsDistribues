@@ -72,11 +72,87 @@ L’objectif principal de ce rapport est de comparer les résultats des tests su
 
 <h2 style="color:#5d79e7; page-break-before: always" id="pres_code_archi">2) Présentation du code et de l'architecture</h2>
 
-# A FAIRE
+Il a été décidé de ne pas utiliser le code java fournit par Mr Dufaud durant le cours de Qualité de développement et de développer un code en python utilisant la librairie MPI et s'inspirant du code prime.py fournit par Mr Hoguin.
 
 <h3 style="color:#5d79e7" id="#pres_archi"> 2.1) Présentation de l'architecture </h3>
 
+MPI utilise un pattern SPMD pour "Single Programm Multiple Data", celà signifie que les workers et le master partagent le même programme. Le programme est ensuite exécuté en même temps sur des données différentes.
+
+![SPMD](Images/archi_spmd.png)
+
+__Figure 1 : Schéma d'une architecture propice au fonctionnement d'un programme distribué utilisant un pattern SPMD__
+
+Le pattern SPMD présente les caractéristiques suivantes : 
+- Approche : Plusieurs processeurs exécute le même programme chacun sur des données différentes
+- Parallélisme : Parallélisme sur les données
+- Communication : Communication entre les  processeurs requises
+- Mémoire : Chaque processeur à sa propre mémoire
+- Usage : Utilisé majoritairement sur des clusters 
+
+Nous avons donc choisit cette approche car notre clusterHat présente toutes les caractéristiques requises a sa mise en place. En effet chaque raspberry possède sa propre mémoire et peuvent communiquer ensemble facilement avec ssh.
+
 <h3 style="color:#5d79e7" id="#pres_code"> 2.2) Présentation du code </h3>
+
+On développe donc le code [pi_monte_carlo](../../../src/PYTHON/pi_monte_carlo.py) qui sera ensuite partagé sur tous les raspberrys du cluster.
+
+```pi_monte_carlo.py``` est un script qui prend en argument le nombre de lancers que l'on souhaite effectuer et le nom du fichiers dans lequel sera stocké les résultats de l'exécution du programme. Le script utilise la méthode probabiliste de MonteCarlo pour estimer la valeur numérique de Pi. A la fin on renvoie le temps d'exécution, la valeur de Pi calculé et l'erreur relative par rapport à la valeur de pi stocké dans la bibliothèque math de Python.
+
+Le fonctionnement du programme est similaire à celui de ```prime.py```. En effet au début du programme on utilise les fonctions de MPI pour donner au programme les informations sur son identité (worker ou master) et sur la taille du cluster. Ensuite on récupère le nombre de lancers et le nom du fichier en lisant les arguments en ligne de commande. Enfin on peut commencer la méthode de monteCarlo en répartissant le travail en fonction du nombre de workers.
+
+__Comment calculer Pi avec une méthode de Monte Carlo ?__
+
+La méthode est la suivante : 
+
+On considère un quart de disque de rayon 1 dans un carré de coté 1. On effectue des tirages de points aléatoires dans ce carré en utilisant par exemple une loi uniforme sur l'ensemble [0 , 1].
+
+![gif_pi_mc](Images/animMonteCarlo.gif)
+
+__Figure 2 : Animation du tirage de 300 000 points aléatoire dans un carré de coté 1__
+
+L'aire du quart de disque vaut $A_d = \frac{\pi* r^2}{4}$ soit $\frac{\pi}{4}$ car $r=1$. L'aire du carré vaut 1 et la probabilité d'obtenir un point dans le quart de disque vaut $ P=\frac{A_d}{A_c} = \frac{\frac{\pi}{4}}{1} = \frac{\pi}{4}$
+
+Un point est dans le quart de disque si sa distance euclidienne au centre du disque est inférieur au rayon du disque. Soit $x_p^2 + y_p^2 < 1$
+
+Soit $n_c$ le nombre de point dans la cible et $n_t$ le nombre total de tirage on peut estimer la valeur de pi de la manière suivante : 
+$$\pi = 4  * \frac{n_c}{n_t}$$
+
+
+__Implémentation avec Python__
+
+```python
+# Make a note of the start time
+start = time.time()
+count = 0
+# Loop through the numbers using rank number to divide the work
+for candidate_number in range(round(throws/cluster_size)):
+    x = random()
+    y = random()
+
+    if ((x * x + y * y)< 1):
+        count +=1
+```
+
+Dans cette implémentation la parallélisation intervient dans la division du nombre de lancer en fonction de la taille du cluster et toutes les opérations faites dans la boucle peuvent être effectué de manière indépendante sur chaque worker. Le master travaille aussi dans cette implémentation.
+
+__Récupération des résultats et calcul de Pi__
+
+```python
+# Once complete, send results to the governing node
+results = comm.gather(count, root=0)
+
+# If I am the governing node, show the results
+if my_rank == 0:
+    # How long did it take?
+    total = sum(results)
+    pi_calc = 4.0 * total / throws
+    end = round(time.time() - start, 2)
+    error = abs((pi_calc - pi))/pi
+```
+
+On utilise la fonction gather de mpi qui permet de récupérer toutes les valeurs d'une variable de chaque programme et des les rassembler dans une liste. On peut ensuite sommer cette liste pour obtenir $n_c$ et calculer Pi avec la formule défini plus haut.
+
+Avec le test du rang on s'assure que seulement le master s'occupe de traiter les résultats.
+
 
 <h2 style="color:#5d79e7; page-break-before: always" id="pres_crit_obj">3) Présentation des critères de qualité et des objectifs</h2>
 
