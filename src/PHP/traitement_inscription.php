@@ -48,115 +48,125 @@ if (isset($_POST) && !empty($_POST["submit_inscription"])){
             ){
                 //on vérifie que les 2 mdp entrés sont identiques
                 if ($password_form == $password_confirm_form){
-                    //on se connecte à la bd
-                    $sqlData = new MySQLDataManagement($VARIABLES_GLOBALES["bd_hostname"], $VARIABLES_GLOBALES["bd_username"], $VARIABLES_GLOBALES["bd_password"], $VARIABLES_GLOBALES["bd_database"]);
-
                     //on crée un objet logger en fonction de la configuration enregistrée
                     $logger = new Logger($VARIABLES_GLOBALES["loggerConf"]);
                     $loggerBd = $logger->getLoggerInstance("loggerDb");
                     $loggerFile = $logger->getLoggerInstance("loggerFile");
-                    
-                    //on vérifie qu'il n'y a aucune erreur
-                    if ($sqlData->getConnectionErreur() == 0){
-                        //on regarde si le mail et le login saisis sont déjà pris
-                        $resultCheckMailLoginTaken = $sqlData->check_mail_login_taken("Users", $mail, $login);
-                        //var_dump($resultCheckMailLoginTaken);
 
-                        if ($resultCheckMailLoginTaken["error"] == 0){
+                    //on vérifie que la connexion à la bd pour le logger est etablie
+                    if ($loggerBd->getMySqlConnector()->getConnectionErreur() == 1){
+                        //on enregistre l'erreur dans le loggerFile
+                        $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Login:{$login}|Erreur:{$loggerBd->getMySqlConnector()->getConnectionErreurMessage()}");
+                        //on affiche une erreur à l'utilisateur
+                        $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
+                        header("Location:page_inscription.php");
+                    }
+                    else{
+                        //on se connecte à la bd
+                        $sqlData = new MySQLDataManagement($VARIABLES_GLOBALES["bd_hostname"], $VARIABLES_GLOBALES["bd_username"], $VARIABLES_GLOBALES["bd_password"], $VARIABLES_GLOBALES["bd_database"]);
 
-                            //on regarde si le login est déjà associé à un compte
-                            if ($resultCheckMailLoginTaken["result"] == -1) {
-                                $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription annulée, login déjà pris|Login:{$login}");
-                                $sqlData->close_connexion_to_db();
-                                //echo "Compte existant";
-                                $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_login_existant"];
-                                header("Location:page_inscription.php");
-                            }
+                        //on vérifie qu'il n'y a aucune erreur
+                        if ($sqlData->getConnectionErreur() == 0){
+                            //on regarde si le mail et le login saisis sont déjà pris
+                            $resultCheckMailLoginTaken = $sqlData->check_mail_login_taken("Users", $mail, $login);
+                            //var_dump($resultCheckMailLoginTaken);
 
-                            //on regarde si le mail est déjà associé à un compte
-                            elseif ($resultCheckMailLoginTaken["result"] == -2){
-                                $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription annulée, mail déjà pris|Mail:{$mail}");
-                                $sqlData->close_connexion_to_db();
-                                //echo "Compte existant";
-                                $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_mail_existant"];
-                                header("Location:page_inscription.php");
-                            }
+                            if ($resultCheckMailLoginTaken["error"] == 0){
 
-                            else{
-                                //le login et le mail ne sont pas pris
-                                //on vérifie si le mdp n'est pas présent dans la table des mot de passe fragiles
-                                $resultVerifSoliditePasword = $sqlData->verif_solidite_password("Weak_passwords", $password_form);
+                                //on regarde si le login est déjà associé à un compte
+                                if ($resultCheckMailLoginTaken["result"] == -1) {
+                                    $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription annulée, login déjà pris|Login:{$login}");
+                                    $sqlData->close_connexion_to_db();
+                                    //echo "Compte existant";
+                                    $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_login_existant"];
+                                    header("Location:page_inscription.php");
+                                }
 
-                                if ($resultVerifSoliditePasword["error"] == 0) {
-                                    if ($resultVerifSoliditePasword["result"]){
-                                        //on créer le user, on enregistre l'action dans un fichier de log, on l'enregistre dans la bd et on le redirige vers sa page
-                                        $uuid = guidv4();
-                                        $user = new User($uuid, $mail, $login, $lastName, $firstName, Enum_role_user::USER, getTodayDate()->format("Y-m-d H:i:s"));
+                                //on regarde si le mail est déjà associé à un compte
+                                elseif ($resultCheckMailLoginTaken["result"] == -2){
+                                    $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription annulée, mail déjà pris|Mail:{$mail}");
+                                    $sqlData->close_connexion_to_db();
+                                    //echo "Compte existant";
+                                    $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_mail_existant"];
+                                    header("Location:page_inscription.php");
+                                }
 
-                                        $resultInsertUser = $sqlData->insert_user("Users", $user, hash_password($password_form));
-                                        $sqlData->close_connexion_to_db();
+                                else{
+                                    //le login et le mail ne sont pas pris
+                                    //on vérifie si le mdp n'est pas présent dans la table des mot de passe fragiles
+                                    $resultVerifSoliditePasword = $sqlData->verif_solidite_password("Weak_passwords", $password_form);
 
-                                        if ($resultInsertUser["error"] == 0){
+                                    if ($resultVerifSoliditePasword["error"] == 0) {
+                                        if ($resultVerifSoliditePasword["result"]){
+                                            //on créer le user, on enregistre l'action dans un fichier de log, on l'enregistre dans la bd et on le redirige vers sa page
+                                            $uuid = guidv4();
+                                            $user = new User($uuid, $mail, $login, $lastName, $firstName, Enum_role_user::USER, getTodayDate()->format("Y-m-d H:i:s"));
 
-                                            $loggerBd->info($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription utilisateur");
-                                            $loggerBd->info($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Connexion user {$user->getRole()->name}");
+                                            $resultInsertUser = $sqlData->insert_user("Users", $user, hash_password($password_form));
+                                            $sqlData->close_connexion_to_db();
 
-                                            //on stocke le logger dans la session
-                                            $_SESSION["logger"] = serialize($logger);
+                                            if ($resultInsertUser["error"] == 0){
 
-                                            //on serialize l'objet pour pouvoir le passer dans la session
-                                            $_SESSION["user"] = serialize($user);
-                                            //print_r($_SESSION);
-                                            switch ($user->getRole()) {
-                                                case Enum_role_user::USER:
-                                                    //echo "Redirection page USER";
-                                                    header("Location:page_accueil_user.php");
-                                                    break;
-                                                case Enum_role_user::ADMIN:
-                                                    //echo "Redirection page ADMIN";
-                                                    header("Location:page_accueil_admin.php");
-                                                    break;
-                                                default :
-                                                    //role inconnu, on le redirige vers la page de connexion
-                                                    //echo "Role inconnu";
-                                                    $loggerFile->warning($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Role inconnu lors d'une tentative de connexion|User:{$user}");
-                                                    header("Location:page_connexion.php");
+                                                $loggerBd->info($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription utilisateur");
+                                                $loggerBd->info($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Connexion user {$user->getRole()->name}");
+
+                                                //on stocke le logger dans la session
+                                                $_SESSION["logger"] = serialize($logger);
+
+                                                //on serialize l'objet pour pouvoir le passer dans la session
+                                                $_SESSION["user"] = serialize($user);
+                                                //print_r($_SESSION);
+                                                switch ($user->getRole()) {
+                                                    case Enum_role_user::USER:
+                                                        //echo "Redirection page USER";
+                                                        header("Location:page_accueil_user.php");
+                                                        break;
+                                                    case Enum_role_user::ADMIN:
+                                                        //echo "Redirection page ADMIN";
+                                                        header("Location:page_accueil_admin.php");
+                                                        break;
+                                                    default :
+                                                        //role inconnu, on le redirige vers la page de connexion
+                                                        //echo "Role inconnu";
+                                                        $loggerFile->warning($user->getId(), getTodayDate(), $_SERVER['REMOTE_ADDR'], "Role inconnu lors d'une tentative de connexion|User:{$user}");
+                                                        header("Location:page_connexion.php");
+                                                }
+                                            }
+                                            else{
+                                                $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|User:{$user}|Erreur:{$resultInsertUser["errorMessage"]}");
+                                                $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
+                                                header("Location:page_inscription.php");
                                             }
                                         }
                                         else{
-                                            $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|User:{$user}|Erreur:{$resultInsertUser["errorMessage"]}");
-                                            $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
+                                            $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription annulée, mot de passe entré trop fragile|Mot de passe:{$password_form}");
+                                            $sqlData->close_connexion_to_db();
+                                            //echo "Le mot de passe entré est trop facile à deviner";
+                                            $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_champs_mdp_fragile"];
                                             header("Location:page_inscription.php");
                                         }
-                                    }
-                                    else{
-                                        $loggerFile->info("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Inscription annulée, mot de passe entré trop fragile|Mot de passe:{$password_form}");
+                                    } else {
+                                        $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Login:{$login}|Erreur:{$resultVerifSoliditePasword["errorMessage"]}");
                                         $sqlData->close_connexion_to_db();
-                                        //echo "Le mot de passe entré est trop facile à deviner";
-                                        $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_champs_mdp_fragile"];
+                                        $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
                                         header("Location:page_inscription.php");
                                     }
-                                } else {
-                                    $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Login:{$login}|Erreur:{$resultVerifSoliditePasword["errorMessage"]}");
-                                    $sqlData->close_connexion_to_db();
-                                    $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
-                                    header("Location:page_inscription.php");
                                 }
+                            }
+                            else{
+                                $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Login:{$login}|Erreur:{$resultCheckMailLoginTaken["errorMessage"]}");
+                                $sqlData->close_connexion_to_db();
+                                //on affiche une erreur à l'utilisateur
+                                $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
+                                header("Location:page_inscription.php");
                             }
                         }
                         else{
-                            $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Login:{$login}|Erreur:{$resultCheckMailLoginTaken["errorMessage"]}");
-                            $sqlData->close_connexion_to_db();
+                            $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Login:{$login}|Erreur:{$sqlData->getConnectionErreurMessage()}");
                             //on affiche une erreur à l'utilisateur
                             $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
                             header("Location:page_inscription.php");
                         }
-                    }
-                    else{
-                        $loggerFile->error("", getTodayDate(), $_SERVER['REMOTE_ADDR'], "Erreur interne|Login:{$login}|Erreur:{$sqlData->getConnectionErreurMessage()}");
-                        //on affiche une erreur à l'utilisateur
-                        $_SESSION["erreur_traitement_inscription"] = $VARIABLES_GLOBALES["notif_erreur_interne"];
-                        header("Location:page_inscription.php");
                     }
                 }
                 else{
