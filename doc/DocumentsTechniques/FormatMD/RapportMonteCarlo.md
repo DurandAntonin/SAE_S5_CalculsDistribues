@@ -74,7 +74,7 @@ Il a été décidé de ne pas utiliser le code java fournit par Mr Dufaud durant
 
 <h3 style="color:#5d79e7" id="#pres_archi"> 2.1) Présentation de l'architecture </h3>
 
-MPI utilise un pattern SPMD pour "Single Programm Multiple Data", celà signifie que les workers et le master partagent le même programme. Le programme est ensuite exécuté en même temps sur des données différentes.
+MPI utilise un pattern SPMD pour "Single Programm Multiple Data", cela signifie que les workers et le master partagent le même programme. Le programme est ensuite exécuté en même temps sur des données différentes.
 
 ![SPMD](Images/archi_spmd.png)
 
@@ -212,24 +212,24 @@ complétude avec lesquelles les utilisateurs atteignent les objectifs spécifié
 
 Dans notre cas, nous cherchons à calculer Pi à l'aide de l'algorithme de Monte Carlo. On récupère donc une
 approximation de la valeur de Pi. On pourrait, par exemple, considérer que ce critère de qualité est rempli
-lorsqu'on trouve une valeur de Pi approximée égale à 0.001 près à la valeur réele de Pi.
+lorsqu'on trouve une valeur de Pi approximée égale à 0.001 près à la valeur réelle de Pi.
 
-Dans le cas de notre programme, la valeur de Pi dite réele est égale à 3.141592653589793, c'est la valeur
-utilisée dans la classe Math de Java.
+Dans le cas de notre programme, la valeur de Pi dite réelle est égale à 3.141592653589793, c'est la valeur
+de la constance ```math.pi```.
 
-Par ailleurs, on calcule l'erreur entre la valeur approximée de Pi et la valeur dite réele de Pi de la manière
+Par ailleurs, on calcule l'erreur entre la valeur approximée de Pi et la valeur dite réelle de Pi de la manière
 suivante : 
 
 $Erreur = \frac{Pi_a - Pi_r}{Pi_r}$ 
 
 <h4 style="color:#5d79e7;" id="obj_effec"> 3.2.2) Objectif à atteindre </h4>
 
-Trouver la valeur réele pourrait être un objectif à atteindre pour considèrer que le critère de l'Effectiveness a
+Trouver la valeur réelle pourrait être un objectif à atteindre pour considèrer que le critère de l'Effectiveness a
 bien été atteint ou non, mais serait bien trop coûteux et long à trouver à l'aide de tests, et d'autres critères de
 qualité s'en retrouveraient fortement impactés négativement.
 
 Ici, l'objectif à atteindre pour considèrer que le critère de l'Effectiveness est atteint ou non, sera une valeur
-approximée de Pi égale à 0.001 près de la valeur réele de Pi et donc une erreur inférieure à $1\times10^{-3}$.
+approximée de Pi égale à 0.001 près de la valeur réelle de Pi et donc une erreur inférieure à $1\times10^{-3}$.
 
 
 <h2 style="color:#5d79e7; page-break-before: always" id="tests"> 4) Tests </h2>
