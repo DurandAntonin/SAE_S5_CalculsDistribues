@@ -16,7 +16,8 @@ _Zehren William_
     <li><a href="#I_A"> A) Choix des images pour le kit Cluster Hat </a></li>
     <li><a href="#I_B"> B) Installation des images sur chaque Raspberry Pi et premier démarrage </a></li>
     <li><a href="#I_C"> C) Configuration du ssh des Raspberry pi du kut Cluster Hat </a></li>
-    <li><a href="#I_D"> D) Installation du service Fail2Ban sur le Raspeberry Pi host </a></li>
+    <li><a href="#I_D"> D) Configuration des Raspberry pi du kut Cluster Hat pour utiliser MPI</a></li>
+    <li><a href="#I_E"> E) Installation du service Fail2Ban sur le Raspeberry Pi host </a></li>
 </ul>
 <li><a href="#II_installationApplication">III- Installation de l'application </a></li>
 <ul>
@@ -175,8 +176,63 @@ permitted by applicable law.
 Last login: Fri Dec  1 20:13:44 2023 from 172.19.181.254
 pi@p1:~ $
 ```
+<h3 style="color:#5d79e7; page-break-before: always" id="I_D"> D) Configuration des Raspberry pi du kit Cluster Hat pour utiliser MPI </h3>
 
-<h3 style="color:#5d79e7; page-break-before: always" id="I_D"> D) Installation du service Fail2Ban sur le Raspeberry Pi host </h3>
+Maintenant que l'on peut communiquer sans mot de passe on pourra fcailement utiliser mpi. Pour installer MPI et Python on va effectuer les commandes suivantes sur chaques nodes.
+
+```bash
+$ sudo apt update
+$ sudo apt install mpich python3-mpi4py
+```
+
+On peut ensuite vérifier que MPI fonctionne sur chaque noeud en testant la commande suivante sur chaque node.
+
+```bash
+$ mpiexec -n 1 hostname
+>> cnat ou p1-2-3-4 en fonction de chaque node
+```
+
+Enfin pour vérifier que l'installation est complète on peut faire les 3 tests suivants : 
+
+__Premier test en grappe__
+
+A partir du node principal on lance la commande suivante qui doit nous renvoyer les hostnames des différents nodes (pas forcément dans l'ordre).
+
+```bash
+$ mpiexec -n 4 --host pi1,pi2,pi3,pi4 hostname
+p1
+p2
+p3
+p4
+```
+
+__Test du programme prime.py__
+
+On essaye avec les nombres premiers de 0 a 100.
+
+```bash
+$ mpiexec -n 4 --host pi1,pi2,pi3,pi4 python prime.py 100
+Find all primes up to: 100
+Nodes: 4
+Time elasped: 0.21 seconds
+Primes discovered: 25
+[1, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+```
+__Avec Docker__ 
+
+Avec docker, il faut utiliser l'option --mca btl_tcp_if_include pour préciser à MPI quel réseau et interface utilisés. Sinon il risque d'utiliser les sous-réseaux et interfaces crées par Docker.
+
+```bash
+$ mpiexec -n 2 --host pi2,pi3 python prime.py 100 --mca btl_tcp_if_include 172.19.181.0/24
+Find all primes up to: 100
+Nodes: 2
+Time elasped: 0.04 seconds
+Primes discovered: 25
+[1, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+```
+Mpi est maintenant installé et pourra être utilisé pour exécuter nos scripts.
+
+<h3 style="color:#5d79e7; page-break-before: always" id="I_E"> E) Installation du service Fail2Ban sur le Raspeberry Pi host </h3>
 
 On installe **Fail2ban** grâce à la commande ci-dessous, qui est une application analysant les différents logs de nombreux services, comme SSH, Apache, FTP, et bannissant temporairement les adresses ip à l'origine de motifs de connexions, de requêtes au préalablement indiqués comme suspectes et non désirables.
 
