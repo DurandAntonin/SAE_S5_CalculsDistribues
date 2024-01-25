@@ -115,7 +115,7 @@ class LoggerInstance
             //on regarde à quel endroit on écrit le log, soit dans un fichier, soit dans une table sql, soit dans les deux
             if ($this->logRepo != "")
                 $this->writeLogInFile(Enum_niveau_logger::DEBUG, $userId, $date, $ip, $message);
-            elseif(!is_null($this->mySqlConnector))
+            if (!is_null($this->mySqlConnector))
                 $this->writeLogInDbTable(Enum_niveau_logger::DEBUG, $userId, $date, $ip, $message);
         }
     }
@@ -142,7 +142,7 @@ class LoggerInstance
             //on regarde à quel endroit on écrit le log, soit dans un fichier, soit dans une table sql, soit dans les deux
             if ($this->logRepo != "")
                 $this->writeLogInFile(Enum_niveau_logger::INFO, $userId, $date, $ip, $message);
-            elseif(!is_null($this->mySqlConnector))
+            if (!is_null($this->mySqlConnector))
                 $this->writeLogInDbTable(Enum_niveau_logger::INFO, $userId, $date, $ip, $message);
         }
     }
@@ -169,7 +169,7 @@ class LoggerInstance
             //on regarde à quel endroit on écrit le log, soit dans un fichier, soit dans une table sql, soit dans les deux
             if ($this->logRepo != "")
                 $this->writeLogInFile(Enum_niveau_logger::WARNING, $userId, $date, $ip, $message);
-            elseif(!is_null($this->mySqlConnector))
+            if (!is_null($this->mySqlConnector))
                 $this->writeLogInDbTable(Enum_niveau_logger::WARNING, $userId, $date, $ip, $message);
         }
     }
@@ -196,7 +196,7 @@ class LoggerInstance
             //on regarde à quel endroit on écrit le log, soit dans un fichier, soit dans une table sql, soit dans les deux
             if ($this->logRepo != "")
                 $this->writeLogInFile(Enum_niveau_logger::ERROR, $userId, $date, $ip, $message);
-            elseif(!is_null($this->mySqlConnector))
+            if (!is_null($this->mySqlConnector))
                 $this->writeLogInDbTable(Enum_niveau_logger::ERROR, $userId, $date, $ip, $message);
         }
     }
@@ -223,7 +223,7 @@ class LoggerInstance
             //on regarde à quel endroit on écrit le log, soit dans un fichier, soit dans une table sql, soit dans les deux
             if ($this->logRepo != "")
                 $this->writeLogInFile(Enum_niveau_logger::CRITICAL, $userId, $date, $ip, $message);
-            elseif(!is_null($this->mySqlConnector))
+            if (!is_null($this->mySqlConnector))
                 $this->writeLogInDbTable(Enum_niveau_logger::CRITICAL, $userId, $date, $ip, $message);
         }
     }
@@ -270,8 +270,7 @@ class LoggerInstance
     /**
      * Permet d'enregistrer un log dans une base de données MySQL.
      *
-     * Il appelle la méthode 'writeLogInFile' pour enregistrer le log dans un répertoire si le mode de l'instance logger est 'file'. <br>
-     * Il appelle la méthode 'writeLogInDbTable' pour enregistrer le log dans une base de données MySQL si le mode de l'instance logger est 'bd'
+     * Insère le log dans la base de données
      *
      * @param Enum_niveau_logger $logLevel
      * @param string $userId Identifiant de l'utilisateur
@@ -279,11 +278,11 @@ class LoggerInstance
      * @param string $ip Adresse IP de l'utilisateur
      * @param string $message Descriptif de l'événement
      *
-     * @return void
+     * @return void Résultat d'exécution de la requête d'insertion du log dans la bd
      *
      * @version 1.0
      */
-    private function writeLogInDbTable(Enum_niveau_logger $logLevel, $userId, $date, $ip, $message): void
+    private function writeLogInDbTable(Enum_niveau_logger $logLevel, string $userId, \DateTime $date, string $ip, string $message): void
     {
         //on crée un objet logging, contenant les différentes info du log
         $log = new Logging(guidv4(), $logLevel, $userId, $date, $ip, $message);
