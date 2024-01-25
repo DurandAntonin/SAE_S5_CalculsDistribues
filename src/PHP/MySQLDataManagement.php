@@ -524,6 +524,8 @@ class MySQLDataManagement{
      * @see MySQLDataManagement::mappMySqliResultToUser()
      *
      * @version 1.0
+     *
+     * @deprecated
      */
     public function get_users_by_mail_appro(string $table, string $mailAppro, Pagination $pagination): array
     {
@@ -590,6 +592,8 @@ class MySQLDataManagement{
      * @see MySQLDataManagement::mappMySqliResultToUser()
      *
      * @version 1.0
+     *
+     * @deprecated 
      */
     public function get_number_users_by_mail(string $table, string $mailAppro): array
     {
@@ -857,6 +861,8 @@ class MySQLDataManagement{
 
                                 $stmt -> execute();
                             }
+
+                            $listeResultParamsFunction["result"] = 1;
                         }
                         catch (\mysqli_sql_exception $e) {
                             //on enregistre dans la liste des param de result, le message d'erreur
@@ -872,6 +878,11 @@ class MySQLDataManagement{
                         return $listeResultParamsFunction;
                     }
 
+                }
+                else{
+                    //on enregistre dans la liste des param de result, le message d'erreur
+                    $listeResultParamsFunction["error"] = 1;
+                    $listeResultParamsFunction["errorMessage"] = $resultSoliditePassword["errorMessage"];
                 }
             }
             else{
@@ -1359,9 +1370,9 @@ class MySQLDataManagement{
      *
      * @version 1.0
      */
-    public function close_connexion_to_db(): void
+    public function close_connexion_to_db(): bool
     {
-        $this->connector -> close();
+        return $this->connector -> close();
     }
 
     /**

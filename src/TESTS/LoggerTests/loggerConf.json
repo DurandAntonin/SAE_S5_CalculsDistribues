@@ -1,0 +1,21 @@
+{
+  "loggerConf" : {
+    "loggerFile" : {
+      "logLevel" : "INFO",
+      "logRepo" : "/var/www/html/LOGS/",
+      "logToDb" : 0
+    },
+    "loggerDb" : {
+      "logLevel" : "INFO",
+      "logRepo" : "",
+      "logToDb" : 1,
+      "configDbConnexion" : {
+        "bdHostname" : "172.19.181.254",
+        "bdUsername" : "BlitzCalc_DB_user",
+        "bdPassword" : "azerty",
+        "bdDatabase" : "BlitzCalc_DB",
+        "bdTableLogging" : "Logging"
+      }
+    }
+  }
+}
