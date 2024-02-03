@@ -1162,10 +1162,6 @@ input:checked ~ .dot {
   height: 75%;
 }
 
-.h-4 {
-  height: 1rem;
-}
-
 .h-4\/5 {
   height: 80%;
 }
@@ -1246,10 +1242,6 @@ input:checked ~ .dot {
   width: 50%;
 }
 
-.w-4 {
-  width: 1rem;
-}
-
 .w-5 {
   width: 1.25rem;
 }
@@ -1297,6 +1289,22 @@ input:checked ~ .dot {
 
 .w-screen {
   width: 100vw;
+}
+
+.w-32 {
+  width: 8rem;
+}
+
+.w-0 {
+  width: 0px;
+}
+
+.w-1\/6 {
+  width: 16.666667%;
+}
+
+.w-8 {
+  width: 2rem;
 }
 
 .min-w-full {
@@ -1404,27 +1412,6 @@ input:checked ~ .dot {
   animation: spin 1s linear infinite;
 }
 
-@keyframes ping {
-  75%, 100% {
-    transform: scale(2);
-    opacity: 0;
-  }
-}
-
-.animate-ping {
-  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
-@keyframes pulse {
-  50% {
-    opacity: .5;
-  }
-}
-
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
 .cursor-pointer {
   cursor: pointer;
 }
@@ -1459,6 +1446,10 @@ input:checked ~ .dot {
 
 .flex-col {
   flex-direction: column;
+}
+
+.flex-col-reverse {
+  flex-direction: column-reverse;
 }
 
 .flex-wrap {
@@ -1628,16 +1619,6 @@ input:checked ~ .dot {
   background-color: rgb(99 102 241 / var(--tw-bg-opacity));
 }
 
-.bg-indigo-800 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(55 48 163 / var(--tw-bg-opacity));
-}
-
-.bg-indigo-900 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(49 46 129 / var(--tw-bg-opacity));
-}
-
 .bg-lgrey {
   --tw-bg-opacity: 1;
   background-color: rgb(134 147 171 / var(--tw-bg-opacity));
@@ -1682,10 +1663,6 @@ input:checked ~ .dot {
 
 .fill-blue-600 {
   fill: #2563eb;
-}
-
-.fill-current {
-  fill: currentColor;
 }
 
 .object-cover {
@@ -1890,6 +1867,11 @@ input:checked ~ .dot {
   line-height: 1rem;
 }
 
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
 .font-black {
   font-weight: 900;
 }
@@ -2024,10 +2006,6 @@ input:checked ~ .dot {
 
 .opacity-0 {
   opacity: 0;
-}
-
-.opacity-75 {
-  opacity: 0.75;
 }
 
 .shadow {
@@ -2274,10 +2252,6 @@ input:checked ~ .dot {
   --tw-ring-color: rgb(189 212 231 / var(--tw-ring-opacity));
 }
 
-.group:hover .group-hover\:bg-gifMC {
-  background-image: url('animMonteCarlo.gif');
-}
-
 .group:hover .group-hover\:opacity-0 {
   opacity: 0;
 }
@@ -2482,6 +2456,11 @@ input:checked ~ .dot {
   .lg\:text-left {
     text-align: left;
   }
+
+  .lg\:text-6xl {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
 }
 
 @media (min-width: 1280px) {
@@ -2489,7 +2468,66 @@ input:checked ~ .dot {
     margin-top: 0px;
   }
 
+  .xl\:mr-2 {
+    margin-right: 0.5rem;
+  }
+
+  .xl\:mr-6 {
+    margin-right: 1.5rem;
+  }
+
+  .xl\:ml-6 {
+    margin-left: 1.5rem;
+  }
+
+  .xl\:h-20 {
+    height: 5rem;
+  }
+
+  .xl\:h-full {
+    height: 100%;
+  }
+
+  .xl\:h-16 {
+    height: 4rem;
+  }
+
   .xl\:w-1\/3 {
     width: 33.333333%;
+  }
+
+  .xl\:w-64 {
+    width: 16rem;
+  }
+
+  .xl\:w-full {
+    width: 100%;
+  }
+
+  .xl\:w-16 {
+    width: 4rem;
+  }
+
+  .xl\:flex-row {
+    flex-direction: row;
+  }
+
+  .xl\:text-left {
+    text-align: left;
+  }
+
+  .xl\:text-6xl {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  .xl\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .xl\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
 }

@@ -15,14 +15,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="PICTURES/blitzcalc-favicon-color.png"/>
 </head>
-<body class= "bg-lightblue h-screen" style="font-family: 'Poppins', sans-serif;">
+<body class= "bg-lightblue" style="font-family: 'Poppins', sans-serif;">
 <header class="top-0 w-full shadow-md bg-lightblue">
     <nav class="flex justify-between items-center w-auto  mx-auto">
         <div class="container mx-auto flex items-center justify-between">
             <div>
-                <img src="PICTURES/blitzcalc-high-resolution-logo-transparent.png" alt="Logo" class="h-20 mr-2">
+                <img src="PICTURES/blitzcalc-high-resolution-logo-transparent.png" alt="Logo de BlitzCalc" class="xl:h-20 h-10 xl:mr-2">
             </div>
-
             <div class="nav-links duration-500 bg-lightblue md:static absolute md:min-h-fit min-h-[15vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
                 <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
                     <li>
@@ -34,60 +33,60 @@
                 </ul>
             </div>
         </div>
-        <div class="flex items-center gap-6">
+        <div class="flex items-center">
             <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
         </div>
     </nav>
 </header>
 <section class="w-full h-screen inline-flex flex-col justify-center items-center">
-    <h1 class="text-6xl text-deepblue mb-3">Bienvenue sur BlitzCalc.fr</h1>
-    <p class="text-3xl text-deepblue text-center mx-24">
+    <h1 class="xl:text-6xl text-xl text-deepblue mb-3">Bienvenue sur BlitzCalc.fr</h1>
+    <p class="xl:text-3xl text-sm text-deepblue text-center mx-24">
         Découvrez, apprenez et améliorez vos compétences sur des modules scientifiques innovants et variés.
         Profitez d'un temps de calcul réduit grâce au calcul distribué sur cluster de Raspberry Pi en vous inscrivant dès maintenant.
     </p>
-    <div class="inline-flex flex-row justify-center items-center w-screen">
+    <div class="inline-flex xl:flex-row flex-col justify-center items-center w-screen">
         <form action="PHP/page_inscription.php">
             <div class="text-center">
-                <input type="submit" name="go_inscription" value="S'inscrire" class="w-64 mr-6 mt-6 py-2 rounded-xl bg-white text-deepblue focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer">
+                <input type="submit" name="go_inscription" value="S'inscrire" class="xl:w-64 w-64 xl:mr-6 mt-6 py-2 rounded-xl bg-white text-deepblue focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer">
             </div>
         </form>
         <form method="post" action="PHP/traitement_connexion.php">
             <div class="text-center">
-                <input type="submit" name="submit_connexion_visiteur" value="Essayer sans inscription" class="w-64 mt-6 ml-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
+                <input type="submit" name="submit_connexion_visiteur" value="Essayer sans inscription" class="xl:w-64 w-64 mt-6 xl:ml-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
             </div>
         </form>
     </div>
 </section>
 <section class="w-full h-screen bg-lyellow flex justify-center items-center">
-    <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0 inline-flex flex-row justify-center items-center md:flex p-20" data-taos-offset="300">
-        <img src="https://i.pinimg.com/564x/b1/6a/44/b16a443978512bffecd043e7ac687ed4.jpg" alt="dummy" class="md:w-1/3 rounded-xl md:rounded-l-xl md:rounded-t-xl mx-20" />
+    <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0 inline-flex xl:flex-row flex-col justify-center items-center md:flex p-20" data-taos-offset="300">
+        <img src="https://i.pinimg.com/564x/b1/6a/44/b16a443978512bffecd043e7ac687ed4.jpg" alt="Image montrant les 100 premiers nombres premiers" class="md:w-1/3 w-1/2 rounded-xl md:rounded-l-xl md:rounded-t-xl mx-20" />
         <div class="p-6 max-w-prose">
-            <h2 class="font-bold text-xl md:text-3xl mb-2 text-deepblue text-left">Module 1 : Calculs Des Nombres premiers</h2>
-            <p class="text-deepblue text-xl text-left">
+            <h2 class="font-bold md:text-3xl text-base mb-2 text-deepblue xl:text-left text-center">Module 1 : Calculs Des Nombres premiers</h2>
+            <p class="text-deepblue text-sm xl:text-left xl:text-xl text-center">
                 Le premier module de notre site ! Découvrez la puissance des nombres premiers, explorez la théorie des nombres et optimisez vos algorithmes de la manière la plus simple qui soit.
             </p>
         </div>
     </div>
 </section>
 <section class="w-full h-screen bg-deepblue flex justify-center items-center" id="sectionBlue">
-    <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0 inline-flex flex-row justify-center items-center md:flex p-20" data-taos-offset="300">
+    <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0 inline-flex xl:flex-row flex-col justify-center items-center md:flex p-20" data-taos-offset="300">
         <div class="p-6 max-w-prose">
-            <h2 class="font-bold text-xl md:text-3xl mb-2 text-white text-left">Module 2 : Approximation de Pi avec Monte-Carlo</h2>
-            <p class="text-white text-xl text-left">
+            <h2 class="font-bold text-base md:text-3xl mb-2 text-white xl:text-left text-center">Module 2 : Approximation de Pi avec Monte-Carlo</h2>
+            <p class="text-white text-sm xl:text-xl xl:text-left text-center">
                 Découvrez la puissance du célèbre algorithme de Monte Carlo dans un module permettant de calculer une valeur approchée de Pi.
                 (Et amusez-vous à en retenir les premières décimales pour impressionner vos proches..)
             </p>
         </div>
-        <img src="https://i.pinimg.com/564x/fb/5a/3f/fb5a3f88bc2e396ef073cc89e4a12a50.jpg" alt="dummy" class="md:w-1/3 max-w-1/2 rounded-xl md:rounded-l-xl md:rounded-t-xl mx-20" />
+        <img src="https://i.pinimg.com/564x/fb/5a/3f/fb5a3f88bc2e396ef073cc89e4a12a50.jpg" alt="dummy" class="md:w-1/3 w-1/2 rounded-xl md:rounded-l-xl md:rounded-t-xl mx-20" />
     </div>
 </section>
 <section class="w-full h-screen bg-lightblue flex justify-center items-center">
     <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0" data-taos-offset="300">
-        <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0 inline-flex flex-row justify-center items-center md:flex p-20" data-taos-offset="300">
-            <img src="https://i.pinimg.com/564x/a2/5d/55/a25d55ca8aaec95c732607d9b2c7eeed.jpg" alt="dummy" class="md:w-1/3 rounded-xl md:rounded-l-xl md:rounded-t-xl mx-20" />
+        <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0 inline-flex xl:flex-row flex-col justify-center items-center md:flex p-20" data-taos-offset="300">
+            <img src="https://i.pinimg.com/564x/a2/5d/55/a25d55ca8aaec95c732607d9b2c7eeed.jpg" alt="dummy" class="md:w-1/3 w-1/2 rounded-xl md:rounded-l-xl md:rounded-t-xl mx-20" />
             <div class="p-6 max-w-prose">
-                <h2 class="font-bold text-xl md:text-3xl mb-2 text-deepblue text-left">Module 3 : Car@Net</h2>
-                <p class="text-deepblue text-xl text-left">
+                <h2 class="font-bold text-base md:text-3xl mb-2 text-deepblue xl:text-left text-center">Module 3 : Car@Net</h2>
+                <p class="text-deepblue text-sm xl:text-xl xl:text-left text-center">
                     Expérimentez et découvrez l'IA ainsi que ses capacités hors du commun dans un module innovant de Machine Learning dédié à la reconnaissance de voitures de plus de 20 constructeurs automobiles.
                 </p>
             </div>
@@ -98,25 +97,25 @@
     <div class="delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0" data-taos-offset="300">
         <div class="p-6 max-w-prose inline-flex flex-col justify-center items-center">
             <div class="flex justify-center items-center">
-                <img src="PICTURES/blitzcalc-high-resolution-logo-white-transparent.png" alt="Logo" class="h-full w-full mb-4">
+                <img src="PICTURES/blitzcalc-high-resolution-logo-white-transparent.png" alt="Logo" class="xl:h-full xl:w-full h-20 mb-4">
             </div>
-            <h1 class="font-bold text-xl md:text-3xl mb-2 text-center text-deepblue">Une masterclass de projet</h1>
-            <p class="text-deepblue text-xl text-center mb-2">
+            <h1 class="font-bold xl:text-xl text-base md:text-3xl mb-2 text-center text-deepblue">Une masterclass de projet</h1>
+            <p class="text-deepblue xl:text-xl text-sm text-center mb-2">
                 Ce projet a été réalisé par Antonin Durand, Benjamin Parciany, Maxime Jougla et William Zehren ainsi qu'en collaboration avec nos professeurs de développement Web et de qualité de développement.
             </p>
         </div>
         <form action="PHP/page_inscription.php">
             <div class="text-center">
-                <button type="submit" name="go_inscription" value="S'inscrire" class="w-64 mr-6 mt-6 py-2 rounded-xl bg-white text-deepblue focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer"><ion-icon name="flash" class="text-center animate-rotate-y animate-infinite animate-duration-[2000ms] animate-ease-in-out"></ion-icon>S'inscrire</button>
+                <button type="submit" name="go_inscription" value="S'inscrire" class="w-64 xl:mr-6 mt-6 py-2 rounded-xl bg-white text-deepblue focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer"><ion-icon name="flash" class="text-center animate-rotate-y animate-infinite animate-duration-[2000ms] animate-ease-in-out"></ion-icon>S'inscrire</button>
             </div>
         </form>
     </div>
 </section>
 
 <button id="to-top-button" onclick="goToTop()" title="Go To Top"
-        class="hidden fixed z-90 bottom-8 right-8 border-0 w-16 h-16 rounded-full drop-shadow-md bg-indigo-500 text-white text-3xl font-bold animate-bounce">&uarr;</button>
+        class="hidden fixed z-90 bottom-8 right-8 border-0 xl:w-16 w-8 xl:h-16 h-8 rounded-full drop-shadow-md bg-indigo-500 text-white xl:text-3xl font-bold animate-bounce">&uarr;</button>
 <div class="flex justify-center items-center">
-    <ion-icon name="chevron-down" class="text-3xl text-deepblue fixed z-90 bottom-8 mx-auto border-0 w-16 h-16 animate-bounce" id="arrowDown"></ion-icon>
+    <ion-icon name="chevron-down" class="text-3xl text-deepblue fixed z-90 bottom-8 mx-auto border-0 xl:w-16 w-8 xl:h-16 h-8  animate-bounce" id="arrowDown"></ion-icon>
 </div>
 
 <footer class="relative bg-deepblue pt-8 pb-6">
