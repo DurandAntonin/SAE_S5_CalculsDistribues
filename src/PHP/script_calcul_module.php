@@ -119,11 +119,11 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
                 if ($hostname == $listHostnameAvailable[0])
                     $listHostnames = [$hostname, "pi2", "pi3", "pi4"];
                 elseif ($hostname == $listHostnameAvailable[1])
-                    $listHostnames = [$hostname, "pi3", "pi4"];
+                    $listHostnames = [$hostname, "pi1", "pi3", "pi4"];
                 elseif ($hostname == $listHostnameAvailable[2])
-                    $listHostnames = [$hostname, "pi2", "pi4"];
+                    $listHostnames = [$hostname, "pi1", "pi2", "pi4"];
                 elseif ($hostname == $listHostnameAvailable[3])
-                    $listHostnames = [$hostname, "pi2", "pi3"];
+                    $listHostnames = [$hostname, "pi1", "pi2", "pi3"];
             }
             elseif (!$execMode && ($userRole == Enum_role_user::USER || $userRole == Enum_role_user::VISITEUR)){
                 //on vérifie que le hostname existe bien
@@ -139,6 +139,7 @@ if (isset($header["Content-Type"]) && $header["Content-Type"] == "application/js
             $commandBuilder = new CommandBuilder($pathToScript, $listScriptParameter, $listCommandParameter, $listHostnames, $pipeToExecuteScript);
             $command = $commandBuilder->buildCommand();
             //echo $command;
+            $loggerFile->info($userId, getTodayDate(), $_SERVER['REMOTE_ADDR'], "Command : " . $command);
 
             //on regarde s'il y a un problème
             if ($command == ""){

@@ -9,7 +9,7 @@ declare -a listWorkerHostname #liste contenant le hostname de chaque worker
 listWorkerHostname[1]="pi2"
 listWorkerHostname[2]="pi3"
 listWorkerHostname[3]="pi4"
-#listWorkerHostname[4]="pi1"
+listWorkerHostname[4]="pi1"
 
 #tubes nommées
 pipeModule1="pipe_module_nb_premiers"
