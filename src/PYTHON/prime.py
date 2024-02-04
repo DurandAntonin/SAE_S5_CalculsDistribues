@@ -1,4 +1,5 @@
 from mpi4py import MPI
+from math import sqrt, floor
 import time
 import sys
 import json
@@ -27,14 +28,18 @@ start = time.time()
 # List of discovered primes for this node
 primes = []
 
+
 # Loop through the numbers using rank number to divide the work
 for candidate_number in range(start_number,end_number, cluster_size * 2):
     # Log progress in steps
-    #print(candidate_number)
+    print(candidate_number)
+
+    racine = floor(sqrt(candidate_number)) +1
+
     # Assume this number is prime
     found_prime = True
     # Go through all previous numbers and see if any divide without remainder
-    for div_number in range(2, candidate_number):
+    for div_number in range(2, racine):
         if candidate_number % div_number == 0:
             found_prime = False
             break
