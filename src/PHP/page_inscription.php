@@ -47,7 +47,7 @@ if (!empty($_SESSION["user"])){
     <nav class="flex justify-center items-center w-auto  mx-auto">
         <div class="container mx-auto flex items-center justify-center">
             <div >
-                <a href="../index.html"><img src="../PICTURES/blitzcalc-high-resolution-logo-transparent.png" alt="Logo" class="xl:h-20 h-40"></a>
+                <a href="../index.html"><img src="../PICTURES/blitzcalc-high-resolution-logo-transparent.png" alt="BlitzCalc Logo" class="xl:h-20 h-40"></a>
             </div>
     </nav>
 </header>
@@ -59,7 +59,7 @@ if (!empty($_SESSION["user"])){
 
             <div class="bg-deepblue rounded-3xl items-center ">
                 <h2 class="text-6xl xl:text-3xl text-center text-white my-8">S'inscrire</h2>
-                <form class="mb-4 rounded px-8 pb-8 pt-6 w-128 xl:w-full" method="post" action="traitement_inscription.php">
+                <form class="mb-4 rounded px-8 pb-8 pt-6 w-full xl:w-full" method="post" action="traitement_inscription.php">
                     <div class="mb-4">
                         <label class="mb-2 block xl:text-sm text-3xl font-bold text-white" for="login"> Identifiant </label>
                         <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 xl:text-sm text-xl leading-tight text-gray-700 shadow focus:outline-none" id="login" name="login" placeholder="Identifiant" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
