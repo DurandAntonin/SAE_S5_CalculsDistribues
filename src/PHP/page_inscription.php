@@ -47,17 +47,17 @@ if (!empty($_SESSION["user"])){
     <nav class="flex justify-center items-center w-auto  mx-auto">
         <div class="container mx-auto flex items-center justify-center">
             <div >
-                <a href="../index.html"><img src="../PICTURES/blitzcalc-high-resolution-logo-transparent.png" alt="Logo" class="h-20"></a>
+                <a href="../index.html"><img src="../PICTURES/blitzcalc-high-resolution-logo-transparent.png" alt="Logo" class="xl:h-20 h-40"></a>
             </div>
     </nav>
 </header>
 
 
-<div class="h-screen  w-full xl:flex xl:items-center xl:justify-center mt-10 xl:mt-0 ">
+<div class="h-fit xl:h-screen  w-full xl:flex xl:items-center xl:justify-center mt-10 xl:mt-0 mb-20 ">
         <div class=" w-full flex justify-center px-6">
             <!-- Row -->
 
-            <div class="bg-deepblue rounded-3xl items-center">
+            <div class="bg-deepblue rounded-3xl items-center ">
                 <h2 class="text-6xl xl:text-3xl text-center text-white my-8">S'inscrire</h2>
                 <form class="mb-4 rounded px-8 pb-8 pt-6 w-128 xl:w-full" method="post" action="traitement_inscription.php">
                     <div class="mb-4">
