@@ -16,6 +16,9 @@ module.exports = {
       backgroundImage: {
         'staticMC': "url('staticMonteCarlo.gif')",
         'gifMC': "url('animMonteCarlo.gif')",
+      },
+      width:{
+        '128': '32rem',
       }
     },
   },
