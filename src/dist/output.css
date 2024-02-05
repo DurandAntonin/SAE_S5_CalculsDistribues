@@ -1221,6 +1221,10 @@ input:checked ~ .dot {
   top: 5rem;
 }
 
+.top-40 {
+  top: 10rem;
+}
+
 .top-\[-100\%\] {
   top: -100%;
 }
@@ -1276,11 +1280,6 @@ input:checked ~ .dot {
 .mx-24 {
   margin-left: 6rem;
   margin-right: 6rem;
-}
-
-.mx-40 {
-  margin-left: 10rem;
-  margin-right: 10rem;
 }
 
 .mx-5 {
@@ -1361,16 +1360,16 @@ input:checked ~ .dot {
   margin-bottom: 1rem;
 }
 
+.mb-40 {
+  margin-bottom: 10rem;
+}
+
 .mb-6 {
   margin-bottom: 1.5rem;
 }
 
 .mb-8 {
   margin-bottom: 2rem;
-}
-
-.mb-96 {
-  margin-bottom: 24rem;
 }
 
 .me-3 {
@@ -1465,6 +1464,14 @@ input:checked ~ .dot {
   margin-top: 2rem;
 }
 
+.mb-auto {
+  margin-bottom: auto;
+}
+
+.mb-96 {
+  margin-bottom: 24rem;
+}
+
 .block {
   display: block;
 }
@@ -1497,12 +1504,16 @@ input:checked ~ .dot {
   display: none;
 }
 
-.h-1 {
-  height: 0.25rem;
+.h-1\/5 {
+  height: 20%;
 }
 
 .h-10 {
   height: 2.5rem;
+}
+
+.h-12 {
+  height: 3rem;
 }
 
 .h-14 {
@@ -1511,6 +1522,18 @@ input:checked ~ .dot {
 
 .h-16 {
   height: 4rem;
+}
+
+.h-2 {
+  height: 0.5rem;
+}
+
+.h-2\.5 {
+  height: 0.625rem;
+}
+
+.h-2\/4 {
+  height: 50%;
 }
 
 .h-20 {
@@ -1582,20 +1605,20 @@ input:checked ~ .dot {
   width: 25%;
 }
 
-.w-1\/5 {
-  width: 20%;
-}
-
 .w-10 {
   width: 2.5rem;
 }
 
-.w-128 {
-  width: 32rem;
+.w-12 {
+  width: 3rem;
 }
 
 .w-16 {
   width: 4rem;
+}
+
+.w-2\/3 {
+  width: 66.666667%;
 }
 
 .w-2\/4 {
@@ -1667,10 +1690,6 @@ input:checked ~ .dot {
   width: 100vw;
 }
 
-.w-2\/3 {
-  width: 66.666667%;
-}
-
 .min-w-full {
   min-width: 100%;
 }
@@ -1681,10 +1700,6 @@ input:checked ~ .dot {
 
 .max-w-screen-xl {
   max-width: 1280px;
-}
-
-.max-w-xs {
-  max-width: 20rem;
 }
 
 .flex-1 {
@@ -2171,10 +2186,6 @@ input:checked ~ .dot {
   padding-left: 1rem;
 }
 
-.pt-10 {
-  padding-top: 2.5rem;
-}
-
 .pt-6 {
   padding-top: 1.5rem;
 }
@@ -2217,6 +2228,11 @@ input:checked ~ .dot {
   line-height: 2.25rem;
 }
 
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
+}
+
 .text-6xl {
   font-size: 3.75rem;
   line-height: 1;
@@ -2245,11 +2261,6 @@ input:checked ~ .dot {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.text-5xl {
-  font-size: 3rem;
-  line-height: 1;
 }
 
 .font-black {
@@ -2674,6 +2685,11 @@ input:checked ~ .dot {
   border-color: transparent;
 }
 
+:is(.dark .dark\:bg-gray-700) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+}
+
 :is(.dark .dark\:bg-gray-800) {
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
@@ -2783,10 +2799,6 @@ input:checked ~ .dot {
 
   .md\:w-auto {
     width: auto;
-  }
-
-  .md\:max-w-3xl {
-    max-width: 48rem;
   }
 
   .md\:flex-row {
@@ -2912,6 +2924,14 @@ input:checked ~ .dot {
 }
 
 @media (min-width: 1280px) {
+  .xl\:top-20 {
+    top: 5rem;
+  }
+
+  .xl\:mb-0 {
+    margin-bottom: 0px;
+  }
+
   .xl\:ml-2 {
     margin-left: 0.5rem;
   }
@@ -2932,20 +2952,32 @@ input:checked ~ .dot {
     margin-top: 0px;
   }
 
-  .xl\:mb-0 {
-    margin-bottom: 0px;
-  }
-
   .xl\:flex {
     display: flex;
+  }
+
+  .xl\:grid {
+    display: grid;
+  }
+
+  .xl\:h-10 {
+    height: 2.5rem;
   }
 
   .xl\:h-16 {
     height: 4rem;
   }
 
+  .xl\:h-2\/4 {
+    height: 50%;
+  }
+
   .xl\:h-20 {
     height: 5rem;
+  }
+
+  .xl\:h-6 {
+    height: 1.5rem;
   }
 
   .xl\:h-full {
@@ -2960,8 +2992,24 @@ input:checked ~ .dot {
     width: 33.333333%;
   }
 
+  .xl\:w-1\/5 {
+    width: 20%;
+  }
+
   .xl\:w-16 {
     width: 4rem;
+  }
+
+  .xl\:w-2\/3 {
+    width: 66.666667%;
+  }
+
+  .xl\:w-6 {
+    width: 1.5rem;
+  }
+
+  .xl\:w-60 {
+    width: 15rem;
   }
 
   .xl\:w-64 {
@@ -2976,16 +3024,16 @@ input:checked ~ .dot {
     flex-direction: row;
   }
 
+  .xl\:flex-col {
+    flex-direction: column;
+  }
+
   .xl\:items-center {
     align-items: center;
   }
 
   .xl\:justify-center {
     justify-content: center;
-  }
-
-  .xl\:justify-between {
-    justify-content: space-between;
   }
 
   .xl\:text-left {
@@ -3015,5 +3063,10 @@ input:checked ~ .dot {
   .xl\:text-xl {
     font-size: 1.25rem;
     line-height: 1.75rem;
+  }
+
+  .xl\:text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
   }
 }
