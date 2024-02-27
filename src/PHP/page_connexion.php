@@ -41,7 +41,7 @@ if (!empty($_SESSION["user"])){
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <link rel="shortcut icon" type="image/png" href="../PICTURES/blitzcalc-favicon-color.png"/>
 </head>
-<body class="bg-lightblue" style="font-family: 'Poppins', sans-serif;">
+<body class="bg-lightblue h-full" style="font-family: 'Poppins', sans-serif;">
 
 <header class="top-0 w-full shadow-md bg-lightblue">
     <nav class="flex justify-center items-center w-auto  mx-auto">

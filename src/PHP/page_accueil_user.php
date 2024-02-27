@@ -18,7 +18,7 @@ $VARIABLES_GLOBALES = import_config();
 ?>
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" >
 <head>
     <meta charset="UTF-8">
     <title>BlitzCalc</title>
@@ -34,7 +34,7 @@ $VARIABLES_GLOBALES = import_config();
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="shortcut icon" type="image/png" href="../PICTURES/blitzcalc-favicon-color.png"/>
 </head>
-<body class="bg-lightblue" style="font-family: 'Poppins', sans-serif;">
+<body class="bg-lightblue h-full" style="font-family: 'Poppins', sans-serif;">
 
 <header class="top-0 w-full shadow-md bg-lightblue">
     <nav class="flex justify-between items-center w-auto  mx-auto">
@@ -124,12 +124,12 @@ echo"<hr class='dark:border-gray-700'>
 </p>
 
 
-<section class="w-full  xl:screen h-fit">
+<section class="w-full  h-fit">
     <div class="items-center w-full justify-center hidden mt-10  mb-96" id="popUpFormProfil">
             <div class=" flex items-center justify-center px-6 w-full">
                 <!-- Row -->
 
-                <div class="w-full md:w-1/3 bg-deepblue rounded-3xl items-center relative">
+                <div class="w-full md:w-2/3 lg:w-1/3 bg-deepblue rounded-3xl items-center relative">
                     <h2 class="text-3xl text-center text-white my-8">Mon profil </h2>
                     <ion-icon name="close" class="text-white right-0 my-9 mr-6 top-0 absolute text-3xl cursor-pointer" onclick="showFormProfile()"></ion-icon>
                     <form class="rounded  px-8 pb-8 pt-6" method="post" action="traitement_profil.php" id="formProfil">
@@ -178,10 +178,10 @@ echo"<hr class='dark:border-gray-700'>
     <div class="my-5">
         <p id="p-message-erreur" style="color:#EB3939"></p>
     </div>
-    <div class="flex h-fit xl:h-screen flex-col xl:flex-row items-center justify-center w-full " id="sectionModules">
-        <div class="inline-flex flex-row justify-center items-center md:flex p-20 w-full xl:w-2/3">
-            <div class="w-3/4 xl:h-2/4">
-                <div  class="wrapper text-gray-900 antialiased animate-fade-left animate-duration-[400ms] animate-ease-in-out xl:h-2/4"   id="0">
+    <div class="flex h-2/3 flex-col xl:flex-row items-center justify-center w-full" id="sectionModules">
+        <div class=" flex-row justify-center items-center md:flex p-20 w-full xl:w-2/3 hidden">
+            <div class="w-3/4 xl:h-2/4 h-1/3">
+                <div  class="wrapper text-gray-900 antialiased animate-fade-left animate-duration-[400ms] animate-ease-in-out xl:h-2/4 h-1/3"   id="0">
                     <img src="https://i.pinimg.com/564x/b1/6a/44/b16a443978512bffecd043e7ac687ed4.jpg" alt="" class="w-full rounded-xl object-cover object-center shadow-md h-2/4" />
                     <div class="relative px-4 -mt-16">
                         <div class="rounded-lg bg-white p-6 shadow-lg text-wrap">
@@ -244,7 +244,7 @@ echo"<hr class='dark:border-gray-700'>
                 </div>
             </div>
         </div>
-        <div class="xl:w-1/5 w-2/3 mb-20 xl:mb-0">
+        <div class="xl:w-1/5 w-2/3 mb-20 xl:mb-0 mt-10 xl:mt-0">
             <div class="flex md:flex-row flex-col xl:flex-col xl:justify-center h-fit -mt-10 ">
                 <div id="blockMod0"
                      class="relative flex flex-col cursor-pointer h-1/5 md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 w-full mx-auto border border-white bg-white my-5">
@@ -253,9 +253,10 @@ echo"<hr class='dark:border-gray-700'>
                     </div>
                     <div class="w-full md:w-2/3 bg-white flex flex-col items-center justify-between p-3">
                         <h3 class="font-black text-gray-800 md:text-xl text-xl">Calculs Des Nombres premiers</h3>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 hidden md:block">
                             <div id="pgbar0" class="bg-deepblue h-2.5 rounded-full bottom-0" style="width: 100%"></div>
                         </div>
+                        <button id="button-module1" class="w-2/4 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer md:hidden" onclick="goToModulePage(event)">Utiliser </button>
                     </div>
                 </div>
 
@@ -267,9 +268,10 @@ echo"<hr class='dark:border-gray-700'>
                     </div>
                     <div class="w-full md:w-2/3 bg-white flex flex-col items-center justify-between p-3">
                         <h3 class="font-black text-gray-800 md:text-xl text-base xl:text-xl ">Approximation de Pi avec Monte-Carlo</h3>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 hidden md:block">
                             <div id="pgbar1" class="bg-deepblue h-2.5 rounded-full" style="width: 0%"></div>
                         </div>
+                        <button id="button-module2" class="w-2/4 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer md:hidden" onclick="goToModulePage(event)">Utiliser </button>
                     </div>
                 </div>
                 <div id="blockMod2"
@@ -279,9 +281,10 @@ echo"<hr class='dark:border-gray-700'>
                     </div>
                     <div class="w-full md:w-2/3 bg-white flex flex-col items-center justify-between p-3">
                         <h3 class="font-black text-gray-800 md:text-xl text-xl">Car@Net</h3>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 hidden md:block">
                             <div id="pgbar2" class="bg-deepblue h-2.5 rounded-full" style="width: 0%"></div>
                         </div>
+                        <button id="button-module3" class="w-2/4 mt-6 py-2 rounded-xl bg-lyellow text-black focus:outline-none hover:bg-deepblue hover:text-white focus:ring-4 focus:ring-gray-300 cursor-pointer md:hidden" onclick="goToModulePage(event)">Utiliser </button>
                     </div>
                 </div>
             </div>
