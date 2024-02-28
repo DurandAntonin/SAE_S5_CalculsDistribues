@@ -2055,6 +2055,22 @@ input:checked ~ .dot {
   background-size: cover;
 }
 
+.bg-contain {
+  background-size: contain;
+}
+
+.bg-auto {
+  background-size: auto;
+}
+
+.bg-fixed {
+  background-attachment: fixed;
+}
+
+.bg-no-repeat {
+  background-repeat: no-repeat;
+}
+
 .fill-blue-600 {
   fill: #1C64F2;
 }
@@ -3043,6 +3059,10 @@ input:checked ~ .dot {
 
   .xl\:w-1\/4 {
     width: 25%;
+  }
+
+  .xl\:w-2\/5 {
+    width: 40%;
   }
 
   .xl\:flex-row {
