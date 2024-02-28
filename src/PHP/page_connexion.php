@@ -69,7 +69,7 @@ if (!empty($_SESSION["user"])){
                         <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 xl:text-sm text-xl leading-tight text-gray-700 shadow focus:outline-none" id="password" name="password" type="password" placeholder="******************" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][1];?>" required/>
                     </div>
                     <div class="mb-6 text-center">
-                        <input type="submit" name="submit_connexion_user" value="Valider" class="w-3/4 text-xl xl:text-base mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
+                        <input type="submit" name="submit_connexion_user" value="Valider" class="xl:w-1/2 w-2/4 text-xl xl:text-base mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
                     </div>
                     <div class="flex justify-center mb-6 ">
                         <p id="erreur_message">

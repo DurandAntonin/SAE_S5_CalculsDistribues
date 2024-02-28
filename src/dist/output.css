@@ -2267,6 +2267,11 @@ input:checked ~ .dot {
   line-height: 1rem;
 }
 
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
 .font-black {
   font-weight: 900;
 }
@@ -3030,6 +3035,14 @@ input:checked ~ .dot {
 
   .xl\:w-full {
     width: 100%;
+  }
+
+  .xl\:w-1\/2 {
+    width: 50%;
+  }
+
+  .xl\:w-1\/4 {
+    width: 25%;
   }
 
   .xl\:flex-row {

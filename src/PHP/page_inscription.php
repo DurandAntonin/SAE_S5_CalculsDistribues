@@ -55,7 +55,6 @@ if (!empty($_SESSION["user"])){
 
 <div class="h-fit xl:h-screen  w-full xl:flex xl:items-center xl:justify-center mt-10 xl:mt-0 mb-20 ">
         <div class=" w-full flex justify-center px-6">
-
             <div class="bg-deepblue xl:w-1/3 w-full rounded-3xl items-center ">
                 <h2 class="text-6xl xl:text-3xl text-center text-white my-8">S'inscrire</h2>
                 <form class="mb-4 rounded px-8 pb-8 pt-6 w-full xl:w-full" method="post" action="traitement_inscription.php">
@@ -90,7 +89,7 @@ if (!empty($_SESSION["user"])){
                         </div>
                     </div>
                     <div class="mb-6 text-center">
-                        <input type="submit" name="submit_inscription" value="Valider" class="w-3/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
+                        <input type="submit" name="submit_inscription" value="Valider" class="xl:w-1/4 w-2/4 mt-6 py-2 rounded-xl bg-lgrey text-white focus:outline-none hover:bg-lyellow hover:text-deepblue focus:ring-4 focus:ring-gray-300 cursor-pointer">
                     </div>
                     <div class="flex justify-center mb-6 ">
                         <p id="erreur_message">
