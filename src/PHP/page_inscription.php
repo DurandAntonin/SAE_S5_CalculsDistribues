@@ -55,9 +55,8 @@ if (!empty($_SESSION["user"])){
 
 <div class="h-fit xl:h-screen  w-full xl:flex xl:items-center xl:justify-center mt-10 xl:mt-0 mb-20 ">
         <div class=" w-full flex justify-center px-6">
-            <!-- Row -->
 
-            <div class="bg-deepblue rounded-3xl items-center ">
+            <div class="bg-deepblue xl:w-1/3 w-full rounded-3xl items-center ">
                 <h2 class="text-6xl xl:text-3xl text-center text-white my-8">S'inscrire</h2>
                 <form class="mb-4 rounded px-8 pb-8 pt-6 w-full xl:w-full" method="post" action="traitement_inscription.php">
                     <div class="mb-4">

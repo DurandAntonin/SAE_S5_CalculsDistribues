@@ -125,44 +125,42 @@ echo"<hr class='dark:border-gray-700'>
 
 
 <section class="w-full  h-fit">
-    <div class="items-center w-full justify-center hidden mt-10  mb-96" id="popUpFormProfil">
-            <div class=" flex items-center justify-center px-6 w-full">
-                <!-- Row -->
-
-                <div class="w-full md:w-2/3 lg:w-1/3 bg-deepblue rounded-3xl items-center relative">
-                    <h2 class="text-3xl text-center text-white my-8">Mon profil </h2>
-                    <ion-icon name="close" class="text-white right-0 my-9 mr-6 top-0 absolute text-3xl cursor-pointer" onclick="showFormProfile()"></ion-icon>
+    <div class=" w-full hidden mt-10  mb-96" id="popUpFormProfil">
+            <div class=" flex px-6 w-full items-center justify-center">
+                <div class="w-full xl:w-1/3 lg:w-2/3 bg-deepblue rounded-3xl items-center relative">
+                    <h2 class="text-6xl xl:text-3xl text-center text-white my-8">Mon profil </h2>
+                    <ion-icon name="close" class="text-white right-0 my-9 mr-6 top-0 absolute xl:text-3xl text-6xl cursor-pointer" onclick="showFormProfile()"></ion-icon>
                     <form class="rounded  px-8 pb-8 pt-6" method="post" action="traitement_profil.php" id="formProfil">
                         <input type="hidden" id="submit_supprimer_compte" name="submit_supprimer_compte" value="">
                         <div class="mb-4">
-                            <label class="mb-2 block text-sm font-bold text-white" for="login"> Identifiant </label>
-                            <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="login" name="login" placeholder="Identifiant" value="<?php echo $user->getLogin(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
+                            <label class="mb-2 block xl:text-sm text-3xl font-bold text-white" for="login"> Identifiant </label>
+                            <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 xl:text-sm text-xl leading-tight text-gray-700 shadow focus:outline-none" id="login" name="login" placeholder="Identifiant" value="<?php echo $user->getLogin(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
                         </div>
-                        <div class="mb-4 md:flex md:justify-between">
+                        <div class="mb-4 md:flex md:justify-between flex-col xl:flex-row">
 
-                            <div class="mb-4 md:mb-0 md:mr-2">
-                                <label class="mb-2 block text-sm font-bold text-white" for="first_name"> Prénom </label>
-                                <input class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="first_name" name="first_name" type="text" placeholder="Prénom" value="<?php echo $user->getFirstName(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
+                            <div class="mb-4 xl:mr-2">
+                                <label class="mb-2 block xl:text-sm text-3xl font-bold text-white" for="first_name"> Prénom </label>
+                                <input class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 xl:text-sm text-xl leading-tight text-gray-700 shadow focus:outline-none" id="first_name" name="first_name" type="text" placeholder="Prénom" value="<?php echo $user->getFirstName(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
                             </div>
-                            <div class="md:ml-2">
-                                <label class="mb-2 block text-sm font-bold text-white" for="last_name"> Nom </label>
-                                <input class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="last_name" name="last_name" type="text" placeholder="Nom" value="<?php echo $user->getLastName(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
+                            <div class="mb-4 xl:ml-2">
+                                <label class="mb-2 block xl:text-sm text-3xl font-bold text-white" for="last_name"> Nom </label>
+                                <input class="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 xl:text-sm text-xl leading-tight text-gray-700 shadow focus:outline-none" id="last_name" name="last_name" type="text" placeholder="Nom" value="<?php echo $user->getLastName(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_texte"][1];?>" required/>
                             </div>
                         </div>
                         <div class="mb-4">
-                            <label class="mb-2 block text-sm font-bold text-white" for="email"> Email </label>
-                            <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="email" type="email" name="email" placeholder="Email" value="<?php echo $user->getMail(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mail"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mail"][1];?>" required/>
+                            <label class="mb-2 block xl:text-sm text-3xl font-bold text-white" for="email"> Email </label>
+                            <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 xl:text-sm text-xl leading-tight text-gray-700 shadow focus:outline-none" id="email" type="email" name="email" placeholder="Email" value="<?php echo $user->getMail(); ?>" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mail"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mail"][1];?>" required/>
                         </div>
-                        <div class="mb-4 md:flex md:justify-between">
-                            <div class="mb-4 md:mb-0 md:mr-2">
-                                <label class="mb-2 block text-sm font-bold text-white" for="password"> Mot de passe </label>
-                                <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border border-red-500 px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="password" name="password" type="password" placeholder="******************" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][1];?>"/>
+                        <div class="mb-4 md:flex md:justify-between flex-col xl:flex-row">
+                            <div class="mb-4 md:mb-0 xl:mr-2">
+                                <label class="mb-2 block xl:text-sm text-3xl font-bold text-white" for="password"> Mot de passe </label>
+                                <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border border-red-500 px-3 py-2 xl:text-sm text-xl leading-tight text-gray-700 shadow focus:outline-none" id="password" name="password" type="password" placeholder="******************" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][1];?>"/>
                                 <p class="text-xs italic text-red-500">Choisissez un mot de passe</p>
                                 <p class="text-xs italic text-red-500">différent du précédent.</p>
                             </div>
-                            <div class="md:ml-2">
-                                <label class="mb-2 block text-sm font-bold text-white" for="password_confirm"> Confirmez le mot de passe</label>
-                                <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 text-sm leading-tight text-gray-700 shadow focus:outline-none" id="password_confirm" name="password_confirm" type="password" placeholder="******************" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][1];?>"/>
+                            <div class="mb-4 xl:ml-2">
+                                <label class="mb-2 block xl:text-sm text-3xl font-bold text-white" for="password_confirm"> Confirmez le mot de passe</label>
+                                <input class="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 xl:text-sm text-xl leading-tight text-gray-700 shadow focus:outline-none" id="password_confirm" name="password_confirm" type="password" placeholder="******************" minlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][0];?>" maxlength="<?php echo $VARIABLES_GLOBALES["taille_champ_mdp"][1];?>"/>
                             </div>
                         </div>
                         <div class="text-center">

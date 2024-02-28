@@ -55,9 +55,8 @@ if (!empty($_SESSION["user"])){
 
 <div class="h-fit xl:h-screen  w-full flex items-center justify-center mt-10 xl:mt-0 mb-20">
         <div class="w-full flex items-center justify-center px-6 mb-20">
-            <!-- Row -->
 
-            <div class=" xl:w-1/3 bg-deepblue rounded-3xl items-center">
+            <div class=" xl:w-1/3 w-full bg-deepblue rounded-3xl items-center">
                 <h2 class="text-6xl xl:text-3xl text-center text-white my-8">Se connecter</h2>
                 <form class="mb-4 rounded  px-8 pb-8 pt-6 w-full xl:w-full" method="post" action="traitement_connexion.php">
                     <div class="mb-4">
