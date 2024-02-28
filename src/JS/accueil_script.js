@@ -16,8 +16,14 @@ function init(){
     divNbUsersModule2 = document.getElementById("div-nb-ut-m2")
     divNbUsersModule3 = document.getElementById("div-nb-ut-m3")
 
+    setTimeout(function(){
+        let sectionModules = document.getElementById("sectionModules")
+    sectionModules.scrollIntoView({ behavior: 'smooth' })
+    },1000)
+
     //on appelle une fonction qui exécute une requete ajax pour récupérer le nombre d'utilisations de chaque module
     requestGetNbOfUsesPerModule()
+
 }
 
 function requestGetNbOfUsesPerModule(){
