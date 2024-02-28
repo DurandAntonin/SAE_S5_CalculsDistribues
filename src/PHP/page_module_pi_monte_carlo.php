@@ -168,16 +168,13 @@ echo"<hr class='dark:border-gray-700'>
                             </div>
                         </div>
 
-                        <div class="mb-4 md:mb-0 md:mr-2 flex flex-col md:flex-row justify-between items-center">
-                                <div class='w-2/4 h-80 m-6 rounded-xl bg-staticMC bg-cover bg-fixed bg-no-repeat cursor-pointer hover:bg-gifMC group flex items-center justify-center' >
-                                <div class="text-center py-4 lg:px-4 group-hover:opacity-0 animate-bounce">
-                                    <div class="p-2 bg-deepblue items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
-                                        <span class="flex rounded-full bg-lightblue uppercase px-2 py-1 text-xs font-bold mr-3"><ion-icon name="hand-left" class="text-black"></ion-icon></span>
-                                        <span class="font-semibold mr-2 text-left flex-auto">Survole pour observer une animation</span>
-                                    </div>
-                                </div>
+                        <div class="mb-4 md:mb-0 md:mr-2 flex flex-col xl:flex-row justify-between items-center">
+                            <div id="gifs-rows" class="cursor-pointer xl:w-2/4 w-3/4 rounded-xl xl:mr-4 mb-6">
+                                <img src="../PICTURES/staticMonteCarlo.gif" alt="gif preset" class="preset-file rounded-xl">
+                                <img src="../PICTURES/animMonteCarlo.gif" alt="gif preset" class="gif-file hidden rounded-xl">
                             </div>
-                            <div id="result" class="border-2 text-white p-3  border-white h-80 w-2/4 rounded-xl ">
+                            
+                            <div id="result" class="border-2 text-white p-3  border-white h-80 xl:w-2/4 w-3/4 rounded-xl ">
                                 <h2 class="text-3xl text-center text-white mb-6">Résultats</h2>
                                 <div class="md:mb-0 md:mr-2 flex flex-col justify-around items-start h-48">
                                     <p id="p-result" class=" inline-block align-baseline text-xl text-opacity-200 text-white mb-4">Approximation de Pi :</p>
