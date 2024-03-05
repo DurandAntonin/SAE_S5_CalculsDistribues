@@ -34,6 +34,7 @@ if (!empty($_SESSION["user"])){
 <head>
     <meta charset="UTF-8">
     <title>Inscription</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../dist/output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,20 +44,21 @@ if (!empty($_SESSION["user"])){
 </head>
 <body class="bg-lightblue" style="font-family: 'Poppins', sans-serif;">
 
-<header class="top-0 w-full shadow-md bg-lightblue">
-    <nav class="flex justify-center items-center w-auto  mx-auto">
-        <div class="container mx-auto flex items-center justify-center">
-            <div >
-                <a href="../index.html"><img src="../PICTURES/blitzcalc-high-resolution-logo-transparent.png" alt="BlitzCalc Logo" class="xl:h-20 h-40"></a>
-            </div>
-    </nav>
+<header class="w-full shadow-md bg-lightblue">
+    <nav class="bg-lightblue border-gray-200 dark:bg-gray-900">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+          <a href="../index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+              <img src="../PICTURES/blitzcalc-high-resolution-logo-transparent.png" class="h-14 xl:h-20" alt="BlitzCalc Logo" />
+          </a>
+        </div>
+      </nav>
 </header>
 
 
 <div class="h-fit xl:h-screen  w-full xl:flex xl:items-center xl:justify-center mt-10 xl:mt-0 mb-20 ">
         <div class=" w-full flex justify-center px-6">
             <div class="bg-deepblue xl:w-1/3 w-full rounded-3xl items-center ">
-                <h2 class="text-6xl xl:text-3xl text-center text-white my-8">S'inscrire</h2>
+                <h2 class="text-4xl xl:text-3xl text-center text-white my-8">S'inscrire</h2>
                 <form class="mb-4 rounded px-8 pb-8 pt-6 w-full xl:w-full" method="post" action="traitement_inscription.php">
                     <div class="mb-4">
                         <label class="mb-2 block xl:text-sm text-3xl font-bold text-white" for="login"> Identifiant </label>

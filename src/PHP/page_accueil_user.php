@@ -22,6 +22,7 @@ $VARIABLES_GLOBALES = import_config();
 <head>
     <meta charset="UTF-8">
     <title>BlitzCalc</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script defer src = "../JS/profil_script.js"> </script>
     <script defer src = "../JS/accueil_script.js"> </script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
@@ -40,7 +41,7 @@ $VARIABLES_GLOBALES = import_config();
     <nav class="flex justify-between items-center w-auto  mx-auto">
         <div class="container mx-auto flex items-center justify-between">
             <div >
-                <a href="page_accueil_user.php"><img src="../PICTURES/blitzcalc-high-resolution-logo-transparent.png" alt="Logo" class="xl:h-20 h-40"></a>
+                <a href="page_accueil_user.php"><img src="../PICTURES/blitzcalc-high-resolution-logo-transparent.png" alt="Logo de blitzcalc" class="xl:h-20 h-14 ml-4"></a>
             </div>
             <?php
             //seul le user inscrit peut voir son profil
@@ -60,18 +61,18 @@ $VARIABLES_GLOBALES = import_config();
                     ";
             }
             ?>
-            <div class="float-right">
-                <img src='../PICTURES/IconeProfil.png' alt='profile picture' class='xl:h-10 h-20 cursor-pointer' onclick='showProfil()' id='showProfil'>
-            </div>
+            <button class="float-right" onclick='showProfil()' id='showProfil'>
+                <img src='../PICTURES/IconeProfil.png' alt='profile picture' class='xl:h-10 h-8 cursor-pointer mr-4'>
+        </button>
     </nav>
 </header>
 <?php
-echo "<div class='hidden absolute xl:top-20 z-50 top-40 right-0 xl:w-60 w-fit px-5 py-3 mr-2 dark:bg-gray-800 bg-deepblue rounded-lg shadow border dark:border-transparent animate-fade-down animate-duration-[400ms] animate-ease-in-out' id='popUpProfil'>
+echo "<div class='hidden absolute xl:top-20 z-50 top-14 right-0 xl:w-60 w-fit px-5 py-3 mr-2 dark:bg-gray-800 bg-deepblue rounded-lg shadow border dark:border-transparent animate-fade-down animate-duration-[400ms] animate-ease-in-out' id='popUpProfil'>
             <ul class='space-y-3 text-white'>
               <li class='font-medium'>
-                <a href='#' class='flex items-center transform text-5xl xl:text-base transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700'>
+                <a href='#' class='flex items-center transform text-xl xl:text-base transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700'>
                   <div class='mr-3'>
-                    <svg class='w-12 xl:w-6 h-12 xl:h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'></path></svg>
+                    <svg class='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'></path></svg>
                   </div>";
 echo $user->getLogin();
 echo "</a>
@@ -79,9 +80,9 @@ echo "</a>
 //on affiche les settings si le user est inscrit
 if ($user->getRole() == Enum_role_user::USER){
     echo "<li class='font-medium'>
-                <a href='#' class='flex items-center transform text-5xl xl:text-base transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700' onclick='showFormProfile()' id='linkShowProfil'>
+                <a href='#' class='flex items-center transform text-xl xl:text-base transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700' onclick='showFormProfile()' id='linkShowProfil'>
                   <div class='mr-3'>
-                    <svg class='w-12 xl:w-6 h-12 xl:h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z'></path><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'></path></svg>
+                    <svg class='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z'></path><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'></path></svg>
                   </div>
                   Setting
                 </a>
@@ -89,9 +90,9 @@ if ($user->getRole() == Enum_role_user::USER){
 }
 echo"<hr class='dark:border-gray-700'>
               <li class='font-medium'>
-                <a href='page_deconnexion.php' class='flex items-center transform text-5xl xl:text-base transition-colors duration-200 border-r-4 border-transparent hover:border-red-600'>
+                <a href='page_deconnexion.php' class='flex items-center transform text-xl xl:text-base transition-colors duration-200 border-r-4 border-transparent hover:border-red-600'>
                   <div class='mr-3 text-red-600'>
-                    <svg class='w-12 xl:w-6 h-12 xl:h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1'></path></svg>
+                    <svg class='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1'></path></svg>
                   </div>
                   Logout
                 </a>
@@ -128,8 +129,8 @@ echo"<hr class='dark:border-gray-700'>
     <div class=" w-full hidden mt-10  mb-96" id="popUpFormProfil">
             <div class=" flex px-6 w-full items-center justify-center">
                 <div class="w-full xl:w-1/3 lg:w-2/3 bg-deepblue rounded-3xl items-center relative">
-                    <h2 class="text-6xl xl:text-3xl text-center text-white my-8">Mon profil </h2>
-                    <ion-icon name="close" class="text-white right-0 my-9 mr-6 top-0 absolute xl:text-3xl text-6xl cursor-pointer" onclick="showFormProfile()"></ion-icon>
+                    <h2 class="text-3xl text-center text-white my-8">Mon profil </h2>
+                    <button onclick="showFormProfile()" class="right-0 my-9 mr-6 top-0 absolute cursor-pointer"><span class="sr-only"> Bouton pour fermer le formulaire</span><ion-icon name="close" class="text-white text-3xl"></ion-icon></button>
                     <form class="rounded  px-8 pb-8 pt-6" method="post" action="traitement_profil.php" id="formProfil">
                         <input type="hidden" id="submit_supprimer_compte" name="submit_supprimer_compte" value="">
                         <div class="mb-4">
@@ -262,7 +263,7 @@ echo"<hr class='dark:border-gray-700'>
                 <div id="blockMod1"
                      class="relative flex flex-col cursor-pointer md:flex-row justify-between md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 w-full mx-auto border border-white bg-white my-5">
                     <div class="w-full md:w-1/3 bg-white xl:grid place-items-center hidden">
-                        <img src="https://i.pinimg.com/564x/fb/5a/3f/fb5a3f88bc2e396ef073cc89e4a12a50.jpg" alt="tailwind logo" class="rounded-xl" />
+                        <img src="https://i.pinimg.com/564x/fb/5a/3f/fb5a3f88bc2e396ef073cc89e4a12a50.jpg" alt="Module pi MonteCarlo logo" class="rounded-xl" />
                     </div>
                     <div class="w-full md:w-2/3 bg-white flex flex-col items-center justify-between p-3">
                         <h3 class="font-black text-gray-800 md:text-xl text-base xl:text-xl ">Approximation de Pi avec Monte-Carlo</h3>
@@ -275,7 +276,7 @@ echo"<hr class='dark:border-gray-700'>
                 <div id="blockMod2"
                      class="relative flex flex-col cursor-pointer md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 w-full  mx-auto border border-white bg-white my-5">
                     <div class="w-full md:w-1/3 bg-white xl:grid  hidden place-items-center">
-                        <img src="https://i.pinimg.com/564x/a2/5d/55/a25d55ca8aaec95c732607d9b2c7eeed.jpg" alt="tailwind logo" class="rounded-xl" />
+                        <img src="https://i.pinimg.com/564x/a2/5d/55/a25d55ca8aaec95c732607d9b2c7eeed.jpg" alt="Module IA logo" class="rounded-xl" />
                     </div>
                     <div class="w-full md:w-2/3 bg-white flex flex-col items-center justify-between p-3">
                         <h3 class="font-black text-gray-800 md:text-xl text-xl">Car@Net</h3>
