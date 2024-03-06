@@ -16,13 +16,17 @@ module.exports = {
       backgroundImage: {
         'staticMC': "url('staticMonteCarlo.gif')",
         'gifMC': "url('animMonteCarlo.gif')",
+      },
+      width:{
+        '128': '32rem',
       }
     },
   },
   plugins: [
     require('taos/plugin'),
     require('tailwindcss-animated'),
-    require('@tailwindcss/forms')
+    require('@tailwindcss/forms'),
+    require('flowbite/plugin')
   ],
   safelist: [
     '!duration-[0ms]',

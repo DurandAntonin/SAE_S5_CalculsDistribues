@@ -28,38 +28,38 @@ $user = unserialize($_SESSION["user"]);
     <nav class="flex justify-between items-center w-auto  mx-auto">
         <div class="container mx-auto flex items-center justify-between">
             <div >
-                <a href="../index.html"><img src="../PICTURES/blitzcalc-high-resolution-logo-transparent.png" alt="Logo" class="h-20"></a>
+                <a href="../index.html"><img src="../PICTURES/blitzcalc-high-resolution-logo-transparent.png" alt="Logo" class="xl:h-20 h-40"></a>
             </div>
 
             <div class="float-right">
-                <img src='../PICTURES/IconeProfil.png' alt='profile picture' class='h-10 cursor-pointer' onclick='showProfil()' id='showProfil'>
+                <img src='../PICTURES/IconeProfil.png' alt='profile picture' class='xl:h-10 h-20 cursor-pointer' onclick='showProfil()' id='showProfil'>
             </div>
         </div>
     </nav>
 </header>
 <?php
 
-echo "<div class='hidden absolute top-20 right-0 w-60 px-5 py-3 mr-2 dark:bg-gray-800 bg-deepblue rounded-lg shadow border dark:border-transparent animate-fade-down animate-duration-[400ms] animate-ease-in-out' id='popUpProfil'>
+echo "<div class='hidden absolute xl:top-20 z-50 top-40 right-0 xl:w-60 w-fit px-5 py-3 mr-2 dark:bg-gray-800 bg-deepblue rounded-lg shadow border dark:border-transparent animate-fade-down animate-duration-[400ms] animate-ease-in-out' id='popUpProfil'>
             <ul class='space-y-3 text-white'>
               <li class='font-medium'>
-                <a href='#' class='flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700'>
+                <a href='#' class='flex items-center transform text-5xl xl:text-base transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700'>
                   <div class='mr-3'>
-                    <svg class='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'></path></svg>
+                    <svg class='w-12 xl:w-6 h-12 xl:h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'></path></svg>
                   </div>";
 echo $user->getLogin();
 echo "</a>
              </li>";
 echo"<hr class='dark:border-gray-700'>
-              <li class='font-medium'>
-                <a href='page_deconnexion.php' class='flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-red-600'>
-                  <div class='mr-3 text-red-600'>
-                    <svg class='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1'></path></svg>
-                  </div>
-                  Logout
-                </a>
-              </li>
-            </ul>
-          </div>";
+             <li class='font-medium'>
+               <a href='page_deconnexion.php' class='flex items-center transform text-5xl xl:text-base transition-colors duration-200 border-r-4 border-transparent hover:border-red-600'>
+                 <div class='mr-3 text-red-600'>
+                   <svg class='w-12 xl:w-6 h-12 xl:h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1'></path></svg>
+                 </div>
+                 Logout
+               </a>
+             </li>
+           </ul>
+         </div>";
 ?>
 
 <p id="erreur_message">
@@ -86,12 +86,12 @@ echo"<hr class='dark:border-gray-700'>
 </p>
 
 
-<section class="w-full h-screen ">
-    <div class="container flex flex-row justify-between items-center w-auto  mx-auto my-20">
+<section class="w-full h-fit xl:h-screen ">
+    <div class="container flex flex-col xl:flex-row justify-between items-center w-auto  mx-auto my-20">
         <div>
-            <p class="text-3xl text-deepblue flex flex-row justify-between items-center mx-2"><ion-icon name="home" class="mx-2  "></ion-icon>Dashboard</p>
+            <p class="text-3xl text-deepblue flex flex-row justify-between items-center xl:mx-2 mb-4 xl:mb-0"><ion-icon name="home" class="mx-2"></ion-icon>Dashboard</p>
         </div>
-        <div class="grid w-[40rem] grid-cols-4 gap-2 rounded-xl bg-deepblue p-2 text-white">
+        <div class="grid w-full md:w-2/3 xl:w-1/3 grid-cols-4 gap-2 rounded-xl bg-deepblue p-2 text-white">
             <div>
                 <input type="radio" name="option" id="jour" value="jour" class="peer hidden" checked />
                 <label for="jour" class="time-filter block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-white peer-checked:font-bold peer-checked:text-deepblue">Jour</label>
@@ -120,8 +120,8 @@ echo"<hr class='dark:border-gray-700'>
             </div>
 
             <div class="mt-4">
-                <div class="flex flex-wrap -mx-6">
-                    <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
+                <div class="flex flex-col xl:flex-row -mx-6">
+                    <div class="w-full px-6">
                         <div class="flex items-center px-5 py-6 bg-white rounded-md cursor-pointer" onclick='showUsers()' id="showUsers">
                             <div class="p-4 h-16 w-16 bg-lyellow  rounded-full">
                                 <ion-icon name="people" class="text-3xl "></ion-icon>
@@ -134,7 +134,7 @@ echo"<hr class='dark:border-gray-700'>
                         </div>
                     </div>
 
-                    <div class="w-full px-6 mt-6 sm:w-1/2 xl:w-1/3 sm:mt-0">
+                    <div class="w-full px-6 mt-6 xl:mt-0">
                         <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm cursor-pointer" onclick='showLogs()' id="showLogs">
                             <div class="p-4  h-16 w-16 bg-lyellow rounded-full">
                                 <ion-icon name="key" class="text-3xl "></ion-icon>
@@ -147,7 +147,7 @@ echo"<hr class='dark:border-gray-700'>
                         </div>
                     </div>
 
-                    <div class="w-full px-6 mt-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
+                    <div class="w-full px-6 mt-6  xl:mt-0">
                         <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
                             <div class="p-4  h-16 w-16 bg-lyellow rounded-full">
                                 <ion-icon name="calculator" class="text-3xl"></ion-icon>
@@ -165,9 +165,9 @@ echo"<hr class='dark:border-gray-700'>
             <div class="mt-8">
             </div>
 
-            <div class="flex justify-between items-center w-auto  mx-auto my-20">
+            <div class="flex justify-between items-center w-auto flex-col md:flex-row  mx-auto my-20">
 
-                <div class="flex flex-col mt-8 w-3/4">
+                <div class="flex flex-col mt-8 md:w-3/4 w-full">
                     <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                         <div
                                 class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
@@ -361,7 +361,7 @@ echo"<hr class='dark:border-gray-700'>
 
 
     <div class="fixed left-0 top-0 z-40 h-full w-full select-none bg-gray-200 bg-opacity-50 hidden" id="popUpUsers">
-        <div class="relative z-50 mx-auto mt-36 w-3/6 p-10 bg-deepblue rounded-xl h-3/4" id="contentUsers">
+        <div class="relative z-50 mx-auto mt-36 xl:w-1/2 w-4/6 p-10 bg-deepblue rounded-xl h-3/4" id="contentUsers">
             <ion-icon name="close" class="text-white right-0 my-9 mr-6 top-0 absolute text-3xl cursor-pointer" onclick="showUsers()"></ion-icon>
             <p class="text-white text-2xl text-center">Rechercher des utilisateurs</p>
             <form class="flex items-center my-5" onsubmit="return false">
@@ -407,7 +407,7 @@ echo"<hr class='dark:border-gray-700'>
         </div>
     </div>
     <div class="fixed left-0 top-0 z-40 h-full w-full select-none bg-gray-200 bg-opacity-50 hidden" id="popUpLogs">
-        <div class="relative z-50 mx-auto mt-36 w-3/6 p-10 bg-deepblue rounded-xl h-3/4" id="contentLogs">
+        <div class="relative z-50 mx-auto mt-36 xl:w-1/2 w-4/6 p-10 bg-deepblue rounded-xl md:h-3/4 h-3/4" id="contentLogs">
             <ion-icon name="close" class="text-white right-0 my-9 mr-6 top-0 absolute text-3xl cursor-pointer" onclick="showLogs()"></ion-icon>
             <p class="text-white text-2xl text-center">Rechercher des logs</p>
             <form class="flex items-center my-5" onsubmit="return false">

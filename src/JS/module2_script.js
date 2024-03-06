@@ -41,6 +41,33 @@ function init(){
 
     //on lance aussi le calcul quand on appuie sur une touche
     nbLancers.addEventListener("keydown", (launchCalculWhenKeyPressed))
+
+    var images = document.querySelectorAll("#gifs-rows img");
+
+    // Boucler à travers chaque élément img
+    images.forEach(function(image) {
+        // Ajouter un gestionnaire d'événements pour le survol de la souris
+        image.addEventListener("mouseover", function() {
+            // Au survol de la souris, basculer la visibilité des éléments '.preset-file' et '.gif-file'
+            document.querySelectorAll('.preset-file').forEach(function(element) {
+                element.classList.add("hidden");
+            });
+            document.querySelectorAll('.gif-file').forEach(function(element) {
+                element.classList.remove("hidden");
+            });
+        });
+
+        // Ajouter un gestionnaire d'événements pour lorsque la souris quitte l'image
+        image.addEventListener("mouseout", function() {
+            // Au départ de la souris, basculer la visibilité des éléments '.preset-file' et '.gif-file' pour les ramener à leur état initial
+            document.querySelectorAll('.preset-file').forEach(function(element) {
+                element.classList.remove("hidden");
+            });
+            document.querySelectorAll('.gif-file').forEach(function(element) {
+                element.classList.add("hidden");
+            });
+        });
+    });
 }
 
 function launchCalculWhenKeyPressed(event){
